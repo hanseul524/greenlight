@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+		<!-- 만약에 데이터가 null로 전달되었으면 빈칸이 아닌 NULL로 인식하도록 설정 -->
+	</settings>
+	<typeAliases>
+		<typeAlias type="com.iei.greenlight.member.domain.Member" alias="Member"/>
+	</typeAliases>
+	<mappers>
+		<mapper resource="mappers/member-mapper.xml"></mapper>
+	</mappers>
+</configuration>
