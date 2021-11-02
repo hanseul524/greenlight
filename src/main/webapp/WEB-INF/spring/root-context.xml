@@ -7,9 +7,9 @@
 	<!-- DB저장을 위한 드라이버 설정 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName"	value="oracle.jdbc.driver.OracleDriver"></property>
-		<property name="url"				value="jdbc:oracle:thin:@localhost:1521:xe"></property>
-		<property name="username"			value="SPRING"></property>
-		<property name="password"			value="SPRING"></property>
+		<property name="url"				value="jdbc:oracle:thin:@finalproject.cjy1tvad074l.ap-northeast-2.rds.amazonaws.com:1521:final"></property>
+		<property name="username"			value="GREENLIGHT"></property>
+		<property name="password"			value="GREENLIGHT12"></property>
 	</bean>
 	
 	<!-- 연결 준비 -->
