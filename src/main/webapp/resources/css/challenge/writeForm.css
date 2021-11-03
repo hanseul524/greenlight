@@ -1,0 +1,44 @@
+@charset "UTF-8";
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.container {
+  width: 1200px;
+  max-height: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.write-form {
+  width: 1000px;
+  height: 800px;
+  margin: 0 auto;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 10px 15px #4040403f;
+}
+.write-left {
+  font-weight: 900;
+  font-size: 55px;
+  color: #293e31c0;
+}
+.write-right {
+  font-weight: 200;
+  font-size: 30px;
+  margin-left: 30px;
+}
+.title-area {
+  width: inherit;
+  height: 80px;
+  background-color: khaki;
+  margin: 10px 0 10px 0;
+}
+.title-area input {
+  width: 800px;
+  height: 60px;
+  padding: 5px;
+  font-size: 25px;
+  outline: none;
+  border: 0;
+  border-bottom: 1px solid gray;
+  background-color: transparent;
+}
