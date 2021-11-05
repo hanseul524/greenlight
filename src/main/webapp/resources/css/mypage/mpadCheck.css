@@ -1,0 +1,101 @@
+
+body{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: small;
+    color: #293E31;
+}
+img{
+    height: 100%;
+    width: 100%;
+}
+.warper{
+    height: 100%;
+    width: 1200px;
+    margin: 0 auto;
+}
+header{
+    height: 120px;
+    width: 100%;
+}
+#nav-section{
+    margin-top: 30px;
+    width: 1200px;
+    height: 80px;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+    .nav-item{
+        list-style: none;
+        float: left;
+        text-align: center;
+        height: 50px;
+        width: 135px;
+        margin-right: 30px;
+        line-height: 80px;
+    }
+        .nav-link active{
+            height: 100%;
+            display: block;
+            text-decoration: none;
+        }
+        /* 달력 */
+  
+        .rap {
+        max-width: 1100px;
+        width: 100%;
+        margin: 0 auto;
+        }
+
+        .date_head {
+        margin-bottom: 10px;
+        }
+
+        .date_head div {
+        background: #000000;
+        color: #fff;
+        text-align: center;
+        }
+
+        .date_form {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-gap: 5px;
+        }
+
+        .date_form div {
+        width: 150px;
+        padding: 10px 10px;
+        font-size: 16px;
+        cursor: default;
+        }
+
+        .dateSel div {
+        font-weight: bold;
+        color: #333;
+        min-height: 130px;
+        padding: 16px 20px;
+        border-radius: 10px;
+        border: 1px solid #f7f7f7;
+        cursor: default;
+        }
+
+        .background {
+        background: #f7f7f7;
+        }
+        
+        #adCheck{
+            text-align: center;
+            margin-top: 20px;
+        }
+            #adCheck-butn{
+                background-color: black;
+                color: white;
+                border-top-left-radius: 25px;
+                border-top-right-radius: 25px;
+                border-bottom-left-radius: 25px;
+                border-bottom-right-radius: 25px;
+                height: 50px;
+                width: 120px;
+            }
