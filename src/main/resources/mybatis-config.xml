@@ -6,9 +6,9 @@
 		<!-- 만약에 데이터가 null로 전달되었으면 빈칸이 아닌 NULL로 인식하도록 설정 -->
 	</settings>
 	<typeAliases>
-		<typeAlias type="com.iei.greenlight.member.domain.Member" alias="Member"/>
+		<typeAlias alias="User" type="com.iei.greenlight.user.domain.User"/>
 	</typeAliases>
 	<mappers>
-		<mapper resource="mappers/member-mapper.xml"></mapper>
+		<mapper resource="mappers/user-mapper.xml"/>
 	</mappers>
 </configuration>
