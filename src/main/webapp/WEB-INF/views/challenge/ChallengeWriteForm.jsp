@@ -7,8 +7,9 @@
 <title>challengeWriteForm</title>
 <script src="../js/summernote/summernote-lite.js"></script>
 <script src="../js/summernote/lang/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="../css/writeForm.css">
+<link rel="stylesheet" href="../css/writeForm/writeForm.css">
 <link rel="stylesheet" href="../css/summernote/summernote-lite.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <script>
 $(document).ready(function(){

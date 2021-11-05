@@ -10,55 +10,59 @@
 <style>
   body {
     font-family: 'Noto Sans KR', sans-serif;
+    color: #293E31;
   }
-  .footer-box {
+  .foot-box {
     width: 100%;
     height: 200px;
     margin-top: 70px;
     text-align: center;
-    color: #293E31;
   }
-  .footer-box span {
+  .foot-box span {
     font-size: 12px;
   }
-  .footer-img {
+  .foot-img {
     width: 15%;
     float: left;
   }
-  .footer-left {
+  .foot-box h5 {
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .foot-left {
     width: 30%;
     float: left;
     font-weight: 300;
   }
-  .footer-center {
+  .foot-center {
     width: 30%;
     float: left;
     font-weight: 300;
   }
-  .footer-right {
+  .foot-right {
     width: 25%;
     float: left;
     font-weight: 300;
   }
 </style>
 <body>
-  <div class="footer-box">
+  <div class="foot-box">
     <hr>
-    <div class="footer-img">푸터 이미지</div>
-    <div class="footer-left">
+    <div class="foot-img">푸터 이미지</div>
+    <div class="foot-left">
       <h5>INFO</h5>
       <span class="box">배송 & 상품</span><br>
       <span class="box">이용약관</span><br>
       <span class="box">개인정보 보호정책</span><br>
       <span class="box">포인트 안내</span><br>
     </div>
-    <div class="footer-center">
+    <div class="foot-center">
       <h5>CUSTOMER SERVICE</h5>
       <span class="box">0618-1124</span><br>
       <span class="box">10:00 ~ 17:00 (Lunch Time 12:00 ~ 13:30)</span><br>
       <span class="box">토, 일요일 및 공휴일 휴무</span>
     </div>
-    <div class="footer-right">
+    <div class="foot-right">
       <h5>CONTACT US</h5>
       <span class="box">seeksik1@naver.com</span>
     </div>
