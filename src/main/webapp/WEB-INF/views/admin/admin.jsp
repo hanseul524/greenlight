@@ -30,7 +30,7 @@
 </script>
 </head>
 <body>
-	<div class="header"></div>
+<jsp:include page="/common/header.jsp"></jsp:include>
   <div class="container">
     <div class="nav-admin">
       <i class="fas fa-user-circle fa-4x" style="color: gray; margin: 15px;"></i>
@@ -168,6 +168,6 @@
       </div>
     </div>
   </div>
-  <div class="footer"></div>
+<jsp:include page="/common/footer.jsp"></jsp:include>
 </body>
 </html>

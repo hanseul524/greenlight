@@ -1,0 +1,108 @@
+@charset "UTF-8";
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.container {
+  width: 1200px;
+  max-height: 2000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.category {
+  width: 1200px;
+  height: 40px;
+  margin-bottom: 100px;
+}
+.menubar {
+  font-weight: 300;
+  font-size: 15px;
+  margin: 10px 20px 30px 70px;
+}
+a {
+  text-decoration: none;
+  color: #293E31;
+}
+.contents {
+  width: 1000px;
+  max-height: 2000px;
+  display: table;
+  text-align: center;
+}
+.user-div {
+  width: 1000px;
+  height: 50px;
+  margin: 20px;
+  display: inline-block;
+  text-align: left;
+}
+.title-div {
+  width: 1000px;
+  max-height: 400px;
+  display: inline-block;
+}
+.title-div p {
+  text-align: left;
+  font-size: 25px;
+  font-weight: 500;
+}
+.img-div {
+  width: 1200px;
+  margin: 10px;
+  display: table-cell;
+  vertical-align: middle;
+  float: left;
+}
+
+.img-con {
+  width: 1000px;
+  max-height: 600px;
+}
+.con-div {
+  width: 1000px;
+  max-height: 1000px;
+  margin: 20px;
+  display: inline-block;
+  border-left: 3px solid #293e31a2;
+}
+.con-div p {
+  text-align: left;
+  font-size: 17px;
+  color: black;
+  font-weight: 300;
+  margin: 10px;
+}
+.con2-div {
+  width: 1000px;
+  display: inline-block;
+}
+.comm-div {
+  width: 1000px;
+  max-height: 1000px;
+  margin: 5px;
+  display: inline-block;
+  text-align: left;
+}
+.comm-user-div {
+  width: 1000px;
+  margin: 5px;
+}
+.user-text {
+  width: 800px;
+  height: 50px;
+  margin: 10px;
+  outline: none;
+}
+.comm-area {
+  width: 1000px;
+  max-height: 1000px;
+  margin: 5px;
+  display: inline-block;
+}
+.comm-inner-area {
+  width: 800px;
+  max-height: 200px;
+  margin: 20px;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 300;
+}

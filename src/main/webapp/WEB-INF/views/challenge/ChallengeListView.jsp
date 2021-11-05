@@ -5,13 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>ChallengeList</title>
-<link rel="stylesheet" href="../css/challenge.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/challenge/chList.css" type="text/css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-  <div class="header"></div>
+<jsp:include page="/common/header.jsp"></jsp:include>
   <div class="container">
     <div class="category">
       <span class="menubar"><a href="#">참여하기</a></span>
@@ -186,6 +186,6 @@
       </div>
    </div>
   </div>
-  <div class="footer"></div>
+<jsp:include page="/common/footer.jsp"></jsp:include>
 </body>
 </html>

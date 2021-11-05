@@ -75,7 +75,7 @@
 </head>
 <body>
   <div class="header">
-    <div class="main-img"><img style="width: 100px; height: 100px; margin: 10px 0 10px 60px;" src="mainlogo.png"></div>
+    <div class="main-img"><img style="width: 100px; height: 100px; margin: 10px 0 10px 60px;" src="${pageContext.request.contextPath}/resources/img/mainlogo.png"></div>
     <div class="navi-area">
       <ul class="navi-menu">
         <li><a href="#">Home</a></li>

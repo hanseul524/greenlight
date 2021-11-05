@@ -4,11 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>index</title>
+<title>Insert title here</title>
 </head>
 <body>
-	<script type="text/javascript">
-		location.href='main.do';
-	</script>
+	<h1>에러페이지</h1>
 </body>
 </html>

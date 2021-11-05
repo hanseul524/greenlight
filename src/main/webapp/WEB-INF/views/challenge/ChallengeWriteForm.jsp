@@ -5,10 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>challengeWriteForm</title>
-<script src="../js/summernote/summernote-lite.js"></script>
-<script src="../js/summernote/lang/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="../css/writeForm/writeForm.css">
-<link rel="stylesheet" href="../css/summernote/summernote-lite.css">
+<script src="${pageContext.request.contextPath}/resources/js/summernote/summernote-lite.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/challenge/writeForm.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/summernote/summernote-lite.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <script>
@@ -28,7 +28,7 @@ $(document).ready(function(){
   });
 </script>
 <body>
-  <div class="header"></div>
+<jsp:include page="/common/header.jsp"></jsp:include>
   <div class="container">
     <form action="" method="post">
       <div class="write-form">
@@ -41,6 +41,6 @@ $(document).ready(function(){
       </div>
     </form>
   </div>
-  <div class="footer"></div>
+<jsp:include page="/common/footer.jsp"></jsp:include>
 </body>
 </html>
