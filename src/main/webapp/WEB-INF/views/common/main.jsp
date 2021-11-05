@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
-<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/common/main.css">
 <!-- Link Swiper's CSS -->
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -18,7 +18,7 @@
 <body>
 <div class="container">
   <div class="main-area">
-    <div class="header"></div>
+<jsp:include page="/common/header.jsp"></jsp:include>
       <div class="ocean">
         <div class="wave"></div>
         <div class="wave"></div>
@@ -27,19 +27,19 @@
   <div class="site-info">
     <a href="#">
       <div class="img-box">
-        <img src="../img/zero2.jpeg" alt="">
+        <img src="${pageContext.request.contextPath}/resources/img/zero2.jpeg" alt="">
         <span style="color: white;">Zero <br> Waste</span>
       </div>
     </a>
     <a href="#">
       <div class="img-box">
-        <img src="../img/upcycling2.jpeg" alt="">
+        <img src="${pageContext.request.contextPath}/resources/img/upcycling2.jpeg" alt="">
         <span style="color: #293e31;">Upcycling</span>
       </div>
     </a>
     <a href="#">
       <div class="img-box">
-        <img src="../img/recycling.jpeg" alt="">
+        <img src="${pageContext.request.contextPath}/resources/img/recycling.jpeg" alt="">
         <span style="color: white;">Recycling</span>
       </div>
     </a>
@@ -64,7 +64,7 @@
     </div>
   </div>
 </div>
-<div class="footer"></div>
+<jsp:include page="/common/footer.jsp"></jsp:include>
 <!-- Initialize Swiper -->
 <script>
   var swiper = new Swiper(".mySwiper", {
