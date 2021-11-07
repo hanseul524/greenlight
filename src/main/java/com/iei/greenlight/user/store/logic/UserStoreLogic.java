@@ -18,6 +18,20 @@ public class UserStoreLogic implements UserStore{
 		User userOne = sqlSession.selectOne("userMapper.loginUser", user);
 		return userOne;
 	}
+	
+	@Override
+	public int checkIdDup(String userId) {
+		int result = sqlSession.selectOne("userMapper.checkIdDup", userId);
+		return result;
+	}
+
+	@Override
+	public int insertUser(User user) {
+		int result = sqlSession.insert("userMapper.insertUser", user);
+		return result;
+	}
+
+	
 
 	
 }
