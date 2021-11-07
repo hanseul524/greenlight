@@ -38,8 +38,5 @@ public class UserController {
 		}else {
 			return"user/error";
 		}
-		
 	}
-	
-	
 }
