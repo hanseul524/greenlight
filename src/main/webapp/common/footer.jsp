@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <style>
+
   body {
     font-family: 'Noto Sans KR', sans-serif;
     color: #293E31;
@@ -44,10 +45,11 @@
     float: left;
     font-weight: 300;
   }
+
 </style>
 <body>
   <div class="foot-box">
-    <hr>
+    <hr style="background-color: black;">
     <div class="foot-img">푸터 이미지</div>
     <div class="foot-left">
       <h5>INFO</h5>

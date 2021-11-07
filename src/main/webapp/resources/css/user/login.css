@@ -70,7 +70,7 @@
     align-items: center;
     padding:40px;
     background: rgb(255,255,255);
-background: linear-gradient(287deg, rgba(255,255,255,1) 0%, rgba(243,244,244,1) 0%, rgba(255,255,255,1) 100%);
+	background: linear-gradient(287deg, rgba(255,255,255,1) 0%, rgba(243,244,244,1) 0%, rgba(255,255,255,1) 100%);
 }
 .login-form-left-side .login-top-wrap{
     display: flex;

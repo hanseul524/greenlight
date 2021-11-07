@@ -80,13 +80,13 @@
       <ul class="navi-menu">
         <li><a href="#">Home</a></li>
         <li><a href="#">Challenge</a></li>
-        <li><a href="#">Auction</a></li>
+        <li><a href="auctionListView.do">Auction</a></li>
         <li><a href="#">Donation</a></li>
         <li><a href="#">Map</a></li>
       </ul>
     </div>
     <div class="user-area">
-      <i class="fas fa-user-circle fa-2x" style="color: gray;"></i><a href="#">Login</a>
+      <i class="fas fa-user-circle fa-2x" style="color: gray;"></i><a href="loginView.do">Login</a>
     </div>
   </div>
 </body>
