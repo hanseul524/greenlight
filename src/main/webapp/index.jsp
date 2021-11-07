@@ -7,7 +7,7 @@
 <title>index</title>
 </head>
 <body>
-	<script type="text/javascript">
+	<script>
 		location.href='main.do';
 	</script>
 </body>
