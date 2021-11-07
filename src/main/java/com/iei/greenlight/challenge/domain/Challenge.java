@@ -3,9 +3,10 @@ package com.iei.greenlight.challenge.domain;
 import java.sql.Date;
 
 public class Challenge {
+	
 	private int categoryNo;
 	private int chNo;
-	private String userId;
+	private String chWriter;
 	private String chTitle;
 	private String chContents;
 	private Date writeDate;
@@ -31,12 +32,12 @@ public class Challenge {
 		this.chNo = chNo;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getChWriter() {
+		return chWriter;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setChWriter(String chWriter) {
+		this.chWriter = chWriter;
 	}
 
 	public String getChTitle() {
@@ -89,10 +90,9 @@ public class Challenge {
 
 	@Override
 	public String toString() {
-		return "Challenge [categoryNo=" + categoryNo + ", chNo=" + chNo + ", userId=" + userId + ", chTitle=" + chTitle
-				+ ", chContents=" + chContents + ", writeDate=" + writeDate + ", likeCount=" + likeCount
-				+ ", replyCount=" + replyCount + ", chConfirm=" + chConfirm + "]";
+		return "Challenge [카테고리번호=" + categoryNo + ", 글번호=" + chNo + ", 작성자아이디=" + chWriter + ", 글제목="
+				+ chTitle + ", 글내용=" + chContents + ", 작성일=" + writeDate + ", 좋아요수=" + likeCount
+				+ ", 댓글수=" + replyCount + ", 인증유무=" + chConfirm + "]";
 	}
-	
 	
 }

@@ -7,8 +7,13 @@
 	</settings>
 	<typeAliases>
 		<typeAlias alias="User" type="com.iei.greenlight.user.domain.User"/>
+		<typeAlias alias="Challenge" type="com.iei.greenlight.challenge.domain.Challenge"/>
+		<typeAlias alias="Auction" type="com.iei.greenlight.auction.domain.Auction"/>
+		<typeAlias alias="AuctionImage" type="com.iei.greenlight.auction.domain.AuctionImage"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
+		<mapper resource="mappers/challenge-mapper.xml"/>
+		<mapper resource="mappers/auction-mapper.xml"/>
 	</mappers>
 </configuration>
