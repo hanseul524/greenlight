@@ -2,8 +2,14 @@ package com.iei.greenlight.user.service.logic;
 
 import java.util.HashMap;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,13 +25,17 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserStore store;
+	@Autowired
+	private JavaMailSenderImpl mailSender;
 	
+	// ë¡œê·¸ì¸
 	@Override
 	public User loginUser(User user) {
 		User userOne = store.loginUser(user);
 		return userOne;
 	}
 
+	// íœ´ëŒ€í° ì¸ì¦
 	@Override
 	public void certifiedPhoneNumber(String phoneNumber, String numStr) {
 		 String api_key = "NCSONNV2NIS96BTQ";
@@ -34,30 +44,73 @@ public class UserServiceImpl implements UserService{
 
 	        // 4 params(to, from, type, text) are mandatory. must be filled
 	        HashMap<String, String> params = new HashMap<String, String>();
-	        params.put("to", phoneNumber);    // ¼ö½ÅÀüÈ­¹øÈ£
-	        params.put("from", "01092809673");    // ¹ß½ÅÀüÈ­¹øÈ£. Å×½ºÆ®½Ã¿¡´Â ¹ß½Å,¼ö½Å µÑ´Ù º»ÀÎ ¹øÈ£·Î ÇÏ¸é µÊ
+	        params.put("to", phoneNumber);    
+	        params.put("from", "01092809673");    
 	        params.put("type", "SMS");
-	        params.put("text", "ÈŞ´ëÆùÀÎÁõ ¸Ş½ÃÁö : ÀÎÁõ¹øÈ£´Â" + "["+numStr+"]" + "ÀÔ´Ï´Ù.");
+	        params.put("text", "íœ´ëŒ€í°ì¸ì¦ ë©”ì‹œì§€ : ì¸ì¦ë²ˆí˜¸ëŠ”" + "["+numStr+"]" + "ì…ë‹ˆë‹¤.");
 	        params.put("app_version", "test app 1.2"); // application name and version
 
 	        try {
 	            JSONObject obj = (JSONObject)coolsms.send(params);
 	            System.out.println(obj.toString());
 	        } catch (CoolsmsException e) {
-	            System.out.println(e.getMessage());
-	            System.out.println(e.getCode());
+	        	
 	        }
 	}
 
+	// ì¤‘ë³µí™•ì¸
 	@Override
 	public int checkIdDup(String userId) {
 		int result = store.checkIdDup(userId);
 		return result;
 	}
 	
+	// íšŒì›ë“±ë¡
 	@Override
 	public int registerUser(User user) {
 		int result = store.insertUser(user);
+		return result;
+	}
+
+	// ì•„ì´ë”” ì°¾ê¸° ì²´í¬
+	@Override
+	public int checkUserId(User userOne) {
+		int result = store.checkUserId(userOne);
+		return result;
+	}
+
+	// ì¸ì¦ ë©”ì¼ ë³´ë‚´ê¸°
+	@Override
+	public void sendMail(String subject, String content, String sender, String receiver) {
+		MimeMessage message = mailSender.createMimeMessage();
+		try {
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+			messageHelper.setSubject(subject);
+			messageHelper.setText(content, true);
+			messageHelper.setFrom(new InternetAddress(sender));
+			messageHelper.setTo(new InternetAddress(receiver));
+			
+			mailSender.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public String showUserId(User userOne) {
+		String userId = store.showUserId(userOne);
+		return userId;
+	}
+
+	@Override
+	public int checkUserPwd(User userOne) {
+		int result = store.checkUserPwd(userOne);
+		return result;
+	}
+
+	@Override
+	public int modifyUserPwd(User userOne) {
+		int result = store.updateUserPwd(userOne);
 		return result;
 	}
 

@@ -57,9 +57,6 @@ public class UserController {
             String ran = Integer.toString(rand.nextInt(10));
             numStr+=ran;
         }
-
-        System.out.println("수신자 번호 : " + phoneNumber);
-        System.out.println("인증번호 : " + numStr);
         service.certifiedPhoneNumber(phoneNumber,numStr);
         return numStr;
     }
@@ -68,7 +65,6 @@ public class UserController {
    @RequestMapping(value="joinUser.do", method=RequestMethod.POST)
    public String joinUser(@ModelAttribute User user,@RequestParam("inputAddress") String inputAddress, @RequestParam("inputAddress2") String inputAddress2, @RequestParam("inputAddress3") String inputAddress3) {
       user.setUserAddr(inputAddress + "/" + inputAddress2 + "/" + inputAddress3);
-      System.out.println(user.getUserId());
       int result = service.registerUser(user);
       if(result > 0) {
          return "redirect:loginView.do";
@@ -86,7 +82,6 @@ public class UserController {
       if(userOne != null) {
          String userId = userOne.getUserId();
          session.setAttribute("userId", userId);
-         System.out.println(userId);
          return "redirect:main.do";
       }else {
          return"user/error";
@@ -94,4 +89,81 @@ public class UserController {
       
    }
    
+   // 아이디 찾기 체크
+   @ResponseBody
+   @RequestMapping(value="checkId.do", method=RequestMethod.POST)
+   public String checkUserId(@RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName) {
+	   User userOne = new User();
+	   userOne.setUserEmail(userEmail);
+	   userOne.setUserName(userName);
+	   String subject = "";  	// 메일 제목
+	   String content = "";		// 메일 내용
+	   String sender = "";		// 보낸이
+	   int authCode = 0;		// 난수
+	   String authCodes = "";	// 인증코드
+	   int result = service.checkUserId(userOne);
+	   if(result > 0) {
+		   for(int i=0; i<6; i++) {
+			   authCode = (int)(Math.random()*9+1);
+			   authCodes += Integer.toString(authCode);
+		   }
+		   subject = "안녕하세요 Green Light 입니다. 아이디 찾기 인증번호 입니다.";
+		   content = "이이디 찾기 인증코드는 " + authCodes + " 입니다.";
+		   sender = "greensmt01@gmail.com";
+		   service.sendMail(subject, content, sender, userEmail);
+		   return authCodes;
+	   }else {
+		   return String.valueOf(result);
+	   }
+   }
+   
+   // 아이디 찾기
+   @ResponseBody
+   @RequestMapping(value="findId.do", method=RequestMethod.POST)
+   public String userId(@RequestParam("userEmail") String userEmail, @RequestParam("userName") String userName) {
+	   User userOne = new User();
+	   userOne.setUserEmail(userEmail);
+	   userOne.setUserName(userName);
+	   String userId = service.showUserId(userOne);
+	   return userId;
+   }
+   
+   // 비밀번호 찾기 체크
+   @ResponseBody
+   @RequestMapping(value="checkUserPwd.do", method=RequestMethod.POST)
+   public String checkUserPwd(@RequestParam("userEmail") String userEmail, @RequestParam("userId") String userId) {
+	   User userOne = new User();
+	   userOne.setUserId(userId);
+	   userOne.setUserEmail(userEmail);
+	   String subject = "";  	// 메일 제목
+	   String content = "";		// 메일 내용
+	   String sender = "";		// 보낸이
+	   int authCode = 0;		// 난수
+	   String authCodes = "";	// 인증코드
+	   int result = service.checkUserPwd(userOne);
+	   if(result > 0) {
+		   for(int i=0; i<6; i++) {
+			   authCode = (int)(Math.random()*9+1);
+			   authCodes += Integer.toString(authCode);
+		   }
+		   subject = "안녕하세요 Green Light 입니다. 비밀번호 찾기 인증번호 입니다.";
+		   content = "비밀번호 찾기 인증코드는 " + authCodes + " 입니다.";
+		   sender = "greensmt01@gmail.com";
+		   service.sendMail(subject, content, sender, userEmail);
+		   return authCodes;
+	   }else {
+		   return String.valueOf(result);
+	   }
+   }
+   
+   // 비밀번호 변경
+   @ResponseBody
+   @RequestMapping(value="userPwdUpdate.do", method=RequestMethod.POST)
+   public String userPwdUpdate(@RequestParam("userId") String userId, @RequestParam("userPwd") String userPwd) {
+	   User userOne = new User();
+	   userOne.setUserId(userId);
+	   userOne.setUserPwd(userPwd);
+	   int result = service.modifyUserPwd(userOne);
+	   return String.valueOf(result);
+   }
 }

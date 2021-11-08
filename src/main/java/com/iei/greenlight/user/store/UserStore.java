@@ -9,4 +9,12 @@ public interface UserStore {
 	public int insertUser(User user);
 
 	public int checkIdDup(String userId);
+
+	public int checkUserId(User userOne);
+
+	public String showUserId(User userOne);
+
+	public int checkUserPwd(User userOne);
+
+	public int updateUserPwd(User userOne);
 }

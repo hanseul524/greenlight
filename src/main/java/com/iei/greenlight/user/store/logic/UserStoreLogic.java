@@ -13,21 +13,49 @@ public class UserStoreLogic implements UserStore{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	// 로그인
 	@Override
 	public User loginUser(User user) {
 		User userOne = sqlSession.selectOne("userMapper.loginUser", user);
 		return userOne;
 	}
 	
+	// 아이디 중복확인
 	@Override
 	public int checkIdDup(String userId) {
 		int result = sqlSession.selectOne("userMapper.checkIdDup", userId);
 		return result;
 	}
 
+	// 회원 등록
 	@Override
 	public int insertUser(User user) {
 		int result = sqlSession.insert("userMapper.insertUser", user);
+		return result;
+	}
+
+	// 아이디 찾기 체크
+	@Override
+	public int checkUserId(User userOne) {
+		int result = sqlSession.selectOne("userMapper.findUserId", userOne);
+		return result;
+	}
+
+	@Override
+	public String showUserId(User userOne) {
+		String userId = sqlSession.selectOne("userMapper.selectUserIdByNameAndEmail", userOne);
+		return userId;
+	}
+
+	@Override
+	public int checkUserPwd(User userOne) {
+		int result = sqlSession.selectOne("userMapper.checkUserpwd", userOne);
+		return result;
+	}
+
+	@Override
+	public int updateUserPwd(User userOne) {
+		int result = sqlSession.update("userMapper.updateUserPwd", userOne);
 		return result;
 	}
 

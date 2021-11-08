@@ -11,4 +11,14 @@ public interface UserService {
 	public int registerUser(User user);
 
 	public int checkIdDup(String userId);
+
+	public int checkUserId(User userOne);
+	
+	public void sendMail(String subject, String content, String sender, String receiver);
+
+	public String showUserId(User userOne);
+
+	public int checkUserPwd(User userOne);
+
+	public int modifyUserPwd(User userOne);
 }

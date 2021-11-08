@@ -34,6 +34,21 @@
 		<property name="maxUploadSize" value="100000000"></property>
 		<property name="maxInMemorySize" value="100000000"></property>
 	</bean>
+	
+	<!-- Gmail -->
+  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="smtp.gmail.com" />
+    <property name="port" value="587" />
+    <property name="username" value="greensmt01@gmail.com" />
+    <property name="password" value="abcdefg01!" />
+    <property name="javaMailProperties">
+    <props>
+      <prop key="mail.smtp.auth">true</prop>
+      <prop key="mail.smtp.starttls.enable">true</prop>
+    </props>
+    </property>
+  </bean>
+	
 	<!-- 
 		1. maxUploadSize : 한 요청당 업로드가 허용되는 최대용량을 바이트단위로 설정
 		-1은 제한이 없다는 뜻이고 프로퍼티를 지정하지 않을 때 기본값
