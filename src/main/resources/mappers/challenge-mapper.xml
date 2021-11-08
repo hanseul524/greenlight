@@ -15,12 +15,31 @@
 		<result property="fileName" column="FILE_NAME"/>
 		<result property="fileSize" column="FILE_SIZE"/>
 		<result property="fileDate" column="FILE_DATE"/>
+		<result property="fileMain" column="FILE_MAIN"/>
 	</resultMap>
 	
-	<insert id="insertCh">
-		INSERT ALL
-		INTO CHALLENGE VALUES(SEQ_CH_NO.NEXTVAL, #{categoryNo}, #{chWriter}, #{chTitle}, #{chContents},
-		DEFAULT, DEFAULT, DEFAULT, DEFAULT)
-		INTO CALLENGE_FILE VALUES(SEQ_CH_NO.NEXTVAL, #{chWriter}, #{categoryNo}, #{filePath}, #{fileName}, #{fileSize}, DEFAULT)
+<!-- 	<insert id="insertCh"> -->
+<!-- 		INSERT ALL -->
+<!-- 		INTO CHALLENGE VALUES(SEQ_CH_NO.NEXTVAL, #{categoryNo}, #{chWriter}, #{chTitle}, #{chContents}, -->
+<!-- 		DEFAULT, DEFAULT, DEFAULT, DEFAULT) -->
+<!-- 		INTO CALLENGE_FILE VALUES(SEQ_CH_NO.NEXTVAL, #{chWriter}, #{categoryNo}, #{filePath}, #{fileName}, #{fileSize}, DEFAULT) -->
+<!-- 	</insert> -->
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*) FROM CHALLENGE ORDER BY DESC
+	</select>
+	<select id="selectAllList" resultMap="challengeResultMap">
+		SELECT * FROM CHALLENGE WHERE 
+	</select>
+	<insert id="insertChallenge" parameterType="Challenge">
+		<selectKey keyProperty="chNo" resultType="_int" order="BEFORE">
+			SELECT SEQ_CH_NO.NEXTVAL FROM dual
+		</selectKey>
+		INSERT INTO CHALLENGE VALUES(#{categoryNo}, #{chNo}, #{chWriter}, #{chTitle}, #{chContents}, DEFAULT, DEFAULT, DEFAULT, DEFAULT )
+	</insert>
+	<insert id="insertImage" parameterType="list">
+		<foreach item="item" open="INSERT ALL" close="SELECT * FROM SYS.DUAL" collection="list" separator=" ">
+			INTO CHALLENGE_FILE VALUES
+			(#{item.chNo}, #{item.chWriter}, #{item.categoryNo}, #{item.filePath}, #{item.fileName}, #{item.fileSize}, DEFAULT, #{item.fileMain})
+		</foreach>
 	</insert>
 </mapper>

@@ -79,7 +79,7 @@
     <div class="navi-area">
       <ul class="navi-menu">
         <li><a href="#">Home</a></li>
-        <li><a href="#">Challenge</a></li>
+        <li><a href="ChallengeListView.do">Challenge</a></li>
         <li><a href="auctionListView.do">Auction</a></li>
         <li><a href="#">Donation</a></li>
         <li><a href="#">Map</a></li>

@@ -4,7 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import com.iei.greenlight.challenge.domain.ChPageInfo;
+import com.iei.greenlight.challenge.domain.CFile;
+import com.iei.greenlight.challenge.domain.PageInfo;
 import com.iei.greenlight.challenge.domain.Challenge;
 import com.iei.greenlight.challenge.domain.Reply;
 
@@ -12,12 +13,13 @@ public interface ChallengeStore {
 	
 	// 글 작성, 수정, 삭제
 	public int insertChallenge(Challenge challenge);
+	public int insertChImage(List<CFile> cList);
 	public int updateChallenge(Challenge challenge);
 	public int deleteChallenge(Challenge challenge);
 	
 	// 챌린지 리스트, 상세 페이지
 	public int selectListCount();
-	public List<Challenge> selectAll(ChPageInfo pi);
+	public List<Challenge> selectAll(PageInfo pi);
 	public Challenge selectOne(int chNo);
 	public int updateLike(int chNo, HttpSession session);
 	public int deleteLike(int chNo, HttpSession session);

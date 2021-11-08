@@ -4,7 +4,7 @@ body {
 }
 .container {
   width: 1200px;
-  height: 1200px;
+  height: 1100px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -80,8 +80,9 @@ a {
 .page_wrap {
   text-align:center;
   font-size:0;
-   position: relative;
-   bottom:30px;
+  position: relative;
+  bottom:30px;
+  display: block;
 }
 .page_nation {
   display:inline-block;
@@ -109,11 +110,11 @@ a {
 }
 
 .page_nation .prev {
-  background:#f8f8f8 url("../img/page_prev.png") no-repeat center center;
+  background:#f8f8f8 url("../../img/page_prev.png") no-repeat center center;
   margin-right:7px;
 }
 .page_nation .next {
-  background:#f8f8f8 url("../img/page_next.png") no-repeat center center;
+  background:#f8f8f8 url("../../img/page_next.png") no-repeat center center;
   margin-left:7px;
 }
 

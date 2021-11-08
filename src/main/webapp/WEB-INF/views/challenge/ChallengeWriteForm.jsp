@@ -34,7 +34,7 @@ $(document).ready(function(){
 <jsp:include page="/common/header.jsp"></jsp:include>
   <div class="container">
     <form action="ChallengeRegister.do" method="post" enctype="multipart/form-data">
-    <input type="hidden" value="" name="categoryNo">
+    <input type="hidden" value="1" name="categoryNo">
       <div class="write-form">
         <span class="write-left">챌린지 참여하기</span>
         <span class="write-right">하루 한장, 모바일 영수증 받기!</span>
@@ -57,7 +57,7 @@ $(document).ready(function(){
       <input type="submit" value="등록">
     </form>
   </div>
-  <script>
+ <script>
     ( /* att_zone : 이미지들이 들어갈 위치 id, btn : file tag id */
       imageView = function imageView(att_zone, btn){
     
@@ -147,7 +147,7 @@ $(document).ready(function(){
             btnAtt.files = dt.files;
             var p = ele.parentNode;
             attZone.removeChild(p)
-          }
+          };
           div.appendChild(img)
           div.appendChild(btn)
           return div

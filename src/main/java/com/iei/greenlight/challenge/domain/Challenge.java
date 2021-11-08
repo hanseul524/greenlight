@@ -1,6 +1,7 @@
 package com.iei.greenlight.challenge.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Challenge {
 	
@@ -14,7 +15,17 @@ public class Challenge {
 	private int replyCount;
 	private String chConfirm;
 	
+	private List<CFile> cfList; 
+	
 	public Challenge() {}
+	
+	public List<CFile> getcfList() {
+		return cfList;
+	}
+
+	public void setcfList(List<CFile> cfList) {
+		this.cfList = cfList;
+	}
 
 	public int getCategoryNo() {
 		return categoryNo;

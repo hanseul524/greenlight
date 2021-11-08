@@ -1,6 +1,6 @@
 package com.iei.greenlight.challenge.domain;
 
-public class ChPageInfo {
+public class PageInfo {
 	
 	private int currentPage;
 	private int boardLimit;
@@ -10,9 +10,9 @@ public class ChPageInfo {
 	private int totalCount;
 	private int maxPage;
 	
-	public ChPageInfo() {}
+	public PageInfo() {}
 
-	public ChPageInfo(int currentPage, int boardLimit, int naviLimit, int startNavi, int endNavi, int totalCount,
+	public PageInfo(int currentPage, int boardLimit, int naviLimit, int startNavi, int endNavi, int totalCount,
 			int maxPage) {
 		super();
 		this.currentPage = currentPage;

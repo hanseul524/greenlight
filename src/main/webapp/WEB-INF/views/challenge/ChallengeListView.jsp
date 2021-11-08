@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>ChallengeList</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/challenge/chList.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/challenge/chList.css" type="text/css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -18,174 +19,80 @@
       <span class="menubar"><a href="#">지난 챌린지</a></span>
       <span class="menubar"><a href="#">지난 챌린지</a></span>
       <span class="menubar"><a href="#">All</a></span>
-      <span class="write-btn"><a href="#">write</a></span>
+      <span class="write-btn"><a href="ChallengeWriteView.do">write</a></span>
     </div>
-    <div class="search">
-      <input type="text" name="search-title" id="search-title" placeholder="제목을 입력해주세요.">
-    </div>
-    <ul class="box">
-      <li class="item">
-        <div class="box-inner">
-          <div class="box-img"></div>
-          <div class="contents-bottom">
-            <div class="box-user">
-              <div style="float: left; margin-right: 15px;">
-                <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
-              </div>
-              <span style="color: #293e31a2;">user01 <br>2021.10.28</span>
-            </div>
-            <div class="box-contents">
-              <a href="#">
-                오늘은 비닐봉지 대신 <br> 장바구니를 사용했어요.
-              </a>
-            </div>
-            <br>
-            <hr>
-            <div style="padding-top: 10px;">
-              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp;6</span>
-              <span class="like"><i class="far fa-heart" style="color: red;"></i>&nbsp;&nbsp;10</span>
-            </div>
-          </div>
-          </div>
-      </li>
-      <li class="item">
-        <div class="box-inner">
-          <div class="box-img"></div>
-          <div class="contents-bottom">
-            <div class="box-user">
-              <div style="float: left; margin-right: 15px;">
-                <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
-              </div>
-              <span style="color: #293e31a2;">user01 <br>2021.10.28</span>
-            </div>
-            <div class="box-contents">
-              <a href="#">
-                오늘은 비닐봉지 대신 <br> 장바구니를 사용했어요.
-              </a>
-            </div>
-            <br>
-            <hr>
-            <div style="padding-top: 10px;">
-              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp;6</span>
-              <span class="like"><i class="far fa-heart" style="color: red;"></i>&nbsp;&nbsp;10</span>
-            </div>
-          </div>
-          </div>
-      </li>
-      <li class="item">
-        <div class="box-inner">
-          <div class="box-img"></div>
-          <div class="contents-bottom">
-            <div class="box-user">
-              <div style="float: left; margin-right: 15px;">
-                <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
-              </div>
-              <span style="color: #293e31a2;">user01 <br>2021.10.28</span>
-            </div>
-            <div class="box-contents">
-              <a href="#">
-                오늘은 비닐봉지 대신 <br> 장바구니를 사용했어요.
-              </a>
-            </div>
-            <br>
-            <hr>
-            <div style="padding-top: 10px;">
-              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp;6</span>
-              <span class="like"><i class="far fa-heart" style="color: red;"></i>&nbsp;&nbsp;10</span>
-            </div>
-          </div>
-          </div>
-      </li>
-      <li class="item">
-        <div class="box-inner">
-          <div class="box-img"></div>
-          <div class="contents-bottom">
-            <div class="box-user">
-              <div style="float: left; margin-right: 15px;">
-                <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
-              </div>
-              <span style="color: #293e31a2;">user01 <br>2021.10.28</span>
-            </div>
-            <div class="box-contents">
-              <a href="#">
-                오늘은 비닐봉지 대신 <br> 장바구니를 사용했어요.
-              </a>
-            </div>
-            <br>
-            <hr>
-            <div style="padding-top: 10px;">
-              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp;6</span>
-              <span class="like"><i class="far fa-heart" style="color: red;"></i>&nbsp;&nbsp;10</span>
-            </div>
-          </div>
-          </div>
-      </li>
-      <li class="item">
-        <div class="box-inner">
-          <div class="box-img"></div>
-          <div class="contents-bottom">
-            <div class="box-user">
-              <div style="float: left; margin-right: 15px;">
-                <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
-              </div>
-              <span style="color: #293e31a2;">user01 <br>2021.10.28</span>
-            </div>
-            <div class="box-contents">
-              <a href="#">
-                오늘은 비닐봉지 대신 <br> 장바구니를 사용했어요.
-              </a>
-            </div>
-            <br>
-            <hr>
-            <div style="padding-top: 10px;">
-              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp; 6</span>
-              <span class="like"><i class="far fa-heart" style="color: red;"></i>&nbsp;&nbsp;10</span>
-            </div>
-          </div>
-          </div>
-      </li>
-      <li class="item">
-        <div class="box-inner">
-          <div class="box-img"></div>
-          <div class="contents-bottom">
-            <div class="box-user">
-              <div style="float: left; margin-right: 15px;">
-                <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
-              </div>
-              <span style="color: #293e31a2;">user01 <br>2021.10.28</span>
-            </div>
-            <div class="box-contents">
-              <a href="#">
-                오늘은 비닐봉지 대신 <br> 장바구니를 사용했어요.
-              </a>
-            </div>
-            <br>
-            <hr>
-            <div style="padding-top: 10px;">
-              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp;6</span>
-              <span class="like"><i class="far fa-heart" style="color: red;"></i>&nbsp;&nbsp;10</span>
-            </div>
-          </div>
-          </div>
-      </li>
-    </ul>
+    <form action="" method="post">
+	    <div class="search">
+	      <input type="text" name="search-title" id="search-title" placeholder="제목을 입력해주세요.">
+	    </div>
+    </form>
+    <c:forEach items="${cList }" var="challenge">
+	    <input type="hidden" value="1" name="categoryNo">
+		    <ul class="box">
+		      <li class="item">
+		        <div class="box-inner">
+		        <c:if test="${cfList.fileMain eq 'Y' }">
+		          <div class="box-img">
+		          	<img alt="" src="${cfList.filePath}">
+		          </div>
+		        </c:if>		        
+		          <div class="contents-bottom">
+		            <div class="box-user">
+		              <div style="float: left; margin-right: 15px;">
+		                <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
+		              </div>
+		              <span style="color: #293e31a2; font-size: 13px;">${challenge.chWriter }<br>${challenge.writeDate }</span>
+		            </div>
+		            <div class="box-contents">
+		              <a href="#">
+		                ${challenge.chTitle }
+		              </a>
+		            </div>
+		            <br>
+		            <hr>
+		            <div style="padding-top: 10px;">
+		              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp;${challenge.replyCount }</span>
+		              <span class="like"><i class="far fa-heart" style="color: red;"></i>&nbsp;&nbsp;${challenge.likeCount }</span>
+		            </div>
+		          </div>
+		          </div>
+		      </li>
+	    </ul>
+    </c:forEach>
+	</div>
     <div class="page_wrap">
+    <c:url var="before" value="ChallengeListView.do">
+    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+    </c:url>
       <div class="page_nation">
+      <c:if test="${pi.currentPage <= 1 }">
          <a class="arrow prev" href="#"></a>
-         <a href="#" class="active">1</a>
-         <a href="#">2</a>
-         <a href="#">3</a>
-         <a href="#">4</a>
-         <a href="#">5</a>
-         <a href="#">6</a>
-         <a href="#">7</a>
-         <a href="#">8</a>
-         <a href="#">9</a>
-         <a href="#">10</a>
+      </c:if>
+      <c:if test="${pi.currentPage > 1 }">
+         <a class="arrow prev" href="${before }"></a>
+      </c:if>
+      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
+      	<c:url var="pagenation" value="ChallengeListView.do">
+      		<c:param name="page" value="${p }"></c:param>
+      	</c:url>
+      	<c:if test="${p eq pi.currentPage }">
+         	<a href="#" class="active">${p }</a>
+      	</c:if>
+      	<c:if test="${p ne pi.currentPage }">
+      		<a href="${pagenation }">${p }</a>
+      	</c:if>
+      </c:forEach>
+      <c:url var="after" value="ChallengeListView.do">
+      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+      </c:url>
+      <c:if test="${pi.currentPage >= pi.maxPage }">
          <a class="arrow next" href="#"></a>
+      </c:if>
+      <c:if test="${pi.currentPage < pi.maxPage }">
+         <a class="arrow next" href="${after }"></a>
+      </c:if>
       </div>
-   </div>
-  </div>
+    </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
 </body>
 </html>

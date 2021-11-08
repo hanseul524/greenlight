@@ -4,14 +4,18 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import com.iei.greenlight.challenge.domain.ChPageInfo;
+import com.iei.greenlight.challenge.domain.CFile;
+import com.iei.greenlight.challenge.domain.PageInfo;
 import com.iei.greenlight.challenge.domain.Challenge;
 import com.iei.greenlight.challenge.domain.Reply;
 import com.iei.greenlight.challenge.store.ChallengeStore;
 
+@Repository
 public class ChallengeStoreLogic implements ChallengeStore {
 
 	@Autowired
@@ -19,7 +23,13 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	
 	@Override
 	public int insertChallenge(Challenge challenge) {
-		int result = session.insert("challengeMapper.insertCh", challenge);
+		int result = session.insert("challengeMapper.insertChallenge", challenge);
+		return result;
+	}
+	
+	@Override
+	public int insertChImage(List<CFile> cList) {
+		int result = session.insert("challengeMapper.insertImage", cList);
 		return result;
 	}
 
@@ -37,14 +47,16 @@ public class ChallengeStoreLogic implements ChallengeStore {
 
 	@Override
 	public int selectListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		int count = session.selectOne("challengeMapper.selectListCount");
+		return count;
 	}
 
 	@Override
-	public List<Challenge> selectAll(ChPageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Challenge> selectAll(PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<Challenge> cList = session.selectList("challengeMapper.selectAllList", pi, rowBounds);
+		return cList;
 	}
 
 	@Override
