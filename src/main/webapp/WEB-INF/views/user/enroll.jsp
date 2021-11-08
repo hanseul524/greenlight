@@ -143,8 +143,9 @@
 	    });
 	    $("#inputPwdCheck").blur(function(){
 	    	var checkPwd2 = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/;
+	    	var userPwd = $("#inputPwd").val();
 			var reCheckPwd2 = $("#inputPwdCheck").val();
-			if(!checkPwd2.test(reCheckPwd2) || reCheckPwd2 ==""){
+			if(!checkPwd2.test(reCheckPwd2) || reCheckPwd2 != userPwd){
 				$("#inputPwdCheck").addClass("is-invalid");
 				return false;
 			}else{
