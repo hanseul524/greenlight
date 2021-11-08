@@ -28,6 +28,7 @@ public class ChallengeController {
 	@Autowired
 	private ChallengeService service;
 
+	
 	// 챌린지 글쓰기 폼 보여주기
 	@RequestMapping(value="ChallengeWriteview.do", method=RequestMethod.GET)
 	public String ChallengeWriteView() {
@@ -97,6 +98,13 @@ public class ChallengeController {
 			return "common/errorPage";
 		}
 		
+		/*
+		 * int result = service.registerChallenge(challenge); if (result > 0) {
+		 * mv.setViewName("redirect:ChallengeList.do"); }else {
+		 * System.out.println("글 등록 실패"); }
+		 */
+		
+
 	}
 	// 챌린지 리스트 뷰 + 페이징 처리
 	@RequestMapping(value="ChallengeListView.do", method=RequestMethod.GET)
