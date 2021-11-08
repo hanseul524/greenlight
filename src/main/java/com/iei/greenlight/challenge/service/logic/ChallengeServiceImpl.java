@@ -5,13 +5,16 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.iei.greenlight.challenge.domain.ChPageInfo;
+import com.iei.greenlight.challenge.domain.CFile;
+import com.iei.greenlight.challenge.domain.PageInfo;
 import com.iei.greenlight.challenge.domain.Challenge;
 import com.iei.greenlight.challenge.domain.Reply;
 import com.iei.greenlight.challenge.service.ChallengeService;
 import com.iei.greenlight.challenge.store.ChallengeStore;
 
+@Service
 public class ChallengeServiceImpl implements ChallengeService{
 	
 	@Autowired
@@ -20,6 +23,12 @@ public class ChallengeServiceImpl implements ChallengeService{
 	@Override
 	public int registerChallenge(Challenge challenge) {
 		int result = store.insertChallenge(challenge);
+		return result;
+	}
+	
+	@Override
+	public int registerChImage(List<CFile> cList) {
+		int result = store.insertChImage(cList);
 		return result;
 	}
 
@@ -37,14 +46,14 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	@Override
 	public int getListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		int totalCount = store.selectListCount();
+		return totalCount;
 	}
 
 	@Override
-	public List<Challenge> printAll(ChPageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Challenge> printAll(PageInfo pi) {
+		List<Challenge> cList = store.selectAll(pi);
+		return cList;
 	}
 
 	@Override
@@ -88,5 +97,6 @@ public class ChallengeServiceImpl implements ChallengeService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 }

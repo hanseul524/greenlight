@@ -5,15 +5,35 @@ import java.sql.Date;
 public class CFile {
 	
 	private int chNo;
-	private String userId;
+	private String chWriter;
 	private int categoryNo;
 	private String filePath;
 	private String fileName;
-	private String fileSize;
+	private long fileSize;
 	private Date fileDate;
 	private String fileMain;
 	
 	public CFile() {}
+	
+	
+	public CFile(int chNo, String chWriter, int categoryNo, String filePath, String fileName, long fileSize,
+			Date fileDate, String fileMain) {
+		super();
+		this.chNo = chNo;
+		this.chWriter = chWriter;
+		this.categoryNo = categoryNo;
+		this.filePath = filePath;
+		this.fileName = fileName;
+		this.fileSize = fileSize;
+		this.fileDate = fileDate;
+		this.fileMain = fileMain;
+	}
+
+	public CFile(String filePath, String fileName) {
+		super();
+		this.filePath = filePath;
+		this.fileName = fileName;
+	}
 
 	public int getChNo() {
 		return chNo;
@@ -23,12 +43,12 @@ public class CFile {
 		this.chNo = chNo;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getChWriter() {
+		return chWriter;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setChWriter(String chWriter) {
+		this.chWriter = chWriter;
 	}
 
 	public int getCategoryNo() {
@@ -55,11 +75,11 @@ public class CFile {
 		this.fileName = fileName;
 	}
 
-	public String getFileSize() {
+	public long getFileSize() {
 		return fileSize;
 	}
 
-	public void setFileSize(String fileSize) {
+	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
 
@@ -81,7 +101,7 @@ public class CFile {
 
 	@Override
 	public String toString() {
-		return "CFile [글번호=" + chNo + ", 아이디=" + userId + ", 카테고리번호=" + categoryNo + ", 파일경로=" + filePath
+		return "CFile [글번호=" + chNo + ", 아이디=" + chWriter + ", 카테고리번호=" + categoryNo + ", 파일경로=" + filePath
 				+ ", 파일이름=" + fileName + ", 파일사이즈=" + fileSize + ", 업로드날짜=" + fileDate + ", 대표사진여부="
 				+ fileMain + "]";
 	}
