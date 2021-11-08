@@ -215,12 +215,16 @@ body, html{
 
 .auction-point{
     width:100%;
-    height:35px;
+    height:20px;
     font-size : 14px;
     overflow: hidden;
     text-align: center;
     color : black;
 }
+    .time, .point{
+    	margin:0px;
+    	padding:0px;
+    }
     .point-start{
         width:100%;
         height:25px;

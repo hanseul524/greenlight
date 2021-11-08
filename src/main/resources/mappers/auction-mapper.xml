@@ -7,6 +7,8 @@
   		<result property="auctionTitle" column="AUCTION_TITLE"/>
   		<result property="auctionTime" column="AUCTION_TIME"/>
   		<result property="auctionPrice" column="AUCTION_PRICE"/>
+  		<result property="varRegDate" column="VAR_REG_DATE"/>
+  		<result property="regDate" column="REG_DATE"/>
   		<result property="fileName" column="FILE_NAME"/>
   		<result property="filePath" column="FILE_PATH"/>
   		<result property="fileMain" column="FILE_MAIN"/>
@@ -23,7 +25,16 @@
   	</resultMap>
   	<!-- auction -->
   	<select id="selectAllList" resultMap="auctionResultMap">
-  		SELECT A.AUCTION_NO, A.USER_ID, A.AUCTION_TITLE, A.AUCTION_TIME, A.AUCTION_PRICE, B.FILE_NAME, B.FILE_PATH, B.FILE_MAIN FROM AUCTION A LEFT JOIN AUCTION_IMAGE B ON A.AUCTION_NO = B.AUCTION_NO WHERE B.FILE_MAIN = 'Y' ORDER BY AUCTION_NO DESC
+  		SELECT A.AUCTION_NO, A.USER_ID, A.AUCTION_TITLE, A.AUCTION_TIME, A.AUCTION_PRICE, A.VAR_REG_DATE, B.FILE_NAME, B.FILE_PATH, B.FILE_MAIN FROM AUCTION A LEFT JOIN AUCTION_IMAGE B ON A.AUCTION_NO = B.AUCTION_NO WHERE B.FILE_MAIN = 'Y' ORDER BY AUCTION_NO DESC
+  	</select>
+  	<select id="selectOneByNo" parameterType="_int" resultMap="auctionResultMap">
+  		SELECT * FROM AUCTION WHERE AUCTION_NO = #{auctionNo }
+  	</select>
+  	<select id="selectAuctionImage" parameterType="_int" resultMap="auctionImageResultMap">
+  		SELECT * FROM AUCTION_IMAGE WHERE AUCTION_NO = #{auctionNo }
+  	</select>
+  	<select id="selectListCount" resultType="_int">
+  		SELECT COUNT(*) FROM AUCTION
   	</select>
 <!--   	<select id="selectMainImage" resultMap="auctionImageResultMap" parameterType="_int">
   		SELECT * FROM AUCTION_IMAGE WHERE AUCTION_NO = #{auctionNo }
@@ -32,7 +43,7 @@
 	  	<selectKey keyProperty="auctionNo" resultType="_int" order="BEFORE" >
 	  		SELECT SEQ_AUCTION_NO.NEXTVAL FROM dual
 	  	</selectKey>
-  		INSERT INTO AUCTION VALUES(#{auctionNo} , #{userId }, #{auctionTitle }, #{auctionTime }, #{auctionPrice })
+  		INSERT INTO AUCTION VALUES(#{auctionNo} , #{userId }, #{auctionTitle }, #{auctionTime }, #{auctionPrice }, DEFAULT, #{varRegDate })
   	</insert>
   	<!-- auctionImage -->
   	<insert id="insertAuctionImage" parameterType="list">

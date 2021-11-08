@@ -26,6 +26,34 @@ public class AuctionServiceImpl implements AuctionService{
 		return aList;
 	}
 	
+	
+	@Override
+	public int getListCount() {
+		
+		int totalCount = store.selectListCount();
+		
+		return totalCount;
+	}
+
+	
+
+
+	@Override
+	public Auction printAuctionOneByNo(int auctionNo) {
+		
+		Auction auction = store.selectAuctionOneByNo(auctionNo);
+		
+		return auction;
+	}
+
+	@Override
+	public List<AuctionImage> printAuctionImageOneByNo(int auctionNo) {
+		
+		List<AuctionImage> imageList = store.selectAuctionImageOneByNo(auctionNo);
+		
+		return imageList;
+	}
+	
 
 	@Override
 	public int registerAuction(Auction auction) {
@@ -42,6 +70,11 @@ public class AuctionServiceImpl implements AuctionService{
 		
 		return result;
 	}
+
+
+
+
+
 
 
 

@@ -9,9 +9,12 @@ import com.iei.greenlight.auction.domain.AuctionImage;
 public interface AuctionStore {
 	
 	// auction
+	public List<Auction> selectAllList();
+	public int selectListCount();
+	public Auction selectAuctionOneByNo(int auctionNo);
+	public List<AuctionImage> selectAuctionImageOneByNo(int auctionNo);
 	public int insertAuction(Auction auction);
 	
-	public List<Auction> selectAllList();
 
 	
 	//auctinoImage

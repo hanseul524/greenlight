@@ -27,6 +27,30 @@ public class AuctionStoreLogic implements AuctionStore{
 	}
 
 	@Override
+	public int selectListCount() {
+		
+		int count = sqlSession.selectOne("");
+		
+		return count;
+	}
+	
+	@Override
+	public Auction selectAuctionOneByNo(int auctionNo) {
+		
+		Auction auction = sqlSession.selectOne("auctionMapper.selectOneByNo", auctionNo);
+		
+		return auction;
+	}
+
+	@Override
+	public List<AuctionImage> selectAuctionImageOneByNo(int auctionNo) {
+		
+		List<AuctionImage> imageList = sqlSession.selectList("auctionMapper.selectAuctionImage", auctionNo);
+		
+		return imageList;
+	}
+
+	@Override
 	public int insertAuction(Auction auction) {
 		
 		int result = sqlSession.insert("auctionMapper.insertAuction", auction);
@@ -40,6 +64,7 @@ public class AuctionStoreLogic implements AuctionStore{
 		
 		return result;
 	}
+
 
 
 }

@@ -2,7 +2,10 @@ package com.iei.greenlight.auction.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,16 +33,18 @@ public class AuctionController {
 	
 	// 리스트 페이지 이동
 	@RequestMapping(value="auctionListView.do")
-	public String auctionListView(HttpServletRequest request, Model model) {
+	public String auctionListView(HttpServletRequest request, Model model, @RequestParam(value="page", required = false) Integer page) {
 		
 		try {
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = service.getListCount();
 			List<Auction> aList = service.printAllList();
 			if(!aList.isEmpty()) {
 				model.addAttribute("aList", aList);
 				return "auction/auctionList";
 			}else {
 				model.addAttribute("aList", null);
-				return "common/errorPage";
+				return "auction/auctionList";
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -56,16 +61,47 @@ public class AuctionController {
 		
 	}
 	
+	// 경매 디테일 페이지
+	@RequestMapping(value="auctionDetail.do")
+	public String auctionDetailView(@RequestParam("auctionNo") int auctionNo, Model model) {
+		
+		try {
+			Auction auction = service.printAuctionOneByNo(auctionNo);
+			System.out.println(auction.toString());
+			if(auction != null) {
+				List<AuctionImage> imageList = service.printAuctionImageOneByNo(auctionNo);
+				for(AuctionImage a : imageList) {
+					System.out.println(a.toString());
+				}
+				model.addAttribute("auction", auction);
+				model.addAttribute("auctionImage", imageList);
+				return "auction/auctionDetail";
+			}else {
+				model.addAttribute("msg", "디테일 조회 실패");
+				return "common/errorPage";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}
+		
+	}
+	
 	
 	// 경매 신청
 	@RequestMapping(value="auctionApply.do", method=RequestMethod.POST)
 	public String auctionApply(@ModelAttribute Auction auction, HttpServletRequest request, Model model, @RequestParam("uploadFiles") MultipartFile[] uploadFiles) {
 		
-		
 		auction.setUserId((String)request.getSession().getAttribute("userId")); // session값에서 아이디 가지고 오기
 		List<AuctionImage> aList = null;
 		
 		try {
+			SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd-HH-mm-ss");
+			Date time = new Date();
+			String time1 = format1.format(time);
+			System.out.println(time1);
+			auction.setVarRegDate(time1);
 			int result = service.registerAuction(auction); // insert 됐을 시 auctionNo 을 가져와야되
 			if(result > 0) {
 				aList = new ArrayList<AuctionImage>();
@@ -86,7 +122,6 @@ public class AuctionController {
 				model.addAttribute("msg", "경매 신청글 실패");
 				return "common/errorPage";
 			}
-			
 		}catch(Exception e) {
 			model.addAttribute("msg", e.toString());
 			return "common/errorPage";

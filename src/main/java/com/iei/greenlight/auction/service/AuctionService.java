@@ -10,9 +10,12 @@ public interface AuctionService {
 	
 	
 	// Auction
+	public List<Auction> printAllList();
+	public int getListCount();
+	public Auction printAuctionOneByNo(int auctionNo);
+	public List<AuctionImage> printAuctionImageOneByNo(int auctionNo);
 	public int registerAuction(Auction auction);
 	
-	List<Auction> printAllList();
 	
 	
 	

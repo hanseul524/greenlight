@@ -25,8 +25,9 @@ import com.iei.greenlight.challenge.service.ChallengeService;
 @Controller
 public class ChallengeController {
 	
-	@Autowired
-	private ChallengeService service;
+	/*
+	 * @Autowired private ChallengeService service;
+	 */
 
 	@RequestMapping(value="ChallengeWriteview.do", method=RequestMethod.GET)
 	public String ChallengeWriteView() {
@@ -64,12 +65,11 @@ public class ChallengeController {
 			}
 		}
 		
-		int result = service.registerChallenge(challenge);
-		if (result > 0) {
-			mv.setViewName("redirect:ChallengeList.do");
-		}else {
-			System.out.println("글 등록 실패");
-		}
+		/*
+		 * int result = service.registerChallenge(challenge); if (result > 0) {
+		 * mv.setViewName("redirect:ChallengeList.do"); }else {
+		 * System.out.println("글 등록 실패"); }
+		 */
 		return mv;
 	}
 	
