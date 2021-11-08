@@ -30,11 +30,11 @@ public class ChallengeController {
 	/*
 	 * @Autowired private ChallengeService service;
 	 */
+	@Autowired
+	private ChallengeService service;
 
 	@RequestMapping(value="ChallengeWriteview.do", method=RequestMethod.GET)
 	public String ChallengeWriteView() {
-	@Autowired
-	private ChallengeService service;
 	
 	// 챌린지 글쓰기 폼 보여주기
 		return "challenge/ChallengeWriteForm";
@@ -108,7 +108,7 @@ public class ChallengeController {
 		 * mv.setViewName("redirect:ChallengeList.do"); }else {
 		 * System.out.println("글 등록 실패"); }
 		 */
-		return mv;
+		
 
 	}
 	// 챌린지 리스트 뷰 + 페이징 처리

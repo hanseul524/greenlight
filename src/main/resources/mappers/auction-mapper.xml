@@ -36,6 +36,9 @@
   	<select id="selectListCount" resultType="_int">
   		SELECT COUNT(*) FROM AUCTION
   	</select>
+  	<select id="selectMyAuctionList" resultMap="auctionResultMap">
+        SELECT * FROM AUCTION WHERE USER_ID = #{userId}
+    </select>
 <!--   	<select id="selectMainImage" resultMap="auctionImageResultMap" parameterType="_int">
   		SELECT * FROM AUCTION_IMAGE WHERE AUCTION_NO = #{auctionNo }
   	</select> -->
