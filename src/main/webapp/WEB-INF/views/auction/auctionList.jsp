@@ -26,7 +26,7 @@
             <c:if test="${ not empty aList }">
             	<c:forEach items="${aList }" var="auction" varStatus="index">
 		            <div class="auction-box" onclick="location.href='auctionDetail.do?auctionNo=${auction.auctionNo}'" style="cursor: pointer;">
-		                <div class="auction-img" onmouseover="timer(this, '${auction.varRegDate}', ${auction.auctionTime })">
+		                <div class="auction-img" onmouseover="timer(this, '${auction.auctionStart}', ${auction.auctionTime })">
 		                    <div class="quick-view">
 		                        <p>quick view</p>
 		                    </div>
@@ -45,23 +45,40 @@
 	        </c:if>
         </div>
     </div>
-    <div class="page_wrap">
-        <div class="page_nation">
-           <a class="arrow prev" href="#"></a>
-           <a href="#" class="active">1</a>
-           <a href="#">2</a>
-           <a href="#">3</a>
-           <a href="#">4</a>
-           <a href="#">5</a>
-           <a href="#">6</a>
-           <a href="#">7</a>
-           <a href="#">8</a>
-           <a href="#">9</a>
-           <a href="#">10</a>
-           <a class="arrow next" href="#"></a>
-        </div>
-     </div>
-<div class="footer"></div>
+	<div class="page_wrap">
+    <c:url var="before" value="auctionListView.do">
+    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+    </c:url>
+      <div class="page_nation">
+      <c:if test="${pi.currentPage <= 1 }">
+         <a class="arrow prev" href="#"></a>
+      </c:if>
+      <c:if test="${pi.currentPage > 1 }">
+         <a class="arrow prev" href="${before }"></a>
+      </c:if>
+      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
+      	<c:url var="pagenation" value="auctionListView.do">
+      		<c:param name="page" value="${p }"></c:param>
+      	</c:url>
+      	<c:if test="${p eq pi.currentPage }">
+         	<a href="#" class="active">${p }</a>
+      	</c:if>
+      	<c:if test="${p ne pi.currentPage }">
+      		<a href="${pagenation }">${p }</a>
+      	</c:if>
+      </c:forEach>
+      <c:url var="after" value="auctionListView.do">
+      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+      </c:url>
+      <c:if test="${pi.currentPage >= pi.maxPage }">
+         <a class="arrow next" href="#"></a>
+      </c:if>
+      <c:if test="${pi.currentPage < pi.maxPage }">
+         <a class="arrow next" href="${after }"></a>
+      </c:if>
+      </div>
+    </div>
+<jsp:include page="${pageContext.request.contextPath}/common/footer.jsp"></jsp:include>    
 <script>
     var time = $(".time");
     var point = $(".point");
@@ -136,25 +153,23 @@
 	            if (secs.toString().length==1) secs = "0" + secs;
 				
 				 if(hours < 0){
-					/* $("#time").hide(); */
+					 result();
 					clearInterval(x);
 				}else{
-					console.log($(obj));
 					$(obj).siblings().last().children().last().html(hours + "시간 " + mins + "분 " + secs + "초 후 경매 마감합니다.");
 // 					$(".time").html(hours + "시간 " + mins + "분 " + secs + "초 후 경매 마감합니다.");
 					/* console.log(hours <= 0 && mins <= 0 && secs <= 0); */
 				}
 				 
-			
 			},1000);
-			
-			 function result(){
-				$(".time").html("경매가 마감하였습니다.");
+			 
+	        function result(){
+	        	$(obj).siblings().last().children().last().html("경매가 마감되었습니다.");
 			}
         }
         
+        
 		 
 </script>
-<jsp:include page="${pageContext.request.contextPath}/common/footer.jsp"></jsp:include>
 </body>
 </html>

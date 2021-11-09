@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>adminPage</title>
-<link rel="stylesheet" href="../css/admin.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <!-- CSS only -->
@@ -47,7 +47,7 @@
           <li class="li-area">
             <i class="fas fa-coins" style="margin-right: 10px;"></i><a href="#">경매관리</a> 
             <ul>
-              <li><a href="#">재고관리</a></li>
+              <li><a href="adminAuctionView.do">재고관리</a></li>
               <li><a href="#">판매관리</a></li>
             </ul>
           </li>
@@ -169,5 +169,20 @@
     </div>
   </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
+<script>
+	todayDate();
+	
+	function todayDate(){
+		  var today = new Date();
+		
+		  var year = today.getFullYear();
+		  var month = ('0' + (today.getMonth() + 1)).slice(-2);
+		  var day = ('0' + today.getDate()).slice(-2);
+		
+		  var dateString = year + '.' + month  + '.' + day;
+		
+		  $("#today").html(dateString);
+	}
+</script>
 </body>
 </html>

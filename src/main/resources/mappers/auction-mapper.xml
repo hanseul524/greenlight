@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="auctionMapper">
+
   	<resultMap type="Auction" id="auctionResultMap">
   		<id property="auctionNo" column="AUCTION_NO"/>
   		<result property="userId" column="USER_ID"/>
@@ -9,11 +10,8 @@
   		<result property="auctionPrice" column="AUCTION_PRICE"/>
   		<result property="varRegDate" column="VAR_REG_DATE"/>
   		<result property="regDate" column="REG_DATE"/>
-  		<result property="fileName" column="FILE_NAME"/>
-  		<result property="filePath" column="FILE_PATH"/>
-  		<result property="fileMain" column="FILE_MAIN"/>
-  		<!-- <collection property="aList" column="auctionNo=AUCTION_NO" javaType="java.util.List" ofType="AuctionImage" select="auctionMapper.selectMainImage"></collection> -->
   	</resultMap>
+  	
   	<resultMap type="AuctionImage" id="auctionImageResultMap">
   		<id property="auctionNo" column="AUCTION_NO"/>
   		<result property="userId" column="USER_ID"/>
@@ -23,36 +21,93 @@
   		<result property="regDate" column="REG_DATE"/>
   		<result property="fileMain" column="FILE_MAIN"/>
   	</resultMap>
+  	
+  	<resultMap type="AuctionHistory" id="auctionHistoryResultMap">
+  		<id property="auctionNo" column="AUCTION_NO"/>
+  		<result property="userId" column="USER_ID"/>
+  		<result property="regDate" column="REG_DATE"/>
+  		<result property="auctionStart" column="AUCTION_START"/>
+  		<result property="auctionTitle" column="AUCTION_TITLE"/>
+  		<result property="auctionStatus" column="AUCTION_STATUS"/>
+  		<result property="auctionTime" column="AUCTION_TIME"/>
+  		<result property="auctionPrice" column="AUCTION_PRICE"/>
+  		<result property="fileName" column="FILE_NAME"/>
+  		<result property="filePath" column="FILE_PATH"/>
+  		<result property="fileMain" column="FILE_MAIN"/>
+  	</resultMap>
+  	
+  	<resultMap type="AuctionUser" id="auctionUserResultMap">
+  		<id property="auctionNo" column="AUCTION_NO"/>
+  		<result property="userId" column="USER_ID"/>
+  		<result property="point" column="POINT"/>
+  	</resultMap>
+  	
   	<!-- auction -->
-  	<select id="selectAllList" resultMap="auctionResultMap">
-  		SELECT A.AUCTION_NO, A.USER_ID, A.AUCTION_TITLE, A.AUCTION_TIME, A.AUCTION_PRICE, A.VAR_REG_DATE, B.FILE_NAME, B.FILE_PATH, B.FILE_MAIN FROM AUCTION A LEFT JOIN AUCTION_IMAGE B ON A.AUCTION_NO = B.AUCTION_NO WHERE B.FILE_MAIN = 'Y' ORDER BY AUCTION_NO DESC
+  	<select id="selectAuctionList" resultMap="auctionResultMap">
+  		SELECT * FROM AUCTION
   	</select>
-  	<select id="selectOneByNo" parameterType="_int" resultMap="auctionResultMap">
+  	<select  id="selectAuctionOneByNo" parameterType="_int" resultMap="auctionResultMap">
   		SELECT * FROM AUCTION WHERE AUCTION_NO = #{auctionNo }
   	</select>
-  	<select id="selectAuctionImage" parameterType="_int" resultMap="auctionImageResultMap">
-  		SELECT * FROM AUCTION_IMAGE WHERE AUCTION_NO = #{auctionNo }
-  	</select>
-  	<select id="selectListCount" resultType="_int">
+   	<select id="selectListCount" resultType="_int">
   		SELECT COUNT(*) FROM AUCTION
   	</select>
   	<select id="selectMyAuctionList" resultMap="auctionResultMap">
         SELECT * FROM AUCTION WHERE USER_ID = #{userId}
     </select>
-<!--   	<select id="selectMainImage" resultMap="auctionImageResultMap" parameterType="_int">
-  		SELECT * FROM AUCTION_IMAGE WHERE AUCTION_NO = #{auctionNo }
-  	</select> -->
   	<insert id="insertAuction" parameterType="Auction">
 	  	<selectKey keyProperty="auctionNo" resultType="_int" order="BEFORE" >
 	  		SELECT SEQ_AUCTION_NO.NEXTVAL FROM dual
 	  	</selectKey>
   		INSERT INTO AUCTION VALUES(#{auctionNo} , #{userId }, #{auctionTitle }, #{auctionTime }, #{auctionPrice }, DEFAULT, #{varRegDate })
   	</insert>
+  	<delete id="deleteAuction" parameterType="java.util.Arrays">
+  		DELETE FROM AUCTION
+  		<where>
+  			AUCTION_NO IN
+  			<foreach collection="array" item="item" index="index" open="(" close=")" separator=", ">
+  				#{item }
+  			</foreach>
+  		</where>
+  	</delete>
+  	
   	<!-- auctionImage -->
+  	<select id="selectAuctionImage" parameterType="_int" resultMap="auctionImageResultMap">
+  		SELECT * FROM AUCTION_IMAGE WHERE AUCTION_NO = #{auctionNo }
+  	</select>
   	<insert id="insertAuctionImage" parameterType="list">
   		<foreach item="item" open="INSERT ALL" close="SELECT * FROM SYS.DUAL" collection="list" separator=" ">
 	  		INTO AUCTION_IMAGE VALUES
   			(#{item.auctionNo }, #{item.userId }, #{item.fileName }, #{item.filePath }, #{item.fileSize }, DEFAULT, #{item.fileMain })
   		</foreach>
   	</insert>
+  	
+  	<!-- auctionHistory -->
+  	<select id="selectAllList" resultMap="auctionHistoryResultMap">
+  		SELECT A.AUCTION_NO, A.USER_ID, A.AUCTION_TITLE, A.AUCTION_STATUS, A.AUCTION_TIME, A.AUCTION_PRICE, A.REG_DATE, A.AUCTION_START, B.FILE_NAME, B.FILE_PATH, B.FILE_MAIN FROM AUCTION_HISTORY A LEFT JOIN AUCTION_IMAGE B ON A.AUCTION_NO = B.AUCTION_NO WHERE B.FILE_MAIN = 'Y' AND A.AUCTION_STATUS = 'Y' ORDER BY AUCTION_NO
+  	</select>
+  	<select id="selectList" resultMap="auctionResultMap">
+        SELECT * FROM AUCTION_HISTORY WHERE AUCTION_NO = (SELECT AUCTION_NO FROM AUCTION_USER WHERE USER_ID = #{userId})
+     </select>
+  	<select id="selectHistoryListCount" resultType="_int">
+  		SELECT COUNT(*) FROM AUCTION_HISTORY
+  	</select>
+  	<select id="selectHistoryOneByNo" parameterType="_int" resultMap="auctionHistoryResultMap">
+  		SELECT * FROM AUCTION_HISTORY WHERE AUCTION_NO = #{auctionNo }
+  	</select>
+  	<insert id="insertAuctionHistory" parameterType="list">
+  		<foreach item="item" open="INSERT ALL" close="SELECT * FROM SYS.DUAL" collection="list" separator=" ">
+  			INTO AUCTION_HISTORY VALUES
+  			(#{item.auctionNo }, #{item.userId }, #{item.auctionStart }, DEFAULT, #{item.auctionTitle }, DEFAULT, #{item.auctionTime }, #{item.auctionPrice })
+  		</foreach>
+  	</insert>
+  	
+  	<!-- auctionUser -->
+  	<select id="selectAuctionUser" parameterType="_int" resultMap="auctionUserResultMap">
+  		SELECT ROWNUM, A.* FROM (SELECT * FROM AUCTION_USER ORDER BY POINT DESC) A WHERE AUCTION_NO = #{auctionNo } AND ROWNUM = 1
+  	</select>
+  	<insert id="insertAuctionUser" parameterType="AuctionUser">
+  		INSERT INTO AUCTION_USER VALUES(#{auctionNo }, #{userId }, #{point })
+  	</insert>
+  	
   </mapper>

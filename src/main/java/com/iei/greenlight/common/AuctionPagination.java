@@ -1,11 +1,10 @@
 package com.iei.greenlight.common;
 
-import com.iei.greenlight.challenge.domain.PageInfo;
+import com.iei.greenlight.auction.domain.PageInfo;
 
-public class Pagination {
+public class AuctionPagination {
 	
 	public static PageInfo getPageInfo(int currentPage, int totalCount) {
-		
 		PageInfo pi = null;
 		
 		int naviLimit = 5;  // 한 페이지에 보이는 네비갯수
@@ -21,6 +20,8 @@ public class Pagination {
 			endNavi = maxPage;
 		}
 		pi = new PageInfo(currentPage, boardLimit, naviLimit, startNavi, endNavi, totalCount, maxPage);
+		System.out.println(pi.toString());
 		return pi;
 	}
+
 }

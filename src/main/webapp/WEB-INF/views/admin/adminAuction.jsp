@@ -1,41 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>admin challengepage</title>
+<title>admin Auction</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function(){
-      $(".header").load("header.html");
-      $(".footer").load("footer.html");
-
-      $('div > ul > li').click(function() {
-        if ( $(this).hasClass('active') ) {
-          $(this).find(' > ul').stop().slideUp(300);
-          $(this).removeClass('active');
-        }
-        else {
-          $(this).find(' > ul').stop().slideDown(300);
-          $(this).addClass('active');
-        }
-      });
-    });
-    function popUp() {
-      window.open('./chpopup.html', '_blank', 
-      'top=250, left=500, height=300, width=500,toolbar=no, menubar=no, location=no, status=no, scrollbars=no, resizable=no');
-    }
-  </script>
 </head>
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
-  <div class="container">
+<div class="container">
     <div class="nav-admin">
       <i class="fas fa-user-circle fa-4x" style="color: gray; margin: 15px;"></i>
       <span>admin01</span>
@@ -80,11 +60,11 @@
     </div>
       <div class="contents">
           <div class="con-title">
-            <div>전체 글 목록</div>
-            <button onclick="popUp();" value="챌린지 오픈하기">챌린지 오픈</button>
-            <p>회원들의 챌린지를 확인하고 승인을 진행해주세요.</p>
+        <form action="registAuctionHistory.do" method="post">
+            <div>재고관리</div>
+            <button type="submit" value="물품등록">물품등록</button>
+            <p>회원들이 보낸 상품 중 경매를 시작하지 않은 상품입니다.</p>
           </div>
-        <form action="" method="get">
           <div class="con-list">
             <table class="table table-hover">
               <thead>
@@ -93,84 +73,97 @@
                   <th>Title</th>
                   <th>Id</th>
                   <th>Date</th>
-                  <th>Status</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>01</td>
-                  <td>오늘은 에코백을 사용했어요.</td>
-                  <td>user01</td>
-                  <td>2021.11.02</td>
-                  <td>미승인</td>
-                </tr>
-                <tr>
-                  <td>01</td>
-                  <td>오늘은 에코백을 사용했어요.</td>
-                  <td>user01</td>
-                  <td>2021.11.02</td>
-                  <td>미승인</td>
-                </tr>
-                <tr>
-                  <td>01</td>
-                  <td>오늘은 에코백을 사용했어요.</td>
-                  <td>user01</td>
-                  <td>2021.11.02</td>
-                  <td>미승인</td>
-                </tr>
-                <tr>
-                  <td>01</td>
-                  <td>오늘은 에코백을 사용했어요.</td>
-                  <td>user01</td>
-                  <td>2021.11.02</td>
-                  <td>미승인</td>
-                </tr>
-                <tr>
-                  <td>01</td>
-                  <td>오늘은 에코백을 사용했어요.</td>
-                  <td>user01</td>
-                  <td>2021.11.02</td>
-                  <td>미승인</td>
-                </tr>
+              <c:if test="${ empty aList }">
+              	<tr>
+                  <td colspan="5">신청한 경매가 없습니다.</td>
+	            </tr>
+              </c:if>
+              <c:if test="${ not empty aList }">
+	              <c:forEach items="${aList }" var="auction" varStatus="status">
+	                <tr>
+	                  <td>${status.count }</td>
+	                  <td>${auction.auctionTitle }</td>
+	                  <td>${auction.userId }</td>
+	                  <td>${auction.regDate }</td>
+	                  <td><input type="checkbox" value="${auction.auctionNo }" name="auctionNo"></td>
+	                </tr>
+	              </c:forEach>
+              </c:if>
               </tbody>
             </table>
+            
+            
             <div class="page_wrap">
-              <div class="page_nation">
-                 <a class="arrow prev" href="#"></a>
-                 <a href="#" class="active">1</a>
-                 <a href="#">2</a>
-                 <a href="#">3</a>
-                 <a href="#">4</a>
-                 <a href="#">5</a>
-                 <a href="#">6</a>
-                 <a href="#">7</a>
-                 <a href="#">8</a>
-                 <a href="#">9</a>
-                 <a href="#">10</a>
-                 <a class="arrow next" href="#"></a>
-              </div>
+			    <c:url var="before" value="adminAuctionView.do">
+			    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+			    </c:url>
+			      <div class="page_nation">
+			      <c:if test="${pi.currentPage <= 1 }">
+			         <a class="arrow prev" href="#"></a>
+			      </c:if>
+			      <c:if test="${pi.currentPage > 1 }">
+			         <a class="arrow prev" href="${before }"></a>
+			      </c:if>
+			      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
+			      	<c:url var="pagenation" value="adminAuctionView.do">
+			      		<c:param name="page" value="${p }"></c:param>
+			      	</c:url>
+			      	<c:if test="${p eq pi.currentPage }">
+			         	<a href="#" class="active">${p }</a>
+			      	</c:if>
+			      	<c:if test="${p ne pi.currentPage }">
+			      		<a href="${pagenation }">${p }</a>
+			      	</c:if>
+			      </c:forEach>
+			      <c:url var="after" value="adminAuctionView.do">
+			      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+			      </c:url>
+			      <c:if test="${pi.currentPage >= pi.maxPage }">
+			         <a class="arrow next" href="#"></a>
+			      </c:if>
+			      <c:if test="${pi.currentPage < pi.maxPage }">
+			         <a class="arrow next" href="${after }"></a>
+			      </c:if>
+			      </div>
+			 </div>
+			 
+			 
            </div>
           </div>
         </form>
       </div>
     </div>
-  </div>
-  <script>
-  
-	  todayDate();
-	  
-	  function todayDate(){
-		  var today = new Date();
-		
-		  var year = today.getFullYear();
-		  var month = ('0' + (today.getMonth() + 1)).slice(-2);
-		  var day = ('0' + today.getDate()).slice(-2);
-		
-		  var dateString = year + '.' + month  + '.' + day;
-		
-		  $("#today").html(dateString);
-	  }
-  </script>
+</div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
+<script>
+	todayDate();
+
+	function todayDate(){
+	  var today = new Date();
+	
+	  var year = today.getFullYear();
+	  var month = ('0' + (today.getMonth() + 1)).slice(-2);
+	  var day = ('0' + today.getDate()).slice(-2);
+	
+	  var dateString = year + '.' + month  + '.' + day;
+	
+	  $("#today").html(dateString);
+	}
+	
+	$('div > ul > li').click(function() {
+        if ( $(this).hasClass('active') ) {
+          $(this).find(' > ul').stop().slideUp(300);
+          $(this).removeClass('active');
+        }
+        else {
+          $(this).find(' > ul').stop().slideDown(300);
+          $(this).addClass('active');
+        }
+      });
+</script>
 </body>
 </html>

@@ -35,7 +35,8 @@
       </div>
       <div class="info">
         <div class="time">
-          <span style="font-size:18px; color:rgb(80, 80, 80);">현재가</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:24px;" id="price">${auction.auctionPrice }</span><span style="font-size: 18px; color:rgb(80, 80, 80)">P</span>
+          <input type="hidden" id="hidden" value="${user.point }">
+          <span style="font-size:18px; color:rgb(80, 80, 80);">현재가</span>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:24px;" id="price"><c:if test="${ empty auctionUser }">${auctionHistory.auctionPrice }</c:if><c:if test="${not empty auctionUser }">${auctionUser.point }</c:if></span><span style="font-size: 18px; color:rgb(80, 80, 80)">P</span>
           <%-- <input type="hidden" id="point" value="${auction.auctionPrice }"> --%>
           <div class="time-box">
             <p id="time"></p>
@@ -46,7 +47,7 @@
             <p>경 매 번 호 &nbsp;&nbsp;: </p>
           </div>
           <div class="auction-content2">
-            <p>&nbsp;&nbsp;${auction.auctionNo }</p>
+            <p>&nbsp;&nbsp;${auctionHistory.auctionNo }</p>
           </div>
         </div>
         <div class="auction-number">
@@ -54,7 +55,7 @@
             <p>경 매 시 간 &nbsp;&nbsp;: </p>
           </div>
           <div class="auction-content2">
-            <p style="color:black;">&nbsp;&nbsp;${auction.auctionTime }시간</p>
+            <p style="color:black;">&nbsp;&nbsp;${auctionHistory.auctionTime }시간</p>
           </div>
         </div>
         <div class="auction-pre">
@@ -72,26 +73,32 @@
             무분별한 입찰은 제한해 주시길 바랍니다.            
           </p>
         </div>
-        <div class="auction-button">
-          <form action="../../portfolio/jacket.html" class="form">
-            <div class="button" type="submit">입 찰</div>
-            <input type="hidden" id="hidden" value="13000">
-          </form>
-        </div>
+        <c:if test="${ not empty user }">
+	        <div class="auction-button">
+	            <div class="button" type="submit">입 찰</div>
+	        </div>
+        </c:if>    
         <!-- <div class="auction-check">
-          
         </div> -->
       </div>
     </div>
 <script>
 
-	auctionTimer('${auction.varRegDate}', '${auction.auctionTime}');
+	auctionTimer('${auctionHistory.auctionStart}', '${auctionHistory.auctionTime}');
 
 	$(document).on("click", ".button", function(e){
 	    e.preventDefault;
-	    var userPoint = $("#hidden").val();
-	    var price = $("#price").html();
-	    if(userPoint > price){
+	    var userPoint = parseInt('${user.point }');
+	    var price = parseInt($("#price").text())+50;
+	    var user = '${user.userId }';
+	    var auctionUser = '${auctionUser.userId }'
+	    console.log(user + ", " + auctionUser);
+	    if(user == auctionUser){
+	    	swal({
+		        icon: "error",
+		        text : "현재 최고입찰자입니다."
+		      });
+	    }else if(userPoint > price){
 	      swal({
 	          title: "입찰을 진행하시겠습니까 ?",
 	          buttons: {
@@ -103,14 +110,17 @@
 	          swal({
 	            icon: "success",
 	            text : "입찰이 완료되었습니다.",
+	          }).then((result) => {
+	        	  if(result){
+		        	location.href="insertAuctionUser.do?userId="+user+"&auctionNo="+${auctionHistory.auctionNo }+"&point="+price;	        		  
+	        	  }
 	          });
-	          console.log(userPoint);
 	          /* location.href="디테일 페이지 재확인" */
 	        }else{
 	          console.log("취소")
 	          return false;
 	        }
-	      })
+	   })
 
 	    }else{
 	      swal({
@@ -130,28 +140,19 @@
 				var minutes = now.getMinutes();
 				var seconds = now.getSeconds();
 				
-				console.log(timer)
 				
 				var sttDt = timer;
 				sttDt = sttDt.split("-");
 				var sttYear = sttDt[0];
-				console.log(sttYear);
 				var sttMonth = sttDt[1]-1;
-				console.log(sttMonth);
 				var sttDay = sttDt[2];
-				console.log(sttDay);
 				var sttHour = sttDt[3];
-				var sttHours = parseInt(sttHour.substr(0, 2)) + parseInt(auctionTime);
-				console.log(sttHours);
+				var sttHours = parseInt(sttHour) + parseInt(auctionTime);
 				var sttMinutes = sttDt[4];
-				console.log(sttMinutes);
 				var sttSeconds = sttDt[5];
-				console.log(sttSeconds);
 				
 				var date1 = new Date(year, month, day, hours, minutes, seconds);
 				var date2 = new Date(sttYear, sttMonth, sttDay, sttHours, sttMinutes, sttSeconds);
-				console.log(date1);
-				console.log(date2);
 				
 				var elapsedMSec = date2.getTime() - date1.getTime();
 				var elapsedMSec = elapsedMSec / 1000; // 초
@@ -166,6 +167,8 @@
 				
 				 if(hours < 0){
 					/* $("#time").hide(); */
+					$("#time").html("마감되었습니다.")
+					result();
 					clearInterval(x);
 				}else{
 					$("#time").html("남은 시간 " + hours + " : " + mins + " : " + secs);
@@ -175,7 +178,7 @@
 			},1000);
 			
 			 function result(){
-				$(".time").html("경매가 마감하였습니다.");
+				 location.href="insertAuctionSuccessFul.do?auctionNo=?"+${auctionHistory.auctionNo };
 			}
 		
 		}
