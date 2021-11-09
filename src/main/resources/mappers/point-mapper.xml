@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pointMapper">
+	<resultMap type="Point" id="pointResultMap">
+		<id property="userId" column="USER_ID"/>
+		<result property="pointDate" column="POINT_DATE"/>
+		<result property="pointContents" column="POINT_CONTENTS"/>
+		<result property="pointPayment" column="POINT_PAYMENT"/>
+		<result property="pointUse" column="POINT_USE"/>
+	</resultMap>
+	<select id="selectPoint" resultMap="pointResultMap">
+		SELECT ROWNUM, x.* FROM ( SELECT a.* FROM POINT_HISTORY a ORDER BY a.POINT_DATE desc) x
+	</select>
+</mapper>
