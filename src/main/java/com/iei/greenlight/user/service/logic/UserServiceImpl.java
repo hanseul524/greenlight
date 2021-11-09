@@ -114,6 +114,26 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 
+	// 소셜 아이디 체크
+	@Override
+	public int checkSocialId(User userOne) {
+		int result = store.checkSocialId(userOne);
+		return result;
+	}
+
+	// 소셜로그인
+	@Override
+	public String socialIdLogin(String socialId) {
+		String userId = store.socialIdLogin(socialId);
+		return userId;
+	}
+
+	@Override
+	public int socialRegisterUser(User user) {
+		int result = store.socialInsertUser(user);
+		return result;
+	}
+
 	
 
 }

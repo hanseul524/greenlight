@@ -16,7 +16,7 @@
 <body>
 	<jsp:include page="/common/header.jsp"></jsp:include>
 	<div style="width: 1200px; height: 900px; margin:0 auto;">
-		<form action="joinUser.do" id="loginForm" class="needs-validation" method="post">
+		<form action="socialJoin.do" id="loginForm" class="needs-validation" method="post">
 			<div align="center">
 				<h2>회원가입</h2>
 				<p style="color: rgb(119, 119, 119);">회원가입시 휴대폰 인증을 반드시 진행하셔야합니다.</p>
@@ -43,7 +43,7 @@
 			</div>
 			<div class="col-md-5" style="margin-top: 2%;">
 				<label for="inputEmail" class="form-label">이메일</label>
-				<input type="text" class="form-control" name="userEmail" id="inputEmail" placeholder="이메일은 아이디/비밀번호를 찾을때 사용됩니다.">
+				<input type="text" class="form-control" name="userEmail" value="${userEmail }" id="inputEmail" placeholder="이메일은 아이디/비밀번호를 찾을때 사용됩니다.">
 				<div class="invalid-feedback">이메일은 OOOO@OOOO.OOO으로 입력해주세요.</div>
 			</div>
 			<div>
@@ -77,6 +77,7 @@
 				<div class="invalid-feedback">상세주소를 입력해주세요.</div>
 			</div>
 			<div class="col-12" align="center" style="margin-top: 5%;">
+				<input type="hidden" value="${socialId }" name="socialId">
 				<button type="button" onclick="join();" class="btn btn-lg" style="background-color: #607a6a; color: white;">가입하기</button>
 			</div>
 		</form>

@@ -17,4 +17,10 @@ public interface UserStore {
 	public int checkUserPwd(User userOne);
 
 	public int updateUserPwd(User userOne);
+
+	public int checkSocialId(User userOne);
+
+	public String socialIdLogin(String socialId);
+
+	public int socialInsertUser(User user);
 }

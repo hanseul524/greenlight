@@ -21,4 +21,10 @@ public interface UserService {
 	public int checkUserPwd(User userOne);
 
 	public int modifyUserPwd(User userOne);
+
+	public int checkSocialId(User userOne);
+
+	public String socialIdLogin(String socialId);
+
+	public int socialRegisterUser(User user);
 }
