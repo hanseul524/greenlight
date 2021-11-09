@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,6 +37,14 @@ public class UserController {
       return "user/enroll";
    }
    
+   // 소셜아이디 회원가입 페이지 이동
+   @RequestMapping(value="socialEnrollView.do", method=RequestMethod.GET)
+   public String socialEnrollView (@RequestParam("socialId") String socialId, @RequestParam("userEmail") String userEmail, Model model) {
+	   model.addAttribute("socialId", socialId);
+	   model.addAttribute("userEmail", userEmail);
+	   return "user/socialEnroll";
+   }
+   
    // 아이디 중복 확인
    @ResponseBody
    @RequestMapping(value="checkDupId.do", method=RequestMethod.POST)
@@ -50,7 +59,6 @@ public class UserController {
    @ResponseBody
    @RequestMapping(value="sendSMS.do", method=RequestMethod.GET)
    public String sendSMS(@RequestParam("phoneNumber") String phoneNumber) {
-
         Random rand = new Random();
         String numStr = "";
         for(int i=0; i<4; i++) {
@@ -74,6 +82,18 @@ public class UserController {
       
    }
    
+   // 소셜 회원가입
+   @RequestMapping(value="socialJoin.do", method=RequestMethod.POST)
+   public String socialJoin(@ModelAttribute User user, @RequestParam("inputAddress") String inputAddress, @RequestParam("inputAddress2") String inputAddress2, @RequestParam("inputAddress3") String inputAddress3) {
+	   user.setUserAddr(inputAddress + "/" + inputAddress2 + "/" + inputAddress3);
+	   int result = service.socialRegisterUser(user);
+	   if(result > 0) {
+		   return "redirect:loginView.do";
+	   }else {
+		   return "user/error";
+	   }
+   }
+   
    // 로그인
    @RequestMapping(value="login.do", method=RequestMethod.POST)
    public String loginUser(@ModelAttribute User user, HttpServletRequest request) {
@@ -88,6 +108,50 @@ public class UserController {
       }
       
    }
+   
+   // 로그아웃
+   @RequestMapping(value="logout.do", method=RequestMethod.GET)
+   public String logoutUser(HttpServletRequest request) {
+	   HttpSession session = request.getSession();
+	   if(session != null) {
+			session.invalidate();
+			return"redirect:main.do";
+		}else {
+			return"user/error";
+		}
+   }
+   
+   
+   // 소셜 아이디 체크
+   @ResponseBody
+   @RequestMapping(value="checkSocialId.do", method=RequestMethod.POST)
+   public String checkSocialId(@RequestParam("userEmail") String userEmail, @RequestParam("socialId") String socialId) {
+	   User userOne = new User();
+	   userOne.setUserEmail(userEmail);
+	   userOne.setSocialId(socialId);
+	   int result = service.checkSocialId(userOne);
+	   if(result > 0) {
+		   return String.valueOf(result);
+	   }else {
+		   return String.valueOf(result);
+	   }
+   }
+   
+   // 소셜 아이디 로그인
+   @RequestMapping(value="socialIdLogin.do", method=RequestMethod.GET)
+   public String socialIdLogin(@RequestParam("socialId") String socialId, HttpServletRequest request) {
+	   String usersocialId = String.valueOf(socialId);
+	   HttpSession session = request.getSession();
+	   String userId = service.socialIdLogin(usersocialId);
+	   System.out.println(usersocialId);
+	  if(userId != null) {
+		  session.setAttribute("userId", userId);
+		  return "redirect:/main.do";
+	  }else {
+		  return"user/error";
+	  }
+   }
+   
    
    // 아이디 찾기 체크
    @ResponseBody

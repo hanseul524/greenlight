@@ -11,10 +11,16 @@
 		<typeAlias alias="ChallengeImage" type="com.iei.greenlight.challenge.domain.CFile"/>
 		<typeAlias alias="Auction" type="com.iei.greenlight.auction.domain.Auction"/>
 		<typeAlias alias="AuctionImage" type="com.iei.greenlight.auction.domain.AuctionImage"/>
+		<typeAlias alias="ChargePoint" type="com.iei.greenlight.chargePoint.domain.ChargePoint"/>
+		<typeAlias alias="Point" type="com.iei.greenlight.mypage.domain.PointHistory"/>
+		<typeAlias alias="AuctionHistory" type="com.iei.greenlight.auction.domain.AuctionHistory"/>
+		<typeAlias alias="AuctionUser" type="com.iei.greenlight.auction.domain.AuctionUser"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
 		<mapper resource="mappers/challenge-mapper.xml"/>
 		<mapper resource="mappers/auction-mapper.xml"/>
+		<mapper resource="mappers/chargePoint-mapper.xml"/>
+		<mapper resource="mappers/point-mapper.xml"/>
 	</mappers>
 </configuration>

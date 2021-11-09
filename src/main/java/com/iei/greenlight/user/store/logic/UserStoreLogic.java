@@ -59,6 +59,24 @@ public class UserStoreLogic implements UserStore{
 		return result;
 	}
 
+	@Override
+	public int checkSocialId(User userOne) {
+		int result = sqlSession.selectOne("userMapper.checkSocialId", userOne);
+		return result;
+	}
+
+	@Override
+	public String socialIdLogin(String socialId) {
+		String userId = sqlSession.selectOne("userMapper.socialIdLogin", socialId);
+		return userId;
+	}
+
+	@Override
+	public int socialInsertUser(User user) {
+		int result = sqlSession.insert("userMapper.socialInsertUser", user);
+		return result;
+	}
+
 	
 
 	
