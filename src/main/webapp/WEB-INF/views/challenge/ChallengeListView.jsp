@@ -19,7 +19,7 @@
       <span class="menubar"><a href="#">지난 챌린지</a></span>
       <span class="menubar"><a href="#">지난 챌린지</a></span>
       <span class="menubar"><a href="#">All</a></span>
-      <span class="write-btn"><a href="ChallengeWriteView.do">write</a></span>
+      <span class="write-btn"><a href="ChallengeWriteview.do">write</a></span>
     </div>
     <form action="" method="post">
 	    <div class="search">
@@ -31,9 +31,9 @@
 		    <ul class="box">
 		      <li class="item">
 		        <div class="box-inner">
-		        <c:if test="${cfList.fileMain eq 'Y' }">
+		        <c:if test="${challenge.fileMain eq 'Y' }">
 		          <div class="box-img">
-		          	<img alt="" src="${cfList.filePath}">
+		          	<img alt="" src="${pageContext.request.contextPath}/resources/cuploadFiles/${challenge.fileName}">
 		          </div>
 		        </c:if>		        
 		          <div class="contents-bottom">
@@ -44,7 +44,10 @@
 		              <span style="color: #293e31a2; font-size: 13px;">${challenge.chWriter }<br>${challenge.writeDate }</span>
 		            </div>
 		            <div class="box-contents">
-		              <a href="#">
+		            	<c:url var="cDetail" value="ChallengeDetail.do">
+		            		<c:param name="chNo" value="${challenge.chNo }"></c:param>
+		            	</c:url>
+		              <a href="${cDetail }">
 		                ${challenge.chTitle }
 		              </a>
 		            </div>

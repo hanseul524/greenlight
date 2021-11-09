@@ -34,14 +34,14 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	@Override
 	public int modifyChallenge(Challenge challenge) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.updateChallenge(challenge);
+		return result;
 	}
 
 	@Override
-	public int removeChallenge(Challenge challenge) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int removeChallenge(int chNo) {
+		int result = store.deleteChallenge(chNo);
+		return result;
 	}
 
 	@Override
@@ -58,8 +58,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	@Override
 	public Challenge printOne(int chNo) {
-		// TODO Auto-generated method stub
-		return null;
+		Challenge challenge = store.selectOne(chNo);
+		return challenge;
+	}
+	@Override
+	public List<CFile> printOneImg(int chNo) {
+		List<CFile> cList = store.selectOneImg(chNo);
+		return cList;
 	}
 
 	@Override
@@ -97,6 +102,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 
 }

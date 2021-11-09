@@ -87,6 +87,11 @@
     </div>
     <div class="user-area">
       <i class="fas fa-user-circle fa-2x" style="color: gray;"></i><a href="loginView.do">Login</a>
+<!--       <ul> -->
+<!--       	<li>마이페이지</li> -->
+<!--       	<li>포인트</li> -->
+<!--       	<li>로그아웃</li> -->
+<!--       </ul> -->
     </div>
   </div>
 </body>

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ public class ChallengeController {
 
 	
 	// 챌린지 글쓰기 폼 보여주기
-	@RequestMapping(value="ChallengeWriteview.do", method=RequestMethod.GET)
+	@RequestMapping(value="/ChallengeWriteview.do", method=RequestMethod.GET)
 	public String ChallengeWriteView() {
 		return "challenge/ChallengeWriteForm";
 	}
@@ -87,7 +88,7 @@ public class ChallengeController {
 				cList.get(0).setFileMain("Y");
 				int imgresult = service.registerChImage(cList);
 				System.out.println("파일 등록 성공");
-				return "redirect:ChallengeWriteView.do";
+				return "redirect:ChallengeListView.do";
 			}else {
 				model.addAttribute("msg", "글 등록 실패");
 				return "common/errorPage";
@@ -97,15 +98,31 @@ public class ChallengeController {
 			model.addAttribute("mgs", e.toString());
 			return "common/errorPage";
 		}
-		
-		/*
-		 * int result = service.registerChallenge(challenge); if (result > 0) {
-		 * mv.setViewName("redirect:ChallengeList.do"); }else {
-		 * System.out.println("글 등록 실패"); }
-		 */
-		
-
 	}
+	
+//	// 파일 저장
+//	public CFile saveFile(MultipartFile uploadFile, HttpServletRequest request ) {
+//		
+//		String root = request.getSession().getServletContext().getRealPath("resources");
+//		String savePath = root + "\\cuploadFiles";
+//		File folder = new File(savePath);
+//		if(!folder.exists()) {
+//			folder.mkdir();
+//		}
+//		String filePath = folder + "\\" + uploadFile.getOriginalFilename();
+//		String fileName = uploadFile.getOriginalFilename();
+//		
+//		try {
+//			uploadFile.transferTo(new File(filePath));
+//		} catch (IllegalStateException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		CFile cfile = new CFile(fileName, filePath);
+//		return cfile;
+//	}
+	
 	// 챌린지 리스트 뷰 + 페이징 처리
 	@RequestMapping(value="ChallengeListView.do", method=RequestMethod.GET)
 	public String ChallengeListView(
@@ -125,5 +142,103 @@ public class ChallengeController {
 			model.addAttribute("msg", "리스트 조회 실패");
 			return "common/errorPage";
 		}
+	}
+	
+	// 챌린지 디테일 페이지
+	@RequestMapping(value="ChallengeDetail.do", method=RequestMethod.GET)
+	public String ChallengeDetail(
+			@RequestParam("chNo") int chNo,
+			Model model
+			) {
+		try {
+			Challenge challenge = service.printOne(chNo);
+			if(challenge != null) {
+				List<CFile> cList = service.printOneImg(chNo);
+				model.addAttribute("challenge", challenge);
+				model.addAttribute("cList", cList);
+				return "challenge/ChallengeDetailView";
+			}else {
+				model.addAttribute("msg", "상세 조회 실패");
+				return "common/errorPage";
+			}			
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}	
+	}
+	
+	// 챌린지 삭제
+	@RequestMapping(value="ChallengeDelete.do", method=RequestMethod.GET)
+	public String ChallengeDelete(
+			@RequestParam("chNo") int chNo,
+			@RequestParam("fileName") String fileName,
+			HttpServletRequest request,
+			Model model) {
+		int result = service.removeChallenge(chNo);
+		if(result > 0) {
+			if(fileName != "") {
+				deleteFile(fileName, request);
+			}
+			return "redirect:ChallengeListView.do";
+		}else {
+			model.addAttribute("msg", "게시글 삭제 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	// 파일 삭제 ~~
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String fullPath = root + "\\cuploadFiles";
+		File file = new File(fullPath + "\\" + fileName);
+		if(file.exists()) {
+			file.delete();
+		}
+	}
+	// 게시글 수정 뷰
+	@RequestMapping(value="ChallengeModify.do")
+	public String ChallengeModifyView(
+			@RequestParam("chNo") int chNo,
+			Model model) {
+		Challenge challenge = service.printOne(chNo);
+		if(challenge != null) {
+			model.addAttribute("challenge", challenge);
+			return "challenge/ChallengeModify";
+		}else {
+			model.addAttribute("msg", "게시글 조회 실패");
+			return "common/errorPage";
+		}
+	}
+	// 게시글 수정
+	@RequestMapping(value="ChallengeUpdate.do", method=RequestMethod.POST)
+	public String ChallengeModify(
+			@ModelAttribute Challenge challenge,
+			@RequestParam("editordata") String chContents,
+//			@RequestParam("fileName") String fileName,
+			Model model,
+			HttpServletRequest request) {
+		try {
+			challenge.setChWriter((String)request.getSession().getAttribute("userId"));
+			challenge.setChContents(chContents);
+			System.out.println(challenge);
+//		challenge.setFileName(fileName);
+			int result = service.modifyChallenge(challenge);
+			if (result > 0) {
+//			if(fileName != null) {
+//				
+//			}	
+				model.addAttribute("chNo", challenge.getChNo());
+				System.out.println(challenge);
+			} else {
+				model.addAttribute("msg", "글 수정 실패");
+				return "common/errorPage";
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+		}
+		return "redirect:ChallengeDetail.do";
 	}
 }

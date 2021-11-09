@@ -25,10 +25,19 @@
 <!-- 		INTO CALLENGE_FILE VALUES(SEQ_CH_NO.NEXTVAL, #{chWriter}, #{categoryNo}, #{filePath}, #{fileName}, #{fileSize}, DEFAULT) -->
 <!-- 	</insert> -->
 	<select id="selectListCount" resultType="_int">
-		SELECT COUNT(*) FROM CHALLENGE ORDER BY DESC
+		SELECT COUNT(*) FROM CHALLENGE ORDER BY CH_NO DESC
 	</select>
 	<select id="selectAllList" resultMap="challengeResultMap">
-		SELECT * FROM CHALLENGE WHERE 
+		SELECT c.CATEGORY_NO, c.CH_NO, c.USER_ID, c.CH_TITLE, c.WRITE_DATE, c.CHLIKE_COUNT, c.REPLY_COUNT, f.FILE_PATH, f.FILE_NAME, f.FILE_MAIN FROM CHALLENGE c LEFT JOIN CHALLENGE_FILE f ON c.CH_NO = f.CH_NO WHERE f.FILE_MAIN = 'Y' ORDER BY CH_NO DESC
+	</select>
+<!-- 	<select id="selectAllList" resultMap="challengeResultMap"> -->
+<!-- 		SELECT * FROM CHALLENGE ORDER BY CH_NO DESC -->
+<!-- 	</select> -->
+	<select id="selectOne" resultMap="challengeResultMap">
+		SELECT * FROM CHALLENGE WHERE CH_NO = #{chNo}
+	</select>
+	<select id="selectOneImg" resultMap="challengeResultMap">
+		SELECT FILE_NAME FROM CHALLENGE_FILE WHERE CH_NO = #{chNo}
 	</select>
 	<insert id="insertChallenge" parameterType="Challenge">
 		<selectKey keyProperty="chNo" resultType="_int" order="BEFORE">
@@ -42,4 +51,10 @@
 			(#{item.chNo}, #{item.chWriter}, #{item.categoryNo}, #{item.filePath}, #{item.fileName}, #{item.fileSize}, DEFAULT, #{item.fileMain})
 		</foreach>
 	</insert>
+	<update id="updateChallenge" parameterType="challenge">
+		UPDATE CHALLENGE SET CH_TITLE = #{chTitle}, CH_CONTENTS = #{chContents} WHERE CH_NO = #{chNo}
+	</update>
+	<delete id="deleteChallenge" parameterType="_int">
+		DELETE FROM CHALLENGE WHERE CH_NO = #{chNo}
+	</delete>
 </mapper>

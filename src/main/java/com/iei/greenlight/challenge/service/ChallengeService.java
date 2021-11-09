@@ -15,12 +15,13 @@ public interface ChallengeService {
 	public int registerChallenge(Challenge challenge);
 	public int registerChImage(List<CFile> cList);
 	public int modifyChallenge(Challenge challenge);
-	public int removeChallenge(Challenge challenge);
+	public int removeChallenge(int chNo);
 	
 	// 챌린지 리스트, 상세 페이지
 	public int getListCount();
 	public List<Challenge> printAll(PageInfo pi);
 	public Challenge printOne(int chNo);
+	public List<CFile> printOneImg(int chNo);
 	public int addLike(int chNo, HttpSession session);
 	public int removeList(int chNo, HttpSession session);
 	

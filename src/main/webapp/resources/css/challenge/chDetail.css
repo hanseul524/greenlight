@@ -4,7 +4,7 @@ body {
 }
 .container {
   width: 1200px;
-  max-height: 2000px;
+  max-height: 2600px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -24,7 +24,7 @@ a {
 }
 .contents {
   width: 1000px;
-  max-height: 2000px;
+  max-height: 2600px;
   display: table;
   text-align: center;
 }
@@ -47,16 +47,28 @@ a {
 }
 .img-div {
   width: 1200px;
+  max-height: 2000px;
   margin: 10px;
   display: table-cell;
   vertical-align: middle;
   float: left;
 }
-
-.img-con {
+.img-area {
   width: 1000px;
-  max-height: 600px;
+  height: 600px;
+  overflow: hidden;
+  margin: 0 auto;
 }
+.img-area img-con {
+  width: 70%;
+  height: 70%;
+  object-fit:cover; 
+}
+
+/* .img-con { */
+/*   width: 1000px; */
+/*   max-height: 600px; */
+/* } */
 .con-div {
   width: 1000px;
   max-height: 1000px;

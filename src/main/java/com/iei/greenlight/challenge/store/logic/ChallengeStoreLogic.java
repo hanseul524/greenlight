@@ -35,14 +35,14 @@ public class ChallengeStoreLogic implements ChallengeStore {
 
 	@Override
 	public int updateChallenge(Challenge challenge) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.update("challengeMapper.updateChallenge", challenge);
+		return result;
 	}
 
 	@Override
-	public int deleteChallenge(Challenge challenge) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteChallenge(int chNo) {
+		int result = session.delete("challengeMapper.deleteChallenge", chNo);
+		return result;
 	}
 
 	@Override
@@ -61,10 +61,16 @@ public class ChallengeStoreLogic implements ChallengeStore {
 
 	@Override
 	public Challenge selectOne(int chNo) {
-		// TODO Auto-generated method stub
-		return null;
+		Challenge challenge = session.selectOne("challengeMapper.selectOne", chNo);
+		return challenge;
 	}
 
+	@Override
+	public List<CFile> selectOneImg(int chNo) {
+		List<CFile> cList = session.selectList("challengeMapper.selectOneImg", chNo);
+		return cList;
+	}
+	
 	@Override
 	public int updateLike(int chNo, HttpSession session) {
 		// TODO Auto-generated method stub
@@ -106,5 +112,6 @@ public class ChallengeStoreLogic implements ChallengeStore {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 }

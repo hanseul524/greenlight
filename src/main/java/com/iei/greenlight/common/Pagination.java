@@ -20,7 +20,6 @@ public class Pagination {
 			endNavi = maxPage;
 		}
 		pi = new PageInfo(currentPage, boardLimit, naviLimit, startNavi, endNavi, totalCount, maxPage);
-		
 		return pi;
 	}
 }

@@ -15,12 +15,13 @@ public interface ChallengeStore {
 	public int insertChallenge(Challenge challenge);
 	public int insertChImage(List<CFile> cList);
 	public int updateChallenge(Challenge challenge);
-	public int deleteChallenge(Challenge challenge);
+	public int deleteChallenge(int chNo);
 	
 	// 챌린지 리스트, 상세 페이지
 	public int selectListCount();
 	public List<Challenge> selectAll(PageInfo pi);
 	public Challenge selectOne(int chNo);
+	public List<CFile> selectOneImg(int chNo);
 	public int updateLike(int chNo, HttpSession session);
 	public int deleteLike(int chNo, HttpSession session);
 	
