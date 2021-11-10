@@ -123,7 +123,14 @@ public class AuctionStoreLogic implements AuctionStore{
 		return result;
 	}
 
+	
+	@Override
+	public int updateAuctionHistory(int auctionNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
+	
 	@Override
 	public AuctionUser selectAuctionUser(int auctionNo) {
 		
@@ -140,6 +147,20 @@ public class AuctionStoreLogic implements AuctionStore{
 		int result = sqlSession.insert("auctionMapper.insertAuctionUser", auctionUser);
 		
 		return result;
+	}
+
+	
+	@Override
+	public List<Auction> selectAllList(String userId) {
+		System.out.println("서비스 : " + userId);
+		List<Auction> aList = sqlSession.selectList("auctionMapper.selectMyAuctionList", userId);
+		return aList;
+	}
+
+	@Override
+	public List<Auction> selectList(String userId) {
+		List<Auction> aList = sqlSession.selectList("auctionMapper.selectList", userId);
+		return aList;
 	}
 
 

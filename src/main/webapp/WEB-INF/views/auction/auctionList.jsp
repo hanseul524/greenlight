@@ -157,8 +157,6 @@
 					clearInterval(x);
 				}else{
 					$(obj).siblings().last().children().last().html(hours + "시간 " + mins + "분 " + secs + "초 후 경매 마감합니다.");
-// 					$(".time").html(hours + "시간 " + mins + "분 " + secs + "초 후 경매 마감합니다.");
-					/* console.log(hours <= 0 && mins <= 0 && secs <= 0); */
 				}
 				 
 			},1000);

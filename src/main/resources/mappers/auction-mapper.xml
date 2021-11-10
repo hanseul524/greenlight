@@ -53,7 +53,7 @@
   		SELECT COUNT(*) FROM AUCTION
   	</select>
   	<select id="selectMyAuctionList" resultMap="auctionResultMap">
-        SELECT * FROM AUCTION WHERE USER_ID = #{userId}
+        SELECT * FROM AUCTION_HISTORY WHERE USER_ID = #{userId}
     </select>
   	<insert id="insertAuction" parameterType="Auction">
 	  	<selectKey keyProperty="auctionNo" resultType="_int" order="BEFORE" >
