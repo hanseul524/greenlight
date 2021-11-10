@@ -178,9 +178,8 @@
 			},1000);
 			
 			 function result(){
-				 location.href="insertAuctionSuccessFul.do?auctionNo=?"+${auctionHistory.auctionNo };
+				 location.href="insertAuctionSuccessFul.do?auctionNo="+${auctionHistory.auctionNo }+"&userId="+${auctionHistory.userId };
 			}
-		
 		}
         
   

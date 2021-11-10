@@ -29,10 +29,15 @@ public interface AuctionService {
 	public List<AuctionHistory> printAllList(PageInfo pi);
 	public AuctionHistory printAuctionHistoryOneByNo(int auctionNo);
 	public int registerAuctionHistory(List<AuctionHistory> hList);
+	public int modifyAuctionHistory(int auctionNo);
 	
 	// AuctionUser
 	public AuctionUser printAuctionUser(int auctionNo);
 	public int registerAuctionUser(AuctionUser auctionUser);
+	
+	// Mypage
+	public List<Auction> printAllList(String userId);
+	public List<Auction> printList(String userId);
 
 	
 }

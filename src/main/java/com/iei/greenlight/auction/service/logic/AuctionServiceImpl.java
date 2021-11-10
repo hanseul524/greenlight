@@ -116,6 +116,15 @@ public class AuctionServiceImpl implements AuctionService{
 		
 		return result;
 	}
+	
+	
+
+	@Override
+	public int modifyAuctionHistory(int auctionNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 
 	@Override
@@ -136,6 +145,18 @@ public class AuctionServiceImpl implements AuctionService{
 	}
 
 
+	@Override
+	   public List<Auction> printAllList(String userId) {
+	      System.out.println("서비스 : " + userId);
+	      List<Auction> aList = store.selectAllList(userId);
+	      return aList;
+	   }
+
+	   @Override
+	   public List<Auction> printList(String userId) {
+	      List<Auction> aList = store.selectList(userId);
+	      return aList;
+	   }
 
 
 }

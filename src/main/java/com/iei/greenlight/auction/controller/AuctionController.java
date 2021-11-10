@@ -96,6 +96,10 @@ public class AuctionController {
 		Date time = new Date();
 		String time1 = format1.format(time);
 		
+		for(int a : auctionNo) {
+			System.out.println("auctionNo : " + a);
+		}
+		
 		for(int i = 0; i < auctionNo.length; i++) {
 			Auction auction = service.printAuctionOneByNo(auctionNo[i]);
 			AuctionHistory auctionHistory = new AuctionHistory(auction.getAuctionNo(), auction.getUserId(), time1, auction.getAuctionTitle(), auction.getAuctionTime(), auction.getAuctionPrice());
@@ -106,9 +110,8 @@ public class AuctionController {
 		System.out.println("auctionHistory : " + result);
 		if(result > 0) {
 			int remove = service.removeAuction(auctionNo);
-			System.out.println("remove" + remove);
 		}
-		return "admin/adminAuction";
+		return "redirect:adminAuctionView.do";
 	}
 	
 	// 경매 디테일 페이지
@@ -217,11 +220,48 @@ public class AuctionController {
 	}
 	
 	@RequestMapping(value="insertAuctionSuccessFul.do")
-	public String insertAuctionSuccessFul(@RequestParam("auctionNo") int auctionNo) {
+	public String insertAuctionSuccessFul(@RequestParam("auctionNo") int auctionNo, @RequestParam("userId") String userId) {
 		
-		System.out.println(auctionNo);
+		//int result = service.modifyAuctionHistory(auctionNo);
+		
+		System.out.println(auctionNo + ", " + userId);
 		
 		return "";
 	}
+	
+	// 내가 올린 경매
+	   @RequestMapping(value="myAcution.do", method=RequestMethod.GET)
+	   public String myAuction(Model model, HttpSession session) {
+	      try {
+	         String userId = (String)session.getAttribute("userId");
+	         System.out.println("경매 리스트 유저아이디 : " + userId);
+	         List<Auction> aList = service.printAllList(userId);
+	         if(!aList.isEmpty()) {
+	            model.addAttribute("aList", aList);
+	            return "mypage/MyAuction";
+	         }else {
+	            model.addAttribute("aList", null);
+	            return "common/errorPage";
+	         }
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	         model.addAttribute("msg", e.toString());
+	         return "common/errorPage";
+	      }
+	   }
+	   // 내가 입찰한 경매
+	   @RequestMapping(value="myBidList.do", method=RequestMethod.GET)
+	   public String myBidList(Model model, HttpSession session) {
+	      
+	      String userId = (String) session.getAttribute("userId");
+	      List<Auction> aList = service.printList(userId);
+	      if(aList != null) {
+	         model.addAttribute("aList", aList);
+	         return "mypage/MyBidList";
+	      }else {
+	         model.addAttribute("aList", null);
+	         return "common/errorPage";
+	      }
+	   }
 
 }

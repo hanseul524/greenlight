@@ -28,9 +28,14 @@ public interface AuctionStore {
 	public List<AuctionHistory> selectAllList(PageInfo pi);
 	public AuctionHistory selectAuctionHistoryOneByNo(int auctionNo);
 	public int insertAuctionHistory(List<AuctionHistory> hList);
+	public int updateAuctionHistory(int auctionNo);
 	
 	// AuctionUser
 	public AuctionUser selectAuctionUser(int auctionNo);
 	public int insertAuctionUser(AuctionUser auctionUser);
+	
+	// MyPage
+	public List<Auction> selectAllList(String userId);
+	public List<Auction> selectList(String userId);
 	
 }
