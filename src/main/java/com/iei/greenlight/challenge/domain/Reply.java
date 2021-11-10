@@ -6,11 +6,20 @@ public class Reply {
 	private int replyNo;
 	private int refChNo;
 	private String replywriter;
-	private int refCategoryNo;
 	private String replyContents;
 	private Date replyDate;
 	
 	public Reply() {}
+	
+		
+	public Reply(int replyNo, int refChNo, String replywriter, String replyContents, Date replyDate) {
+		super();
+		this.replyNo = replyNo;
+		this.refChNo = refChNo;
+		this.replywriter = replywriter;
+		this.replyContents = replyContents;
+		this.replyDate = replyDate;
+	}
 
 	public int getReplyNo() {
 		return replyNo;
@@ -36,14 +45,6 @@ public class Reply {
 		this.replywriter = replywriter;
 	}
 
-	public int getRefCategoryNo() {
-		return refCategoryNo;
-	}
-
-	public void setRefCategoryNo(int refCategoryNo) {
-		this.refCategoryNo = refCategoryNo;
-	}
-
 	public String getReplyContents() {
 		return replyContents;
 	}
@@ -62,9 +63,9 @@ public class Reply {
 
 	@Override
 	public String toString() {
-		return "Reply [댓글번호=" + replyNo + ", 글번호=" + refChNo + ", 댓글작성자=" + replywriter
-				+ ", 카테고리번호=" + refCategoryNo + ", 댓글내용=" + replyContents + ", 댓글작성일=" + replyDate
-				+ "]";
+		return "Reply [댓글 번호=" + replyNo + ", 글 번호=" + refChNo + ", 댓글 작성자=" + replywriter
+				+ ", 댓글 내용=" + replyContents + ", 댓글 작성일=" + replyDate + "]";
 	}
+	
 	
 }

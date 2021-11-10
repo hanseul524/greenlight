@@ -23,6 +23,7 @@
         <div class="wave"></div>
         <div class="wave"></div>
     </div>
+      <div class="con-img"><img src="${pageContext.request.contextPath}/resources/img/mainimg.png"></div>
   </div>
   <div class="site-info">
     <a href="#">

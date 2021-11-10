@@ -63,13 +63,13 @@
 	        <hr>
 	        <div class="comm-user-div">
 	          <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
-	          <input class="user-text" type="text" name="" id=""placeholder="댓글을 입력해주세요.">
+	          <input class="user-text" type="text" name="replyContents" id="" placeholder="댓글을 입력해주세요.">
 	          <input type="submit" value="등록">
 	        </div>
 	        <div class="comm-area">
 	          <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
-	          <div class="comm-inner-area">
-	            댓글 영역
+	          <div class="comm-inner-area"> <!-- 댓글 목록 영역 -->
+	           		
 	          </div>
 	        </div>
 	      </div>
