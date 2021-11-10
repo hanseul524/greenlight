@@ -1,5 +1,8 @@
 package com.iei.greenlight.user.service;
 
+import java.util.List;
+
+import com.iei.greenlight.mypage.domain.PointHistory;
 import com.iei.greenlight.user.domain.User;
 
 public interface UserService {
@@ -27,4 +30,10 @@ public interface UserService {
 	public String socialIdLogin(String socialId);
 
 	public int socialRegisterUser(User user);
+	
+	User printUser(String userId);
+	
+	int modifyUser(User user);
+	
+	int removeUser(String userId);
 }

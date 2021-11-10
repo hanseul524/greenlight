@@ -10,14 +10,9 @@ public interface MyPageStore {
 	
 	List<PointHistory> selectPoint(String userId);
 
-	User selectUser(String userId);
 	
-	int updateUser(User user);
 	
-	int deleteUser(String userId);
 	
-	public List<Auction> selectAllList(String userId);
 	
-	public List<Auction> selectList(String userId);
 
 }

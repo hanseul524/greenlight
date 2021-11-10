@@ -23,36 +23,10 @@ public class MyPageStoreLogic implements MyPageStore{
 		return point;
 	}
 	
-	@Override
-	public User selectUser(String userId) {
-		User user = sqlSession.selectOne("userMapper.selectUserOne", userId);
-		return user;
-	}
 	
-	@Override
-	public int updateUser(User user) {
-		int result = sqlSession.update("userMapper.updateUserOne", user);
-		return result;
-	}
 	
-	@Override
-	public int deleteUser(String userId) {
-		int result = sqlSession.delete("userMapper.deleteUserOne", userId);
-		return result;
-	}
 	
-	@Override
-	public List<Auction> selectAllList(String userId) {
-		System.out.println("서비스 : " + userId);
-		List<Auction> aList = sqlSession.selectList("auctionMapper.selectMyAuctionList", userId);
-		return aList;
-	}
-
-	@Override
-	public List<Auction> selectList(String userId) {
-		List<Auction> aList = sqlSession.selectList("auctionMapper.selectList", userId);
-		return aList;
-	}
+	
 
 	
 

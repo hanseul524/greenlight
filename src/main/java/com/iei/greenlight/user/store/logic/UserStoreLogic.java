@@ -77,7 +77,21 @@ public class UserStoreLogic implements UserStore{
 		return result;
 	}
 
-	
+	@Override
+	public User selectUser(String userId) {
+		User user = sqlSession.selectOne("userMapper.selectUserOne", userId);
+		return user;
+	}
 
+	@Override
+	public int updateUser(User user) {
+		int result = sqlSession.update("userMapper.updateUserOne", user);
+		return result;
+	}
 	
+	@Override
+	public int deleteUser(String userId) {
+		int result = sqlSession.delete("userMapper.deleteUserOne", userId);
+		return result;
+	}
 }

@@ -1,6 +1,7 @@
 package com.iei.greenlight.user.service.logic;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
@@ -13,6 +14,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.iei.greenlight.auction.domain.Auction;
+import com.iei.greenlight.mypage.domain.PointHistory;
 import com.iei.greenlight.user.domain.User;
 import com.iei.greenlight.user.service.UserService;
 import com.iei.greenlight.user.store.UserStore;
@@ -134,6 +137,22 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 
+	@Override
+	public User printUser(String userId) {
+		User user = store.selectUser(userId);
+		return user;
+	}
+
+	@Override
+	public int modifyUser(User user) {
+		int result = store.updateUser(user);
+		return result;
+	}
 	
+	@Override
+	public int removeUser(String userId) {
+		int result = store.deleteUser(userId);
+		return result;
+	}
 
 }

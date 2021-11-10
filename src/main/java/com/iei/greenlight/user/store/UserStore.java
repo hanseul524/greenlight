@@ -23,4 +23,10 @@ public interface UserStore {
 	public String socialIdLogin(String socialId);
 
 	public int socialInsertUser(User user);
+	
+	User selectUser(String userId);
+	
+	int updateUser(User user);
+	
+	int deleteUser(String userId);
 }

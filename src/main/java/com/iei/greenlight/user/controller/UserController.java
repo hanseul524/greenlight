@@ -230,4 +230,52 @@ public class UserController {
 	   int result = service.modifyUserPwd(userOne);
 	   return String.valueOf(result);
    }
+   
+    // 회원 정보 출력
+	@RequestMapping(value="myPageInfo.do", method=RequestMethod.GET)
+	public String myPageInfo(HttpServletRequest request, Model model, HttpSession session) {
+		String userId = (String) session.getAttribute("userId");
+		User user = service.printUser(userId);
+		if(user != null) {
+			model.addAttribute("user", user);
+			return "mypage/UserInfo";
+		}else {
+			return "common/errorPage";
+		}
+	}
+	
+	// 회원 정보 수정
+	@RequestMapping(value="modifyInfo.do", method=RequestMethod.POST)
+	public String modifyInfo(@ModelAttribute User user, @RequestParam("post") String post, @RequestParam("addrOne") String addrOne, @RequestParam("addrTwo") String addrTwo, Model model, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		user.setUserAddr(post+"/"+addrOne+"/"+addrTwo);
+		System.out.println(post + addrOne + addrTwo);
+		try {
+			int result = service.modifyUser(user);
+			if(result > 0) {
+				session.setAttribute("loginUser", user);
+				return "redirect:myPageInfo.do";
+			}else {
+				model.addAttribute("msg", "회원 정보 수정 실패");
+				return "common/errorPage";
+			}
+		}catch(Exception e) {
+			model.addAttribute("msg", "회원정보 수정 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	// 회원 탈퇴
+	@RequestMapping(value="userDelete.do", method=RequestMethod.GET)
+	public String userDelete(@RequestParam("userId") String userId, Model model) {
+		
+		int result = service.removeUser(userId);
+		if(result >0) {
+			
+			return "redirect:logout.do"; 
+		}else {
+			model.addAttribute("msg", "회원 탈퇴 실패");
+			return "common/errorPage";
+		}
+	}
 }
