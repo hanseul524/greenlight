@@ -40,13 +40,15 @@ public class AuctionController {
 	@Autowired
 	private AuctionService service;
 	@Autowired
-	private MyPageService myPageService;
+	private UserService userService;
+	
 	
 	@RequestMapping(value="admin.do")
 	public String asdfasdf() {
 		
 		return "admin/adminCh";
 	}
+	
 	 
 	// 관리자 재고 페이지 이동
 	@RequestMapping(value="adminAuctionView.do")
@@ -120,7 +122,7 @@ public class AuctionController {
 		
 		try {
 			AuctionUser auctionUser = service.printAuctionUser(auctionNo);
-			User user = myPageService.printUser((String)request.getSession().getAttribute("userId"));
+			User user = userService.printUser((String)request.getSession().getAttribute("userId"));
 			AuctionHistory auctionHistory = service.printAuctionHistoryOneByNo(auctionNo);
 			if(auctionHistory != null) {
 				List<AuctionImage> imageList = service.printAuctionImageOneByNo(auctionNo);
