@@ -14,7 +14,7 @@
     .header {
       width: 100%;
       height: 100px;
-      margin-bottom: 40px;
+/*       margin-bottom: 10px; */
     }
     .main-img {
       width: 15%;
