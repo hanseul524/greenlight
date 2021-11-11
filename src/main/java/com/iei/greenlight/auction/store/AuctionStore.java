@@ -7,6 +7,7 @@ import com.iei.greenlight.auction.domain.AdminPageInfo;
 import com.iei.greenlight.auction.domain.Auction;
 import com.iei.greenlight.auction.domain.AuctionHistory;
 import com.iei.greenlight.auction.domain.AuctionImage;
+import com.iei.greenlight.auction.domain.AuctionSuccessFul;
 import com.iei.greenlight.auction.domain.AuctionUser;
 import com.iei.greenlight.auction.domain.PageInfo;
 
@@ -34,8 +35,14 @@ public interface AuctionStore {
 	public AuctionUser selectAuctionUser(int auctionNo);
 	public int insertAuctionUser(AuctionUser auctionUser);
 	
-	// MyPage
-	public List<Auction> selectAllList(String userId);
-	public List<Auction> selectList(String userId);
+	// AuctionSuccessFul
+	public List<AuctionSuccessFul> selectAuctionSuccessFul();
+	public List<AuctionSuccessFul> selectAuctionSuccessFulByNo(HashMap<String, int[]> map);
+	public int insertAuctionSuccessFul(AuctionSuccessFul auctionSuccessFul);
+	public int updateAuctionSuccessFul(int[] auctionNo);
+	
+	// mypage
+	public List<AuctionHistory> selectAllList(String userId);
+	public List<AuctionHistory> selectList(String userId);
 	
 }

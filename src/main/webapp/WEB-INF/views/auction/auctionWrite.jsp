@@ -40,7 +40,7 @@
                 <fieldset style ="border : 0px; margin-top:25px; display:inline-block; margin-left:50px;">
                     <legend style="width:100%; height: 120px;"><p>시작 입찰가</p>
                         <div class="div-auction">
-                            <input type="text"  class="auction-input" placeholder="ex) 1000 (1000P)" name="auctionPrice" id="auctionPrice">
+                            <input type="text"  class="auction-input" placeholder="최소금액은 1000P입니다." name="auctionPrice" id="auctionPrice">
                             <div class="feedback" id="price-feedback">숫자로 적어주세요.</div>
                         </div>
                     </legend>
@@ -201,6 +201,7 @@ imageLoader = function(file){
                         $("#title-feedback").show();
                         $("#title-feedback").html("제목을 입력해주시기 바랍니다.");
                         $("#title-feedback").css("color", "red");
+                        $("#auctionTitle").focus();
                         return false;
                     }else{
                         $("#title-feedback").hide();
@@ -210,6 +211,7 @@ imageLoader = function(file){
                         $("#time-feedback").show();
                         $("#time-feedback").html("시간을 입력해주시기 바랍니다.");
                         $("#time-feedback").css("color", "red");
+                        $("#auctionTime").focus();
                         return false;
                     }else{
                         $("#time-feedback").hide();
@@ -219,6 +221,7 @@ imageLoader = function(file){
                         $("#time-feedback").show();
                         $("#time-feedback").html("숫자로만 입력해주시기 바랍니다.");
                         $("#time-feedback").css("color", "red");
+                        $("#auctionTime").focus();
                         return false;
                     }else{
                         $("#time-feedback").hide();
@@ -228,6 +231,8 @@ imageLoader = function(file){
                         $("#price-feedback").show();
                         $("#price-feedback").html("가격을 입력해주시기 바랍니다.");
                         $("#price-feedback").css("color", "red");
+                        $("#auctionPrice").focus();
+                        $("#auctionTime").focus();
                         return false;
                     }else{
                         $("#price-feedback").hide();
@@ -237,6 +242,17 @@ imageLoader = function(file){
                         $("#price-feedback").show();
                         $("#price-feedback").html("숫자로만 입력해주시기 바랍니다.");
                         $("#price-feedback").css("color", "red");
+                        $("#auctionPrice").focus();
+                        return false;
+                    }else{
+                        $("#price-feedback").hide();
+                    }
+                    
+                    if(auctionPrice < 1000){
+                        $("#price-feedback").show();
+                        $("#price-feedback").html("최소금액은 천원입니다.");
+                        $("#price-feedback").css("color", "red");
+                        $("#auctionPrice").focus();
                         return false;
                     }else{
                         $("#price-feedback").hide();

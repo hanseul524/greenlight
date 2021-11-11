@@ -10,6 +10,7 @@ import com.iei.greenlight.auction.domain.AdminPageInfo;
 import com.iei.greenlight.auction.domain.Auction;
 import com.iei.greenlight.auction.domain.AuctionHistory;
 import com.iei.greenlight.auction.domain.AuctionImage;
+import com.iei.greenlight.auction.domain.AuctionSuccessFul;
 import com.iei.greenlight.auction.domain.AuctionUser;
 import com.iei.greenlight.auction.domain.PageInfo;
 import com.iei.greenlight.auction.service.AuctionService;
@@ -121,8 +122,10 @@ public class AuctionServiceImpl implements AuctionService{
 
 	@Override
 	public int modifyAuctionHistory(int auctionNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		int result = store.updateAuctionHistory(auctionNo);
+		
+		return result;
 	}
 
 
@@ -146,17 +149,52 @@ public class AuctionServiceImpl implements AuctionService{
 
 
 	@Override
-	   public List<Auction> printAllList(String userId) {
-	      System.out.println("서비스 : " + userId);
-	      List<Auction> aList = store.selectAllList(userId);
-	      return aList;
-	   }
+	public List<AuctionSuccessFul> printSuccessFulList() {
+		
+		List<AuctionSuccessFul> sList = store.selectAuctionSuccessFul();
+		
+		return sList;
+	}
 
-	   @Override
-	   public List<Auction> printList(String userId) {
-	      List<Auction> aList = store.selectList(userId);
-	      return aList;
-	   }
+
+	@Override
+	public List<AuctionSuccessFul> printSuccessFulByNo(HashMap<String, int[]> map) {
+
+		List<AuctionSuccessFul> sList = store.selectAuctionSuccessFulByNo(map);
+		
+		return sList;
+	}
+	
+	@Override
+	public int registerAuctionSuccessFul(AuctionSuccessFul auctionSuccessFul) {
+		
+		int result = store.insertAuctionSuccessFul(auctionSuccessFul);
+		
+		return result;
+	}
+
+	@Override
+	public int modifyAuctionSuccessFul(int[] auctionNo) {
+		
+		int result = store.updateAuctionSuccessFul(auctionNo);
+		
+		return result;
+	}
+	
+
+	// 서비스 로직
+	@Override
+	public List<AuctionHistory> printAllList(String userId) {
+		System.out.println("서비스 : " + userId);
+		List<AuctionHistory> aList = store.selectAllList(userId);
+		return aList;
+	}
+
+	@Override
+	public List<AuctionHistory> printList(String userId) {
+		List<AuctionHistory> aList = store.selectList(userId);
+		return aList;
+	}
 
 
 }

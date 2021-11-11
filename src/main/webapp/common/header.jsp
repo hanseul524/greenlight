@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,7 +87,10 @@
       </ul>
     </div>
     <div class="user-area">
-      <i class="fas fa-user-circle fa-2x" style="color: gray;"></i><a href="loginView.do">Login</a>
+    <c:if test="${userId eq null }"><a href="loginView.do">Login</a></c:if>
+    <c:if test="${userId ne null and userId ne 'admin'}"><i class="fas fa-user-circle fa-2x" style="color: gray;"></i></c:if> <!--괜찮  -->
+    <c:if test="${userId eq 'admin' and userId ne null}"><i class="fas fa-user-cog fa-2x" style="color: gray;"></i></c:if> <!-- 안괜찮 -->
+      
 <!--       <ul> -->
 <!--       	<li>마이페이지</li> -->
 <!--       	<li>포인트</li> -->

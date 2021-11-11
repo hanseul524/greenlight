@@ -10,6 +10,7 @@
   		<result property="auctionPrice" column="AUCTION_PRICE"/>
   		<result property="varRegDate" column="VAR_REG_DATE"/>
   		<result property="regDate" column="REG_DATE"/>
+  		<result property="count" column="COUNT"/>
   	</resultMap>
   	
   	<resultMap type="AuctionImage" id="auctionImageResultMap">
@@ -42,9 +43,20 @@
   		<result property="point" column="POINT"/>
   	</resultMap>
   	
+  	<resultMap type="AuctionSuccessFul" id="auctionSuccessFulResultMap">
+		<id property="auctionNo" column="AUCTION_NO"/>
+  		<result property="buyer" column="BUYER"/>
+  		<result property="seller" column="SELLER"/>
+  		<result property="auctionPrice" column="AUCTION_PRICE"/>
+  		<result property="auctionDate" column="AUCTION_DATE"/>
+  		<result property="auctionReceipt" column="AUCTION_RECEIPT"/>
+  		<result property="auctionTitle" column="AUCTION_TITLE"/>
+  		<result property="count" column="COUNT"/>
+  	</resultMap>
+  	
   	<!-- auction -->
   	<select id="selectAuctionList" resultMap="auctionResultMap">
-  		SELECT * FROM AUCTION
+  		SELECT ROWNUM AS COUNT, A.* FROM AUCTION A ORDER BY COUNT DESC
   	</select>
   	<select  id="selectAuctionOneByNo" parameterType="_int" resultMap="auctionResultMap">
   		SELECT * FROM AUCTION WHERE AUCTION_NO = #{auctionNo }
@@ -52,9 +64,6 @@
    	<select id="selectListCount" resultType="_int">
   		SELECT COUNT(*) FROM AUCTION
   	</select>
-  	<select id="selectMyAuctionList" resultMap="auctionResultMap">
-        SELECT * FROM AUCTION_HISTORY WHERE USER_ID = #{userId}
-    </select>
   	<insert id="insertAuction" parameterType="Auction">
 	  	<selectKey keyProperty="auctionNo" resultType="_int" order="BEFORE" >
 	  		SELECT SEQ_AUCTION_NO.NEXTVAL FROM dual
@@ -86,21 +95,27 @@
   	<select id="selectAllList" resultMap="auctionHistoryResultMap">
   		SELECT A.AUCTION_NO, A.USER_ID, A.AUCTION_TITLE, A.AUCTION_STATUS, A.AUCTION_TIME, A.AUCTION_PRICE, A.REG_DATE, A.AUCTION_START, B.FILE_NAME, B.FILE_PATH, B.FILE_MAIN FROM AUCTION_HISTORY A LEFT JOIN AUCTION_IMAGE B ON A.AUCTION_NO = B.AUCTION_NO WHERE B.FILE_MAIN = 'Y' AND A.AUCTION_STATUS = 'Y' ORDER BY AUCTION_NO
   	</select>
-  	<select id="selectList" resultMap="auctionResultMap">
-        SELECT * FROM AUCTION_HISTORY WHERE AUCTION_NO = (SELECT AUCTION_NO FROM AUCTION_USER WHERE USER_ID = #{userId})
+  	<select id="selectList" resultMap="auctionHistoryResultMap">
+        SELECT * FROM AUCTION_HISTORY WHERE AUCTION_NO IN (SELECT AUCTION_NO FROM AUCTION_USER WHERE USER_ID = 'test')
      </select>
   	<select id="selectHistoryListCount" resultType="_int">
-  		SELECT COUNT(*) FROM AUCTION_HISTORY
+  		SELECT COUNT(*) FROM AUCTION_HISTORY WHERE AUCTION_STATUS = 'Y'
   	</select>
   	<select id="selectHistoryOneByNo" parameterType="_int" resultMap="auctionHistoryResultMap">
   		SELECT * FROM AUCTION_HISTORY WHERE AUCTION_NO = #{auctionNo }
   	</select>
+  	<select id="selectMyAuctionList" resultMap="auctionHistoryResultMap">
+        SELECT * FROM AUCTION_HISTORY WHERE USER_ID = #{userId}
+    </select>
   	<insert id="insertAuctionHistory" parameterType="list">
   		<foreach item="item" open="INSERT ALL" close="SELECT * FROM SYS.DUAL" collection="list" separator=" ">
   			INTO AUCTION_HISTORY VALUES
   			(#{item.auctionNo }, #{item.userId }, #{item.auctionStart }, DEFAULT, #{item.auctionTitle }, DEFAULT, #{item.auctionTime }, #{item.auctionPrice })
   		</foreach>
   	</insert>
+  	<update id="updateAuctionHistory" parameterType="_int">
+  		UPDATE AUCTION_HISTORY SET AUCTION_STATUS = 'N' WHERE AUCTION_NO = #{auctionNo }
+  	</update>
   	
   	<!-- auctionUser -->
   	<select id="selectAuctionUser" parameterType="_int" resultMap="auctionUserResultMap">
@@ -109,5 +124,25 @@
   	<insert id="insertAuctionUser" parameterType="AuctionUser">
   		INSERT INTO AUCTION_USER VALUES(#{auctionNo }, #{userId }, #{point })
   	</insert>
+  	
+  	<!-- AuctionSuccessFul -->
+  	<select id="selectAuctionSuccessFulList" resultMap="auctionSuccessFulResultMap">
+  		SELECT ROWNUM AS COUNT, A.* FROM AUCTION_SUCCESSFUL A WHERE AUCTION_RECEIPT = 'N' ORDER BY AUCTION_DATE DESC
+  	</select>
+  	<select id="selectAuctionSuccessFulByNo" resultMap="auctionSuccessFulResultMap" parameterType="hashmap">
+  		SELECT * FROM AUCTION_SUCCESSFUL WHERE AUCTION_RECEIPT = 'N' AND
+  		<foreach collection="auctionNo" item="item" separator="or">
+			AUCTION_NO = ${item }
+  		</foreach>
+  	</select>
+  	<insert id="insertAuctionSuccessFul" parameterType="AuctionSuccessFul">
+  		INSERT INTO AUCTION_SUCCESSFUL VALUES(#{auctionNo }, #{buyer }, #{seller }, #{auctionPrice }, DEFAULT, DEFAULT, #{auctionTitle })
+  	</insert>
+  	<update id="updateAuctionSuccessFul" parameterType="java.util.Arrays">
+  		UPDATE AUCTION_SUCCESSFUL SET AUCTION_RECEIPT = 'Y' WHERE AUCTION_NO IN
+  		<foreach collection="array" item="item" index="index" separator=", " open="(" close=")">
+  			#{item }
+  		</foreach>
+  	</update>
   	
   </mapper>

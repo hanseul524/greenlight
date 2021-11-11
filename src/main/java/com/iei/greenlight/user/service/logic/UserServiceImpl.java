@@ -150,9 +150,40 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
+	public int modifyUserPoint(HashMap<String, Object> pointMap) {
+		int result = store.updateUserPoint(pointMap); 
+		return result;
+	}
+	
+	@Override
+	public int modifyUserMinusPoint(HashMap<String, Object> pointMap) {
+		int result = store.updateUserMinusPoint(pointMap); 
+		return result;
+	}
+
+	
+	@Override
+	public int modifyUserChargePoint(HashMap<String, Object> chargePointMap) {
+		int result = store.updateUserChargePoint(chargePointMap);
+		return result;
+	}
+
+	@Override
+	public int modifySellerPoint(HashMap<String, Object> pointMap) {
+		int result = store.updateSellerPoint(pointMap);
+		return result;
+	}
+	
+	@Override
 	public int removeUser(String userId) {
 		int result = store.deleteUser(userId);
 		return result;
 	}
+
+
+
+
+
+
 
 }

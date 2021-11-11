@@ -1,5 +1,7 @@
 package com.iei.greenlight.user.store.logic;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -90,8 +92,39 @@ public class UserStoreLogic implements UserStore{
 	}
 	
 	@Override
+	public int updateUserPoint(HashMap<String, Object> pointMap) {
+		int result = sqlSession.update("userMapper.updateUserPoint", pointMap);
+		return result;
+	}
+	
+	@Override
+	public int updateUserMinusPoint(HashMap<String, Object> pointMap) {
+		int result = sqlSession.update("userMapper.updateUserMinusPoint", pointMap);
+		return result;
+	}
+
+	@Override
+	public int updateUserChargePoint(HashMap<String, Object> chargePointMap) {
+		int result = sqlSession.update("userMapper.updateUserChargePoint", chargePointMap);
+		return result;
+	}
+	
+	@Override
+	public int updateSellerPoint(HashMap<String, Object> pointMap) {
+		int result = sqlSession.update("userMapper.updateSellerPoint", pointMap);
+		return result;
+	}
+	
+	@Override
 	public int deleteUser(String userId) {
 		int result = sqlSession.delete("userMapper.deleteUserOne", userId);
 		return result;
 	}
+
+
+
+
+
+
+
 }

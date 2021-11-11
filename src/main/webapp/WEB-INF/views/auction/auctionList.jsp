@@ -37,7 +37,7 @@
 		                    <p>${auction.auctionTitle }</p>
 		                </div>
 		                <div class="auction-point">
-		                    <p class="point">현재 입찰가 : ${auction.auctionPrice }</p>
+		                    <p class="point">현재 입찰가 : ${auction.auctionPrice }P</p>
 		                    <p class="time"></p>
 		                </div>
 		            </div>
@@ -103,7 +103,6 @@
 			location.href="auctionWrite.do";
         }
         
-        
         /* ----------------------------경매 시간--------------------------------- */
         
         function timer(obj, a, b){
@@ -152,8 +151,8 @@
 	            if (mins.toString().length==1) mins = "0" + mins;  
 	            if (secs.toString().length==1) secs = "0" + secs;
 				
-				 if(hours < 0){
-					 result();
+				if(hours < 0){
+					result();
 					clearInterval(x);
 				}else{
 					$(obj).siblings().last().children().last().html(hours + "시간 " + mins + "분 " + secs + "초 후 경매 마감합니다.");
@@ -162,11 +161,10 @@
 			},1000);
 			 
 	        function result(){
+	        	location.href="auctionListView.do";
 	        	$(obj).siblings().last().children().last().html("경매가 마감되었습니다.");
 			}
         }
-        
-        
 		 
 </script>
 </body>

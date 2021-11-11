@@ -37,7 +37,7 @@
       <span>admin01</span>
       <div style="margin-left: 40px; font-size: 14px; font-weight: 500; color:#7ea18b;">
         관리자님, 안녕하세요. <br>
-        오늘은 2021.11.01일 입니다.
+        오늘은 <span id="today" style="width:80px;">2021.11.01</span>일 입니다.
       </div>
       <div class="nav-inner">
         <ul>
@@ -48,7 +48,7 @@
             <i class="fas fa-coins" style="margin-right: 10px;"></i><a href="#">경매관리</a> 
             <ul>
               <li><a href="adminAuctionView.do">재고관리</a></li>
-              <li><a href="#">판매관리</a></li>
+              <li><a href="adminSellAuctionView.do">판매관리</a></li>
             </ul>
           </li>
           <li class="li-area">

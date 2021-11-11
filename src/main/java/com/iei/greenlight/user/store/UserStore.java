@@ -1,5 +1,7 @@
 package com.iei.greenlight.user.store;
 
+import java.util.HashMap;
+
 import com.iei.greenlight.user.domain.User;
 
 public interface UserStore {
@@ -17,6 +19,14 @@ public interface UserStore {
 	public int checkUserPwd(User userOne);
 
 	public int updateUserPwd(User userOne);
+	
+	public int updateUserPoint(HashMap<String, Object> pointMap);
+	
+	public int updateUserMinusPoint(HashMap<String, Object> pointMap);
+	
+	public int updateUserChargePoint(HashMap<String, Object> chargePointMap);
+	
+	public int updateSellerPoint(HashMap<String, Object> pointMap);
 
 	public int checkSocialId(User userOne);
 
