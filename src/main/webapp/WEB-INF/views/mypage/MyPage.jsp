@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,16 +36,38 @@
             <div id="main-section">
                 <div id="main-img"><img src="../../../resources/css/mypage/img/mybatis.png" alt=""></div>
                 <div id="main-text">
-                    <p>
-                        회원님이 사용하신 포인트는 50이고
-                        보유한 포인트는 50입니다.
-                    </p>
-                    <p>
-             100의 포인트로 나무를 100그루를 살리고
-                        쓰레기를 100톤 줄인 효과를 얻었습니다
-                    </p>
+                	<c:forEach items="${history }" var="history">
+	                <c:forEach items="${user }" var="user">
+                		<p>
+				                        회원님이 사용하신 포인트는 ${history.pointUse }이고<br>
+				                        보유한 포인트는 ${user.point }입니다.
+	                    </p>
+	                	<c:if test="${iValue == 1 || iValue == 3 || iValue == 5 || iValue == 7 || iValue == 9}">
+		                    <p>
+					                        총합 ${history.pointUse + user.point }의 포인트로<br>
+					                        나무를 <c:choose>
+					                  	<c:when test="${history.pointUse + user.point <= 1000}">10그루</c:when>
+					                  	<c:when test="${history.pointUse + user.point <= 10000}">100그루</c:when>
+					                  	<c:when test="${history.pointUse + user.point <= 100000}">1000그루</c:when>
+					                  	<c:when test="${history.pointUse + user.point >= 1000000}">10000그루</c:when>
+					                  </c:choose>를 심는 효과를 얻었습니다.
+		                    </p>
+		                </c:if>
+		                <c:if test="${iValue == 2 || iValue == 4 || iValue == 6 || iValue == 8 || iValue == 10}">
+			                    <p>
+						                        총합 ${history.pointUse + user.point }의 포인트로<br>
+						                        쓰레기 <c:choose>
+						                  	<c:when test="${history.pointUse + user.point <= 1000}">10kg</c:when>
+						                  	<c:when test="${history.pointUse + user.point <= 10000}">100kg</c:when>
+						                  	<c:when test="${history.pointUse + user.point <= 100000}">1t</c:when>
+						                  	<c:when test="${history.pointUse + user.point >= 1000000}">10t</c:when>
+						                  </c:choose>을 줄이는 효과를 얻었습니다
+			                    </p>
+		                </c:if>
+	                </c:forEach>
+	                </c:forEach>
                 </div>
-                <div id="main-butn"><button>포인트 사용하기</button></div>
+                <div id="main-butn"><button onclick="location.href='myPage.do'">포인트 사용하기</button></div>
             </div>
         </main>
     </div>

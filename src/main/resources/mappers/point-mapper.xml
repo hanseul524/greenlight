@@ -9,6 +9,9 @@
 		<result property="pointUse" column="POINT_USE"/>
 	</resultMap>
 	<select id="selectPoint" resultMap="pointResultMap">
-		SELECT ROWNUM, x.* FROM ( SELECT a.* FROM POINT_HISTORY a ORDER BY a.POINT_DATE desc) x
+		SELECT ROWNUM, x.* FROM ( SELECT a.* FROM POINT_HISTORY a ORDER BY a.POINT_DATE desc) x WHERE USER_ID = #{userId}
+	</select>
+	<select id="selectTotalUse" resultMap="pointResultMap" parameterType="String">
+		select USER_ID, SUM(POINT_USE) as POINT_USE from POINT_HISTORY WHERE USER_ID = #{userId} group by USER_ID
 	</select>
 </mapper>

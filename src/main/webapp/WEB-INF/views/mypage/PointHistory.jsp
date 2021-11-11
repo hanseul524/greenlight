@@ -44,14 +44,21 @@
                        <th class="table-th">지급 포인트</th>
                        <th class="table-th">사용 포인트</th>
                    </tr>
-                   <c:forEach items="${point }" var="point" varStatus="index">
-	                   <tr>
-	                       <td  class="table-td">${point.pointDate }</td>
-	                       <td  class="table-td">${point.pointContents }</td>
-	                       <td  class="table-td">+${point.pointPayment }</td>
-	                       <td  class="table-td">-${point.pointUse }</td>
-	                   </tr>
-                   </c:forEach>
+                   <c:if test="${empty point }">
+		                   <tr>
+		                       <td colspan="4"  class="table-td">포인트 획득 내역이 없습니다</td>
+		                   </tr>
+                   </c:if>
+                   <c:if test="${ not empty point }">
+	                   <c:forEach items="${point }" var="point" varStatus="index">
+		                   <tr>
+		                       <td  class="table-td">${point.pointDate }</td>
+		                       <td  class="table-td">${point.pointContents }</td>
+		                       <td  class="table-td">+${point.pointPayment }</td>
+		                       <td  class="table-td">-${point.pointUse }</td>
+		                   </tr>
+	                   </c:forEach>
+                   </c:if>
                </table>
                <div id="point-pageing">
                    [이전] 1 2 3 4 5 [다음]

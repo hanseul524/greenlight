@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,13 +75,13 @@
     	  const maxDay = Math.ceil((day + lastDay) / 7) * 7;
 
     	  var html = '';
-
+			
     	  for (var i = 1; i <= maxDay; i++) {
     	    const diff = i - day;
     	    const d = diff <= lastDay && i > day ? diff : '';
     	    const tmpClass = !d ? 'background' : '';
     	    
-    	    html += "<div class='dateSel '"+tmpClass+">"+d+"</div>";
+    	    html += "<div class='dateSel '"+tmpClass+">"+d+"<br><br><p align='center'>출석</p>"+"</div>";
     	  }
     	  document.querySelector('.dateSel').innerHTML = html;
     	  document.querySelector('.date_text').innerText = y+'년 '+pad(m)+'월';

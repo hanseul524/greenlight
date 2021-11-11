@@ -89,7 +89,7 @@
 			<div align="center" style="height: 80px; width: 500px; margin:0 auto;">
                 <div class="col-12" style="margin-top: 5%; float: left;">
                     <button type="button" onclick="join();" class="btn btn-lg" style="background-color: blue; color: white;">가입하기</button>
-                    <button type="button" onclick="location.href='userDelete.do?userId=${user.userId }';" class="btn btn-lg" style="background-color: red; color: white;">탈퇴하기</button>
+                    <button type="button" onclick="deleteUser();" class="btn btn-lg" style="background-color: red; color: white;">탈퇴하기</button>
                 </div>
             </div>
 		</form>
@@ -205,6 +205,18 @@
 							}
 						}).open();
 			}
+		function deleteUser(){
+			if(confirm("정말 탈퇴하실 건가요?")){
+				if($("#inputPwd").val() == ${user.userPwd} && $("#inputPwdCheck").val() == ${user.userPwd}){
+					alert("다시 찾아오실 때까지 기다리겠습니다!")
+					location.href='userDelete.do?userId=${user.userId }';
+				}else{
+					alert("비밀번호를 확인 바랍니다.")
+				}
+			}else{
+				alert("탈퇴 안해주셔서 감사합니다!");
+			}
+		}
 	</script>
 </body>
 
