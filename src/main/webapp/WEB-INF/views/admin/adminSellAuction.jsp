@@ -60,49 +60,49 @@
     </div>
       <div class="contents">
           <div class="con-title">
-        <form action="registAuctionHistory.do" method="post">
-            <div>재고관리</div>
-            <button type="submit" value="물품등록">물품등록</button>
-            <p>회원들이 보낸 상품 중 경매를 시작하지 않은 상품입니다.</p>
+        <form action="userPayPoint.do" method="post">
+            <div>판매승인관리</div>
+            <button type="submit" value="판매승인">판매승인</button>
+            <p>상품을 최종 낙찰한 회원들의 포인트를 회수해주세요.</p>
           </div>
           <div class="con-list">
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th>No.</th>
+                  <th>No</th>
                   <th>물품명</th>
-                  <th>희망가</th>
-                  <th>희망시간</th>
+                  <th>낙찰가</th>
                   <th>판매자</th>
-                  <th>신청일</th>
+                  <th>구매자</th>
+                  <th>낙찰일</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-              <c:if test="${ empty aList }">
+              <c:if test="${ empty sList }">
               	<tr>
-                  <td colspan="7" align="center">신청한 경매가 없습니다.</td>
+                  <td colspan="7" align="center">낙찰된 경매가 없습니다.</td>
 	            </tr>
               </c:if>
-              <c:if test="${ not empty aList }">
-	              <c:forEach items="${aList }" var="auction" varStatus="status">
+              <c:if test="${ not empty sList }">
+	              <c:forEach items="${sList }" var="auction" varStatus="status">
 	                <tr>
 	                  <td>${auction.count }</td>
 	                  <td>${auction.auctionTitle }</td>
-	                  <td>${auction.auctionPrice }P</td>
-	                  <td>${auction.auctionTime }시간</td>
-	                  <td>${auction.userId }</td>
-	                  <td>${auction.regDate }</td>
+	                  <td>${auction.auctionPrice }</td>
+	                  <td>${auction.seller }</td>
+	                  <td>${auction.buyer }</td>
+	                  <td>${auction.auctionDate }</td>
 	                  <td><input type="checkbox" value="${auction.auctionNo }" name="auctionNo"></td>
 	                </tr>
 	              </c:forEach>
               </c:if>
               </tbody>
             </table>
-            
+            </form>
             
             <div class="page_wrap">
-			    <c:url var="before" value="adminAuctionView.do">
+			    <c:url var="before" value="adminSellAuctionView.do">
 			    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 			    </c:url>
 			      <div class="page_nation">
@@ -113,7 +113,7 @@
 			         <a class="arrow prev" href="${before }"></a>
 			      </c:if>
 			      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
-			      	<c:url var="pagenation" value="adminAuctionView.do">
+			      	<c:url var="pagenation" value="adminSellAuctionView.do">
 			      		<c:param name="page" value="${p }"></c:param>
 			      	</c:url>
 			      	<c:if test="${p eq pi.currentPage }">
@@ -123,7 +123,7 @@
 			      		<a href="${pagenation }">${p }</a>
 			      	</c:if>
 			      </c:forEach>
-			      <c:url var="after" value="adminAuctionView.do">
+			      <c:url var="after" value="adminSellAuctionView.do">
 			      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
 			      </c:url>
 			      <c:if test="${pi.currentPage >= pi.maxPage }">
@@ -134,11 +134,8 @@
 			      </c:if>
 			      </div>
 			 </div>
-			 
-			 
            </div>
           </div>
-        </form>
       </div>
     </div>
 </div>

@@ -52,7 +52,7 @@
             <i class="fas fa-coins" style="margin-right: 10px;"></i><a href="#">경매관리</a> 
             <ul>
               <li><a href="adminAuctionView.do">재고관리</a></li>
-              <li><a href="#">판매관리</a></li>
+              <li><a href="adminSellAuctionView.do">판매관리</a></li>
             </ul>
           </li>
           <li class="li-area">

@@ -12,6 +12,7 @@ import com.iei.greenlight.auction.domain.AdminPageInfo;
 import com.iei.greenlight.auction.domain.Auction;
 import com.iei.greenlight.auction.domain.AuctionHistory;
 import com.iei.greenlight.auction.domain.AuctionImage;
+import com.iei.greenlight.auction.domain.AuctionSuccessFul;
 import com.iei.greenlight.auction.domain.AuctionUser;
 import com.iei.greenlight.auction.domain.PageInfo;
 import com.iei.greenlight.auction.store.AuctionStore;
@@ -126,8 +127,10 @@ public class AuctionStoreLogic implements AuctionStore{
 	
 	@Override
 	public int updateAuctionHistory(int auctionNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		int result = sqlSession.update("auctionMapper.updateAuctionHistory", auctionNo);
+		
+		return result;
 	}
 
 	
@@ -151,17 +154,51 @@ public class AuctionStoreLogic implements AuctionStore{
 
 	
 	@Override
-	public List<Auction> selectAllList(String userId) {
+	public List<AuctionSuccessFul> selectAuctionSuccessFul() {
+		
+		List<AuctionSuccessFul> sList = sqlSession.selectList("auctionMapper.selectAuctionSuccessFulList");
+		
+		return sList;
+	}
+
+	@Override
+	public List<AuctionSuccessFul> selectAuctionSuccessFulByNo(HashMap<String, int[]> map) {
+		
+		List<AuctionSuccessFul> sList = sqlSession.selectList("auctionMapper.selectAuctionSuccessFulByNo", map);
+		
+		return sList;
+	}
+
+	@Override
+	public int insertAuctionSuccessFul(AuctionSuccessFul auctionSuccessFul) {
+		
+		int result = sqlSession.insert("auctionMapper.insertAuctionSuccessFul", auctionSuccessFul);
+		
+		return result;
+	}
+	
+	@Override
+	public int updateAuctionSuccessFul(int[] auctionNo) {
+		
+		int result = sqlSession.update("auctionMapper.updateAuctionSuccessFul", auctionNo);
+		
+		return result;
+	}
+
+	// 스토어 로직 수정
+	@Override
+	public List<AuctionHistory> selectAllList(String userId) {
 		System.out.println("서비스 : " + userId);
-		List<Auction> aList = sqlSession.selectList("auctionMapper.selectMyAuctionList", userId);
+		List<AuctionHistory> aList = sqlSession.selectList("auctionMapper.selectMyAuctionList", userId);
 		return aList;
 	}
 
 	@Override
-	public List<Auction> selectList(String userId) {
-		List<Auction> aList = sqlSession.selectList("auctionMapper.selectList", userId);
+	public List<AuctionHistory> selectList(String userId) {
+		List<AuctionHistory> aList = sqlSession.selectList("auctionMapper.selectList", userId);
 		return aList;
 	}
+
 
 
 }

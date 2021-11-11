@@ -17,6 +17,7 @@
 		<typeAlias alias="Point" type="com.iei.greenlight.mypage.domain.PointHistory"/>
 		<typeAlias alias="AuctionHistory" type="com.iei.greenlight.auction.domain.AuctionHistory"/>
 		<typeAlias alias="AuctionUser" type="com.iei.greenlight.auction.domain.AuctionUser"/>
+		<typeAlias alias="AuctionSuccessFul" type="com.iei.greenlight.auction.domain.AuctionSuccessFul"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>

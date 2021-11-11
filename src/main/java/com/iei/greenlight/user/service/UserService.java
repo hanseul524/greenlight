@@ -1,5 +1,6 @@
 package com.iei.greenlight.user.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.iei.greenlight.mypage.domain.PointHistory;
@@ -24,6 +25,14 @@ public interface UserService {
 	public int checkUserPwd(User userOne);
 
 	public int modifyUserPwd(User userOne);
+	
+	public int modifyUserPoint(HashMap<String, Object> pointMap);
+	
+	public int modifyUserMinusPoint(HashMap<String, Object> pointMap);
+	
+	public int modifyUserChargePoint(HashMap<String, Object> chargePointMap);
+	
+	public int modifySellerPoint(HashMap<String, Object> pointMap);
 
 	public int checkSocialId(User userOne);
 

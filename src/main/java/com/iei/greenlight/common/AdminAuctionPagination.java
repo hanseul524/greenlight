@@ -21,7 +21,6 @@ public class AdminAuctionPagination {
 			endNavi = maxPage;
 		}
 		pi = new AdminPageInfo(currentPage, auctionLimit, naviLimit, startNavi, endNavi, totalCount, maxPage);
-		System.out.println(pi.toString());
 		return pi;
 	}
 

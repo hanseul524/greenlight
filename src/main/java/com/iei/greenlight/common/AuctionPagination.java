@@ -20,7 +20,6 @@ public class AuctionPagination {
 			endNavi = maxPage;
 		}
 		pi = new PageInfo(currentPage, boardLimit, naviLimit, startNavi, endNavi, totalCount, maxPage);
-		System.out.println(pi.toString());
 		return pi;
 	}
 

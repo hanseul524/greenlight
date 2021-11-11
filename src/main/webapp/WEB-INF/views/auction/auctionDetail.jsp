@@ -88,16 +88,32 @@
 
 	$(document).on("click", ".button", function(e){
 	    e.preventDefault;
-	    var userPoint = parseInt('${user.point }');
+	    var userPoint = parseInt('${user.point }') + parseInt('${user.chargePoint }');
 	    var price = parseInt($("#price").text())+50;
 	    var user = '${user.userId }';
+	    var userHistory = '${auctionHistory.userId}'
 	    var auctionUser = '${auctionUser.userId }'
+	    console.log(userHistory);
+	    console.log("userPoint : " + userPoint)
 	    console.log(user + ", " + auctionUser);
-	    if(user == auctionUser){
+	    if(user == userHistory){
+	    	swal({
+		        icon: "error",
+		        text : "본인경매는 입찰할 수 없습니다."
+		      }).then((result) => {
+	        	  if(result){
+			        	location.href="auctionDetail.do?auctionNo="+${auctionHistory.auctionNo};	        		  
+		        	  }
+		          });
+	    }else if(user == auctionUser){
 	    	swal({
 		        icon: "error",
 		        text : "현재 최고입찰자입니다."
-		      });
+		      }).then((result) => {
+	        	  if(result){
+			        	location.href="auctionDetail.do?auctionNo="+${auctionHistory.auctionNo};	        		  
+		        	  }
+		          });
 	    }else if(userPoint > price){
 	      swal({
 	          title: "입찰을 진행하시겠습니까 ?",
@@ -140,6 +156,7 @@
 				var minutes = now.getMinutes();
 				var seconds = now.getSeconds();
 				
+			/* ----------------------------------------------------------- */	
 				
 				var sttDt = timer;
 				sttDt = sttDt.split("-");
@@ -150,6 +167,19 @@
 				var sttHours = parseInt(sttHour) + parseInt(auctionTime);
 				var sttMinutes = sttDt[4];
 				var sttSeconds = sttDt[5];
+				
+				/* var sttDt = "2021-11-11";
+				sttDt = sttDt.split("-");
+				var sttYear = sttDt[0];
+				var sttMonth = sttDt[1]-1;
+				var sttDay = sttDt[2];
+				
+				// 관리자가 경매 진행할 시간 입력하기
+				var sttHours = 17; // 시
+				var sttMinutes = 48; // 분
+				var sttSeconds = 00; // 초  */
+				
+			/* ----------------------------------------------------------- */
 				
 				var date1 = new Date(year, month, day, hours, minutes, seconds);
 				var date2 = new Date(sttYear, sttMonth, sttDay, sttHours, sttMinutes, sttSeconds);
@@ -178,7 +208,8 @@
 			},1000);
 			
 			 function result(){
-				 location.href="insertAuctionSuccessFul.do?auctionNo="+${auctionHistory.auctionNo }+"&userId="+${auctionHistory.userId };
+//				 location.href="insertAuctionSuccessFul.do?auctionNo="+${auctionHistory.auctionNo }+"&userId="+${auctionHistory.userId };
+				 location.href="insertAuctionSuccessFul.do?auctionNo="+${auctionHistory.auctionNo };
 			}
 		}
         

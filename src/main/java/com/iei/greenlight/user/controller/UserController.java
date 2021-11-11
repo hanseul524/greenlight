@@ -143,7 +143,6 @@ public class UserController {
 	   String usersocialId = String.valueOf(socialId);
 	   HttpSession session = request.getSession();
 	   String userId = service.socialIdLogin(usersocialId);
-	   System.out.println(usersocialId);
 	  if(userId != null) {
 		  session.setAttribute("userId", userId);
 		  return "redirect:/main.do";

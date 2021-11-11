@@ -39,6 +39,11 @@
         SELECT * FROM USERS WHERE USER_ID = #{userId}
      </select>
      
+     <!-- 포인트 합산  -->
+     <select id="selectTotalPoint" resultMap="userResultMap" parameterType="string">
+        select POINT+CHARGE_POINT AS POINT FROM USERS WHERE USER_ID = #{userId}
+     </select>
+     
      <!-- 소셜 로그인 아이디 체크 -->
      <select id="checkSocialId" parameterType="User" resultType="_int">
      	SELECT COUNT(*) FROM USERS WHERE SOCIAL_ID = #{socialId }
@@ -59,6 +64,22 @@
   	
   	<update id="updateUserPwd">
   		UPDATE USERS SET USER_PWD = #{userPwd } WHERE USER_ID = #{userId }
+  	</update>
+  	
+  	<update id="updateUserPoint" parameterType="hashmap">
+  		UPDATE USERS SET POINT = #{point } WHERE USER_ID = #{userId }
+  	</update>
+  	
+  	<update id="updateUserMinusPoint" parameterType="hashmap">
+  		UPDATE USERS SET POINT = POINT - #{point } WHERE USER_ID = #{userId }
+  	</update>
+  	
+  	<update id="updateUserChargePoint" parameterType="hashmap">
+  		UPDATE USERS SET CHARGE_POINT = CHARGE_POINT - #{point } WHERE USER_ID = #{userId }
+  	</update>
+  	
+  	<update id="updateSellerPoint" parameterType="hashmap">
+  		UPDATE USERS SET POINT = POINT + #{point } WHERE USER_ID = #{userId }
   	</update>
   	
   	<update id="updateUserOne">
