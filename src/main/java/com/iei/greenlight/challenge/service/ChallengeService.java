@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.iei.greenlight.challenge.domain.CFile;
+import com.iei.greenlight.challenge.domain.ChLike;
 import com.iei.greenlight.challenge.domain.PageInfo;
 import com.iei.greenlight.challenge.domain.Challenge;
 import com.iei.greenlight.challenge.domain.Reply;
@@ -22,8 +23,8 @@ public interface ChallengeService {
 	public List<Challenge> printAll(PageInfo pi);
 	public Challenge printOne(int chNo);
 	public List<CFile> printOneImg(int chNo);
-	public int addLike(int chNo, HttpSession session);
-	public int removeList(int chNo, HttpSession session);
+	public int addLike(ChLike chlike);
+	public int removeLike(ChLike chlike);
 	
 	// 챌린지 게시판 댓글
 	public List<Reply> printAll(int chNo);

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iei.greenlight.challenge.domain.CFile;
+import com.iei.greenlight.challenge.domain.ChLike;
 import com.iei.greenlight.challenge.domain.PageInfo;
 import com.iei.greenlight.challenge.domain.Challenge;
 import com.iei.greenlight.challenge.domain.Reply;
@@ -68,39 +69,38 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	@Override
-	public int addLike(int chNo, HttpSession session) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int addLike(ChLike chlike) {
+		int result = store.updateLike(chlike);
+		return result;
 	}
 
 	@Override
-	public int removeList(int chNo, HttpSession session) {
+	public int removeLike(ChLike chlike) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public List<Reply> printAll(int chNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return store.selectAll(chNo);
 	}
 
 	@Override
 	public int registerReply(Reply reply) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.insertReply(reply);
+		return result;
 	}
 
 	@Override
 	public int modifyReply(Reply reply) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.updateReply(reply);
+		return result;
 	}
 
 	@Override
 	public int removeReply(Reply reply) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.deleteReply(reply);
+		return result;
 	}
 
 

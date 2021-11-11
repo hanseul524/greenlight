@@ -2,11 +2,28 @@ package com.iei.greenlight.challenge.domain;
 
 public class ChLike {
 	
+	private int likeNo;
 	private int chNo;
 	private String userId;
 	private String likeCk;
 	
 	public ChLike() {}
+	
+	public ChLike(int likeNo, int chNo, String userId, String likeCk) {
+		super();
+		this.likeNo = likeNo;
+		this.chNo = chNo;
+		this.userId = userId;
+		this.likeCk = likeCk;
+	}
+
+	public int getLikeNo() {
+		return likeNo;
+	}
+
+	public void setLikeNo(int likeNo) {
+		this.likeNo = likeNo;
+	}
 
 	public int getChNo() {
 		return chNo;
@@ -34,7 +51,7 @@ public class ChLike {
 
 	@Override
 	public String toString() {
-		return "ChLike [글 번호=" + chNo + ", 좋아요 아이디=" + userId + ", 좋아요 체크=" + likeCk + "]";
+		return "ChLike [likeNo=" + likeNo + ", chNo=" + chNo + ", userId=" + userId + ", likeCk=" + likeCk + "]";
 	}
 	
 	

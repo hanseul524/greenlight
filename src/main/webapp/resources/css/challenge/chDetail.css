@@ -60,9 +60,9 @@ a {
   margin: 0 auto;
 }
 .img-area img-con {
-  width: 70%;
-  height: 70%;
-  object-fit:cover; 
+  width: 60%;
+  height: 60%;
+/*   object-fit:cover;  */
 }
 
 /* .img-con { */
@@ -111,9 +111,9 @@ a {
   display: inline-block;
 }
 .comm-inner-area {
-  width: 800px;
-  max-height: 200px;
-  margin: 20px;
+  width: 1000px;
+  max-height: 800px;
+  margin: 10px;
   display: inline-block;
   font-size: 15px;
   font-weight: 300;

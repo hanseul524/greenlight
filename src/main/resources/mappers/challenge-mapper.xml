@@ -57,4 +57,38 @@
 	<delete id="deleteChallenge" parameterType="_int">
 		DELETE FROM CHALLENGE WHERE CH_NO = #{chNo}
 	</delete>
+	
+	<!-- REPLY RESULTMAP -->
+	<resultMap type="Reply" id="replyResultMap">
+		<id property="replyNo" column="REPLY_NO"/>
+		<result property="chNo" column="CH_NO"/>
+		<result property="replywriter" column="USER_ID"/>
+		<result property="replyContents" column="REPLY_CONTENTS"/>
+		<result property="replyDate" column="REPLY_DATE"/>
+	</resultMap>
+	<select id="selectAllReply" resultMap="replyResultMap">
+		SELECT * FROM CHALLENGE_REPLY WHERE CH_NO = #{chNo}
+	</select>
+	<insert id="insertReply" parameterType="Reply">
+		INSERT INTO CHALLENGE_REPLY VALUES(SEQ_REPLY_NO.NEXTVAL, #{chNo}, #{replywriter}, #{replyContents}, DEFAULT)
+	</insert>
+	<update id="updateReply" parameterType="Reply">
+		UPDATE CHALLENGE_REPLY SET REPLY_CONTENTS = #{replyContents} WHERE CH_NO = #{chNo} AND REPLY_NO = #{replyNo}
+	</update>
+	<update id="updateReplyCount" parameterType="Reply">
+		UPDATE CHALLENGE SET REPLY_COUNT = REPLY_COUNT + 1 WHERE CH_NO = #{chNo}
+	</update>
+	<delete id="deleteReply" parameterType="_int">
+		DELETE FROM CHALLENGE_REPLY WHERE REPLY_NO = #{replyNo}
+	</delete>
+	
+	<resultMap type="ChLike" id="likeResultMap">
+		<id property="likeNo" column="LIKE_NO"/>
+		<result property="chNo" column="CH_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="likeCk" column="LIKE_CK"/>
+	</resultMap>
+	<insert id="updateLike" parameterType="ChLike">
+		INSERT INTO CHALLENGE_LIKE VALUES(SEQ_LIKE_NO.NEXTVAL, #{chNo}, #{userId}, 1)
+	</insert>
 </mapper>

@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
@@ -59,17 +60,26 @@
 	        <hr>
 	      </div>
 	      <div class="comm-div">
-	        <span style="font-size: 20px; font-weight: 600;">Comments</span>
-	        <hr>
+	        <span style="font-size: 20px; font-weight: 600;">Comments</span> <span id="rCount"></span>
+	        <c:choose>
+   				<c:when test="${chlike.likeCk eq '0'}"> <!-- likeCk가0이면 빈하트-->
+					<a href="#" onclick="addHeart();"><i class="far fa-heart fa-2x" style="color:red;"></i></a>
+    			</c:when>
+   				<c:otherwise> <!-- likeCk가1이면 빨간 하트-->
+					<a href="#" onclick="delHeart();"><i class="fas fa-heart fa-2x" style="color:red;"></i></a>
+    			</c:otherwise>
+			</c:choose>
+	        
+	        <hr> 
 	        <div class="comm-user-div">
 	          <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
-	          <input class="user-text" type="text" name="replyContents" id="" placeholder="댓글을 입력해주세요.">
-	          <input type="submit" value="등록">
+	          <input class="user-text" type="text" name="replyContents" id="replyContents" placeholder="댓글을 입력해주세요.">
+	          <button id="submitBtn">등록</button>
 	        </div>
-	        <div class="comm-area">
-	          <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
-	          <div class="comm-inner-area"> <!-- 댓글 목록 영역 -->
-	           		
+	        <div class="comm-area" id="replyArea">
+	          
+	          <div class="comm-inner-area" id="replyArea"> <!-- 댓글 목록 영역 -->
+	           	
 	          </div>
 	        </div>
 	      </div>
@@ -77,6 +87,193 @@
   </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
 <script>
+	//좋아요 update하는 함수
+	function addHeart() {
+		var chNo = '${challenge.chNo}';
+		
+		$.ajax({
+			url : "addLike.do",
+			type : "post",
+			data : {
+				"chNo" : chNo
+			},
+			success : function(data) {
+				console.log(data)
+				Swal.fire({ 
+					icon: 'success',
+					title: '좋아요',
+					text: '좋아요 성공!',
+					});
+				
+			},
+			error : function() {
+				alert("좋아요 실패~");
+			}
+		})
+	}
+	
+	function delHeart() {
+		var chNo = '${challenge.chNo}';
+		
+		$.ajax({
+			url : "removeLike.do",
+			type : "post",
+			data : {
+				"chNo" : chNo
+			},
+			success : function(data) {
+				Swal.fire({ 
+					icon: 'success',
+					title: '좋아요 취소',
+					text: '좋아요 취소 성공!',
+					});
+			},
+			error : function() {
+				alert("취소 실패~");
+			}
+		})
+	}
+	
+    getReplyList();
+	$("#submitBtn").on("click", function() {
+		var chNo = '${challenge.chNo}';
+		var replyContents = $("#replyContents").val();
+		$.ajax({
+			url : "addReply.do",
+			type : "post",
+			data : {
+				"chNo" : chNo,
+				"replyContents" : replyContents
+			},
+			success : function(data) {
+				console.log(data)
+				if(data == "success") {
+					getReplyList();//댓글 리스트 불러오기
+					$("#replyContents").val("");
+					Swal.fire({ 
+						icon: 'success',
+						title: '댓글 등록',
+						text: '등록이 완료되었습니다.',
+						});
+				}else{
+					alert("댓글 등록 실패!");
+				}
+			},
+			error : function() {
+				alert("submit 오류");
+			}
+		})
+	});
+	
+	function getReplyList() {
+		var chNo = '${challenge.chNo}';
+		$.ajax({
+			url : "replyList.do",
+			type : "get",
+			data : { "chNo" : chNo },
+			dataType : "json",
+			
+			success : function(data) {
+				console.log(data)
+				var $rdiv = $("#replyArea div");
+				$rdiv.html("");
+				var $innerdiv;
+				var $rWriter;
+				var $rContent;
+				var $rDate;
+				var $btnArea;
+				var $icon;
+				
+				$("#rCount").text(data.length);
+				if(data.length > 0) {
+					for(var i in data) {
+						$innerdiv = $("<div id='replyDiv' style='border: 1px solid yellow; vertical-align:middle; align-items:center; padding: 10px;'><hr>");
+						$icon = $("<i class='fas fa-user-circle fa-3x' style='color: gray;'>");
+						$rWriter = $("<span>").text(data[i].replywriter);
+						$rContent = $("<span>").text(data[i].replyContents);
+						$rDate = $("<span>").text(data[i].replyDate);
+						$btnArea = $("<span style='float:right;'>")
+						.append("<a href='#' onclick='modifyReply(this,"+chNo+","+data[i].replyNo+",\""+data[i].replyContents+"\");'>수정 /</a>")
+						.append("<a href='#' onclick='deleteReply(this,"+chNo+","+data[i].replyNo+");'> 삭제</a>")
+						
+						$innerdiv.append($icon);
+						$innerdiv.append($rWriter);
+						$innerdiv.append($rContent);
+						$innerdiv.append($rDate);
+						$innerdiv.append($btnArea);
+						$rdiv.append($innerdiv);
+						
+					}
+				}
+			}
+		});
+	}
+	// 댓글 수정 영역
+	function modifyReply(obj, chNo, replyNo, replyContents) {
+// 		$(obj).focus();
+		var offset = $(obj).offset();
+		$('html, body').animate({scrollTop : offset.top}, 600);
+		
+		$divModify = $("<div>");
+		$divModify.append("<input type='text' id='modifyReply' size='70' value='"+replyContents+"'>");
+		$divModify.append("<div><button onclick='modifyReplyOk("+chNo+","+replyNo+")'>수정하기</button></div>");
+		$(obj).parent().after($divModify);
+	}
+	
+	// 댓글 수정 ajax
+	function modifyReplyOk(chNo, replyNo) {
+		var updateContent = $("#modifyReply").val();
+		$.ajax({
+			url : "modifyReply.do",
+			type : "post",
+			data : {
+				"chNo" : chNo,
+				"replyNo" : replyNo,
+				"replyContents" : updateContent
+			},
+			success : function(data) {
+				if(data == "success") {
+					getReplyList();
+					Swal.fire({ 
+						icon: 'success',
+						title: '댓글 수정', 
+						text: '수정이 완료되었습니다.', 
+						});
+				}else {
+					alert("댓글 수정 실패");
+				}
+			},
+			error : function() {
+				alert("ajax 실패");
+			}
+		});
+	}
+	
+	// 댓글 삭제
+	function deleteReply(obj, chNo, replyNo) {
+		var offset = $(obj).offset();
+		$('html, body').animate({scrollTop : offset.top}, 600);
+		$.ajax({
+			url : "deleteReply.do",
+			type : "get",
+			data : {
+				"chNo" : chNo,
+				"replyNo" : replyNo
+			},
+			success : function(data) {
+				if(data == "success") {
+					Swal.fire({ 
+						icon: 'success', // Alert 타입 
+						title: '댓글 삭제', // Alert 제목 
+						text: '삭제가 완료되었습니다.', // Alert 내용 
+						});
+					getReplyList();
+				}else {
+					alert("댓글 삭제 실패");
+				}
+			}
+		});
+	}
 // 	function alertBtn() {
 		
 // 		var chNo = $("#chNo").val();

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.iei.greenlight.challenge.domain.CFile;
+import com.iei.greenlight.challenge.domain.ChLike;
 import com.iei.greenlight.challenge.domain.PageInfo;
 import com.iei.greenlight.challenge.domain.Challenge;
 import com.iei.greenlight.challenge.domain.Reply;
@@ -35,7 +36,7 @@ public class ChallengeStoreLogic implements ChallengeStore {
 
 	@Override
 	public int updateChallenge(Challenge challenge) {
-		int result = session.update("challengeMapper.updateChallenge", challenge);
+		int result = session.insert("challengeMapper.insertChallenge", challenge);
 		return result;
 	}
 
@@ -72,39 +73,42 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	}
 	
 	@Override
-	public int updateLike(int chNo, HttpSession session) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateLike(ChLike chlike) {
+		int result = session.insert("challengeMapper.updateLike",chlike);
+		return result;
 	}
 
 	@Override
-	public int deleteLike(int chNo, HttpSession session) {
+	public int deleteLike(ChLike chlike) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public List<Reply> selectAll(int chNo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Reply> rList = session.selectList("challengeMapper.selectAllReply", chNo);
+		return rList;
 	}
 
 	@Override
 	public int insertReply(Reply reply) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.insert("challengeMapper.insertReply", reply);
+		if(result > 0) {
+			session.update("challengeMapper.updateReplyCount", reply);
+		}
+		return result;
 	}
 
 	@Override
 	public int updateReply(Reply reply) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.update("challengeMapper.updateReply", reply);
+		return result;
 	}
 
 	@Override
 	public int deleteReply(Reply reply) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.delete("challengeMapper.deleteReply", reply);
+		return result;
 	}
 
 	@Override
