@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.iei.greenlight.chargePoint.domain.ChargePoint;
 import com.iei.greenlight.chargePoint.domain.PageInfo;
+import com.iei.greenlight.mypage.domain.PointHistory;
 
 public interface ChargePointService {
 
@@ -12,5 +13,9 @@ public interface ChargePointService {
 	int getListCount(String userId);
 
 	List<ChargePoint> showList(HashMap<String, Object> hashMap);
+
+	int registerChargePoint(ChargePoint cp);
+
+	int registerChargePoint(PointHistory pHistory);
 
 }

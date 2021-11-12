@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.iei.greenlight.chargePoint.domain.ChargePoint;
 import com.iei.greenlight.chargePoint.domain.PageInfo;
 import com.iei.greenlight.chargePoint.store.ChargePointStore;
+import com.iei.greenlight.mypage.domain.PointHistory;
 
 @Repository
 public class ChargePointLogic implements ChargePointStore{
@@ -31,5 +32,17 @@ public class ChargePointLogic implements ChargePointStore{
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return sqlSession.selectList("chargePointMapper.selectUserIdList", hashMap, rowBounds);
+	}
+
+
+	@Override
+	public int insertChargePoint(ChargePoint cp) {
+		return sqlSession.insert("chargePointMapper.insertChargePoint", cp);
+	}
+
+
+	@Override
+	public int insertPHChargePoint(PointHistory pHistory) {
+		return sqlSession.insert("chargePointMapper.insertPHChargePoint", pHistory);
 	}
 }

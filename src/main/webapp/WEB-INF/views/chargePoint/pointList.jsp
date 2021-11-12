@@ -35,10 +35,14 @@
                   <td>${cPoint.rowNum }</td>
                   <td>${cPoint.chargeMoney }</td>
                   <td>${cPoint.chargeDate }</td>
-                  <td>
-                  	<c:if test="${cPoint.refund eq 'N'}" ><a href="#" style="text-decoration: none;">결제완료</a></c:if>
-              		<c:if test="${cPoint.refund ne 'N'} ">취소완료</c:if>
-                  </td>
+           		  <td>
+                 	<c:if test="${cPoint.refund eq 'N'}" >
+                 			<a onclick="cancelPay();" style="text-decoration: none;">결제완료</a>
+              		</c:if>
+             		<c:if test="${cPoint.refund ne 'N'}" >
+              			취소완료
+             		</c:if>
+             	   </td>
                 </tr>
                 <input type="hidden" value="${cPoint.chargeNo }">	
               </c:forEach>
@@ -83,33 +87,28 @@
 
 <jsp:include page="/common/footer.jsp"></jsp:include>
 <script>
-    var IMP = window.IMP;
-	IMP.init("imp85681928");
 	function popUp() {
 	      window.open('/cpPopView.do', '_blank', 
-	      'top=250, left=500, height=300, width=500,toolbar=no, menubar=no, location=no, status=no, scrollbars=no, resizable=no');
+	      'top=250, left=500, height=562, width=812,toolbar=no, menubar=no, location=no, status=no, scrollbars=no, resizable=no');
 	    }
-	function requestPay() {
-	      // IMP.request_pay(param, callback) 결제창 호출
-	      IMP.request_pay({ // param
-	          pg: "html5_inicis",
-	          pay_method: "card",
-	          merchant_uid: "ORD20180131-0000011",
-	          name: "노르웨이 회전 의자",
-	          amount: 64900,
-	          buyer_email: "gildong@gmail.com",
-	          buyer_name: "홍길동",
-	          buyer_tel: "010-4242-4242",
-	          buyer_addr: "서울특별시 강남구 신사동",
-	          buyer_postcode: "01181"
-	      }, function (rsp) { // callback
-	          if (rsp.success) {
-	              // 결제 성공 시 로직,
-	          } else {
-	              // 결제 실패 시 로직,
-	          }
-	      });
-	    }
+	
+	// 결제 취소 
+	function cancelPay() {
+	    jQuery.ajax({
+	      "url": "{환불요청을 받을 서비스 URL}", // 예: http://www.myservice.com/payments/cancel
+	      "type": "POST",
+	      "contentType": "application/json",
+	      "data": JSON.stringify({
+	        "merchant_uid": "{결제건의 주문번호}", // 예: ORD20180131-0000011
+	        "cancel_request_amount": 2000, // 환불금액
+	        "reason": "테스트 결제 환불" // 환불사유
+	        "refund_holder": "홍길동", // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+	        "refund_bank": "88" // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+	        "refund_account": "56211105948400" // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+	      }),
+	      "dataType": "json"
+	    });
+	  }
 </script>
 </body>
 </html>

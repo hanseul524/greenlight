@@ -45,4 +45,6 @@ public interface UserService {
 	int modifyUser(User user);
 	
 	int removeUser(String userId);
+
+	public int modifyChargePoint(User userOne);
 }

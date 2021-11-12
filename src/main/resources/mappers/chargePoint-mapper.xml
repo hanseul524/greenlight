@@ -13,10 +13,22 @@
 	
 	<!-- 충환전 리스트 -->
 	<select id="selectUserIdList" parameterType="hashMap" resultMap="cpResultMap">
-		SELECT ROWNUM AS COUNT, A.* FROM CHARGE_POINT A WHERE USER_ID = #{userId } ORDER BY CHARGE_DATE DESC
+		SELECT  ROWNUM AS COUNT,A.* FROM (SELECT * FROM CHARGE_POINT WHERE USER_ID = #{userId } ORDER BY CHARGE_DATE ASC) A ORDER BY A.CHARGE_DATE DESC
 	</select>
 	
 	<select id="selectListCount" parameterType="string" resultType="_int">
 		SELECT COUNT(*) FROM CHARGE_POINT WHERE USER_ID = #{userId }
 	</select>
+	
+	<!-- chargePoint 테이블 데이터 추가  -->
+	<insert id="insertChargePoint" parameterType="ChargePoint">
+		INSERT INTO CHARGE_POINT VALUES(SEQ_CP_NO.NEXTVAL, #{userId }, #{chargeMoney }, #{chargePoint }, DEFAULT, DEFAULT)
+	</insert>
+	
+	<!-- pointHistory  -->
+	<insert id="insertPHChargePoint" parameterType="Point">
+		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, #{pointContents }, #{pointPayment }, DEFAULT, 'Y')
+	</insert>
+	
+	
 </mapper>

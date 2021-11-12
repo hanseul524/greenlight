@@ -39,4 +39,6 @@ public interface UserStore {
 	int updateUser(User user);
 	
 	int deleteUser(String userId);
+
+	public int updateChargePoint(User userOne);
 }

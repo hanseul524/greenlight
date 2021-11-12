@@ -180,6 +180,11 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 
+	@Override
+	public int modifyChargePoint(User userOne) {
+		return store.updateChargePoint(userOne);
+	}
+
 
 
 

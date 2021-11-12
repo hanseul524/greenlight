@@ -9,7 +9,8 @@ public class PointHistory {
 	private String pointContents;
 	private int pointPayment;
 	private int pointUse;
-
+	private String chargeYN;
+	
 	public PointHistory() {
 	}
 
@@ -22,11 +23,11 @@ public class PointHistory {
 		this.pointUse = pointUse;
 	}
 
-	public String getUseId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUseId(String userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
@@ -61,11 +62,22 @@ public class PointHistory {
 	public void setPointUse(int pointUse) {
 		this.pointUse = pointUse;
 	}
+	
+	
+
+	public String getChargeYN() {
+		return chargeYN;
+	}
+
+	public void setChargeYN(String chargeYN) {
+		this.chargeYN = chargeYN;
+	}
 
 	@Override
 	public String toString() {
-		return "PointHistory [유저 아이디 =" + userId + ", 포인트 획득 날짜 =" + pointDate + ", 변동 내용 =" + pointContents
-				+ ", 지급 날짜 =" + pointPayment + ", 사용 포인트=" + pointUse + "]";
+		return "PointHistory [userId=" + userId + ", pointDate=" + pointDate + ", pointContents=" + pointContents
+				+ ", pointPayment=" + pointPayment + ", pointUse=" + pointUse + ", chargeYN=" + chargeYN + "]";
 	}
+
 
 }

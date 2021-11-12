@@ -121,6 +121,11 @@ public class UserStoreLogic implements UserStore{
 		return result;
 	}
 
+	@Override
+	public int updateChargePoint(User userOne) {
+		return sqlSession.update("userMapper.updateChargePoint", userOne);
+	}
+
 
 
 
