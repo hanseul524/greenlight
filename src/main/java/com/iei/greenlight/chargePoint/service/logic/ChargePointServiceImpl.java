@@ -1,5 +1,6 @@
 package com.iei.greenlight.chargePoint.service.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,16 @@ public class ChargePointServiceImpl implements ChargePointService {
 	@Autowired
 	private ChargePointStore store;
 
+
 	@Override
-	public List<ChargePoint> showList(String userId) {
-		List<ChargePoint> cpList = store.selectUserIdList(userId);
-		return cpList;
+	public int getListCount(String userId) {
+		return store.selectListCount(userId);
+	}
+
+
+	@Override
+	public List<ChargePoint> showList(HashMap<String, Object> hashMap) {
+		
+		return store.selectList(hashMap);
 	}
 }
