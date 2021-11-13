@@ -1,5 +1,6 @@
 package com.iei.greenlight.challenge.store.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -71,17 +72,28 @@ public class ChallengeStoreLogic implements ChallengeStore {
 		List<CFile> cList = session.selectList("challengeMapper.selectOneImg", chNo);
 		return cList;
 	}
+	@Override
+	public ChLike selectLike(HashMap<String, Object> hashMap) {
+		ChLike chlike = session.selectOne("challengeMapper.selectLike", hashMap);
+		return chlike;
+	}
 	
 	@Override
+	public int insertLike(HashMap<String, Object> hashMap) {
+		int result = session.insert("challengeMapper.insertLike", hashMap);
+		return result;
+	}
+		
+	@Override
 	public int updateLike(ChLike chlike) {
-		int result = session.insert("challengeMapper.updateLike",chlike);
+		int result = session.update("challengeMapper.updateLike",chlike);
 		return result;
 	}
 
 	@Override
 	public int deleteLike(ChLike chlike) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.update("challengeMapper.deleteLike", chlike);
+		return result;
 	}
 
 	@Override
@@ -116,6 +128,7 @@ public class ChallengeStoreLogic implements ChallengeStore {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 
 }

@@ -1,8 +1,8 @@
 package com.iei.greenlight.challenge.service;
 
+import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 
 import com.iei.greenlight.challenge.domain.CFile;
 import com.iei.greenlight.challenge.domain.ChLike;
@@ -23,7 +23,9 @@ public interface ChallengeService {
 	public List<Challenge> printAll(PageInfo pi);
 	public Challenge printOne(int chNo);
 	public List<CFile> printOneImg(int chNo);
-	public int addLike(ChLike chlike);
+	public ChLike LikeCk(HashMap<String, Object> hashMap);
+	public int addLike(HashMap<String, Object> hashMap);
+	public int updateLike(ChLike chlike);
 	public int removeLike(ChLike chlike);
 	
 	// 챌린지 게시판 댓글

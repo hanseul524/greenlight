@@ -3,6 +3,7 @@ package com.iei.greenlight.challenge.cotroller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -156,14 +157,40 @@ public class ChallengeController {
 	@RequestMapping(value="ChallengeDetail.do", method=RequestMethod.GET)
 	public String ChallengeDetail(
 			@RequestParam("chNo") int chNo,
-			Model model
+			Model model,
+			HttpServletRequest request
 			) {
 		try {
+			String userId = (String)request.getSession().getAttribute("userId");
+			int likeCk = 0;
+			System.out.println(userId);
 			Challenge challenge = service.printOne(chNo);
 			if(challenge != null) {
 				List<CFile> cList = service.printOneImg(chNo);
 				model.addAttribute("challenge", challenge);
 				model.addAttribute("cList", cList);
+				// 로그인했을때
+				if(userId != null) {
+					HashMap<String, Object> hashMap = new HashMap<String, Object>();
+					hashMap.put("userId", userId);
+					hashMap.put("chNo", chNo);
+					hashMap.put("likeCk", likeCk);
+					System.out.println(hashMap.toString());
+					ChLike chlike = service.LikeCk(hashMap);
+					// chlike테이블에 유저의 정보가 있을 때
+					if(chlike != null) {
+						System.out.println("테이블에 유저 정보 있을 때 " + chlike.toString());
+						model.addAttribute("chlike", chlike);
+						return "challenge/ChallengeDetailView";
+					}else { //테이블에 유저 정보가 없을때 insert
+						int result = service.addLike(hashMap);
+						if(result > 0) {
+							chlike = service.LikeCk(hashMap);
+							model.addAttribute("chlike", chlike);
+							return "challenge/ChallengeDetailView";
+						}
+					}
+				}
 				return "challenge/ChallengeDetailView";
 			}else {
 				model.addAttribute("msg", "상세 조회 실패");
@@ -174,6 +201,46 @@ public class ChallengeController {
 			model.addAttribute("msg", e.toString());
 			return "common/errorPage";
 		}	
+	}
+	
+	// 좋아요 추가
+	@ResponseBody
+	@RequestMapping(value="addLike.do", method=RequestMethod.POST)
+	public String addLike(@ModelAttribute ChLike chlike,
+			HttpServletRequest request,
+			Model model) {
+		int likeCk = 1;
+		chlike.setUserId((String)request.getSession().getAttribute("userId"));
+		chlike.setLikeCk(likeCk);
+		int result = service.updateLike(chlike);
+		System.out.println("좋아요 눌렀을 때"+ chlike.toString());
+		System.out.println(result);
+		if(result > 0) {
+			model.addAttribute("chlike", chlike);
+			System.out.println("누른 결과값" + chlike.toString());
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
+	
+	// 좋아요 취소
+	@ResponseBody
+	@RequestMapping(value="removeLike.do", method=RequestMethod.POST)
+	public String delLike(@ModelAttribute ChLike chlike,
+			HttpServletRequest request,
+			Model model) {
+		chlike.setUserId((String)request.getSession().getAttribute("userId"));
+		System.out.println(chlike.toString());
+		int result = service.removeLike(chlike);
+		System.out.println(result);
+		if(result > 0) {
+			System.out.println(chlike.toString());
+			model.addAttribute("chlike", chlike);
+			return "success";
+		}else {
+			return "fail";
+		}
 	}
 	
 	// 챌린지 삭제
@@ -204,6 +271,7 @@ public class ChallengeController {
 			file.delete();
 		}
 	}
+	
 	// 게시글 수정 뷰
 	@RequestMapping(value="ChallengeModify.do")
 	public String ChallengeModifyView(
@@ -218,6 +286,7 @@ public class ChallengeController {
 			return "common/errorPage";
 		}
 	}
+	
 	// 게시글 수정
 	@RequestMapping(value="ChallengeUpdate.do", method=RequestMethod.POST)
 	public String ChallengeModify(
@@ -279,7 +348,7 @@ public class ChallengeController {
 			Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd").create(); // replyDate 데이터포멧으로 출력
 			gson.toJson(rList, response.getWriter());
 		}else {
-			System.out.println("데이터 전송 실패");
+			System.out.println("댓글 데이터 전송 실패");
 		}
 	}
 	
@@ -294,6 +363,7 @@ public class ChallengeController {
 			return "fail";
 		}
 	}
+	
 	// 댓글 삭제
 	@ResponseBody
 	@RequestMapping(value="deleteReply.do", method=RequestMethod.GET)
@@ -306,34 +376,5 @@ public class ChallengeController {
 			return "fail";
 		}
 	}
-	@ResponseBody
-	@RequestMapping(value="addLike.do", method=RequestMethod.POST)
-	public String addLike(@ModelAttribute ChLike chlike,
-			HttpServletRequest request) {
-		System.out.println(chlike.toString());
-		chlike.setUserId((String)request.getSession().getAttribute("userId"));
-		int result = service.addLike(chlike);
-		System.out.println(result);
-		if(result > 0) {
-			System.out.println(chlike);
-			return "success";
-		}else {
-			return "fail";
-		}
-	}
 	
-	@ResponseBody
-	@RequestMapping(value="removeLike.do", method=RequestMethod.POST)
-	public String delLike(@ModelAttribute ChLike chlike,
-			HttpServletRequest request,
-			Model model) {
-		chlike.setUserId((String)request.getSession().getAttribute("userId"));
-		int result = service.removeLike(chlike);
-		if(result > 0) {
-			model.addAttribute("chlike", chlike);
-			return "success";
-		}else {
-			return "fail";
-		}
-	}
 }

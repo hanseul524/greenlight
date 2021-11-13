@@ -1,5 +1,6 @@
 package com.iei.greenlight.challenge.store;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,8 @@ public interface ChallengeStore {
 	public List<Challenge> selectAll(PageInfo pi);
 	public Challenge selectOne(int chNo);
 	public List<CFile> selectOneImg(int chNo);
+	public ChLike selectLike(HashMap<String, Object> hashMap);
+	public int insertLike(HashMap<String, Object> hashMap);
 	public int updateLike(ChLike chlike);
 	public int deleteLike(ChLike chlike);
 	
