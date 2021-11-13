@@ -104,7 +104,7 @@
         <li><a href="ChallengeListView.do">Challenge</a></li>
         <li><a href="auctionListView.do">Auction</a></li>
         <li><a href="#">Donation</a></li>
-        <li><a href="#">Map</a></li>
+        <li><a href="offlineShopView.do">Map</a></li>
       </ul>
     </div>
     <div class="user-area">

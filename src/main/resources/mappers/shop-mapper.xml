@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="offlineShopMapper">
+	<resultMap type="OfflineShop" id="offlineShopResultMap">
+		<id property="shopNo" column="SHOP_NO"/>
+		<result property="shopName" column="SHOP_NAME"/>
+		<result property="shopAddress" column="SHOP_ADDRESS"/>
+		<result property="shopInstagram" column="SHOP_PHONE"/>
+		<result property="category" column="SHOP_INSTAGRAM"/>
+		<result property="shopPhone" column="CATEGORY"/>
+	</resultMap>
+	
+	<resultMap type="OnlineShop" id="onlineShopResultMap">
+		<id property="shopNo" column="SHOP_NO"/>
+		<result property="shopName" column="SHOP_NAME"/>
+		<result property="shopContents" column="SHOP_CONTENTS"/>
+		<result property="shopAddress" column="SHOP_ADDRESS"/>
+		<result property="shopImage" column="SHOP_IMAGE"/>
+		<result property="category" column="CATEGORY"/>
+	</resultMap>
+	
+	<!-- OfflineShop -->
+	<select id="selectOfflineShopList" resultMap="offlineShopResultMap">
+		SELECT * FROM OFFLINESHOP ORDER BY SHOP_NO ASC
+	</select>
+</mapper>

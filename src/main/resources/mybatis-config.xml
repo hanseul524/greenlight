@@ -18,6 +18,8 @@
 		<typeAlias alias="AuctionHistory" type="com.iei.greenlight.auction.domain.AuctionHistory"/>
 		<typeAlias alias="AuctionUser" type="com.iei.greenlight.auction.domain.AuctionUser"/>
 		<typeAlias alias="AuctionSuccessFul" type="com.iei.greenlight.auction.domain.AuctionSuccessFul"/>
+		<typeAlias alias="OfflineShop" type="com.iei.greenlight.shop.domain.OfflineShop"/>
+		<typeAlias alias="OnlineShop" type="com.iei.greenlight.shop.domain.OnlineShop"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
@@ -25,5 +27,6 @@
 		<mapper resource="mappers/auction-mapper.xml"/>
 		<mapper resource="mappers/chargePoint-mapper.xml"/>
 		<mapper resource="mappers/point-mapper.xml"/>
+		<mapper resource="mappers/shop-mapper.xml"/>
 	</mappers>
 </configuration>
