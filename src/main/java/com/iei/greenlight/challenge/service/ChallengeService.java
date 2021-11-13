@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import com.iei.greenlight.challenge.domain.CFile;
+import com.iei.greenlight.challenge.domain.Category;
 import com.iei.greenlight.challenge.domain.ChLike;
 import com.iei.greenlight.challenge.domain.PageInfo;
 import com.iei.greenlight.challenge.domain.Challenge;
@@ -23,6 +24,7 @@ public interface ChallengeService {
 	public List<Challenge> printAll(PageInfo pi);
 	public Challenge printOne(int chNo);
 	public List<CFile> printOneImg(int chNo);
+//	public int likeCount(int chNo);
 	public ChLike LikeCk(HashMap<String, Object> hashMap);
 	public int addLike(HashMap<String, Object> hashMap);
 	public int updateLike(ChLike chlike);
@@ -33,4 +35,12 @@ public interface ChallengeService {
 	public int registerReply(Reply reply);
 	public int modifyReply(Reply reply);
 	public int removeReply(Reply reply);
+	
+	// 관리자 챌린지 페이지
+	public List<Challenge> printAllCh(PageInfo api);
+	public int registerCategory(Category category);
+	
+	// 마이페이지
+	public int getMyListCount(String userId);
+	public List<Challenge> printChallList(HashMap<String, Object> hashMap);
 }

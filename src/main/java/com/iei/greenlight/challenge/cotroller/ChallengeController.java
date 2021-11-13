@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,11 +26,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.iei.greenlight.challenge.domain.CFile;
+import com.iei.greenlight.challenge.domain.Category;
 import com.iei.greenlight.challenge.domain.ChLike;
 import com.iei.greenlight.challenge.domain.PageInfo;
 import com.iei.greenlight.challenge.domain.Reply;
 import com.iei.greenlight.challenge.domain.Challenge;
 import com.iei.greenlight.challenge.service.ChallengeService;
+import com.iei.greenlight.common.AdminChPagination;
 import com.iei.greenlight.common.Pagination;
 
 @Controller
@@ -143,6 +146,8 @@ public class ChallengeController {
 		int totalCount = service.getListCount();
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		List<Challenge> cList = service.printAll(pi);
+		int likeCount = 0;
+		
 		if(!cList.isEmpty()) {
 			model.addAttribute("cList", cList);
 			model.addAttribute("pi", pi);
@@ -150,6 +155,43 @@ public class ChallengeController {
 		}else {
 			model.addAttribute("msg", "리스트 조회 실패");
 			return "common/errorPage";
+		}
+	}
+	// 관리자 페이지 챌린지 리스트 조회
+	@RequestMapping(value="AdminChList.do", method=RequestMethod.GET)
+	public String AdminChListView(
+			@ModelAttribute Challenge challenge,
+			HttpServletRequest request,
+			Model model,
+			@RequestParam(value="page", required=false) Integer page) {
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListCount();
+		PageInfo api = AdminChPagination.getPageInfo(currentPage, totalCount);
+		List<Challenge> cList = service.printAllCh(api);
+		System.out.println(cList.toString());
+		if(!cList.isEmpty()) {
+			model.addAttribute("cList", cList);
+			model.addAttribute("api", api);
+			return "admin/adminCh";
+		}else {
+			model.addAttribute("msg", "리스트 조회 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	// 관리자 페이지 챌린지 오픈 
+	@RequestMapping(value="ChOpen.do")
+	public String AdminChOpen(@RequestParam("chOpen") String chCategory,
+			@ModelAttribute Category category,
+			Model model
+			) {
+		category.setChCategory(chCategory);
+		int result = service.registerCategory(category);
+		if(result > 0) {
+			return "admin/chPopup";
+		}else {
+			model.addAttribute("msg", "챌린지 오픈 실패");
+			return "common/errorPage";			
 		}
 	}
 	
@@ -377,4 +419,25 @@ public class ChallengeController {
 		}
 	}
 	
+	//마이페이지챌린지
+	   @RequestMapping(value="myChallenge.do", method=RequestMethod.GET)
+	   public String myChallenge(@ModelAttribute Challenge challenge, Model model, HttpServletRequest request, @RequestParam(value="page", required=false) Integer page) {
+	      String userId = (String)request.getSession().getAttribute("userId");
+	      int currentPage = (page != null) ? page : 1;
+	      int totalCount = service.getMyListCount(userId);
+	      PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+	      HashMap<String, Object> hashMap = new HashMap<String, Object>();
+	      hashMap.put("pi", pi);
+	      hashMap.put("userId", userId);
+	      List<Challenge> challenges = service.printChallList(hashMap);
+	      if(!challenges.isEmpty()) {
+	         model.addAttribute("cList", challenges);
+	         model.addAttribute("pi", pi);
+	         model.addAttribute("userId", userId);
+	         return "mypage/MyChallenge";
+	      }else {
+	         model.addAttribute("msg", "실패");
+	         return "common/errorPage";
+	      }
+	   }
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iei.greenlight.challenge.domain.CFile;
+import com.iei.greenlight.challenge.domain.Category;
 import com.iei.greenlight.challenge.domain.ChLike;
 import com.iei.greenlight.challenge.domain.PageInfo;
 import com.iei.greenlight.challenge.domain.Challenge;
@@ -68,6 +69,12 @@ public class ChallengeServiceImpl implements ChallengeService{
 		List<CFile> cList = store.selectOneImg(chNo);
 		return cList;
 	}
+	
+//	@Override
+//	public int likeCount(int likeCount) {
+//		int result = store.selectLikeCount(likeCount);
+//		return result;
+//	}
 
 	@Override
 	public ChLike LikeCk(HashMap<String, Object> hashMap) {
@@ -115,4 +122,27 @@ public class ChallengeServiceImpl implements ChallengeService{
 		int result = store.deleteReply(reply);
 		return result;
 	}
+
+	@Override
+	public List<Challenge> printAllCh(PageInfo api) {
+		List<Challenge> cList = store.selectAll(api);
+		return cList;
+	}
+
+	@Override
+	public int registerCategory(Category category) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	//마이페이지
+	@Override
+	public int getMyListCount(String userId) {
+	    return store.selectMyListCount(userId);
+	}
+
+	@Override
+	public List<Challenge> printChallList(HashMap<String, Object> hashMap) {
+	    return store.selectMyChall(hashMap);
+	 }
 }

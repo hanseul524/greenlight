@@ -94,6 +94,10 @@ a {
   display: inline-block;
   text-align: left;
 }
+.heart-area {
+	padding: 10px;
+	margin-left: 800px;
+}
 .comm-user-div {
   width: 1000px;
   margin: 5px;

@@ -48,12 +48,37 @@ p {
   <div class="popup-area">
     <h3>챌린지 오픈하기</h3>
     <p>챌린지 오픈시 한달간 운영됩니다.</p>
-    <form action="" method="post">
       <div>
-        <input class="input-area" type="text" placeholder="주제를 입력해주세요.">
-        <input class="input-btn" type="submit" value="오픈하기">
+        <input class="input-area" type="text" name="chOpen" id="chOpen" placeholder="주제를 입력해주세요.">
+        <button class="input-btn" onclick="open();">오픈하기</button>
       </div>
-    </form>
   </div>
+  
+  <script>
+  
+  	function open() {
+  		var chCategory = $("#chOpen").val();
+  		$.ajax({
+  			url : "ChOpen.do",
+  			type : "post",
+  			data : { "chCategory" : chCategory },
+  			success : function(data) {
+  				if(data == "success") {
+  					$("#chOpen").val("");
+  					Swal.fire({ 
+						icon: 'success',
+						title: '카테고리 등록',
+						text: '새로운 챌린지가 오픈되었습니다.',
+						}).then(function () {
+							window.close('/ChOpen.do');
+						})
+  				}
+  			},
+  			error : function() {
+  				alert("카테고리 등록 실패");
+  			}
+  		})
+  	}
+  </script>
 </body>
 </html>

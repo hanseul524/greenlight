@@ -52,11 +52,7 @@
             </ul>
           </li>
           <li class="li-area">
-            <i class="far fa-calendar-check" style="margin-right: 10px;"></i><a href="#">챌린지 관리</a> 
-            <ul>
-              <li><a href="#">승인관리</a></li>
-              <li><a href="#">챌린지등록</a></li>
-            </ul>
+            <i class="far fa-calendar-check" style="margin-right: 10px;"></i><a href="AdminChList.do">챌린지 관리</a> 
           </li>
           <li class="li-area">
             <i class="fas fa-hand-holding-usd" style="margin-right: 10px;"></i><a href="#">기부관리</a>

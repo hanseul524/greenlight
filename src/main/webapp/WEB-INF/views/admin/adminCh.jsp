@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>admin challengepage</title>
+<title>admin challengePage</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
@@ -28,7 +29,7 @@
       });
     });
     function popUp() {
-      window.open('./chpopup.html', '_blank', 
+      window.open('/ChOpen.do', '_blank', 
       'top=250, left=500, height=300, width=500,toolbar=no, menubar=no, location=no, status=no, scrollbars=no, resizable=no');
     }
   </script>
@@ -56,11 +57,7 @@
             </ul>
           </li>
           <li class="li-area">
-            <i class="far fa-calendar-check" style="margin-right: 10px;"></i><a href="#">챌린지 관리</a> 
-            <ul>
-              <li><a href="#">승인관리</a></li>
-              <li><a href="#">챌린지등록</a></li>
-            </ul>
+            <i class="far fa-calendar-check" style="margin-right: 10px;"></i><a href="AdminChList.do">챌린지 관리</a> 
           </li>
           <li class="li-area">
             <i class="fas fa-hand-holding-usd" style="margin-right: 10px;"></i><a href="#">기부관리</a>
@@ -84,7 +81,6 @@
             <button onclick="popUp();" value="챌린지 오픈하기">챌린지 오픈</button>
             <p>회원들의 챌린지를 확인하고 승인을 진행해주세요.</p>
           </div>
-        <form action="" method="get">
           <div class="con-list">
             <table class="table table-hover">
               <thead>
@@ -97,61 +93,58 @@
                 </tr>
               </thead>
               <tbody>
+              <c:forEach items="${cList }" var="challenge">
                 <tr>
-                  <td>01</td>
-                  <td>오늘은 에코백을 사용했어요.</td>
-                  <td>user01</td>
-                  <td>2021.11.02</td>
-                  <td>미승인</td>
+                  <td>${challenge.chNo }</td>
+                  <td><a href="ChallengeDetail.do?chNo=">${challenge.chTitle }</a></td>
+                  <td>${challenge.chWriter }</td>
+                  <td>${challenge.writeDate }</td>
+                  <td>
+                  <c:if test="${challenge.chConfirm eq 'N' }">
+                  	미승인
+                  </c:if>
+                  <c:if test="${challenge.chConfirm eq 'Y' }">
+                  	승인
+                  </c:if>
+                  </td>
                 </tr>
-                <tr>
-                  <td>01</td>
-                  <td>오늘은 에코백을 사용했어요.</td>
-                  <td>user01</td>
-                  <td>2021.11.02</td>
-                  <td>미승인</td>
-                </tr>
-                <tr>
-                  <td>01</td>
-                  <td>오늘은 에코백을 사용했어요.</td>
-                  <td>user01</td>
-                  <td>2021.11.02</td>
-                  <td>미승인</td>
-                </tr>
-                <tr>
-                  <td>01</td>
-                  <td>오늘은 에코백을 사용했어요.</td>
-                  <td>user01</td>
-                  <td>2021.11.02</td>
-                  <td>미승인</td>
-                </tr>
-                <tr>
-                  <td>01</td>
-                  <td>오늘은 에코백을 사용했어요.</td>
-                  <td>user01</td>
-                  <td>2021.11.02</td>
-                  <td>미승인</td>
-                </tr>
+              </c:forEach>
               </tbody>
             </table>
-            <div class="page_wrap">
-              <div class="page_nation">
-                 <a class="arrow prev" href="#"></a>
-                 <a href="#" class="active">1</a>
-                 <a href="#">2</a>
-                 <a href="#">3</a>
-                 <a href="#">4</a>
-                 <a href="#">5</a>
-                 <a href="#">6</a>
-                 <a href="#">7</a>
-                 <a href="#">8</a>
-                 <a href="#">9</a>
-                 <a href="#">10</a>
-                 <a class="arrow next" href="#"></a>
-              </div>
-           </div>
+    <div class="page_wrap">
+    <c:url var="before" value="AdminChList.do">
+    	<c:param name="page" value="${api.currentPage - 1 }"></c:param>
+    </c:url>
+      <div class="page_nation">
+      <c:if test="${api.currentPage <= 1 }">
+         <a class="arrow prev" href="#"></a>
+      </c:if>
+      <c:if test="${api.currentPage > 1 }">
+         <a class="arrow prev" href="${before }"></a>
+      </c:if>
+      <c:forEach var="p" begin="${api.startNavi}" end="${api.endNavi }">
+      	<c:url var="pagenation" value="AdminChList.do">
+      		<c:param name="page" value="${p }"></c:param>
+      	</c:url>
+      	<c:if test="${p eq api.currentPage }">
+         	<a href="#" class="active">${p }</a>
+      	</c:if>
+      	<c:if test="${p ne api.currentPage }">
+      		<a href="${pagenation }">${p }</a>
+      	</c:if>
+      </c:forEach>
+      <c:url var="after" value="AdminChList.do">
+      	<c:param name="page" value="${api.currentPage + 1 }"></c:param>
+      </c:url>
+      <c:if test="${api.currentPage >= api.maxPage }">
+         <a class="arrow next" href="#"></a>
+      </c:if>
+      <c:if test="${api.currentPage < api.maxPage }">
+         <a class="arrow next" href="${after }"></a>
+      </c:if>
+      </div>
+    </div>
           </div>
-        </form>
       </div>
     </div>
   </div>
