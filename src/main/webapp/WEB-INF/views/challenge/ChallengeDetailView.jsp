@@ -61,14 +61,19 @@
 	      </div>
 	      <div class="comm-div">
 	        <span style="font-size: 20px; font-weight: 600;">Comments</span> <span id="rCount"></span>
-	        <c:choose>
-   				<c:when test="${chlike.likeCk eq '0'}"> <!-- likeCk가0이면 빈하트-->
-					<a href="#" onclick="addHeart();"><i class="far fa-heart fa-2x" style="color:red;"></i></a>
-    			</c:when>
-   				<c:otherwise> <!-- likeCk가1이면 빨간 하트-->
-					<a href="#" onclick="delHeart();"><i class="fas fa-heart fa-2x" style="color:red;"></i></a>
-    			</c:otherwise>
-			</c:choose>
+	        <c:if test="${userId ne null }">
+		        <c:choose>
+	   				<c:when test="${chlike.likeCk eq 0}"> <!-- likeCk가0이면 빈하트-->
+						<a href="#" onclick="addHeart();"><i class="far fa-heart fa-2x" style="color:red;"></i></a>
+	    			</c:when>
+	   				<c:otherwise> <!-- likeCk가1이면 빨간 하트-->
+						<a href="#" onclick="delHeart();"><i class="fas fa-heart fa-2x" style="color:red;"></i></a>
+	    			</c:otherwise>
+				</c:choose>
+	        </c:if>
+	        <c:if test="${userId eq null }">
+	        	<a href="#" onclick="loginCk();"><i class="far fa-heart fa-2x" style="color:red;"></i></a>
+	        </c:if>
 	        
 	        <hr> 
 	        <div class="comm-user-div">
@@ -87,6 +92,16 @@
   </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
 <script>
+	//좋아요를 눌렀을 때 아이디 값이 없을때
+	function loginCk() {
+		Swal.fire({ 
+			icon: 'warning',
+			title: '로그인이 필요합니다.',
+			text: '로그인 후 이용해주세요.',
+			}).then(function(){
+				location.href="loginView.do";				
+			})
+	}
 	//좋아요 update하는 함수
 	function addHeart() {
 		var chNo = '${challenge.chNo}';
@@ -103,8 +118,9 @@
 					icon: 'success',
 					title: '좋아요',
 					text: '좋아요 성공!',
-					});
-				
+					}).then(function (){
+						location.reload();
+					})
 			},
 			error : function() {
 				alert("좋아요 실패~");
@@ -112,6 +128,7 @@
 		})
 	}
 	
+	// 좋아요 delete
 	function delHeart() {
 		var chNo = '${challenge.chNo}';
 		
@@ -126,7 +143,9 @@
 					icon: 'success',
 					title: '좋아요 취소',
 					text: '좋아요 취소 성공!',
-					});
+					}).then(function(){
+						location.reload();
+					})
 			},
 			error : function() {
 				alert("취소 실패~");
@@ -134,6 +153,7 @@
 		})
 	}
 	
+	// 댓글 쓰기
     getReplyList();
 	$("#submitBtn").on("click", function() {
 		var chNo = '${challenge.chNo}';
@@ -165,6 +185,7 @@
 		})
 	});
 	
+	// 댓글 리스트 불러오기
 	function getReplyList() {
 		var chNo = '${challenge.chNo}';
 		$.ajax({

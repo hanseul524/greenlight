@@ -1,5 +1,6 @@
 package com.iei.greenlight.challenge.service.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -69,15 +70,27 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	@Override
-	public int addLike(ChLike chlike) {
+	public ChLike LikeCk(HashMap<String, Object> hashMap) {
+		ChLike chlike = store.selectLike(hashMap);
+		return chlike;
+	}
+	
+	@Override
+	public int addLike(HashMap<String, Object> hashMap) {
+		int result = store.insertLike(hashMap);
+		return result;
+	}
+	
+	@Override
+	public int updateLike(ChLike chlike) {
 		int result = store.updateLike(chlike);
 		return result;
 	}
 
 	@Override
 	public int removeLike(ChLike chlike) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.deleteLike(chlike);
+		return result;
 	}
 
 	@Override
@@ -102,7 +115,4 @@ public class ChallengeServiceImpl implements ChallengeService{
 		int result = store.deleteReply(reply);
 		return result;
 	}
-
-
-
 }

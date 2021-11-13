@@ -15,7 +15,7 @@
     .header {
       width: 100%;
       height: 100px;
-/*       margin-bottom: 10px; */
+      margin-bottom: 40px;
     }
     .main-img {
       width: 15%;
@@ -29,7 +29,7 @@
       float: left;
     }
     .user-area {
-      width: 15%;
+      width: 13%;
       height: 100px;
       float: left;
       text-align: right;
@@ -39,7 +39,7 @@
       text-align: center;
       margin-top: 13px;
     }
-    .navi-menu li {
+    .navi-menu>li {
       display: inline-block;
       margin: 20px;
       position: relative;
@@ -64,14 +64,35 @@
       font-weight: 300;
       font-size: 15px;
     }
-    .user-area a {
+    .user-area>a {
       color: black;
       font-weight: 300;
       text-decoration: none;
       display: inline-block;
-      margin: 20px;
+      margin: 5px;
       position: relative;
     }
+    .user-navi {
+      position: absolute;
+      width: 80px;
+      right: 30px;
+      top: 40px;
+      display: none;
+    }
+    .user-navi>li {
+      list-style-type: none;
+      width: 85px;
+    }
+    .user-navi>li>a {
+      text-decoration: none;
+      margin: 10px;
+      font-size: 12px;
+      font-weight: 300;
+      color: black;
+    }
+	.icon:hover ~ .user-navi{
+      display: block;
+   }
 </style>
 </head>
 <body>
@@ -88,7 +109,14 @@
     </div>
     <div class="user-area">
     <c:if test="${userId eq null }"><a href="loginView.do">Login</a></c:if>
-    <c:if test="${userId ne null and userId ne 'admin'}"><i class="fas fa-user-circle fa-2x" style="color: gray;"></i></c:if> <!--괜찮  -->
+    <div class="user-area">
+      <a class="icon" href="#" style="margin: 0;"><i class="fas fa-user-circle fa-2x" style="color: gray;"></i></a>
+      <ul class="user-navi">
+      	<li><a href="myPage.do">마이페이지</a></li>
+      	<li><a href="chargeList.do">포인트</a></li>
+      	<li><a href="logout.do">로그아웃</a></li>
+      </ul>
+    </div><!--괜찮  -->
     <c:if test="${userId eq 'admin' and userId ne null}"><i class="fas fa-user-cog fa-2x" style="color: gray;"></i></c:if> <!-- 안괜찮 -->
       
 <!--       <ul> -->

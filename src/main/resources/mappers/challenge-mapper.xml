@@ -88,7 +88,17 @@
 		<result property="userId" column="USER_ID"/>
 		<result property="likeCk" column="LIKE_CK"/>
 	</resultMap>
-	<insert id="updateLike" parameterType="ChLike">
-		INSERT INTO CHALLENGE_LIKE VALUES(SEQ_LIKE_NO.NEXTVAL, #{chNo}, #{userId}, 1)
+	
+	<select id="selectLike" parameterType="hashmap" resultMap="likeResultMap">
+		SELECT * FROM CHALLENGE_LIKE WHERE CH_NO = #{chNo} AND USER_ID = #{userId}
+	</select>
+	<insert id="insertLike" parameterType="ChLike">
+		INSERT INTO CHALLENGE_LIKE VALUES(SEQ_LIKE_NO.NEXTVAL, #{chNo}, #{userId}, DEFAULT)
 	</insert>
+	<update id="updateLike" parameterType="ChLike">
+		UPDATE CHALLENGE_LIKE SET LIKE_CK = 1 WHERE CH_NO = #{chNo} AND USER_ID = #{userId}
+	</update>
+	<update id="deleteLike" parameterType="ChLike">
+		UPDATE CHALLENGE_LIKE SET LIKE_CK = 0 WHERE CH_NO = #{chNo} AND USER_ID = #{userId}
+	</update>
 </mapper>

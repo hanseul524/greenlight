@@ -5,17 +5,19 @@ public class ChLike {
 	private int likeNo;
 	private int chNo;
 	private String userId;
-	private String likeCk;
+	private int likeCk;
 	
 	public ChLike() {}
 	
-	public ChLike(int likeNo, int chNo, String userId, String likeCk) {
+	
+	public ChLike(int likeNo, int chNo, String userId, int likeCk) {
 		super();
 		this.likeNo = likeNo;
 		this.chNo = chNo;
 		this.userId = userId;
 		this.likeCk = likeCk;
 	}
+
 
 	public int getLikeNo() {
 		return likeNo;
@@ -41,11 +43,11 @@ public class ChLike {
 		this.userId = userId;
 	}
 
-	public String getLikeCk() {
+	public int getLikeCk() {
 		return likeCk;
 	}
 
-	public void setLikeCk(String likeCk) {
+	public void setLikeCk(int likeCk) {
 		this.likeCk = likeCk;
 	}
 
