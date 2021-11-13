@@ -103,6 +103,7 @@ p {
 	        		  type : "post",
 	        		  data : {
 	        			  "chargeMoney" : inputPrice,
+	        			  "imp_uid" : rsp.imp_uid
 	        		  },
 	        		  success : function(result){
 	        			  if(result >2){

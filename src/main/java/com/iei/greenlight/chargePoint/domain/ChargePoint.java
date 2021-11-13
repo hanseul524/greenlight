@@ -9,21 +9,33 @@ public class ChargePoint {
 	private int chargeMoney;
 	private int chargePoint;
 	private Date chargeDate;
+	private String impUid;
 	private String refund;
 	private int rowNum;
 
 	public ChargePoint() {}
-
-	public ChargePoint(int chargeNo, String userId, int chargeMoney, int chargePoint, Date chargeDate, String refund) {
+	
+	public ChargePoint(int chargeNo, String userId, int chargeMoney, int chargePoint, Date chargeDate, String impUid,
+			String refund, int rowNum) {
 		super();
 		this.chargeNo = chargeNo;
 		this.userId = userId;
 		this.chargeMoney = chargeMoney;
 		this.chargePoint = chargePoint;
 		this.chargeDate = chargeDate;
+		this.impUid = impUid;
 		this.refund = refund;
+		this.rowNum = rowNum;
 	}
-	
+
+	public String getImpUid() {
+		return impUid;
+	}
+
+	public void setImpUid(String impUid) {
+		this.impUid = impUid;
+	}
+
 	public int getRowNum() {
 		return rowNum;
 	}
@@ -83,9 +95,10 @@ public class ChargePoint {
 	@Override
 	public String toString() {
 		return "ChargePoint [chargeNo=" + chargeNo + ", userId=" + userId + ", chargeMoney=" + chargeMoney
-				+ ", chargePoint=" + chargePoint + ", chargeDate=" + chargeDate + ", refund=" + refund + ", rowNum="
-				+ rowNum + "]";
+				+ ", chargePoint=" + chargePoint + ", chargeDate=" + chargeDate + ", impUid=" + impUid + ", refund="
+				+ refund + ", rowNum=" + rowNum + "]";
 	}
+
 	
 
 }

@@ -1,10 +1,14 @@
 package com.iei.greenlight.chargePoint.controller;
 
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +49,7 @@ public class ChargePointController {
 		return "chargePoint/pointList";
 	}
 	
+	// 충전 웹 이동
 	@RequestMapping(value="cpPopView.do", method=RequestMethod.GET)
 	public String cpPopView(HttpServletRequest request,Model model) {
 		String userId = (String)request.getSession().getAttribute("userId");
@@ -53,15 +58,17 @@ public class ChargePointController {
 		return "chargePoint/cpPopup";
 	}
 	
+	// 포인트 충전
 	@ResponseBody
 	@RequestMapping(value="chargePoint.do", method=RequestMethod.POST)
-	public String chargePoint(HttpServletRequest request, @RequestParam("chargeMoney") int chargeMoney) {
+	public String chargePoint(HttpServletRequest request, @RequestParam("chargeMoney") int chargeMoney, @RequestParam("imp_uid") String impUid) {
 		String userId = (String)request.getSession().getAttribute("userId");
 		int chargePoint = chargeMoney;
 		ChargePoint cp = new ChargePoint();
 		cp.setUserId(userId);
 		cp.setChargeMoney(chargeMoney);
 		cp.setChargePoint(chargePoint);
+		cp.setImpUid(impUid);
 		int result = service.registerChargePoint(cp);
 		int uResult = 0;
 		int phResult = 0;
@@ -82,4 +89,12 @@ public class ChargePointController {
 			return String.valueOf(sum);
 		}
 	}
+	
+	// 취소요청
+	@RequestMapping(value="chargeCancel.do", method=RequestMethod.POST)
+	public String chargeCancel(@RequestParam("impUid") String impUid, @RequestParam("chargeMoney") int chargeMoney) {
+		
+		return "";
+	}
+	
 }

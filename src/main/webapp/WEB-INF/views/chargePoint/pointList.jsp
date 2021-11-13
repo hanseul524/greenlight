@@ -37,7 +37,7 @@
                   <td>${cPoint.chargeDate }</td>
            		  <td>
                  	<c:if test="${cPoint.refund eq 'N'}" >
-                 			<a onclick="cancelPay();" style="text-decoration: none;">결제완료</a>
+                 			<a onclick="<%-- cancelPay('${cPoint.impUid }', ${cPoint.chargeMoney }); --%> test();" style="text-decoration: none; color: blue; cursor: pointer;">결제완료</a>
               		</c:if>
              		<c:if test="${cPoint.refund ne 'N'}" >
               			취소완료
@@ -93,22 +93,37 @@
 	    }
 	
 	// 결제 취소 
-	function cancelPay() {
-	    jQuery.ajax({
-	      "url": "{환불요청을 받을 서비스 URL}", // 예: http://www.myservice.com/payments/cancel
+ 	function cancelPay(impUid, chargeMoney) {
+		console.log(impUid);
+		console.log(chargeMoney);
+	    $.ajax({
+	      "url": "chargeCancel.do", // 예: http://www.myservice.com/payments/cancel
 	      "type": "POST",
 	      "contentType": "application/json",
 	      "data": JSON.stringify({
-	        "merchant_uid": "{결제건의 주문번호}", // 예: ORD20180131-0000011
-	        "cancel_request_amount": 2000, // 환불금액
-	        "reason": "테스트 결제 환불" // 환불사유
-	        "refund_holder": "홍길동", // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
-	        "refund_bank": "88" // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
-	        "refund_account": "56211105948400" // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+	        "impUid": impUid, // 예: ORD20180131-0000011
+	        "chargeMoney": chargeMoney, // 환불금액
+	        "reason": "포인트 충전 취소", // 환불사유
 	      }),
 	      "dataType": "json"
 	    });
 	  }
+	function test(){
+		var imp_key = "5629102220202692";
+		var imp_secret = "e16865ead67733834d03a4bc19b7c3f318bbbfc8cf3291c831bcb78d373a08b8352582d077d5f395";
+		$.ajax({
+			url : "https://api.iamport.kr/users/getToken",
+			type : "POST",
+			data : {
+				"imp_key" : imp_key,
+				"imp_secret" : imp_secret
+			},
+			success : function(rsp){
+				console.log(rsp);
+			}
+		})
+	}
+
 </script>
 </body>
 </html>
