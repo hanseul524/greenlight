@@ -8,6 +8,7 @@
 		<result property="chargePoint" column="CHARGE_POINT"/>
 		<result property="chargeDate" column="CHARGE_DATE"/>
 		<result property="refund" column="REFUND"/>
+		<result property="impUid" column="IMP_UID"/>
 		<result property="rowNum" column="COUNT"/>
 	</resultMap>
 	
@@ -22,7 +23,7 @@
 	
 	<!-- chargePoint 테이블 데이터 추가  -->
 	<insert id="insertChargePoint" parameterType="ChargePoint">
-		INSERT INTO CHARGE_POINT VALUES(SEQ_CP_NO.NEXTVAL, #{userId }, #{chargeMoney }, #{chargePoint }, DEFAULT, DEFAULT)
+		INSERT INTO CHARGE_POINT VALUES(SEQ_CP_NO.NEXTVAL, #{userId }, #{chargeMoney }, #{chargePoint }, DEFAULT, #{impUid }, DEFAULT)
 	</insert>
 	
 	<!-- pointHistory  -->
