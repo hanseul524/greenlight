@@ -39,6 +39,7 @@
            <div id="point-table-section">
                <table align="center" id="point-table">
                    <tr>
+                   	   <th class="table-th">No</th>
                        <th class="table-th">일시</th>
                        <th class="table-th">내용</th>
                        <th class="table-th">지급 포인트</th>
@@ -46,12 +47,13 @@
                    </tr>
                    <c:if test="${empty point }">
 		                   <tr>
-		                       <td colspan="4"  class="table-td">포인트 획득 내역이 없습니다</td>
+		                       <td colspan="5"  class="table-td">포인트 획득/사용 내역이 없습니다</td>
 		                   </tr>
                    </c:if>
                    <c:if test="${ not empty point }">
 	                   <c:forEach items="${point }" var="point" varStatus="index">
 		                   <tr>
+		                   	   <td class="table-td">${point.rowNum }</td>
 		                       <td  class="table-td">${point.pointDate }</td>
 		                       <td  class="table-td">${point.pointContents }</td>
 		                       <td  class="table-td">+${point.pointPayment }</td>
@@ -61,7 +63,39 @@
                    </c:if>
                </table>
                <div id="point-pageing">
-                   [이전] 1 2 3 4 5 [다음]
+                   <div class="page_wrap">
+				    <c:url var="before" value="myPagePoint.do">
+				    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+				    </c:url>
+				      <div class="page_nation">
+				      <c:if test="${pi.currentPage <= 1 }">
+				         <a class="arrow prev" href="#"></a>
+				      </c:if>
+				      <c:if test="${pi.currentPage > 1 }">
+				         <a class="arrow prev" href="${before }"></a>
+				      </c:if>
+				      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
+				      	<c:url var="pagenation" value="myPagePoint.do">
+				      		<c:param name="page" value="${p }"></c:param>
+				      	</c:url>
+				      	<c:if test="${p eq pi.currentPage }">
+				         	<a href="#" class="active">${p }</a>
+				      	</c:if>
+				      	<c:if test="${p ne pi.currentPage }">
+				      		<a href="${pagenation }">${p }</a>
+				      	</c:if>
+				      </c:forEach>
+				      <c:url var="after" value="myPagePoint.do">
+				      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+				      </c:url>
+				      <c:if test="${pi.currentPage >= pi.maxPage }">
+				         <a class="arrow next" href="#"></a>
+				      </c:if>
+				      <c:if test="${pi.currentPage < pi.maxPage }">
+				         <a class="arrow next" href="${after }"></a>
+				      </c:if>
+				      </div>
+				    </div>
                </div>
            </div>
        </main>

@@ -1,5 +1,6 @@
 package com.iei.greenlight.mypage.service.logic;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,20 +32,20 @@ public class MyPageServiceImpl implements MyPageService{
 	}
 	
 	@Override
-	public List<PointHistory> printPoint(String userId) {
-		return store.selectPoint(userId);
+	public List<PointHistory> printPoint(HashMap<String, Object> hashmap) {
+		return store.selectPoint(hashmap);
 	}
 
 	@Override
-	public int getListCount() {
-		int totalCount = store.selectListCount();
+	public int getListCount(String userId) {
+		int totalCount = store.selectListCount(userId);
 		return totalCount;
 	}
 
-	@Override
-	public List<Challenge> printChallList(PageInfo pi) {
-		return store.selectChallList(pi);
-	}
+//	@Override
+//	public List<Challenge> printChallList(PageInfo pi) {
+//		return store.selectChallList(pi);
+//	}
 
 	
 

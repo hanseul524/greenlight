@@ -1,5 +1,6 @@
 package com.iei.greenlight.mypage.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.iei.greenlight.challenge.domain.Challenge;
-import com.iei.greenlight.challenge.domain.PageInfo;
-import com.iei.greenlight.common.Pagination;
+import com.iei.greenlight.mypage.common.Pagination;
+import com.iei.greenlight.mypage.domain.PageInfo;
 import com.iei.greenlight.mypage.domain.PointHistory;
 import com.iei.greenlight.mypage.service.MyPageService;
 import com.iei.greenlight.user.domain.User;
@@ -53,16 +54,23 @@ public class MyPageController {
 	}
 	// point 이력 출력
 	@RequestMapping(value="myPagePoint.do", method=RequestMethod.GET)
-	public String myPagePointHistory(HttpSession session, Model model) {
+	public String myPagePointHistory(HttpSession session, Model model, @RequestParam(value="page", required=false) Integer page) {
 		String userId = (String)session.getAttribute("userId");
-		List<PointHistory> point = service.printPoint(userId);
-		System.out.println(point.toString());
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListCount(userId);
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		hashmap.put("pi", pi);
+		hashmap.put("userId", userId);
+		List<PointHistory> point = service.printPoint(hashmap);
 		try {
 			if(!point.isEmpty()) {
 				model.addAttribute("point", point);
+				model.addAttribute("pi", pi);
 				return "mypage/PointHistory";
 			}else {
 				model.addAttribute("point", null);
+				model.addAttribute("pi", pi);
 				return "mypage/PointHistory";
 			}
 		} catch (Exception e) {
@@ -78,42 +86,23 @@ public class MyPageController {
 	}
 	
 	
-	
-	@RequestMapping(value="myChallenge.do", method=RequestMethod.GET)
-	public String myChallenge(@ModelAttribute Challenge challenge, Model model, HttpServletRequest request, @RequestParam(value="page", required=false) Integer page) {
-		int currentPage = (page != null) ? page : 1;
-		int totalCount = service.getListCount();
-		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-		String userId = (String)request.getSession().getAttribute("userId");
-		List<Challenge> challenges = service.printChallList(pi);
-		if(!challenges.isEmpty()) {
-			model.addAttribute("cList", challenges);
-			model.addAttribute("pi", pi);
-			model.addAttribute("userId", userId);
-			return "mypage/MyChallenge";
-		}else {
-			model.addAttribute("msg", "실패");
-			return "common/errorPage";
-		}
-	}
-	
-//	@RequestMapping(value="ChallengeListView.do", method=RequestMethod.GET)
-//	public String ChallengeListView(
-//			@ModelAttribute Challenge challenge,
-//			HttpServletRequest request,
-//			Model model,
-//			@RequestParam(value="page", required=false) Integer page) {
+	//챌린지
+//	@RequestMapping(value="myChallenge.do", method=RequestMethod.GET)
+//	public String myChallenge(@ModelAttribute Challenge challenge, Model model, HttpServletRequest request, @RequestParam(value="page", required=false) Integer page) {
 //		int currentPage = (page != null) ? page : 1;
 //		int totalCount = service.getListCount();
 //		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-//		List<Challenge> cList = service.printAll(pi);
-//		if(!cList.isEmpty()) {
-//			model.addAttribute("cList", cList);
+//		String userId = (String)request.getSession().getAttribute("userId");
+//		List<Challenge> challenges = service.printChallList(pi);
+//		if(!challenges.isEmpty()) {
+//			model.addAttribute("cList", challenges);
 //			model.addAttribute("pi", pi);
-//			return "challenge/ChallengeListView";
+//			model.addAttribute("userId", userId);
+//			return "mypage/MyChallenge";
 //		}else {
-//			model.addAttribute("msg", "리스트 조회 실패");
+//			model.addAttribute("msg", "실패");
 //			return "common/errorPage";
 //		}
 //	}
+	
 }

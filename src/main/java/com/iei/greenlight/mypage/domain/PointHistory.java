@@ -10,9 +10,9 @@ public class PointHistory {
 	private int pointPayment;
 	private int pointUse;
 	private String chargeYN;
-	
-	public PointHistory() {
-	}
+	private int rowNum;
+
+	public PointHistory() {}
 
 	public PointHistory(String userId, Date pointDate, String pointContents, int pointPayment, int pointUse) {
 		super();
@@ -23,6 +23,16 @@ public class PointHistory {
 		this.pointUse = pointUse;
 	}
 
+
+	
+	public int getRowNum() {
+		return rowNum;
+	}
+
+	public void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
+	}
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -63,8 +73,6 @@ public class PointHistory {
 		this.pointUse = pointUse;
 	}
 	
-	
-
 	public String getChargeYN() {
 		return chargeYN;
 	}

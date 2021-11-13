@@ -30,7 +30,7 @@
 	           </ul>
 	       </div>
             <c:if test="${ empty aList }">
-            	<h1 align="center">진행중인 경매가 없습니다</h1>
+            	<h1 align="center">입찰한 경매가 없습니다.</h1>
             </c:if>
             <c:if test="${ not empty aList }">
             	<c:forEach items="${aList }" var="auction" varStatus="index">
