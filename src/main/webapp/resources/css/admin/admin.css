@@ -6,6 +6,10 @@
   padding: 25px;
   display: table;
 }
+a {
+  text-decoration : none;
+  color : black;
+}
 .nav-admin {
   width: 270px;
   height: 600px;

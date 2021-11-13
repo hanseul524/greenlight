@@ -64,15 +64,15 @@
 	        <c:if test="${userId ne null }">
 		        <c:choose>
 	   				<c:when test="${chlike.likeCk eq 0}"> <!-- likeCk가0이면 빈하트-->
-						<a href="#" onclick="addHeart();"><i class="far fa-heart fa-2x" style="color:red;"></i></a>
+						<a class="heart-area" href="#" onclick="addHeart();"><i class="far fa-heart fa-2x" style="color:red;"></i></a><span>${challenge.likeCount }</span>
 	    			</c:when>
 	   				<c:otherwise> <!-- likeCk가1이면 빨간 하트-->
-						<a href="#" onclick="delHeart();"><i class="fas fa-heart fa-2x" style="color:red;"></i></a>
+						<a class="heart-area" href="#" onclick="delHeart();"><i class="fas fa-heart fa-2x" style="color:red;"></i></a><span>${challenge.likeCount }</span>
 	    			</c:otherwise>
 				</c:choose>
 	        </c:if>
 	        <c:if test="${userId eq null }">
-	        	<a href="#" onclick="loginCk();"><i class="far fa-heart fa-2x" style="color:red;"></i></a>
+	        	<a class="heart-area" href="#" onclick="loginCk();"><i class="far fa-heart fa-2x" style="color:red;"></i></a><span>${challenge.likeCount }</span>
 	        </c:if>
 	        
 	        <hr> 
@@ -208,7 +208,7 @@
 				$("#rCount").text(data.length);
 				if(data.length > 0) {
 					for(var i in data) {
-						$innerdiv = $("<div id='replyDiv' style='border: 1px solid yellow; vertical-align:middle; align-items:center; padding: 10px;'><hr>");
+						$innerdiv = $("<div id='replyDiv' style=vertical-align:middle; align-items:center; padding: 30px;><hr>");
 						$icon = $("<i class='fas fa-user-circle fa-3x' style='color: gray;'>");
 						$rWriter = $("<span>").text(data[i].replywriter);
 						$rContent = $("<span>").text(data[i].replyContents);
