@@ -202,20 +202,41 @@ public class AuctionStoreLogic implements AuctionStore{
 		
 		return result;
 	}
-
+	
+	
 	// 스토어 로직 수정
 	@Override
-	public List<AuctionHistory> selectAllList(String userId) {
-		System.out.println("서비스 : " + userId);
-		List<AuctionHistory> aList = sqlSession.selectList("auctionMapper.selectMyAuctionList", userId);
+	public int selectMyListCount(String userId) {
+		return sqlSession.selectOne("auctionMapper.selectMyHistory", userId);
+	}
+	
+	@Override
+	public int selectMyAuctionCount(String userId) {
+		return sqlSession.selectOne("auctionMapper.selectMyBidList", userId);
+	}
+	
+	@Override
+	public List<AuctionHistory> selectAllList(HashMap<String, Object> hashMap) {
+		PageInfo pi = (PageInfo)(hashMap.get("pi"));
+		int offset = (pi.getCurrentPage() - 1) * pi.getAuctionLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getAuctionLimit());
+		List<AuctionHistory> aList = sqlSession.selectList("auctionMapper.selectMyAuctionList", hashMap, rowBounds);
 		return aList;
 	}
 
 	@Override
-	public List<AuctionHistory> selectList(String userId) {
-		List<AuctionHistory> aList = sqlSession.selectList("auctionMapper.selectList", userId);
+	public List<AuctionHistory> selectList(HashMap<String, Object> hashMap) {
+		PageInfo pi = (PageInfo)(hashMap.get("pi"));
+		int offset = (pi.getCurrentPage() - 1) * pi.getAuctionLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getAuctionLimit());
+		List<AuctionHistory> aList = sqlSession.selectList("auctionMapper.selectList", hashMap, rowBounds);
 		return aList;
 	}
+
+
+
+
+
 
 
 }

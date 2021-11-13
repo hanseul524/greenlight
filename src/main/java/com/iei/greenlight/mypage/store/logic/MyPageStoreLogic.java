@@ -39,13 +39,6 @@ public class MyPageStoreLogic implements MyPageStore{
 		return sqlSession.selectList("pointMapper.selectPoint", hashmap, rowBounds);
 	}
 
-//	@Override
-//	public List<Challenge> selectChallList(PageInfo pi) {
-//		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
-//		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-//		List<Challenge> cList = sqlSession.selectList("challengeMapper.selectAllList", pi, rowBounds);
-//		return cList;
-//	}
 	
 	@Override
 	public int selectListCount(String userId) {

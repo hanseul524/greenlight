@@ -37,6 +37,15 @@ body, html{
             display: block;
             text-decoration: none;
         }
+#my-auction-butn{
+	height: 80px;
+	width: 1200px;
+	float: left;
+}
+	#my-auction-butn a{
+		color: black;
+		line-height: 80px;
+	}
 .auction{
     width:1100px;
     margin : 0 auto;

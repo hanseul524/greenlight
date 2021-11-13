@@ -16,10 +16,6 @@ public interface MyPageStore {
 	
 	List<PointHistory> selectPoint(HashMap<String, Object> hashmap);
 
-//	List<Challenge> selectChallList(PageInfo pi);
-	
 	public int selectListCount(String userId);
-
-//	List<Challenge> selectChallList(PageInfo pi);
 
 }

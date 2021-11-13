@@ -86,23 +86,5 @@ public class MyPageController {
 	}
 	
 	
-	//챌린지
-//	@RequestMapping(value="myChallenge.do", method=RequestMethod.GET)
-//	public String myChallenge(@ModelAttribute Challenge challenge, Model model, HttpServletRequest request, @RequestParam(value="page", required=false) Integer page) {
-//		int currentPage = (page != null) ? page : 1;
-//		int totalCount = service.getListCount();
-//		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-//		String userId = (String)request.getSession().getAttribute("userId");
-//		List<Challenge> challenges = service.printChallList(pi);
-//		if(!challenges.isEmpty()) {
-//			model.addAttribute("cList", challenges);
-//			model.addAttribute("pi", pi);
-//			model.addAttribute("userId", userId);
-//			return "mypage/MyChallenge";
-//		}else {
-//			model.addAttribute("msg", "실패");
-//			return "common/errorPage";
-//		}
-//	}
 	
 }

@@ -45,8 +45,10 @@ public interface AuctionService {
 	public int modifyAuctionSuccessFul(int[] auctionNo);
 	
 	// mypage
-    public List<AuctionHistory> printAllList(String userId);
-    public List<AuctionHistory> printList(String userId);
+	public int getMyListCount(String userId);
+	public int getMyAuctionCount(String userId);
+    public List<AuctionHistory> printAllList(HashMap<String, Object> hashMap);
+    public List<AuctionHistory> printList(HashMap<String, Object> hashMap);
 	
 
 

@@ -44,7 +44,9 @@ public interface AuctionStore {
 	public int updateAuctionSuccessFul(int[] auctionNo);
 	
 	// mypage
-	public List<AuctionHistory> selectAllList(String userId);
-	public List<AuctionHistory> selectList(String userId);
+	public int selectMyListCount(String userId);
+	public int selectMyAuctionCount(String userId);
+	public List<AuctionHistory> selectAllList(HashMap<String, Object> hashMap);
+	public List<AuctionHistory> selectList(HashMap<String, Object> hashMap);
 	
 }

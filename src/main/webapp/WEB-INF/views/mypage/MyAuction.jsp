@@ -29,6 +29,10 @@
 		          <li class="nav-item"><a href="#" class="nav-link active">나의 기부 현황</a></li>
 	           </ul>
 	       </div>
+	       <div id="my-auction-butn">
+           		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="myAcution.do">내가 올린 경매</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+           		<a href="myBidList.do">내가 입찰한 경매</a>
+	       </div>
             <c:if test="${ empty aList }">
             	<h1 align="center">진행중인 경매가 없습니다</h1>
             </c:if>
@@ -39,7 +43,7 @@
 		                    <div class="quick-view">
 		                        <p>quick view</p>
 		                    </div>
-		                    <img src="${pageContext.request.contextPath}/resources/auctionImage/${auction.fileName }" class="img">
+		                    <img src="../../../resources/auctionImage/${auction.fileName }" class="img">
 		                </div>
 		                <input type="hidden" id="hidden" value="${auction.auctionPrice }">
 		                <div class="auction-title">
@@ -54,39 +58,39 @@
 	        </c:if>
         </div>
     </div>
-<!-- 	<div class="page_wrap"> -->
-<%--     <c:url var="before" value="auctionListView.do"> --%>
-<%--     	<c:param name="page" value="${pi.currentPage - 1 }"></c:param> --%>
-<%--     </c:url> --%>
-<!--       <div class="page_nation"> -->
-<%--       <c:if test="${pi.currentPage <= 1 }"> --%>
-<!--          <a class="arrow prev" href="#"></a> -->
-<%--       </c:if> --%>
-<%--       <c:if test="${pi.currentPage > 1 }"> --%>
-<%--          <a class="arrow prev" href="${before }"></a> --%>
-<%--       </c:if> --%>
-<%--       <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }"> --%>
-<%--       	<c:url var="pagenation" value="auctionListView.do"> --%>
-<%--       		<c:param name="page" value="${p }"></c:param> --%>
-<%--       	</c:url> --%>
-<%--       	<c:if test="${p eq pi.currentPage }"> --%>
-<%--          	<a href="#" class="active">${p }</a> --%>
-<%--       	</c:if> --%>
-<%--       	<c:if test="${p ne pi.currentPage }"> --%>
-<%--       		<a href="${pagenation }">${p }</a> --%>
-<%--       	</c:if> --%>
-<%--       </c:forEach> --%>
-<%--       <c:url var="after" value="auctionListView.do"> --%>
-<%--       	<c:param name="page" value="${pi.currentPage + 1 }"></c:param> --%>
-<%--       </c:url> --%>
-<%--       <c:if test="${pi.currentPage >= pi.maxPage }"> --%>
-<!--          <a class="arrow next" href="#"></a> -->
-<%--       </c:if> --%>
-<%--       <c:if test="${pi.currentPage < pi.maxPage }"> --%>
-<%--          <a class="arrow next" href="${after }"></a> --%>
-<%--       </c:if> --%>
-<!--       </div> -->
-<!--     </div> -->
+	<div class="page_wrap">
+    <c:url var="before" value="myAcution.do">
+    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+    </c:url>
+      <div class="page_nation">
+      <c:if test="${pi.currentPage <= 1 }">
+         <a class="arrow prev" href="#"></a>
+      </c:if>
+      <c:if test="${pi.currentPage > 1 }">
+         <a class="arrow prev" href="${before }"></a>
+      </c:if>
+      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
+      	<c:url var="pagenation" value="myAcution.do">
+      		<c:param name="page" value="${p }"></c:param>
+      	</c:url>
+      	<c:if test="${p eq pi.currentPage }">
+         	<a href="#" class="active">${p }</a>
+      	</c:if>
+      	<c:if test="${p ne pi.currentPage }">
+      		<a href="${pagenation }">${p }</a>
+      	</c:if>
+      </c:forEach>
+      <c:url var="after" value="myAcution.do">
+      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+      </c:url>
+      <c:if test="${pi.currentPage >= pi.maxPage }">
+         <a class="arrow next" href="#"></a>
+      </c:if>
+      <c:if test="${pi.currentPage < pi.maxPage }">
+         <a class="arrow next" href="${after }"></a>
+      </c:if>
+      </div>
+    </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>   
 <script>
     var time = $(".time");
