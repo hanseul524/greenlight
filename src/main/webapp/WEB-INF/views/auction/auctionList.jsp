@@ -15,11 +15,9 @@
 </head>
 <body>
 <jsp:include page="${pageContext.request.contextPath}/common/header.jsp"></jsp:include>
-    <div class="header"></div>
-    <div class="body">
         <div class="content">
             <div class="auction"><span>A</span>&nbsp;&nbsp;<span>U</span>&nbsp;&nbsp;<span>C</span>&nbsp;&nbsp;<span>T</span>&nbsp;&nbsp;<span>I</span>&nbsp;&nbsp;<span>O</span>&nbsp;&nbsp;<span>N</span></div>
-            <div class="button" onclick="auctionWriteView();" style="cursor: pointer;">경매 신청</div>
+            <c:if test="${ not empty sessionScope.userId }"><div class="button" onclick="auctionWriteView();" style="cursor: pointer;">경매 신청</div></c:if>
             <c:if test="${ empty aList }">
             	<h1 align="center">진행중인 경매가 없습니다</h1>
             </c:if>
@@ -37,47 +35,46 @@
 		                    <p>${auction.auctionTitle }</p>
 		                </div>
 		                <div class="auction-point">
-		                    <p class="point">현재 입찰가 : ${auction.auctionPrice }P</p>
+		                    <p class="point">현재 입찰가 : <c:if test="${ auction.point eq 0 }">${auction.auctionPrice }</c:if><c:if test="${ auction.point ne 0 }">${auction.point }</c:if>P</p>
 		                    <p class="time"></p>
 		                </div>
 		            </div>
 	            </c:forEach>
 	        </c:if>
         </div>
-    </div>
-	<div class="page_wrap">
-    <c:url var="before" value="auctionListView.do">
-    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
-    </c:url>
-      <div class="page_nation">
-      <c:if test="${pi.currentPage <= 1 }">
-         <a class="arrow prev" href="#"></a>
-      </c:if>
-      <c:if test="${pi.currentPage > 1 }">
-         <a class="arrow prev" href="${before }"></a>
-      </c:if>
-      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
-      	<c:url var="pagenation" value="auctionListView.do">
-      		<c:param name="page" value="${p }"></c:param>
-      	</c:url>
-      	<c:if test="${p eq pi.currentPage }">
-         	<a href="#" class="active">${p }</a>
-      	</c:if>
-      	<c:if test="${p ne pi.currentPage }">
-      		<a href="${pagenation }">${p }</a>
-      	</c:if>
-      </c:forEach>
-      <c:url var="after" value="auctionListView.do">
-      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
-      </c:url>
-      <c:if test="${pi.currentPage >= pi.maxPage }">
-         <a class="arrow next" href="#"></a>
-      </c:if>
-      <c:if test="${pi.currentPage < pi.maxPage }">
-         <a class="arrow next" href="${after }"></a>
-      </c:if>
-      </div>
-    </div>
+		<div class="page_wrap">
+		   <c:url var="before" value="auctionListView.do">
+		      <c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+		   </c:url>
+		     <div class="page_nation">
+		     <c:if test="${pi.currentPage <= 1 }">
+		        <a class="arrow prev" href="#"></a>
+		     </c:if>
+		     <c:if test="${pi.currentPage > 1 }">
+		        <a class="arrow prev" href="${before }"></a>
+		     </c:if>
+		     <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
+		        <c:url var="pagenation" value="auctionListView.do">
+		           <c:param name="page" value="${p }"></c:param>
+		        </c:url>
+		        <c:if test="${p eq pi.currentPage }">
+		           <a href="#" class="active">${p }</a>
+		        </c:if>
+		        <c:if test="${p ne pi.currentPage }">
+		           <a href="${pagenation }">${p }</a>
+		        </c:if>
+		     </c:forEach>
+		     <c:url var="after" value="auctionListView.do">
+		        <c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+		     </c:url>
+		     <c:if test="${pi.currentPage >= pi.maxPage }">
+		        <a class="arrow next" href="#"></a>
+		     </c:if>
+		     <c:if test="${pi.currentPage < pi.maxPage }">
+		        <a class="arrow next" href="${after }"></a>
+		     </c:if>
+	     </div>
+	   </div>
 <jsp:include page="${pageContext.request.contextPath}/common/footer.jsp"></jsp:include>    
 <script>
     var time = $(".time");

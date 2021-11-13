@@ -32,6 +32,7 @@
   		<result property="auctionStatus" column="AUCTION_STATUS"/>
   		<result property="auctionTime" column="AUCTION_TIME"/>
   		<result property="auctionPrice" column="AUCTION_PRICE"/>
+  		<result property="point" column="POINT"/>
   		<result property="fileName" column="FILE_NAME"/>
   		<result property="filePath" column="FILE_PATH"/>
   		<result property="fileMain" column="FILE_MAIN"/>
@@ -90,13 +91,22 @@
   			(#{item.auctionNo }, #{item.userId }, #{item.fileName }, #{item.filePath }, #{item.fileSize }, DEFAULT, #{item.fileMain })
   		</foreach>
   	</insert>
+  	<delete id="deleteAuctionImage" parameterType="java.util.Arrays">
+  		DELETE FROM AUCTION_IMAGE
+  		<where>
+  			AUCTION_NO IN
+  			<foreach collection="array" item="item" index="index" open="(" close=")" separator=", ">
+  				#{item }
+  			</foreach>
+  		</where>
+  	</delete>
   	
   	<!-- auctionHistory -->
   	<select id="selectAllList" resultMap="auctionHistoryResultMap">
-  		SELECT A.AUCTION_NO, A.USER_ID, A.AUCTION_TITLE, A.AUCTION_STATUS, A.AUCTION_TIME, A.AUCTION_PRICE, A.REG_DATE, A.AUCTION_START, B.FILE_NAME, B.FILE_PATH, B.FILE_MAIN FROM AUCTION_HISTORY A LEFT JOIN AUCTION_IMAGE B ON A.AUCTION_NO = B.AUCTION_NO WHERE B.FILE_MAIN = 'Y' AND A.AUCTION_STATUS = 'Y' ORDER BY AUCTION_NO
+  		SELECT A.AUCTION_NO, A.USER_ID, A.AUCTION_TITLE, A.AUCTION_STATUS, A.AUCTION_TIME, A.AUCTION_PRICE, A.REG_DATE, A.AUCTION_START, A.POINT, B.FILE_NAME, B.FILE_PATH, B.FILE_MAIN FROM AUCTION_IMAGE B LEFT JOIN (SELECT A.AUCTION_NO, A.USER_ID, A.AUCTION_START, A.REG_DATE, A.AUCTION_TITLE, A.AUCTION_STATUS, A.AUCTION_TIME, A.AUCTION_PRICE, B.POINT FROM AUCTION_HISTORY A LEFT JOIN (SELECT AUCTION_NO, MAX(POINT) AS POINT FROM AUCTION_USER GROUP BY AUCTION_NO ORDER BY AUCTION_NO DESC) B ON A.AUCTION_NO = B.AUCTION_NO WHERE AUCTION_STATUS = 'Y') A ON A.AUCTION_NO = B.AUCTION_NO WHERE FILE_MAIN = 'Y' AND A.AUCTION_NO IS NOT NULL
   	</select>
   	<select id="selectList" resultMap="auctionHistoryResultMap">
-        SELECT * FROM AUCTION_HISTORY WHERE AUCTION_NO IN (SELECT AUCTION_NO FROM AUCTION_USER WHERE USER_ID = 'test')
+        SELECT * FROM AUCTION_HISTORY WHERE AUCTION_NO IN (SELECT AUCTION_NO FROM AUCTION_USER WHERE USER_ID = #{userId })
      </select>
   	<select id="selectHistoryListCount" resultType="_int">
   		SELECT COUNT(*) FROM AUCTION_HISTORY WHERE AUCTION_STATUS = 'Y'
@@ -124,6 +134,15 @@
   	<insert id="insertAuctionUser" parameterType="AuctionUser">
   		INSERT INTO AUCTION_USER VALUES(#{auctionNo }, #{userId }, #{point })
   	</insert>
+  	<delete id="deleteAuctionUser" parameterType="java.util.Arrays">
+  		DELETE FROM AUCTION_USER
+  		<where>
+  			AUCTION_NO IN
+  			<foreach collection="array" item="item" index="index" open="(" close=")" separator=", ">
+  				#{item }
+  			</foreach>
+  		</where>
+  	</delete>
   	
   	<!-- AuctionSuccessFul -->
   	<select id="selectAuctionSuccessFulList" resultMap="auctionSuccessFulResultMap">

@@ -25,6 +25,7 @@ public interface AuctionService {
 	// AuctionImage
 	public List<AuctionImage> printAuctionImageOneByNo(int auctionNo);
 	public int registerAuctionImage(List<AuctionImage> aList);
+	public int removeAuctionImage(int[] auctionNo);
 	
 	// AuctionHistory
 	public List<AuctionHistory> printAllList(PageInfo pi);
@@ -35,6 +36,7 @@ public interface AuctionService {
 	// AuctionUser
 	public AuctionUser printAuctionUser(int auctionNo);
 	public int registerAuctionUser(AuctionUser auctionUser);
+	public int removeAuctionUser(int[] auctionNo);
 	
 	// AuctionSuccessFul
 	public List<AuctionSuccessFul> printSuccessFulList();
