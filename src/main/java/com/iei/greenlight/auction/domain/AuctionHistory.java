@@ -12,6 +12,7 @@ public class AuctionHistory {
 	private String auctionStatus;
 	private int auctionTime;
 	private int auctionPrice;
+	private int point;
 	private String fileName;
 	private String filePath;
 	private String fileMain; 
@@ -19,7 +20,7 @@ public class AuctionHistory {
 	public AuctionHistory() {}
 	
 	public AuctionHistory(int auctionNo, String userId, Date regDate, String auctionStart, String auctionTitle,
-			String auctionStatus, int auctionTime, int auctionPrice, String fileName, String filePath,
+			String auctionStatus, int auctionTime, int auctionPrice, int point, String fileName, String filePath,
 			String fileMain) {
 		super();
 		this.auctionNo = auctionNo;
@@ -30,10 +31,13 @@ public class AuctionHistory {
 		this.auctionStatus = auctionStatus;
 		this.auctionTime = auctionTime;
 		this.auctionPrice = auctionPrice;
+		this.point = point;
 		this.fileName = fileName;
 		this.filePath = filePath;
 		this.fileMain = fileMain;
 	}
+
+
 
 
 
@@ -149,12 +153,21 @@ public class AuctionHistory {
 		this.fileMain = fileMain;
 	}
 
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
 	@Override
 	public String toString() {
 		return "AuctionHistory [auctionNo=" + auctionNo + ", userId=" + userId + ", regDate=" + regDate
 				+ ", auctionStart=" + auctionStart + ", auctionTitle=" + auctionTitle + ", auctionStatus="
-				+ auctionStatus + ", auctionTime=" + auctionTime + ", auctionPrice=" + auctionPrice + ", fileName="
-				+ fileName + ", filePath=" + filePath + ", fileMain=" + fileMain + "]";
+				+ auctionStatus + ", auctionTime=" + auctionTime + ", auctionPrice=" + auctionPrice + ", point=" + point
+				+ ", fileName=" + fileName + ", filePath=" + filePath + ", fileMain=" + fileMain + "]";
 	}
+
 
 }

@@ -114,6 +114,15 @@ public class AuctionStoreLogic implements AuctionStore{
 		
 		return result;
 	}
+	
+	@Override
+	public int deleteAuctionImage(int[] auctionNo) {
+		
+		int result = sqlSession.delete("auctionMapper.deleteAuctionImage", auctionNo);
+		
+		return result;
+	}
+
 
 	
 	@Override
@@ -152,6 +161,15 @@ public class AuctionStoreLogic implements AuctionStore{
 		return result;
 	}
 
+
+	@Override
+	public int deleteAuctionUser(int[] auctionNo) {
+		
+		int result = sqlSession.delete("auctionMapper.deleteAuctionUser", auctionNo);
+		
+		return result;
+	}
+	
 	
 	@Override
 	public List<AuctionSuccessFul> selectAuctionSuccessFul() {
@@ -198,7 +216,6 @@ public class AuctionStoreLogic implements AuctionStore{
 		List<AuctionHistory> aList = sqlSession.selectList("auctionMapper.selectList", userId);
 		return aList;
 	}
-
 
 
 }

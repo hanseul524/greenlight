@@ -64,6 +64,7 @@ public class AuctionController {
 			model.addAttribute("pi", pi);
 			return "admin/adminAuction";
 		}else {
+			model.addAttribute("pi", pi);
 			model.addAttribute("aList", null);
 			return "admin/adminAuction";
 		}
@@ -95,11 +96,13 @@ public class AuctionController {
 			int totalCount = service.getListCount();
 			PageInfo pi = AuctionPagination.getPageInfo(currentPage, totalCount);
 			List<AuctionHistory> aList = service.printAllList(pi);
+			
 			if(!aList.isEmpty()) {
 				model.addAttribute("pi", pi);
 				model.addAttribute("aList", aList);
 				return "auction/auctionList";
 			}else {
+				model.addAttribute("pi", pi);
 				model.addAttribute("aList", null);
 				return "auction/auctionList";
 			}
@@ -224,6 +227,8 @@ public class AuctionController {
 		return auctionImage;
 	}
 	
+
+	
 	@RequestMapping(value="insertAuctionUser.do")
 	public String insertAuctionUser(@ModelAttribute AuctionUser auctionUser) {
 		int result = service.registerAuctionUser(auctionUser);
@@ -252,7 +257,7 @@ public class AuctionController {
 	
 	// 관리자 포인트지급 및 회수
 	@RequestMapping(value="userPayPoint.do", method=RequestMethod.POST)
-	public String userPayPoint(Model model, @RequestParam("auctionNo") int[] auctionNo) {
+	public String userPayPoint(Model model, @RequestParam("auctionNo") int[] auctionNo, HttpServletRequest request) {
 		
 		HashMap<String, int[]> map = new HashMap<String, int[]>();
 		HashMap<String, Object> pointMap = new HashMap<String, Object>();
@@ -262,35 +267,55 @@ public class AuctionController {
 		List<AuctionSuccessFul> sList = service.printSuccessFulByNo(map);
 		for(AuctionSuccessFul auctionSuccessFul : sList) {
 			User user = userService.printUser(auctionSuccessFul.getBuyer());
+			int auctionPrice = auctionSuccessFul.getAuctionPrice();
+			String buyer = auctionSuccessFul.getBuyer();
 			if(auctionSuccessFul.getAuctionPrice() == 0) {
 				
-			}else if(user.getPoint() < auctionSuccessFul.getAuctionPrice()) { // 낙찰가격이 적립포인트보다 적으면
+			}else if(user.getPoint() < auctionPrice) { // 낙찰가격이 적립포인트보다 적으면
 				int point = auctionSuccessFul.getAuctionPrice() - user.getPoint();
 				if(user.getPoint() != 0) {
-					pointMap.put("userId", auctionSuccessFul.getBuyer());
+					pointMap.put("userId", buyer);
 					pointMap.put("point", 0);
 					int resultPoint = userService.modifyUserPoint(pointMap);
-					chargePointMap.put("userId", auctionSuccessFul.getBuyer());
+					chargePointMap.put("userId", buyer);
 					chargePointMap.put("point", point);
 					int resultChargePoint = userService.modifyUserChargePoint(chargePointMap);
 				}else {
-					chargePointMap.put("userId", auctionSuccessFul.getBuyer());
+					chargePointMap.put("userId", buyer);
 					chargePointMap.put("point", point);
 					int result = userService.modifyUserChargePoint(chargePointMap);
 				}
 			}else {
-				pointMap.put("userId", auctionSuccessFul.getBuyer());
-				pointMap.put("point", auctionSuccessFul.getAuctionPrice());
+				pointMap.put("userId", buyer);
+				pointMap.put("point", auctionPrice);
 				int result = userService.modifyUserMinusPoint(pointMap);
 			}
 			pointMap.put("userId", auctionSuccessFul.getSeller());
-			pointMap.put("point", auctionSuccessFul.getAuctionPrice());
+			pointMap.put("point", auctionPrice);
 			int result = userService.modifySellerPoint(pointMap);
 		}
 		
-		int result = service.modifyAuctionSuccessFul(auctionNo);
+		int result = service.modifyAuctionSuccessFul(auctionNo); // 낙찰자 상태 수정
+		int removeAuctionUser = service.removeAuctionUser(auctionNo); // 입찰자 삭제
+		for(int i = 0; i < auctionNo.length; i++) { // 이미지 삭제
+			List<AuctionImage> aList = service.printAuctionImageOneByNo(auctionNo[i]);
+			for(AuctionImage a : aList) {
+				deleteFile(a.getFileName(), request);
+			}
+		}
+		int removeAuctionImage = service.removeAuctionImage(auctionNo); // 낙찰 이미지 삭제
 		
 		return "redirect:adminSellAuctionView.do";
+	}
+	
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String fullPath = root + "\\auctionImage";
+		File file = new File(fullPath + "\\" + fileName);
+		if(file.exists()) {
+			file.delete();
+		}
 	}
 	
 	
@@ -308,7 +333,7 @@ public class AuctionController {
 			} else {
 				model.addAttribute("aList", null);
 				// 11/11 수정
-				return "auction/MyAuction";
+				return "mypage/MyAuction";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

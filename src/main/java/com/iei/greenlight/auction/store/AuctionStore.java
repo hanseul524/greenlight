@@ -24,6 +24,7 @@ public interface AuctionStore {
 	// AuctinoImage
 	public List<AuctionImage> selectAuctionImageOneByNo(int auctionNo);
 	public int insertAuctionImage(List<AuctionImage> aList);
+	public int deleteAuctionImage(int[] auctionNo);
 	
 	// AuctionHistory
 	public List<AuctionHistory> selectAllList(PageInfo pi);
@@ -34,6 +35,7 @@ public interface AuctionStore {
 	// AuctionUser
 	public AuctionUser selectAuctionUser(int auctionNo);
 	public int insertAuctionUser(AuctionUser auctionUser);
+	public int deleteAuctionUser(int[] auctionNo);
 	
 	// AuctionSuccessFul
 	public List<AuctionSuccessFul> selectAuctionSuccessFul();

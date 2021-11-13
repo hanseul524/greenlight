@@ -109,6 +109,15 @@ public class AuctionServiceImpl implements AuctionService{
 		return result;
 	}
 	
+
+	@Override
+	public int removeAuctionImage(int[] auctionNo) {
+		
+		int result = store.deleteAuctionImage(auctionNo);
+		
+		return result;
+	}
+	
 	
 	@Override
 	public int registerAuctionHistory(List<AuctionHistory> hList) {
@@ -143,6 +152,15 @@ public class AuctionServiceImpl implements AuctionService{
 	public int registerAuctionUser(AuctionUser auctionUser) {
 		
 		int result = store.insertAuctionUser(auctionUser);
+		
+		return result;
+	}
+	
+
+	@Override
+	public int removeAuctionUser(int[] auctionNo) {
+		
+		int result = store.deleteAuctionUser(auctionNo);
 		
 		return result;
 	}
@@ -195,6 +213,10 @@ public class AuctionServiceImpl implements AuctionService{
 		List<AuctionHistory> aList = store.selectList(userId);
 		return aList;
 	}
+
+
+
+
 
 
 }
