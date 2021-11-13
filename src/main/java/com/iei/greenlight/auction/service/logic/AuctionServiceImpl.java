@@ -199,21 +199,33 @@ public class AuctionServiceImpl implements AuctionService{
 		return result;
 	}
 	
-
+	@Override
+	public int getMyListCount(String userId) {
+		
+		return store.selectMyListCount(userId);
+	}
+	
+	@Override
+	public int getMyAuctionCount(String userId) {
+		
+		return store.selectMyAuctionCount(userId);
+	}
+	
 	// 서비스 로직
 	@Override
-	public List<AuctionHistory> printAllList(String userId) {
-		System.out.println("서비스 : " + userId);
-		List<AuctionHistory> aList = store.selectAllList(userId);
+	public List<AuctionHistory> printAllList(HashMap<String, Object> hashMap) {
+		List<AuctionHistory> aList = store.selectAllList(hashMap);
 		return aList;
 	}
 
 	@Override
-	public List<AuctionHistory> printList(String userId) {
-		List<AuctionHistory> aList = store.selectList(userId);
+	public List<AuctionHistory> printList(HashMap<String, Object> hashMap) {
+		List<AuctionHistory> aList = store.selectList(hashMap);
 		return aList;
 	}
 
+
+	
 
 
 

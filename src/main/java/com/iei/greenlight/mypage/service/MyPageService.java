@@ -17,7 +17,6 @@ public interface MyPageService {
 	
 	List<PointHistory> printPoint(HashMap<String, Object> hashmap);
 
-//	List<Challenge> printChallList(PageInfo pi);
 	
 	public int getListCount(String userId);
 	

@@ -321,17 +321,23 @@ public class AuctionController {
 	
 	// 내가 올린 경매
 	@RequestMapping(value = "myAcution.do", method = RequestMethod.GET)
-	public String myAuction(Model model, HttpSession session) {
+	public String myAuction(Model model, HttpSession session, @RequestParam(value="page", required = false) Integer page) {
 		try {
 			String userId = (String) session.getAttribute("userId");
-			System.out.println("경매 리스트 유저아이디 : " + userId);
-			List<AuctionHistory> aList = service.printAllList(userId);
-			System.out.println("aList : " + aList.toString());
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = service.getMyListCount(userId);
+			PageInfo pi = AuctionPagination.getPageInfo(currentPage, totalCount);
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			hashMap.put("pi", pi);
+			hashMap.put("userId", userId);
+			List<AuctionHistory> aList = service.printAllList(hashMap);
 			if (!aList.isEmpty()) {
 				model.addAttribute("aList", aList);
+				model.addAttribute("pi", pi);
 				return "mypage/MyAuction";
 			} else {
 				model.addAttribute("aList", null);
+				model.addAttribute("pi", pi);
 				// 11/11 수정
 				return "mypage/MyAuction";
 			}
@@ -344,15 +350,23 @@ public class AuctionController {
 
 	// 내가 입찰한 경매
 	@RequestMapping(value = "myBidList.do", method = RequestMethod.GET)
-	public String myBidList(Model model, HttpSession session) {
+	public String myBidList(Model model, HttpSession session, @RequestParam(value="page", required = false) Integer page) {
 
 		String userId = (String) session.getAttribute("userId");
-		List<AuctionHistory> aList = service.printList(userId);
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getMyAuctionCount(userId);
+		PageInfo pi = AuctionPagination.getPageInfo(currentPage, totalCount);
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		hashMap.put("pi", pi);
+		hashMap.put("userId", userId);
+		List<AuctionHistory> aList = service.printList(hashMap);
 		if (aList != null) {
 			model.addAttribute("aList", aList);
+			model.addAttribute("pi", pi);
 			return "mypage/MyBidList";
 		} else {
 			model.addAttribute("aList", null);
+			model.addAttribute("pi", pi);
 			return "mypage/MyBidList";
 		}
 	}

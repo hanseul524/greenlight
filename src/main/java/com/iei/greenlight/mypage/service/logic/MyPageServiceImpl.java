@@ -42,10 +42,6 @@ public class MyPageServiceImpl implements MyPageService{
 		return totalCount;
 	}
 
-//	@Override
-//	public List<Challenge> printChallList(PageInfo pi) {
-//		return store.selectChallList(pi);
-//	}
 
 	
 
