@@ -1,5 +1,6 @@
 package com.iei.greenlight.mypage.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.iei.greenlight.auction.domain.Auction;
@@ -14,10 +15,10 @@ public interface MyPageService {
 	
 	List<PointHistory> printTotalUse(String userId);
 	
-	List<PointHistory> printPoint(String userId);
+	List<PointHistory> printPoint(HashMap<String, Object> hashmap);
 
-	List<Challenge> printChallList(PageInfo pi);
+//	List<Challenge> printChallList(PageInfo pi);
 	
-	public int getListCount();
+	public int getListCount(String userId);
 	
 }

@@ -1,10 +1,10 @@
 package com.iei.greenlight.mypage.store;
 
+import java.util.HashMap;
 import java.util.List;
 
-import com.iei.greenlight.auction.domain.Auction;
 import com.iei.greenlight.challenge.domain.Challenge;
-import com.iei.greenlight.challenge.domain.PageInfo;
+import com.iei.greenlight.mypage.domain.PageInfo;
 import com.iei.greenlight.mypage.domain.PointHistory;
 import com.iei.greenlight.user.domain.User;
 
@@ -14,10 +14,12 @@ public interface MyPageStore {
 	
 	List<PointHistory> selectTotalUse(String userId);
 	
-	List<PointHistory> selectPoint(String userId);
+	List<PointHistory> selectPoint(HashMap<String, Object> hashmap);
 
-	List<Challenge> selectChallList(PageInfo pi);
+//	List<Challenge> selectChallList(PageInfo pi);
 	
-	public int selectListCount();
+	public int selectListCount(String userId);
+
+//	List<Challenge> selectChallList(PageInfo pi);
 
 }

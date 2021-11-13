@@ -7,11 +7,15 @@
 		<result property="pointContents" column="POINT_CONTENTS"/>
 		<result property="pointPayment" column="POINT_PAYMENT"/>
 		<result property="pointUse" column="POINT_USE"/>
+		<result property="rowNum" column="COUNT"/>
 	</resultMap>
 	<select id="selectPoint" resultMap="pointResultMap">
-		SELECT ROWNUM, x.* FROM ( SELECT a.* FROM POINT_HISTORY a ORDER BY a.POINT_DATE desc) x WHERE USER_ID = #{userId}
+		SELECT ROWNUM AS COUNT, A.* FROM (SELECT * FROM POINT_HISTORY WHERE USER_ID = #{userId} ORDER BY POINT_DATE) A ORDER BY POINT_DATE DESC
 	</select>
 	<select id="selectTotalUse" resultMap="pointResultMap" parameterType="String">
 		select USER_ID, SUM(POINT_USE) as POINT_USE from POINT_HISTORY WHERE USER_ID = #{userId} group by USER_ID
+	</select>
+	<select id="selectListCount" parameterType="String" resultType="_int">
+		SELECT COUNT(*) FROM POINT_HISTORY WHERE USER_ID = #{userId}
 	</select>
 </mapper>

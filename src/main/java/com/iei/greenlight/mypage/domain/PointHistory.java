@@ -9,6 +9,7 @@ public class PointHistory {
 	private String pointContents;
 	private int pointPayment;
 	private int pointUse;
+	private int rowNum;
 
 	public PointHistory() {
 	}
@@ -20,6 +21,14 @@ public class PointHistory {
 		this.pointContents = pointContents;
 		this.pointPayment = pointPayment;
 		this.pointUse = pointUse;
+	}
+
+	public int getRowNum() {
+		return rowNum;
+	}
+
+	public void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
 	}
 
 	public String getUseId() {
