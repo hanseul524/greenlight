@@ -20,6 +20,8 @@
 <jsp:include page="/common/header.jsp"></jsp:include>
   <div class="container" style="width: 1200px; margin: 0 auto; padding: 20px;">
   	<div class="contents" style="margin: 0 auto; width:80%;">
+  		<h3 style="float: right; margin-bottom: 30px;" >회원의 충전 포인트 : ${chargePoint }</h3>
+  		<input type="hidden" id="chargePoint" value="${chargePoint }">
             <table class="table table-hover">
               <thead>
                 <tr>
@@ -37,7 +39,7 @@
                   <td>${cPoint.chargeDate }</td>
            		  <td>
                  	<c:if test="${cPoint.refund eq 'N'}" >
-                 			<a onclick="<%-- cancelPay('${cPoint.impUid }', ${cPoint.chargeMoney }); --%> test();" style="text-decoration: none; color: blue; cursor: pointer;">결제완료</a>
+                 			<a onclick="cancelPoint('${cPoint.impUid }', ${cPoint.chargeMoney });" style="text-decoration: none; color: blue; cursor: pointer;">결제완료</a>
               		</c:if>
              		<c:if test="${cPoint.refund ne 'N'}" >
               			취소완료
@@ -87,43 +89,60 @@
 
 <jsp:include page="/common/footer.jsp"></jsp:include>
 <script>
+	var token;
+	test();
+	var userChargePoint = $("#chargePoint").val();
+	var cancelPoint;
+	var result;
 	function popUp() {
 	      window.open('/cpPopView.do', '_blank', 
 	      'top=250, left=500, height=562, width=812,toolbar=no, menubar=no, location=no, status=no, scrollbars=no, resizable=no');
 	    }
 	
-	// 결제 취소 
- 	function cancelPay(impUid, chargeMoney) {
-		console.log(impUid);
-		console.log(chargeMoney);
-	    $.ajax({
-	      "url": "chargeCancel.do", // 예: http://www.myservice.com/payments/cancel
-	      "type": "POST",
-	      "contentType": "application/json",
-	      "data": JSON.stringify({
-	        "impUid": impUid, // 예: ORD20180131-0000011
-	        "chargeMoney": chargeMoney, // 환불금액
-	        "reason": "포인트 충전 취소", // 환불사유
-	      }),
-	      "dataType": "json"
-	    });
-	  }
-	function test(){
-		var imp_key = "5629102220202692";
-		var imp_secret = "e16865ead67733834d03a4bc19b7c3f318bbbfc8cf3291c831bcb78d373a08b8352582d077d5f395";
-		$.ajax({
-			url : "https://api.iamport.kr/users/getToken",
-			type : "POST",
+	function cancelPoint(impUid, chargeMoney){
+		cancelPoint = chargeMoney;
+		if(userChargePoint >= cancelPoint){
+			cancel(impUid, chargeMoney);
+			location.href="chargeCancel.do?impUid=" + impUid + "&chargeMoney=" + chargeMoney;
+			}else{
+				 Swal.fire({
+						icon : 'error',
+						title : '포인트 환불실패',
+						text : '포인트 환불 실패, 관리자에게 문의하세요.', 
+					})
+			}
+	}
+	
+	/* 아임포트 취소요청 */
+	function cancel(impUid, chargeMoney){
+		 $.ajax({
+			url : "cancel.do",
+			type : "post",
 			data : {
-				"imp_key" : imp_key,
-				"imp_secret" : imp_secret
+				"impUid" : impUid,
+				"chargeMoney" : chargeMoney,
+				"token" : token
 			},
-			success : function(rsp){
-				console.log(rsp);
+			success : function(result){
+				if(result == 1){
+					result = result;
+				}else{
+					result = result;
+				}
 			}
 		})
 	}
-
+	
+	/* 아임포트 토큰받아오기 */
+	function test(){
+		$.ajax({
+			url : "getToken.do",
+			type : "post",
+			success : function(data){
+				token = data;
+			}
+		});
+	}
 </script>
 </body>
 </html>

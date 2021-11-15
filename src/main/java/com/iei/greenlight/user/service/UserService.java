@@ -1,6 +1,9 @@
 package com.iei.greenlight.user.service;
 
 import java.util.HashMap;
+import java.util.List;
+import com.iei.greenlight.user.domain.PageInfo;
+import com.iei.greenlight.mypage.domain.PointHistory;
 import com.iei.greenlight.user.domain.User;
 
 public interface UserService {
@@ -44,6 +47,10 @@ public interface UserService {
 	int removeUser(String userId);
 
 	public int modifyChargePoint(User userOne);
-	
 
+	public int modifycancelChargePoin(User user);
+	
+	public int getListCount();
+	
+	public List<User> showUserList(PageInfo upi); 
 }

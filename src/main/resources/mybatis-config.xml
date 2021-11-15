@@ -20,6 +20,9 @@
 		<typeAlias alias="AuctionSuccessFul" type="com.iei.greenlight.auction.domain.AuctionSuccessFul"/>
 		<typeAlias alias="OfflineShop" type="com.iei.greenlight.shop.domain.OfflineShop"/>
 		<typeAlias alias="OnlineShop" type="com.iei.greenlight.shop.domain.OnlineShop"/>
+		<typeAlias alias="DonationBoard" type="com.iei.greenlight.donationBoard.domain.DonationBoard"/>
+		<typeAlias alias="AdCheck" type="com.iei.greenlight.mypage.domain.AdCheck"/>
+		<typeAlias alias="Category" type="com.iei.greenlight.challenge.domain.Category"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
@@ -28,5 +31,7 @@
 		<mapper resource="mappers/chargePoint-mapper.xml"/>
 		<mapper resource="mappers/point-mapper.xml"/>
 		<mapper resource="mappers/shop-mapper.xml"/>
+		<mapper resource="mappers/donationBoard-mapper.xml"/>
+		<mapper resource="mappers/adcheck-mapper.xml"/>
 	</mappers>
 </configuration>

@@ -23,6 +23,7 @@ import com.iei.greenlight.user.store.UserStore;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import com.iei.greenlight.user.domain.PageInfo;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -186,5 +187,27 @@ public class UserServiceImpl implements UserService{
 		return store.updateChargePoint(userOne);
 	}
 	
+
+	@Override
+	public int modifycancelChargePoin(User user) {
+		return store.updateCancelChargePoint(user);
+	}
+
+	 // 총 회원수
+	   @Override
+	   public int getListCount() {
+	      int totalCount = store.selectListCount();
+	      return totalCount;
+	   }
+
+	   @Override
+	   public List<User> showUserList(PageInfo upi) {
+	      List<User> uList = store.selectUserList(upi);
+	      return uList;
+	   }
+
+
+
+
 
 }

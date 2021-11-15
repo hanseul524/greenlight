@@ -1,11 +1,13 @@
 package com.iei.greenlight.user.store.logic;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
+import com.iei.greenlight.user.domain.PageInfo;
 import com.iei.greenlight.user.domain.User;
 import com.iei.greenlight.user.store.UserStore;
 
@@ -125,5 +127,28 @@ public class UserStoreLogic implements UserStore{
 	public int updateChargePoint(User userOne) {
 		return sqlSession.update("userMapper.updateChargePoint", userOne);
 	}
+
+	@Override
+	public int updateCancelChargePoint(User user) {
+		return sqlSession.update("userMapper.updateCancelChargePoint", user);
+	}
+
+
+	@Override
+	public List<User> selectUserList(PageInfo upi) {
+		int offset = (upi.getCurrentPage() - 1) * upi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, upi.getBoardLimit());
+		List<User> uList = sqlSession.selectList("userMapper.selectAllList", upi, rowBounds);
+		return uList;
+	}
+
+	@Override
+	public int selectListCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
 
 }

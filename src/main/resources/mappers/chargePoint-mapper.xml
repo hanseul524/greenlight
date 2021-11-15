@@ -21,6 +21,11 @@
 		SELECT COUNT(*) FROM CHARGE_POINT WHERE USER_ID = #{userId }
 	</select>
 	
+	<!-- 회원 충전 포인트 가져오기 -->
+	<select id="selectUserChargePoint" parameterType="string" resultType="_int">
+		SELECT CHARGE_POINT FROM USERS WHERE USER_ID = #{userId }
+	</select>
+	
 	<!-- chargePoint 테이블 데이터 추가  -->
 	<insert id="insertChargePoint" parameterType="ChargePoint">
 		INSERT INTO CHARGE_POINT VALUES(SEQ_CP_NO.NEXTVAL, #{userId }, #{chargeMoney }, #{chargePoint }, DEFAULT, #{impUid }, DEFAULT)
@@ -31,5 +36,13 @@
 		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, #{pointContents }, #{pointPayment }, DEFAULT, 'Y')
 	</insert>
 	
+	<!-- pointHistory 포인트 취소 -->
+	<insert id="phCancelChargePoint" parameterType="Point">
+		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, #{pointContents }, DEFAULT, #{pointUse }, 'Y')
+	</insert>
 	
+	<!-- 포인트 충전 취소 chargePoint 테이블 컬럼 데이터 수정-->
+	<update id="cancelChargePoint" parameterType="ChargePoint">
+		UPDATE CHARGE_POINT SET REFUND = 'Y' WHERE IMP_UID = #{impUid }
+	</update>
 </mapper>

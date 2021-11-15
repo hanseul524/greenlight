@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.iei.greenlight.challenge.domain.Challenge;
 import com.iei.greenlight.mypage.common.Pagination;
+import com.iei.greenlight.mypage.domain.AdCheck;
 import com.iei.greenlight.mypage.domain.PageInfo;
 import com.iei.greenlight.mypage.domain.PointHistory;
 import com.iei.greenlight.mypage.service.MyPageService;
