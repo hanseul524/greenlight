@@ -99,7 +99,7 @@
 	    $.ajax({
 	      "url": "chargeCancel.do", // 예: http://www.myservice.com/payments/cancel
 	      "type": "POST",
-	      "contentType": "application/json",
+	      "contentType": "application/json{}",
 	      "data": JSON.stringify({
 	        "impUid": impUid, // 예: ORD20180131-0000011
 	        "chargeMoney": chargeMoney, // 환불금액
