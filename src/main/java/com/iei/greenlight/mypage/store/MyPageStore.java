@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.iei.greenlight.challenge.domain.Challenge;
+import com.iei.greenlight.mypage.domain.AdCheck;
 import com.iei.greenlight.mypage.domain.PageInfo;
 import com.iei.greenlight.mypage.domain.PointHistory;
 import com.iei.greenlight.user.domain.User;

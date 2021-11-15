@@ -1,5 +1,6 @@
 package com.iei.greenlight.mypage.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -91,7 +92,7 @@ public class MyPageController {
 	   public String myPageAdCheck(Model model, HttpSession session) {
 	      String userId = (String) session.getAttribute("userId");
 	      String arr = null;
-	      List<String> arry = new ArrayList();
+	      List<String> arry = new ArrayList<String>();
 	      List<AdCheck> ad = service.printAdCheck(userId);
 	      System.out.println(ad.toString());
 	      for(int i = 0; i < ad.size(); i++) {
