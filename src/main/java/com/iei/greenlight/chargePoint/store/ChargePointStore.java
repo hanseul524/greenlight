@@ -18,4 +18,10 @@ public interface ChargePointStore {
 
 	int insertPHChargePoint(PointHistory pHistory);
 
+	int selectUserChargePoint(String userId);
+
+	int cancelPoint(ChargePoint cp);
+
+	int insertPHCancelChargePoint(PointHistory ph);
+
 }

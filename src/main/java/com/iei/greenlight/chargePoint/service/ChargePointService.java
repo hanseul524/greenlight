@@ -18,4 +18,10 @@ public interface ChargePointService {
 
 	int registerChargePoint(PointHistory pHistory);
 
+	int getChargePoint(String userId);
+
+	int cancelPoint(ChargePoint cp);
+
+	int registerCancelChargePoint(PointHistory ph);
+
 }

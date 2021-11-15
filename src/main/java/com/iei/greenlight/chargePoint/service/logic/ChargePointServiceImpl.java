@@ -42,4 +42,22 @@ public class ChargePointServiceImpl implements ChargePointService {
 	public int registerChargePoint(PointHistory pHistory) {
 		return store.insertPHChargePoint(pHistory);
 	}
+
+
+	@Override
+	public int getChargePoint(String userId) {
+		return store.selectUserChargePoint(userId);
+	}
+
+
+	@Override
+	public int cancelPoint(ChargePoint cp) {
+		return store.cancelPoint(cp);
+	}
+
+
+	@Override
+	public int registerCancelChargePoint(PointHistory ph) {
+		return store.insertPHCancelChargePoint(ph);
+	}
 }

@@ -1,7 +1,9 @@
 package com.iei.greenlight.user.store.logic;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -126,8 +128,19 @@ public class UserStoreLogic implements UserStore{
 		return sqlSession.update("userMapper.updateChargePoint", userOne);
 	}
 
+	@Override
+	public int updateCancelChargePoint(User user) {
+		return sqlSession.update("userMapper.updateCancelChargePoint", user);
+	}
 
 
+	 @Override
+	   public List<User> selectUserList(PageInfo upi) {
+	      int offset = (upi.getCurrentPage()-1) * upi.getBoardLimit();
+	      RowBounds rowBounds = new RowBounds(offset, upi.getBoardLimit());
+	      List<User> uList = sqlSession.selectList("userMapper.selectAllList", upi, rowBounds);
+	      return uList;
+	   }
 
 
 

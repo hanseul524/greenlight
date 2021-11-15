@@ -45,4 +45,22 @@ public class ChargePointLogic implements ChargePointStore{
 	public int insertPHChargePoint(PointHistory pHistory) {
 		return sqlSession.insert("chargePointMapper.insertPHChargePoint", pHistory);
 	}
+
+
+	@Override
+	public int selectUserChargePoint(String userId) {
+		return sqlSession.selectOne("chargePointMapper.selectUserChargePoint", userId);
+	}
+
+
+	@Override
+	public int cancelPoint(ChargePoint cp) {
+		return sqlSession.update("chargePointMapper.cancelChargePoint", cp);
+	}
+
+
+	@Override
+	public int insertPHCancelChargePoint(PointHistory ph) {
+		return sqlSession.insert("chargePointMapper.phCancelChargePoint", ph);
+	}
 }

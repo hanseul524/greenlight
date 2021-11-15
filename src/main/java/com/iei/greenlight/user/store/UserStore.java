@@ -1,8 +1,10 @@
 package com.iei.greenlight.user.store;
 
 import java.util.HashMap;
+import java.util.List;
 
 import com.iei.greenlight.user.domain.User;
+import com.iei.greenlight.user.domain.PageInfo;
 
 public interface UserStore {
 
@@ -41,4 +43,10 @@ public interface UserStore {
 	int deleteUser(String userId);
 
 	public int updateChargePoint(User userOne);
+
+	public int updateCancelChargePoint(User user);
+	 // 관리자 페이지
+	public int selectListCount();
+	   
+	public List<User> selectUserList(PageInfo upi); 
 }
