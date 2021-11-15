@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adCheckMapper">
+	<resultMap type="AdCheck" id="adCheckResultMap">
+		<id property="userId" column="USER_ID"/>
+		<result property="adDate" column="AD_DATE"/>
+		<result property="consecutive" column="CONSECUTIVE"/>
+	</resultMap>
+	<select id="selectAdList" resultMap="adCheckResultMap">
+		SELECT * FROM AD_CHECK WHERE USER_ID = #{userId}
+	</select>
+</mapper>
