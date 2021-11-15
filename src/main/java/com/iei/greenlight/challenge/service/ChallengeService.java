@@ -39,6 +39,9 @@ public interface ChallengeService {
 	// 관리자 챌린지 페이지
 	public List<Challenge> printAllCh(PageInfo api);
 	public int registerCategory(Category category);
+	public int confirmChallenge(HashMap<String, Object> hashmap);
+	public int modifyChPoint(HashMap<String, Object> hashmap);
+	
 	
 	// 마이페이지
 	public int getMyListCount(String userId);

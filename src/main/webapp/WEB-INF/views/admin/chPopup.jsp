@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>ChallengeOpen</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 .popup-area {
   font-family: 'Noto Sans KR', sans-serif;
@@ -50,14 +53,15 @@ p {
     <p>챌린지 오픈시 한달간 운영됩니다.</p>
       <div>
         <input class="input-area" type="text" name="chOpen" id="chOpen" placeholder="주제를 입력해주세요.">
-        <button class="input-btn" onclick="open();">오픈하기</button>
+        <input class="input-btn" type="button" onclick="caStart();" value="오픈하기">
       </div>
   </div>
   
   <script>
-  
-  	function open() {
+  	function caStart() {
   		var chCategory = $("#chOpen").val();
+  		console.log(chCategory);
+  		
   		$.ajax({
   			url : "ChOpen.do",
   			type : "post",
@@ -65,12 +69,13 @@ p {
   			success : function(data) {
   				if(data == "success") {
   					$("#chOpen").val("");
+  					
   					Swal.fire({ 
 						icon: 'success',
 						title: '카테고리 등록',
 						text: '새로운 챌린지가 오픈되었습니다.',
-						}).then(function () {
-							window.close('/ChOpen.do');
+						}).then(function(){
+							window.close();
 						})
   				}
   			},

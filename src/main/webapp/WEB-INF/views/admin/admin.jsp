@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,7 +79,6 @@
             <input type="button" name="name" value="search">
           </div>
         </form>
-        <form action="" method="get">
           <div class="con-list">
             <table class="table table-hover">
               <thead>
@@ -88,79 +88,64 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Address</th>
+                  <th>Point</th>
                   <th>Date</th>
-                  <th><input type="checkbox" name="" id=""></th>
+                  <th><input type="checkbox" id="chk_all"></th>
                 </tr>
               </thead>
               <tbody>
+			  <c:forEach items="${uList }" var="user">
                 <tr>
                   <td>01</td>
-                  <td>user01</td>
-                  <td>일용자</td>
-                  <td>user01@iei.com</td>
-                  <td>서울시 중구</td>
-                  <td>2021.11.02</td>
-                  <td><input type="checkbox" name="" id=""></td>
+                  <td>${user.userId }</td>
+                  <td>${user.userName }</td>
+                  <td>${user.userEmail }</td>
+                  <td>${user.userAddr }</td>
+                  <td>${totalPoint}</td>
+                  <td>${user.regDate }</td>
+                  <td><input type="checkbox" name="chk" class="del-chk" value="${user.userId }"></td>
                 </tr>
-                <tr>
-                  <td>01</td>
-                  <td>user01</td>
-                  <td>일용자</td>
-                  <td>user01@iei.com</td>
-                  <td>서울시 중구</td>
-                  <td>2021.11.02</td>
-                  <td><input type="checkbox" name="" id=""></td>
-                </tr>
-                <tr>
-                  <td>01</td>
-                  <td>user01</td>
-                  <td>일용자</td>
-                  <td>user01@iei.com</td>
-                  <td>서울시 중구</td>
-                  <td>2021.11.02</td>
-                  <td><input type="checkbox" name="" id=""></td>
-                </tr>
-                <tr>
-                  <td>01</td>
-                  <td>user01</td>
-                  <td>일용자</td>
-                  <td>user01@iei.com</td>
-                  <td>서울시 중구</td>
-                  <td>2021.11.02</td>
-                  <td><input type="checkbox" name="" id=""></td>
-                </tr>
-                <tr>
-                  <td>01</td>
-                  <td>user01</td>
-                  <td>일용자</td>
-                  <td>user01@iei.com</td>
-                  <td>서울시 중구</td>
-                  <td>2021.11.02</td>
-                  <td><input type="checkbox" name="" id=""></td>
-                </tr>
+			  </c:forEach>
               </tbody>
             </table>
             <div class="page_wrap">
-              <div class="page_nation">
-                 <a class="arrow prev" href="#"></a>
-                 <a href="#" class="active">1</a>
-                 <a href="#">2</a>
-                 <a href="#">3</a>
-                 <a href="#">4</a>
-                 <a href="#">5</a>
-                 <a href="#">6</a>
-                 <a href="#">7</a>
-                 <a href="#">8</a>
-                 <a href="#">9</a>
-                 <a href="#">10</a>
-                 <a class="arrow next" href="#"></a>
-              </div>
+			    <c:url var="before" value="userList.do">
+			    	<c:param name="page" value="${upi.currentPage - 1 }"></c:param>
+			    </c:url>
+			      <div class="page_nation">
+			      <c:if test="${upi.currentPage <= 1 }">
+			         <a class="arrow prev" href="#"></a>
+			      </c:if>
+			      <c:if test="${upi.currentPage > 1 }">
+			         <a class="arrow prev" href="${before }"></a>
+			      </c:if>
+			      <c:forEach var="p" begin="${upi.startNavi}" end="${upi.endNavi }">
+			      	<c:url var="pagenation" value="userList.do">
+			      		<c:param name="page" value="${p }"></c:param>
+			      	</c:url>
+			      	<c:if test="${p eq upi.currentPage }">
+			         	<a href="#" class="active">${p }</a>
+			      	</c:if>
+			      	<c:if test="${p ne upi.currentPage }">
+			      		<a href="${pagenation }">${p }</a>
+			      	</c:if>
+			      </c:forEach>
+			      <c:url var="after" value="userList.do">
+			      	<c:param name="page" value="${upi.currentPage + 1 }"></c:param>
+			      </c:url>
+			      <c:if test="${upi.currentPage >= upi.maxPage }">
+			         <a class="arrow next" href="#"></a>
+			      </c:if>
+			      <c:if test="${upi.currentPage < upi.maxPage }">
+			         <a class="arrow next" href="${after }"></a>
+			      </c:if>
+			      </div>
+			 </div>
               <div class="btn-area">
                 <input type="submit" value="선택탈퇴">
               </div>
            </div>
           </div>
-        </form>
       </div>
     </div>
   </div>
@@ -179,6 +164,14 @@
 		
 		  $("#today").html(dateString);
 	}
+	
+	$("#chk_all").on("click", function() {
+	    if($('#chk_all').is(':checked')){
+	        $('.del-chk').prop('checked',true);
+	     }else{
+	        $('.del-chk').prop('checked',false);
+	     }
+	})
 </script>
 </body>
 </html>
