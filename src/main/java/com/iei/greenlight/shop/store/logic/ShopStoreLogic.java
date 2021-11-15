@@ -23,4 +23,21 @@ public class ShopStoreLogic implements ShopStore{
 		return sList;
 	}
 
+	@Override
+	public List<OfflineShop> selectOfflineSearchList(String searchKeyWord) {
+		
+		List<OfflineShop> sList = sqlSession.selectList("offlineShopMapper.selectOfflineSearchList", searchKeyWord);
+		
+		return sList;
+	}
+	
+	@Override
+	public OfflineShop selectOfflineOneByNo(int shopNo) {
+		
+		OfflineShop offlineShop = sqlSession.selectOne("offlineShopMapper.selectOfflineOneByNo", shopNo);
+		
+		return offlineShop;
+	}
+
+
 }

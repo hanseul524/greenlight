@@ -85,6 +85,34 @@ public class MyPageController {
 		return "mypage/AdCheck";
 	}
 	
+	// 출석체크
+	   @RequestMapping(value="myPageAdCheck.do", method=RequestMethod.GET)
+	   public String myPageAdCheck(Model model, HttpSession session) {
+	      String userId = (String) session.getAttribute("userId");
+	      String arr = null;
+	      List<String> arry = new ArrayList();
+	      List<AdCheck> ad = service.printAdCheck(userId);
+	      System.out.println(ad.toString());
+	      for(int i = 0; i < ad.size(); i++) {
+	         arr = String.valueOf(ad.get(i).getAdDate());
+	         System.out.println(i);
+	         arry.add(arr);
+	      }
+	      try {
+	         if(!ad.isEmpty()) {
+	            model.addAttribute("ad", ad);
+	            model.addAttribute("arry", arry);
+	            return "mypage/AdCheck";
+	         }else {
+	            model.addAttribute("ad", null);
+	            return "mypage/AdCheck";
+	         }
+	      } catch (Exception e) {
+	         model.addAttribute("msg", e);
+	         return "common/errorPage";
+	      }
+	   }
+	
 	
 	
 }

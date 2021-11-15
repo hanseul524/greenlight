@@ -24,204 +24,140 @@ public class AuctionServiceImpl implements AuctionService{
 	
 	@Override
 	public List<Auction> printAuctionAllList(AdminPageInfo pi) {
-		
-		List<Auction> aList = store.selectAuctionAllList(pi);
-		
-		return aList;
+		return store.selectAuctionAllList(pi);
 	}
 	
 
 	@Override
 	public List<AuctionHistory> printAllList(PageInfo pi) {
-		
-		List<AuctionHistory> aList = store.selectAllList(pi);
-		
-		return aList;
+		return store.selectAllList(pi);
 	}
 
 
 	@Override
 	public int getAdminListCount() {
-		
-		int totalCount = store.selectAdminListCount();
-		
-		return totalCount;
+		return store.selectAdminListCount();
 	}
 	
 	@Override
 	public int getListCount() {
-		
-		int totalCount = store.selectListCount();
-		
-		return totalCount;
+		return store.selectListCount();
 	}
 
 
 	@Override
 	public Auction printAuctionOneByNo(int auctionNo) {
-		
-		Auction auction = store.selectAuctionOneByNo(auctionNo);
-		
-		return auction;
+		return store.selectAuctionOneByNo(auctionNo);
 	}
 
 
 	@Override
 	public AuctionHistory printAuctionHistoryOneByNo(int auctionNo) {
-		
-		AuctionHistory auctionHistory = store.selectAuctionHistoryOneByNo(auctionNo);
-		
-		return auctionHistory;
+		return store.selectAuctionHistoryOneByNo(auctionNo);
 	}
 
 	@Override
 	public List<AuctionImage> printAuctionImageOneByNo(int auctionNo) {
-		
-		List<AuctionImage> imageList = store.selectAuctionImageOneByNo(auctionNo);
-		
-		return imageList;
+		return store.selectAuctionImageOneByNo(auctionNo);
 	}
 	
 
 	@Override
 	public int registerAuction(Auction auction) {
-		
-		int result = store.insertAuction(auction);
-		
-		return result;
+		return store.insertAuction(auction);
 	}
 	
 
 	@Override
 	public int removeAuction(int[] auctionNo) {
-		
-		int result = store.deleteAuction(auctionNo);
-		
-		return result;
+		return store.deleteAuction(auctionNo);
 	}
 
 
 	@Override
 	public int registerAuctionImage(List<AuctionImage> aList) {
-		
-		int result = store.insertAuctionImage(aList);
-		
-		return result;
+		return store.insertAuctionImage(aList);
 	}
 	
 
 	@Override
 	public int removeAuctionImage(int[] auctionNo) {
-		
-		int result = store.deleteAuctionImage(auctionNo);
-		
-		return result;
+		return store.deleteAuctionImage(auctionNo);
 	}
 	
 	
 	@Override
 	public int registerAuctionHistory(List<AuctionHistory> hList) {
-		
-		int result = store.insertAuctionHistory(hList);
-		
-		return result;
+		return store.insertAuctionHistory(hList);
 	}
 	
 	
 
 	@Override
 	public int modifyAuctionHistory(int auctionNo) {
-		
-		int result = store.updateAuctionHistory(auctionNo);
-		
-		return result;
+		return store.updateAuctionHistory(auctionNo);
 	}
 
 
 
 	@Override
 	public AuctionUser printAuctionUser(int auctionNo) {
-		
-		AuctionUser auctionUser = store.selectAuctionUser(auctionNo);
-		
-		return auctionUser;
+		return store.selectAuctionUser(auctionNo);
 	}
 
 
 	@Override
 	public int registerAuctionUser(AuctionUser auctionUser) {
-		
-		int result = store.insertAuctionUser(auctionUser);
-		
-		return result;
+		return store.insertAuctionUser(auctionUser);
 	}
 	
 
 	@Override
 	public int removeAuctionUser(int[] auctionNo) {
-		
-		int result = store.deleteAuctionUser(auctionNo);
-		
-		return result;
+		return store.deleteAuctionUser(auctionNo);
 	}
 
 
 	@Override
 	public List<AuctionSuccessFul> printSuccessFulList() {
-		
-		List<AuctionSuccessFul> sList = store.selectAuctionSuccessFul();
-		
-		return sList;
+		return store.selectAuctionSuccessFul();
 	}
 
 
 	@Override
 	public List<AuctionSuccessFul> printSuccessFulByNo(HashMap<String, int[]> map) {
-
-		List<AuctionSuccessFul> sList = store.selectAuctionSuccessFulByNo(map);
-		
-		return sList;
+		return store.selectAuctionSuccessFulByNo(map);
 	}
 	
 	@Override
 	public int registerAuctionSuccessFul(AuctionSuccessFul auctionSuccessFul) {
-		
-		int result = store.insertAuctionSuccessFul(auctionSuccessFul);
-		
-		return result;
+		return store.insertAuctionSuccessFul(auctionSuccessFul);
 	}
 
 	@Override
 	public int modifyAuctionSuccessFul(int[] auctionNo) {
-		
-		int result = store.updateAuctionSuccessFul(auctionNo);
-		
-		return result;
+		return store.updateAuctionSuccessFul(auctionNo);
 	}
 	
 	@Override
 	public int getMyListCount(String userId) {
-		
 		return store.selectMyListCount(userId);
 	}
 	
 	@Override
 	public int getMyAuctionCount(String userId) {
-		
 		return store.selectMyAuctionCount(userId);
 	}
 	
 	// 서비스 로직
 	@Override
 	public List<AuctionHistory> printAllList(HashMap<String, Object> hashMap) {
-		List<AuctionHistory> aList = store.selectAllList(hashMap);
-		return aList;
+		return store.selectAllList(hashMap);
 	}
 
 	@Override
 	public List<AuctionHistory> printList(HashMap<String, Object> hashMap) {
-		List<AuctionHistory> aList = store.selectList(hashMap);
-		return aList;
+		return store.selectList(hashMap);
 	}
 
 

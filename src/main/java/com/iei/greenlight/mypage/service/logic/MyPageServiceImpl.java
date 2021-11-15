@@ -42,6 +42,35 @@ public class MyPageServiceImpl implements MyPageService{
 		return totalCount;
 	}
 
+	@Override
+	public int registerAuctionBuyerPoint(User user) {
+		int result = store.insertAuctionBuyerPoint(user);
+		return result;
+	}
+
+	@Override
+	public int registerAuctionBuyerChargePoint(HashMap<String, Object> hashMap) {
+		int result = store.insertAuctionBuyerChargePoint(hashMap);
+		return result;
+	}
+
+	@Override
+	public int registerAuctionBuyerPointHistory(HashMap<String, Object> hashMap) {
+		int result = store.insertAuctionBuyerPointHistory(hashMap);
+		return result;
+	}
+
+	@Override
+	public int registerAuctionSellerPointHistory(HashMap<String, Object> hashMap) {
+		int result = store.insertAuctionSellerPointHistory(hashMap);
+		return result;
+	}
+	
+	@Override
+	public List<AdCheck> printAdCheck(String userId) {
+		return store.selectAdCheck(userId);
+	}
+
 
 	
 

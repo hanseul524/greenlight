@@ -23,4 +23,21 @@ public class ShopServiceImpl implements ShopService{
 		return sList;
 	}
 
+	@Override
+	public List<OfflineShop> printOfflineSearchList(String searchKeyWord) {
+		
+		List<OfflineShop> sList = store.selectOfflineSearchList(searchKeyWord);
+		
+		return sList;
+	}
+	
+	@Override
+	public OfflineShop printOfflineOneByNo(int shopNo) {
+		
+		OfflineShop offlineShop = store.selectOfflineOneByNo(shopNo);
+		
+		return offlineShop;
+	}
+
+
 }

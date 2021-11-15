@@ -18,4 +18,23 @@
 	<select id="selectListCount" parameterType="String" resultType="_int">
 		SELECT COUNT(*) FROM POINT_HISTORY WHERE USER_ID = #{userId}
 	</select>
+	<update id="updateUserChPoint" parameterType="hashmap">
+		UPDATE USERS SET POINT = POINT + #{pointPayment} WHERE USER_ID = #{userId}
+	</update>
+	<insert id="updateChPoint" parameterType="Point">
+		INSERT INTO POINT_HISTORY VALUES(#{userId}, DEFAULT, #{pointContents},
+		#{pointPayment}, DEFAULT, DEFAULT)
+	</insert>
+	<insert id="insertBuyerPoint" parameterType="User">
+		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, '경매 낙찰', DEFAULT, #{point }, DEFAULT)
+	</insert>
+	<insert id="insertBuyerChargePoint" parameterType="hashmap">
+		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, '경매 낙찰', DEFAULT, #{point }, 'Y')
+	</insert>
+	<insert id="insertBuyerPointHistory" parameterType="hashmap">
+		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, '경매 낙찰', DEFAULT, #{point }, DEFAULT)	
+	</insert>
+	<insert id="insertSellerPointHistory" parameterType="hashmap">
+		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, '경매 판매', #{point }, DEFAULT, DEFAULT)
+	</insert>
 </mapper>

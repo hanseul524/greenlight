@@ -7,5 +7,7 @@ import com.iei.greenlight.shop.domain.OfflineShop;
 public interface ShopService {
 	
 	public List<OfflineShop> printOfflineShopList();
+	public List<OfflineShop> printOfflineSearchList(String searchKeyWord);
+	public OfflineShop printOfflineOneByNo(int shopNo);
 
 }

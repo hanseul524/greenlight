@@ -30,179 +30,106 @@ public class AuctionStoreLogic implements AuctionStore{
 		
 		int offset = (pi.getCurrentPage()-1) * pi.getAuctionLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getAuctionLimit());
-		List<Auction> aList = sqlSession.selectList("auctionMapper.selectAuctionList", pi, rowBounds);
-		
-		return aList;
+		return sqlSession.selectList("auctionMapper.selectAuctionList", pi, rowBounds);
 	}
-
-	
 	
 	@Override
 	public List<AuctionHistory> selectAllList(PageInfo pi) {
 		
 		int offset = (pi.getCurrentPage()-1) * pi.getAuctionLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getAuctionLimit());
-		List<AuctionHistory> aList = sqlSession.selectList("auctionMapper.selectAllList", pi, rowBounds);
-		
-		return aList;
+		return sqlSession.selectList("auctionMapper.selectAllList", pi, rowBounds);
 	}
 
 	@Override
 	public int selectListCount() {
-		
-		int count = sqlSession.selectOne("auctionMapper.selectHistoryListCount");
-		
-		return count;
+		return sqlSession.selectOne("auctionMapper.selectHistoryListCount");
 	}
 	
-
 	@Override
 	public int selectAdminListCount() {
-		
-		int count = sqlSession.selectOne("auctionMapper.selectListCount");
-		
-		return count;
+		return sqlSession.selectOne("auctionMapper.selectListCount");
 	}
-	
 
 	@Override
 	public Auction selectAuctionOneByNo(int auctionNo) {
-		
-		Auction auction = sqlSession.selectOne("selectAuctionOneByNo", auctionNo);
-		
-		return auction;
+		return sqlSession.selectOne("selectAuctionOneByNo", auctionNo);
 	}
-
 	
 	@Override
 	public AuctionHistory selectAuctionHistoryOneByNo(int auctionNo) {
-		
-		AuctionHistory auctionHistory = sqlSession.selectOne("auctionMapper.selectHistoryOneByNo", auctionNo);
-		
-		return auctionHistory;
+		return sqlSession.selectOne("auctionMapper.selectHistoryOneByNo", auctionNo);
 	}
 	
 	@Override
 	public int deleteAuction(int[] auctionNo) {
-		
-		int result = sqlSession.delete("auctionMapper.deleteAuction", auctionNo);
-		
-		return result;
+		return sqlSession.delete("auctionMapper.deleteAuction", auctionNo);
 	}
 
-	
 	@Override
 	public List<AuctionImage> selectAuctionImageOneByNo(int auctionNo) {
-		
-		List<AuctionImage> imageList = sqlSession.selectList("auctionMapper.selectAuctionImage", auctionNo);
-		
-		return imageList;
+		return sqlSession.selectList("auctionMapper.selectAuctionImage", auctionNo);
 	}
 
 	@Override
 	public int insertAuction(Auction auction) {
-		
-		int result = sqlSession.insert("auctionMapper.insertAuction", auction);
-		
-		return result;
+		return sqlSession.insert("auctionMapper.insertAuction", auction);
 	}
 
 	@Override
 	public int insertAuctionImage(List<AuctionImage> aList) {
-		
-		int result = sqlSession.insert("auctionMapper.insertAuctionImage", aList);
-		
-		return result;
+		return sqlSession.insert("auctionMapper.insertAuctionImage", aList);
 	}
 	
 	@Override
 	public int deleteAuctionImage(int[] auctionNo) {
-		
-		int result = sqlSession.delete("auctionMapper.deleteAuctionImage", auctionNo);
-		
-		return result;
+		return sqlSession.delete("auctionMapper.deleteAuctionImage", auctionNo);
 	}
-
-
 	
 	@Override
 	public int insertAuctionHistory(List<AuctionHistory> hList) {
-		
-		int result = sqlSession.insert("auctionMapper.insertAuctionHistory", hList);
-		
-		return result;
+		return sqlSession.insert("auctionMapper.insertAuctionHistory", hList);
 	}
-
 	
 	@Override
 	public int updateAuctionHistory(int auctionNo) {
-		
-		int result = sqlSession.update("auctionMapper.updateAuctionHistory", auctionNo);
-		
-		return result;
+		return sqlSession.update("auctionMapper.updateAuctionHistory", auctionNo);
 	}
 
-	
 	@Override
 	public AuctionUser selectAuctionUser(int auctionNo) {
-		
-		AuctionUser auctionUser = sqlSession.selectOne("auctionMapper.selectAuctionUser", auctionNo);
-		
-		return auctionUser;
+		return sqlSession.selectOne("auctionMapper.selectAuctionUser", auctionNo);
 	}
-
-
 
 	@Override
 	public int insertAuctionUser(AuctionUser auctionUser) {
-		
-		int result = sqlSession.insert("auctionMapper.insertAuctionUser", auctionUser);
-		
-		return result;
+		return sqlSession.insert("auctionMapper.insertAuctionUser", auctionUser);
 	}
-
 
 	@Override
 	public int deleteAuctionUser(int[] auctionNo) {
-		
-		int result = sqlSession.delete("auctionMapper.deleteAuctionUser", auctionNo);
-		
-		return result;
+		return sqlSession.delete("auctionMapper.deleteAuctionUser", auctionNo);
 	}
-	
 	
 	@Override
 	public List<AuctionSuccessFul> selectAuctionSuccessFul() {
-		
-		List<AuctionSuccessFul> sList = sqlSession.selectList("auctionMapper.selectAuctionSuccessFulList");
-		
-		return sList;
+		return sqlSession.selectList("auctionMapper.selectAuctionSuccessFulList");
 	}
 
 	@Override
 	public List<AuctionSuccessFul> selectAuctionSuccessFulByNo(HashMap<String, int[]> map) {
-		
-		List<AuctionSuccessFul> sList = sqlSession.selectList("auctionMapper.selectAuctionSuccessFulByNo", map);
-		
-		return sList;
+		return sqlSession.selectList("auctionMapper.selectAuctionSuccessFulByNo", map);
 	}
 
 	@Override
 	public int insertAuctionSuccessFul(AuctionSuccessFul auctionSuccessFul) {
-		
-		int result = sqlSession.insert("auctionMapper.insertAuctionSuccessFul", auctionSuccessFul);
-		
-		return result;
+		return sqlSession.insert("auctionMapper.insertAuctionSuccessFul", auctionSuccessFul);
 	}
 	
 	@Override
 	public int updateAuctionSuccessFul(int[] auctionNo) {
-		
-		int result = sqlSession.update("auctionMapper.updateAuctionSuccessFul", auctionNo);
-		
-		return result;
+		return sqlSession.update("auctionMapper.updateAuctionSuccessFul", auctionNo);
 	}
-	
 	
 	// 스토어 로직 수정
 	@Override
@@ -232,11 +159,5 @@ public class AuctionStoreLogic implements AuctionStore{
 		List<AuctionHistory> aList = sqlSession.selectList("auctionMapper.selectList", hashMap, rowBounds);
 		return aList;
 	}
-
-
-
-
-
-
 
 }

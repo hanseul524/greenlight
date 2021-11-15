@@ -46,6 +46,35 @@ public class MyPageStoreLogic implements MyPageStore{
 		return count;
 	}
 
+	@Override
+	public int insertAuctionBuyerPoint(User user) {
+		int result = sqlSession.insert("pointMapper.insertBuyerPoint", user);
+		return result;
+	}
+
+	@Override
+	public int insertAuctionBuyerChargePoint(HashMap<String, Object> hashMap) {
+		int result = sqlSession.insert("pointMapper.insertBuyerChargePoint", hashMap);
+		return result;
+	}
+
+	@Override
+	public int insertAuctionBuyerPointHistory(HashMap<String, Object> hashMap) {
+		int result = sqlSession.insert("pointMapper.insertBuyerPointHistory", hashMap);
+		return result;
+	}
+
+	@Override
+	public int insertAuctionSellerPointHistory(HashMap<String, Object> hashMap) {
+		int result = sqlSession.insert("pointMapper.insertSellerPointHistory", hashMap);
+		return result;
+	}
+	
+	@Override
+	   public List<AdCheck> selectAdCheck(String userId) {
+	      return sqlSession.selectList("adCheckMapper.selectAdList", userId);
+	}
+
 	
 	
 	

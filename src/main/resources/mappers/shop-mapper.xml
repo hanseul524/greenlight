@@ -5,9 +5,9 @@
 		<id property="shopNo" column="SHOP_NO"/>
 		<result property="shopName" column="SHOP_NAME"/>
 		<result property="shopAddress" column="SHOP_ADDRESS"/>
-		<result property="shopInstagram" column="SHOP_PHONE"/>
-		<result property="category" column="SHOP_INSTAGRAM"/>
-		<result property="shopPhone" column="CATEGORY"/>
+		<result property="shopPhone" column="SHOP_PHONE"/>
+		<result property="shopInstagram" column="SHOP_INSTAGRAM"/>
+		<result property="category" column="CATEGORY"/>
 	</resultMap>
 	
 	<resultMap type="OnlineShop" id="onlineShopResultMap">
@@ -22,5 +22,11 @@
 	<!-- OfflineShop -->
 	<select id="selectOfflineShopList" resultMap="offlineShopResultMap">
 		SELECT * FROM OFFLINESHOP ORDER BY SHOP_NO ASC
+	</select>
+	<select id="selectOfflineSearchList" resultMap="offlineShopResultMap" parameterType="string">
+		SELECT * FROM OFFLINESHOP WHERE SHOP_NAME LIKE '%'||#{searchKeyword }||'%'
+	</select>
+	<select id="selectOfflineOneByNo" resultMap="offlineShopResultMap" parameterType="_int">
+		SELECT * FROM OFFLINESHOP WHERE SHOP_NO = #{shopNo }
 	</select>
 </mapper>

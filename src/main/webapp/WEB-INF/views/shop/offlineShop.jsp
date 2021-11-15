@@ -11,8 +11,6 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/shop/offlineShop.css">
 <style>
 	/* map / + & - */
-	html, body {width:100%;height:100%;margin:0;padding:0;} 
-	.map_wrap {position:relative;overflow:hidden;width:100%;height:350px;}
 	.radius_border{border:1px solid #919191;border-radius:5px;}     
 	.custom_typecontrol {position:absolute;top:10px;right:10px;overflow:hidden;height:30px;margin:0;padding:0;z-index:1;font-size:12px;font-family:'Malgun Gothic', '맑은 고딕', sans-serif;}
 	.custom_typecontrol span {display:block;width:65px;height:30px;float:left;text-align:center;line-height:30px;cursor:pointer;}
@@ -35,7 +33,7 @@
 	.info .close {position: absolute;top: 8px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
 	.info .close:hover {cursor: pointer;}
 	.info .body {position: relative;overflow: hidden;}
-	.info .desc {position: relative;margin: 13px 0 0 20px;}
+	.info .desc {position: relative;margin: 13px 0 0 20px; padding-right:10px;}
 	.desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
 	.desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
 	.info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
@@ -47,6 +45,45 @@
 	.overlay_info a strong {background: no-repeat; padding-left: 2px;}
 	.overlay_info .desc {padding:14px;position: relative; min-width: 190px; height: 56px}
 	.overlay_info .address {font-size: 12px; color: #333; position: absolute; left: 80px; right: 14px; top: 24px; white-space: normal}
+	
+	
+	.map_wrap, .map_wrap * {font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+	.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+	.map_wrap {position:relative;width:100%;height:500px;}
+	#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+	.bg_white {background:#fff;}
+	#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+	#menu_wrap .option{text-align: center;}
+	#menu_wrap .option p {margin:10px 0;}  
+	#menu_wrap .option button {margin-left:5px;}
+	#placesList li {list-style: none;}
+	ul{padding:0px;}
+	#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+	#placesList .item span {display: block;margin-top:4px;}
+	#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+	#placesList .item .info{padding:0px 0px 10px 55px;}
+	#placesList .info .gray {color:#8a8a8a;}
+	#placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+	#placesList .info .tel {color:#009900;}
+	#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 10px 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+	#placesList .item .marker_1 {background-position: 0 -10px;}
+	#placesList .item .marker_2 {background-position: 0 -56px;}
+	#placesList .item .marker_3 {background-position: 0 -102px}
+	#placesList .item .marker_4 {background-position: 0 -148px;}
+	#placesList .item .marker_5 {background-position: 0 -194px;}
+	#placesList .item .marker_6 {background-position: 0 -240px;}
+	#placesList .item .marker_7 {background-position: 0 -286px;}
+	#placesList .item .marker_8 {background-position: 0 -332px;}
+	#placesList .item .marker_9 {background-position: 0 -378px;}
+	#placesList .item .marker_10 {background-position: 0 -423px;}
+	#placesList .item .marker_11 {background-position: 0 -470px;}
+	#placesList .item .marker_12 {background-position: 0 -516px;}
+	#placesList .item .marker_13 {background-position: 0 -562px;}
+	#placesList .item .marker_14 {background-position: 0 -608px;}
+	#placesList .item .marker_15 {background-position: 0 -654px;}
+	#pagination {margin:10px auto;text-align: center;}
+	#pagination a {display:inline-block;margin-right:10px;}
+	#pagination .on {font-weight: bold; cursor: default;color:#777;}
 </style>
 </head>
 <body>
@@ -63,14 +100,9 @@
             </div>
         </div>
         <!-- ------------------------------------------------------------------------- -->
-		<form method="get" name="listForm" id="listForm" action="search.do">
+		<form method="post" name="listForm" id="listForm" action="offlineSearch.do">
 			<div>
-			    <input type="text" class="text" id="searchWrd" name="searchKeyword" placeholder="검색어를 입력해주세요" style="width: 300px;"/> 
-			    <!-- <a href="#" onclick="fn_search();"    class="btn-login" style="width: 100px; height: 40px; margin-left: 5px;"><spring:message code="btn.search" text="검색" /></a> -->
-			    <button onclick="fn_search();" class="btn-login" style="width: 100px; height: 40px; margin-left: 5px;">검색</button>
-			</div>
-			<div>
-			      <div class="map_wrap">
+				<div class="map_wrap">
 			        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div> 
 			     <!-- 지도타입 컨트롤 div 입니다 -->
 			    <div class="custom_typecontrol radius_border">
@@ -82,9 +114,21 @@
 			        <span onclick="zoomIn()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>  
 			        <span onclick="zoomOut()"><img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
 			    </div>
+					<div id="menu_wrap" class="bg_white">
+				        <div class="option">
+				            <div>
+				                    키워드 : <input type="text" value="ZERO WASTE" id="keyword" size="15" name="searchKeyWord"> 
+				                    <button type="submit">검색하기</button> 
+				            </div>
+				        </div>
+				        <hr>
+				        <ul id="placesList"></ul>
+				        <div id="pagination"></div>
+				    </div>
 			    </div>
 			</div>
 		</form>
+		<div style="width:100%; height:200px;"></div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd570f17739018454dc708a7398620de&libraries=services"></script>
 <script>
 		function fn_search() { 
@@ -131,21 +175,28 @@
 		var addrList = new Array();
 		var nameList = new Array();
 		var instaList = new Array();
+		var noList = new Array();
+		var phoneList = new Array();
 		
 		
 		
 		var rdnList =JSON.parse('${sList }');
-		console.log(rdnList);
 		for(var k in rdnList){    
 		    var $obj = rdnList[k]; // 리스트 객체를 나눠 보자..
-		    console.log($obj)
+		    var shopNo = $obj.shopNo;
 		    var shopAddr =  $obj.shopAddress; // 주소
 		    var shopName  =  $obj.shopName; // 상점이름
 		    var shopInsta = $obj.shopInstagram; // 인스타그램
+		    var shopPhone = $obj.shopPhone;
+		    
 		    addrList.push(shopAddr); // 주소 리스트
 		    nameList.push(shopName); // 상점이름 리스트
 		    instaList.push(shopInsta); // 인스타 리스트
+		    noList.push(shopNo);
+		    phoneList.push(shopPhone);
 		}
+		
+		var a;
 		
 		//주소 리스트 
 		addrList.forEach(function(addr, index){
@@ -158,7 +209,34 @@
 		       if (status === kakao.maps.services.Status.OK) {
 		  
 		          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-		          console.log(coords);
+		          /* var itemEl = getListItem(rdnList, index);
+		          a += itemEl
+		          $("#placesList").html(a); */
+		          
+		          
+		          /* ----------------------------------------------------------- */
+		          var el = document.createElement('li'),
+				    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
+				                '<div class="info">' +
+				                '   <h5>' + nameList[index] + '</h5>';
+				
+				    if (addrList[index]) {
+				        itemStr += '    <span>' + addrList[index] + '</span>' +
+				                    '   <span class="jibun gray">' +  "아아아아"  + '</span>';
+				    } else {
+				        itemStr += '    <span>' +  "아아아아아아아아"  + '</span>'; 
+				    }
+				                 
+				      itemStr += '  <span class="tel">' + phoneList[index] + '</span>' +
+				                '</div>';           
+				
+				    el.innerHTML += itemStr;
+				    el.className = 'item';
+				    
+				    $("#placesList").html(el);
+				   /* ---------------------------------------------------------- */
+		          
+		          
 		          
 		          // 결과값으로 받은 위치를 마커로 표시합니다
 		          var marker = new kakao.maps.Marker({
@@ -166,54 +244,55 @@
 		              position: coords
 		          });
 		          
-		          // 인포윈도우 박스 content.... 어렵다 1일차
-		          /* var content = '<div class="overlay_info">';
-		          content += '    <a href="list.do"><strong>' + nameList[index] +'</strong>';
-		          content += '    <div class="desc">';
-		          content += '        <img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/place_thumb.png" alt="">';
-		          content += '        <span class="address">'+ addrList[index]  +'</span>';
-		          content += '    </div></a>';
-		          content += '</div>'; */
+		         
+		          
 		          
 		          var content = '<div class="wrap">' + 
 		          '    <div class="info">' + 
 		          '        <div class="title">' + 
 		         			  nameList[index]+ 
-		          '            <div id="close" class="close" title="닫기"></div>' + 
+		          /* '            <div id="close" class="close" onclick="infoWindow(this)" title="닫기"></div>' + */ 
 		          '        </div>' + 
 		          '        <div class="body">' + 
 		          '            <div class="desc">' + 
 		          '                <div class="ellipsis">'+addrList[index]+'</div>' + 
-		          '                <div><a href="'+instaList[index]+'" target="_blank" class="link">홈페이지</a></div>' + 
+		          '                <div><a href="offlineShopDetail.do?shopNo='+noList[index]+'" class="link">홈페이지</a></div>' + 
 		          '            </div>' + 
 		          '        </div>' + 
 		          '    </div>' +    
 		          '</div>';
 		          
+		          
+		       
+		          
 		       // 마커 위에 커스텀오버레이를 표시합니다
 		       // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
 		       var overlay = new kakao.maps.CustomOverlay({
-		        	    content: content,
-		        	    map: map,
-		        	    position: marker.getPosition()       
-		        	});
-		       // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
-		           kakao.maps.event.addListener(marker, 'click', function() {
-		         	    overlay.setMap(map);
-		         	});
-		       // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
-		       $(document).on("click", function() {
-		    	   overlay.setMap(null);
+	        	    content: content,
+	        	    map: map,
+	        	    position: marker.getPosition()       
 		       });
-		  
-		          /* // 인포윈도우로 장소에 대한 설명을 표시합니다
-		          var infowindow = new kakao.maps.InfoWindow({
-		              //  content: nameList[index], 
-		              content: content,
-		                 disableAutoPan: true
-		                 
-		          });
-		          infowindow.open(map, marker); */
+		       overlay.setMap(null);
+		       // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+		       /* kakao.maps.event.addListener(marker, 'click', function() {
+	         	    overlay.setMap(map);
+		       }); */
+		       // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+		       
+		       (function(marker, overlay) {
+		    	   overlay.setMap(null);
+		           // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
+		           kakao.maps.event.addListener(marker, 'click', function() {
+		        	   overlay.setMap(map);
+		           });
+
+		           // 마커에 mouseout 이벤트를 등록하고 마우스 아웃 시 인포윈도우를 닫습니다
+		           kakao.maps.event.addListener(marker, 'mouseover', function() {
+		        	   overlay.setMap(null);
+		           });
+		           
+		       })(marker, overlay);
+		       
 		  
 		          // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 		          if(index == 0){
@@ -222,6 +301,37 @@
 		      } 
 		  });    
 		}); 
+		
+		
+		
+		function infoWindow(t){
+	    	   $(t).parent().parent().parent().remove();
+	    }
+		
+		/* function getListItem(data, i){
+			console.log(data)
+			var el = document.createElement('li'),
+		    itemStr = '<span class="markerbg marker_' + (i+1) + '"></span>' +
+		                '<div class="info">' +
+		                '   <h5>' + data[i].shopName + '</h5>';
+		
+		    if (data[i].shopAddress) {
+		        itemStr += '    <span>' + data[i].shopAddress + '</span>' +
+		                    '   <span class="jibun gray">' +  "아아아아"  + '</span>';
+		    } else {
+		        itemStr += '    <span>' +  "아아아아아아아아"  + '</span>'; 
+		    }
+		                 
+		      itemStr += '  <span class="tel">' + data[i].shopPhone  + '</span>' +
+		                '</div>';           
+		
+		    el.innerHTML = itemStr;
+		    el.className = 'item';
+		
+		    return el;
+		} */
+		
+		
 </script>
 <jsp:include page="${pageContext.request.contextPath}/common/footer.jsp"></jsp:include>
 </body>

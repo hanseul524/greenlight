@@ -42,6 +42,8 @@ public class AuctionController {
 	private AuctionService service;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MyPageService mypageService;
 	
 	
 	@RequestMapping(value="admin.do")
@@ -272,38 +274,44 @@ public class AuctionController {
 			if(auctionSuccessFul.getAuctionPrice() == 0) {
 				
 			}else if(user.getPoint() < auctionPrice) { // 낙찰가격이 적립포인트보다 적으면
-				int point = auctionSuccessFul.getAuctionPrice() - user.getPoint();
-				if(user.getPoint() != 0) {
+				int point = auctionPrice - user.getPoint(); // 낙찰가격에서 적립포인트를 뺀 금액
+				int buyPoint = user.getPoint(); // 적립포인트 금액
+				if(user.getPoint() != 0) { // 적립포인트가 0원이 아니면
 					pointMap.put("userId", buyer);
 					pointMap.put("point", 0);
-					int resultPoint = userService.modifyUserPoint(pointMap);
+					mypageService.registerAuctionBuyerPoint(user); // 적립포인트 pointhistory
+					userService.modifyUserPoint(pointMap); // 적립포인트를 0으로 update
 					chargePointMap.put("userId", buyer);
 					chargePointMap.put("point", point);
-					int resultChargePoint = userService.modifyUserChargePoint(chargePointMap);
+					mypageService.registerAuctionBuyerChargePoint(chargePointMap);
+					userService.modifyUserChargePoint(chargePointMap); // 낙찰가격 - 적립포인트를 뺀 금액을 충전포인트에서 차감
 				}else {
 					chargePointMap.put("userId", buyer);
 					chargePointMap.put("point", point);
-					int result = userService.modifyUserChargePoint(chargePointMap);
+					mypageService.registerAuctionBuyerChargePoint(chargePointMap);
+					userService.modifyUserChargePoint(chargePointMap); // 적립포인트가 0원이면 바로 충전포인트에서 차감
 				}
-			}else {
+			}else { // 적립포인트가 낙찰포인트보다 많으면
 				pointMap.put("userId", buyer);
 				pointMap.put("point", auctionPrice);
-				int result = userService.modifyUserMinusPoint(pointMap);
+				mypageService.registerAuctionBuyerPointHistory(pointMap);
+				userService.modifyUserMinusPoint(pointMap); // 적립포인트에서 낙찰가격 차감
 			}
 			pointMap.put("userId", auctionSuccessFul.getSeller());
 			pointMap.put("point", auctionPrice);
-			int result = userService.modifySellerPoint(pointMap);
+			mypageService.registerAuctionSellerPointHistory(pointMap);
+			userService.modifySellerPoint(pointMap); // 판매자에게 금액 추가
 		}
 		
-		int result = service.modifyAuctionSuccessFul(auctionNo); // 낙찰자 상태 수정
-		int removeAuctionUser = service.removeAuctionUser(auctionNo); // 입찰자 삭제
+		service.modifyAuctionSuccessFul(auctionNo); // 낙찰자 상태 수정
+		service.removeAuctionUser(auctionNo); // 입찰자 삭제
 		for(int i = 0; i < auctionNo.length; i++) { // 이미지 삭제
 			List<AuctionImage> aList = service.printAuctionImageOneByNo(auctionNo[i]);
 			for(AuctionImage a : aList) {
 				deleteFile(a.getFileName(), request);
 			}
 		}
-		int removeAuctionImage = service.removeAuctionImage(auctionNo); // 낙찰 이미지 삭제
+		service.removeAuctionImage(auctionNo); // 낙찰 이미지 삭제
 		
 		return "redirect:adminSellAuctionView.do";
 	}

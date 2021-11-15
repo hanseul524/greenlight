@@ -20,4 +20,9 @@ public interface MyPageService {
 	
 	public int getListCount(String userId);
 	
+	public int registerAuctionBuyerPoint(User user);
+	public int registerAuctionBuyerChargePoint(HashMap<String, Object> hashMap);
+	public int registerAuctionBuyerPointHistory(HashMap<String, Object> hashMap);
+	public int registerAuctionSellerPointHistory(HashMap<String, Object> hashMap);
+	public List<AdCheck> printAdCheck(String userId);
 }
