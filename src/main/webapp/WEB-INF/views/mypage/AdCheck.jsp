@@ -33,6 +33,12 @@
                 </div>
             </nav>
             <main>
+            	<c:forEach items="${arr }" var="arr" varStatus="index">
+	            	<c:forTokens items="${arr }" delims="-" var="adr" varStatus="status">
+	            		<input type="hidden" name="year" value="${status.index eq 0 }">
+	            		<input type="text" name="year" value="${status.index eq 0 }">
+	            	</c:forTokens>
+            	</c:forEach>
                 <h2 class='date_text' style="text-align: center; padding: 2rem 0"></h2>
                 <div class='date_item rap'>
                     <div class="grid date_form date_head">
@@ -80,6 +86,9 @@
     	    const diff = i - day;
     	    const d = diff <= lastDay && i > day ? diff : '';
     	    const tmpClass = !d ? 'background' : '';
+    	    console.log(y);
+    	    console.log(m);
+    	    console.log(d);
     	    
     	    html += "<div class='dateSel '"+tmpClass+">"+d+"<br><br><p align='center'>출석</p>"+"</div>";
     	  }
