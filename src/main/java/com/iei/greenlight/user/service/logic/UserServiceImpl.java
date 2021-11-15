@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.iei.greenlight.auction.domain.Auction;
 import com.iei.greenlight.mypage.domain.PointHistory;
+import com.iei.greenlight.user.domain.PageInfo;
 import com.iei.greenlight.user.domain.User;
 import com.iei.greenlight.user.service.UserService;
 import com.iei.greenlight.user.store.UserStore;
@@ -184,11 +185,6 @@ public class UserServiceImpl implements UserService{
 	public int modifyChargePoint(User userOne) {
 		return store.updateChargePoint(userOne);
 	}
-
-
-
-
-
-
+	
 
 }

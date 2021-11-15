@@ -100,7 +100,7 @@
     <div class="main-img"><img style="width: 100px; height: 100px; margin: 10px 0 10px 60px;" src="${pageContext.request.contextPath}/resources/img/mainlogo.png"></div>
     <div class="navi-area">
       <ul class="navi-menu">
-        <li><a href="#">Home</a></li>
+        <li><a href="main.do">Home</a></li>
         <li><a href="ChallengeListView.do">Challenge</a></li>
         <li><a href="auctionListView.do">Auction</a></li>
         <li><a href="#">Donation</a></li>
@@ -110,7 +110,7 @@
     <div class="user-area">
     <c:if test="${userId eq null }"><a href="loginView.do">Login</a></c:if>
     <div class="user-area">
-      <a class="icon" href="#" style="margin: 0;"><i class="fas fa-user-circle fa-2x" style="color: gray;"></i></a>
+      <a class="icon" href="userList.do" style="margin: 0;"><i class="fas fa-user-circle fa-2x" style="color: gray;"></i></a>
       <ul class="user-navi">
       	<li><a href="myPage.do">마이페이지</a></li>
       	<li><a href="chargeList.do">포인트</a></li>

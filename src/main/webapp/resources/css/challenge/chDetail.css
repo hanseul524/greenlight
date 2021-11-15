@@ -40,10 +40,22 @@ a {
   max-height: 400px;
   display: inline-block;
 }
-.title-div p {
+.title-div span {
+  float: left;
   text-align: left;
   font-size: 25px;
   font-weight: 500;
+}
+.title-div button {
+  float: right;
+  padding: 10px 20px 10px 20px;
+  margin: 0 50px 20px 0;
+  border: 1px solid rgba(128, 128, 128, 0.61);
+  border-radius: 10px;
+  font-weight: 300;
+}
+.title-div button:hover {
+  background-color: #819789c4;
 }
 .img-div {
   width: 1200px;

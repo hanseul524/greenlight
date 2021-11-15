@@ -41,6 +41,8 @@ public interface ChallengeStore {
 	// 관리자 챌린지 페이지
 	public List<Challenge> printAllCh(PageInfo api);
 	public int insertCategory(Category category);
+	public int updateChallengeCf(HashMap<String, Object> hashmap);
+	public int updatePoint(HashMap<String, Object> hashmap);
 	
 	//마이페이지
 	public int selectMyListCount(String userId);

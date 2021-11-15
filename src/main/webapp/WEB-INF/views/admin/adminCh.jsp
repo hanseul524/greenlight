@@ -29,7 +29,7 @@
       });
     });
     function popUp() {
-      window.open('/ChOpen.do', '_blank', 
+      window.open('/ChPopupView.do', '_blank', 
       'top=250, left=500, height=300, width=500,toolbar=no, menubar=no, location=no, status=no, scrollbars=no, resizable=no');
     }
   </script>
@@ -96,7 +96,10 @@
               <c:forEach items="${cList }" var="challenge">
                 <tr>
                   <td>${challenge.chNo }</td>
-                  <td><a href="ChallengeDetail.do?chNo=">${challenge.chTitle }</a></td>
+                  <c:url var="cDetail" value="ChallengeDetail.do">
+                  	<c:param name="chNo" value="${challenge.chNo }"></c:param>
+                  </c:url>
+                  <td><a href="${cDetail }">${challenge.chTitle }</a></td>
                   <td>${challenge.chWriter }</td>
                   <td>${challenge.writeDate }</td>
                   <td>

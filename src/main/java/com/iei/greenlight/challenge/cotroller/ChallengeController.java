@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -178,20 +177,47 @@ public class ChallengeController {
 			return "common/errorPage";
 		}
 	}
-	
+	// 관리자 페이지 팝업창 뷰
+	@RequestMapping(value="/ChPopupView.do", method=RequestMethod.GET)
+	public String AdminChPopupView() {
+		return "admin/chPopup";
+	}
 	// 관리자 페이지 챌린지 오픈 
-	@RequestMapping(value="ChOpen.do")
-	public String AdminChOpen(@RequestParam("chOpen") String chCategory,
+	@ResponseBody
+	@RequestMapping(value="ChOpen.do", method=RequestMethod.POST)
+	public String AdminChOpen(@RequestParam("chCategory") String chCategory,
 			@ModelAttribute Category category,
 			Model model
 			) {
 		category.setChCategory(chCategory);
+		System.out.println(chCategory.toString());
 		int result = service.registerCategory(category);
 		if(result > 0) {
-			return "admin/chPopup";
+			return "success";
 		}else {
-			model.addAttribute("msg", "챌린지 오픈 실패");
-			return "common/errorPage";			
+			return "error";			
+		}
+	}
+	
+	// 관리자 페이지 챌린지 승인
+	@ResponseBody
+	@RequestMapping(value="challengeConfirm.do", method=RequestMethod.POST)
+	public String ChallengeConfirm(@RequestParam("chNo") int chNo,
+			@RequestParam("userId") String userId) {
+		String pointContents = "챌린지 승인";
+		int pointPayment = 100;
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		hashmap.put("chNo", chNo);
+		hashmap.put("userId", userId);
+		hashmap.put("pointContents", pointContents);
+		hashmap.put("pointPayment", pointPayment);
+		int result = service.confirmChallenge(hashmap);
+		System.out.println(hashmap.toString());
+		if(result > 0) {
+			service.modifyChPoint(hashmap);
+			return "success";
+		}else {
+			return "fail";
 		}
 	}
 	

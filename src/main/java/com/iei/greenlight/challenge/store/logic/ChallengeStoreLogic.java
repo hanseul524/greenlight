@@ -150,8 +150,23 @@ public class ChallengeStoreLogic implements ChallengeStore {
 
 	@Override
 	public int insertCategory(Category category) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = session.insert("challengeMapper.insertCategory", category);
+		return result;
+	}
+	
+	@Override
+	public int updateChallengeCf(HashMap<String, Object> hashmap) {
+		int result = session.update("challengeMapper.updateConfirm", hashmap);
+		if(result > 0) {
+			session.insert("pointMapper.updateChPoint", hashmap);
+		}
+		return result;
+	}
+	
+	@Override
+	public int updatePoint(HashMap<String, Object> hashmap) {
+		int result = session.update("pointMapper.updateUserChPoint", hashmap);
+		return result;
 	}
 	
 	// 마이페이지
@@ -167,4 +182,5 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	   RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 	   return session.selectList("challengeMapper.selectMyChall", hashMap, rowBounds);
 	 }
+
 }

@@ -61,6 +61,9 @@
 	<update id="updateChallenge" parameterType="challenge">
 		UPDATE CHALLENGE SET CH_TITLE = #{chTitle}, CH_CONTENTS = #{chContents} WHERE CH_NO = #{chNo}
 	</update>
+	<update id="updateConfirm" parameterType="challenge">
+		UPDATE CHALLENGE SET CH_CONFIRM = 'Y' WHERE CH_NO = #{chNo}
+	</update>
 	<delete id="deleteChallenge" parameterType="_int">
 		DELETE FROM CHALLENGE WHERE CH_NO = #{chNo}
 	</delete>
@@ -88,7 +91,7 @@
 	<delete id="deleteReply" parameterType="_int">
 		DELETE FROM CHALLENGE_REPLY WHERE REPLY_NO = #{replyNo}
 	</delete>
-	
+	<!-- CHALLENGE_LIKE RESULTMAP -->
 	<resultMap type="ChLike" id="likeResultMap">
 		<id property="likeNo" column="LIKE_NO"/>
 		<result property="chNo" column="CH_NO"/>
@@ -111,4 +114,9 @@
 	<update id="deleteLike" parameterType="ChLike">
 		UPDATE CHALLENGE_LIKE SET LIKE_CK = 0 WHERE CH_NO = #{chNo} AND USER_ID = #{userId}
 	</update>
+	
+	<!-- CH CATEGORY RESULTMAP -->
+	<insert id="insertCategory" parameterType="Category">
+		INSERT INTO CATEGORY VALUES(SEQ_CATEGORY_NO.NEXTVAL, #{chCategory}, DEFAULT)
+	</insert>
 </mapper>

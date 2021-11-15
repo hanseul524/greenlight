@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
@@ -43,7 +43,15 @@
 	        </span>
 	      </div>
 	      <div class="title-div">
-	        <p>${challenge.chTitle }</p>
+	        <span>${challenge.chTitle }</span>
+	      <c:if test="${userId eq 'admin' }">
+	      	<c:if test="${challenge.chConfirm eq 'N'}">
+		        <button onclick="chConfirm();" value="승인하기">승인하기</button>
+	      	</c:if>
+	      	<c:if test="${challenge.chConfirm eq 'Y' }">
+		        <button onclick="chMessage();">승인완료</button>
+	      	</c:if>
+	      </c:if>
 	      </div>
 	      <div class="img-div">
 	      <c:forEach items="${cList }" var="chImg" varStatus="index">
@@ -92,6 +100,52 @@
   </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
 <script>
+	//챌린지 승인
+	function chConfirm() {
+		var chNo = '${challenge.chNo}';
+		var userId = '${challenge.chWriter}';
+		console.log(chNo);
+		
+		Swal.fire({
+			  title: '승인하시겠습니까?',
+			  text: "승인시 회원에게 100포인트를 지급힙니다!",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: '승인하기'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+				$.ajax({
+					url : "challengeConfirm.do",
+					type : "post",
+					data : { 
+						"chNo" : chNo,
+						"userId" : userId
+						},
+					success : function(data) {
+						if(data == "success") {
+						    Swal.fire(
+						      '승인이 되었습니다!',
+						      '회원의 게시글을 승인했습니다.',
+						      'success'
+						    )
+						}
+					},
+					error : function() {
+						alert("승인 실패");
+					}
+				});
+			  }
+			})
+	}
+	function chMessage() {
+		Swal.fire({ 
+			icon: 'warning',
+			title: '이미 승인된 챌린지 입니다.',
+			text: '승인완료는 취소할 수 없습니다.',
+			})
+	}
 	//좋아요를 눌렀을 때 아이디 값이 없을때
 	function loginCk() {
 		Swal.fire({ 

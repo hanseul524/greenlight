@@ -131,8 +131,18 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	@Override
 	public int registerCategory(Category category) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = store.insertCategory(category);
+		return result;
+	}
+	
+	@Override
+	public int confirmChallenge(HashMap<String, Object> hashmap) {
+		return store.updateChallengeCf(hashmap);
+	}
+	
+	@Override
+	public int modifyChPoint(HashMap<String, Object> hashmap) {
+		return store.updatePoint(hashmap);
 	}
 
 	//마이페이지
@@ -145,4 +155,5 @@ public class ChallengeServiceImpl implements ChallengeService{
 	public List<Challenge> printChallList(HashMap<String, Object> hashMap) {
 	    return store.selectMyChall(hashMap);
 	 }
+
 }

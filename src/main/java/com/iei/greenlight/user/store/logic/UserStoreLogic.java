@@ -126,10 +126,4 @@ public class UserStoreLogic implements UserStore{
 		return sqlSession.update("userMapper.updateChargePoint", userOne);
 	}
 
-
-
-
-
-
-
 }

@@ -85,7 +85,7 @@
   	<update id="updateUserOne">
         UPDATE USERS SET USER_PWD = #{userPwd}, USER_ADDR = #{userAddr } WHERE USER_ID = #{userId}
      </update>
-     
+          
      <!-- 포인트 충전  -->
      <update id="updateChargePoint">
      	UPDATE USERS SET CHARGE_POINT = CHARGE_POINT + #{chargePoint } WHERE USER_ID = #{userId }
@@ -94,4 +94,5 @@
      <delete id="deleteUserOne" parameterType="User">
         DELETE FROM USERS WHERE USER_ID = #{user_id}
      </delete>
+     
 </mapper>

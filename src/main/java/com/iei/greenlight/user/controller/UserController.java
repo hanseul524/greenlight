@@ -1,6 +1,8 @@
 package com.iei.greenlight.user.controller;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.iei.greenlight.common.UserPagination;
+import com.iei.greenlight.user.domain.PageInfo;
 import com.iei.greenlight.user.domain.User;
 import com.iei.greenlight.user.service.UserService;
 
@@ -264,6 +268,7 @@ public class UserController {
 		}
 		
 	}
+	
 	// 회원 탈퇴
 	@RequestMapping(value="userDelete.do", method=RequestMethod.GET)
 	public String userDelete(@RequestParam("userId") String userId, Model model) {
@@ -274,6 +279,36 @@ public class UserController {
 			return "redirect:logout.do"; 
 		}else {
 			model.addAttribute("msg", "회원 탈퇴 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	// 관리자 페이지 회원 리스트 받아오기
+	@RequestMapping(value="userList.do", method=RequestMethod.GET)
+	public String UserListView(
+			@ModelAttribute User user,
+			Model model,
+			@RequestParam(value="page", required=false) Integer page) {
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getListCount();
+		PageInfo upi = UserPagination.getpageInfo(currentPage, totalCount);
+		List<User> uList = service.showUserList(upi);
+		List<String> pList = new ArrayList<String>();
+		if(!uList.isEmpty()) {
+			int point;
+			int chargePoint; 
+			int totalPoint;
+			for(int i=0; i<uList.size(); i++) {
+				point = uList.get(i).getPoint();
+				chargePoint = uList.get(i).getChargePoint();
+				totalPoint = point+chargePoint;
+				System.out.println(chargePoint);
+			}
+			model.addAttribute("uList", uList);
+			model.addAttribute("upi", upi);
+			return "admin/admin";
+		}else {
+			model.addAttribute("msg", "회원 리스트 조회 실패");
 			return "common/errorPage";
 		}
 	}

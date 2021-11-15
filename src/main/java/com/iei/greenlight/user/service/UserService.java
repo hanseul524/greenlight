@@ -1,9 +1,6 @@
 package com.iei.greenlight.user.service;
 
 import java.util.HashMap;
-import java.util.List;
-
-import com.iei.greenlight.mypage.domain.PointHistory;
 import com.iei.greenlight.user.domain.User;
 
 public interface UserService {
@@ -47,4 +44,6 @@ public interface UserService {
 	int removeUser(String userId);
 
 	public int modifyChargePoint(User userOne);
+	
+
 }
