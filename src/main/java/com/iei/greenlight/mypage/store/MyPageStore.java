@@ -17,11 +17,14 @@ public interface MyPageStore {
 	
 	List<PointHistory> selectPoint(HashMap<String, Object> hashmap);
 
+	public int isertAdCheck(String id); 
+
 	public int selectListCount(String userId);
 	public int insertAuctionBuyerPoint(User user);
 	public int insertAuctionBuyerChargePoint(HashMap<String, Object> hashMap);
 	public int insertAuctionBuyerPointHistory(HashMap<String, Object> hashMap);
 	public int insertAuctionSellerPointHistory(HashMap<String, Object> hashMap);
 	public List<AdCheck> selectAdCheck(String userId);
+	
 
 }

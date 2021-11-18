@@ -89,7 +89,7 @@ header{
             text-align: center;
             margin-top: 20px;
         }
-            #adCheck-butn{
+            .adCheck-butn{
                 background-color: black;
                 color: white;
                 border-top-left-radius: 25px;

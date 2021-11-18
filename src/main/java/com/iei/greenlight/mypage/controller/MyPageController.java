@@ -1,21 +1,21 @@
 package com.iei.greenlight.mypage.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.iei.greenlight.challenge.domain.Challenge;
 import com.iei.greenlight.mypage.common.Pagination;
 import com.iei.greenlight.mypage.domain.AdCheck;
 import com.iei.greenlight.mypage.domain.PageInfo;
@@ -35,10 +35,11 @@ public class MyPageController {
 		String userId = (String)session.getAttribute("userId");
 		List<User> user = service.printTotalPoint(userId);
 		List<PointHistory> history = service.printTotalUse(userId);
+		System.out.println(user.toString());
+		System.out.println(history.toString());
 		// 난수 생성
 		double dValue = Math.random();
 		int iValue = (int)(dValue * 10)+1;
-		System.out.println(iValue);
 		try {
 			if(!user.isEmpty()) {
 				model.addAttribute("user", user);
@@ -46,8 +47,9 @@ public class MyPageController {
 				model.addAttribute("iValue", iValue);
 				return "mypage/MyPage";
 			}else {
-				model.addAttribute("msg", "실패");
-				return "common/errorPage";
+				model.addAttribute("user", null);
+				model.addAttribute("history", null);
+				return "mypage/MyPage";
 			}
 		} catch (Exception e) {
 			model.addAttribute("msg", e);
@@ -65,6 +67,7 @@ public class MyPageController {
 		hashmap.put("pi", pi);
 		hashmap.put("userId", userId);
 		List<PointHistory> point = service.printPoint(hashmap);
+		System.out.println(point);
 		try {
 			if(!point.isEmpty()) {
 				model.addAttribute("point", point);
@@ -80,28 +83,27 @@ public class MyPageController {
 			return "common/errorPage";
 		}
 	}
-	// 출석체크
-	@RequestMapping(value="myPageAdCheck.do")
-	public String myPageAdCheck(HttpServletRequest request) {
-		
-		return "mypage/AdCheck";
-	}
 	
-	// 출석체크
+		// 출석체크
 	   @RequestMapping(value="myPageAdCheck.do", method=RequestMethod.GET)
 	   public String myPageAdCheck(Model model, HttpSession session) {
 	      String userId = (String) session.getAttribute("userId");
 	      String arr = null;
+	      String lastCheck = null;
 	      List<String> arry = new ArrayList<String>();
 	      List<AdCheck> ad = service.printAdCheck(userId);
-	      System.out.println(ad.toString());
+	      Calendar c1 = new GregorianCalendar();
+		  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
+		  String toDay = sdf.format(c1.getTime()); 
 	      for(int i = 0; i < ad.size(); i++) {
 	         arr = String.valueOf(ad.get(i).getAdDate());
-	         System.out.println(i);
+	         lastCheck = String.valueOf(ad.get(0).getAdDate());
 	         arry.add(arr);
 	      }
 	      try {
 	         if(!ad.isEmpty()) {
+	        	model.addAttribute("today", toDay);
+	        	model.addAttribute("lastCheck", lastCheck);
 	            model.addAttribute("ad", ad);
 	            model.addAttribute("arry", arry);
 	            return "mypage/AdCheck";
@@ -113,6 +115,39 @@ public class MyPageController {
 	         model.addAttribute("msg", e);
 	         return "common/errorPage";
 	      }
+	   }
+	   
+	@RequestMapping(value="adChecking.do", method=RequestMethod.POST)
+	   public String myPageAdChecking(Model model, @RequestParam("adDate") String adDate, @RequestParam("consecutive") int consecutive, HttpSession session) {
+		   String id = (String) session.getAttribute("userId");
+		   Calendar c1 = new GregorianCalendar();
+	       c1.add(Calendar.DATE, -1); // 오늘날짜로부터 -1
+	       int pulsConsecutive = consecutive+1;
+	       HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		   SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // 날짜 포맷 
+		   String yesterDay = sdf.format(c1.getTime()); // String으로 저장
+	       if(yesterDay.equals(adDate)) {
+	    	   if(consecutive%7 == 0) {
+	    		   System.out.println("연속출석 7");
+	    		   hashMap.put("puls", pulsConsecutive);
+	    		   hashMap.put("userId", id);
+	    	   }else {
+	    		   System.out.println("연속출석 7 이하");
+	    	   }
+	       }else {
+	    	   System.out.println("다름");
+	       }
+		   int result = service.addAdCheck(id);
+		   try {
+			   if (result > 0) {
+				   return "redirect:myPageAdCheck.do";
+			   }else {
+				   return "reidrect:myPageAdCheck.do";
+			   }
+			} catch (Exception e) {
+				model.addAttribute("msg", e);
+				return "common/errorPage";
+			}
 	   }
 	
 	

@@ -72,6 +72,11 @@ public class MyPageServiceImpl implements MyPageService{
 		return store.selectAdCheck(userId);
 	}
 
+	@Override
+	public int addAdCheck(String id) {
+		return store.isertAdCheck(id);
+	}
+
 
 	
 

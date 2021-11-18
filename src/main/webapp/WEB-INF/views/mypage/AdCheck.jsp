@@ -33,10 +33,17 @@
                 </div>
             </nav>
             <main>
-            	<c:forEach items="${arr }" var="arr" varStatus="index">
-	            	<c:forTokens items="${arr }" delims="-" var="adr" varStatus="status">
-	            		<input type="hidden" name="year" value="${status.index eq 0 }">
-	            		<input type="text" name="year" value="${status.index eq 0 }">
+            	<c:forEach items="${arry }" var="arr" varStatus="index">
+	            	<c:forTokens items="${arr }" delims="-" var="arr" varStatus="status">
+	            		<c:if test="${status.index eq 0 }">
+		            		<input type="hidden" id="year" name="year" value="${arr }">
+	            		</c:if>
+	            		<c:if test="${status.index eq 1 }">
+	            			<input type="hidden" id="month" name="month" value="${arr }">
+	            		</c:if>
+	            		<c:if test="${status.index eq 2 }">
+	            			<input type="hidden" id="day" name="day" value="${arr }">
+	            		</c:if>
 	            	</c:forTokens>
             	</c:forEach>
                 <h2 class='date_text' style="text-align: center; padding: 2rem 0"></h2>
@@ -53,7 +60,19 @@
                     <div class="grid date_form dateSel"></div>
                 </div>
                 <div id="adCheck">
-                    <input type="button" id="adCheck-butn" value="출석체크">
+                	<form action="adChecking.do" method="post">
+<!-- 	                    <input type="button" onclick="CheckSubmit();" id="adCheck-butn" value="출석체크"> -->
+	                    <c:forEach items="${ad }" var="ad" varStatus="index">
+		            		<input type="hidden" name="consecutive" value="${ad.consecutive }">
+	            		</c:forEach>
+		            		<input type="hidden" id="last-Checking" name="adDate" value="${lastCheck }">
+	            		<c:if test="${lastCheck ne toDay }">
+							<button class="adCheck-butn">출석체크</button>
+	            		</c:if>
+	            		<c:if test="${lastCheck eq toDay }">
+	            			<button class="adCheck-butn">이미 출석을 하셨습니다</button>
+	            		</c:if>
+                	</form>
                 </div>
             </main>
         </div>
@@ -79,18 +98,39 @@
     	  const day = new Date([y, m, 1].join("-")).getDay() * 1;
     	  
     	  const maxDay = Math.ceil((day + lastDay) / 7) * 7;
+		  
+    	  const year = $("#year").val();
 
+    	  const month = $("#month").val();
+    	  
+    	  const dayy = $("#day").val();
+    	  
     	  var html = '';
 			
+    	  if(y == year){
+	    	    console.log(y);
+  	      }
+    	  
+    	  if(m == month){
+	    	    console.log(m);
+	      }
+    	  
+    	  
     	  for (var i = 1; i <= maxDay; i++) {
     	    const diff = i - day;
     	    const d = diff <= lastDay && i > day ? diff : '';
     	    const tmpClass = !d ? 'background' : '';
-    	    console.log(y);
-    	    console.log(m);
-    	    console.log(d);
-    	    
-    	    html += "<div class='dateSel '"+tmpClass+">"+d+"<br><br><p align='center'>출석</p>"+"</div>";
+    	    let checkFlag = false;
+		    	    $("input[name=day]").each(function(index, item) {
+		    	    	if(d == $(item).val()) {
+		    	    		html += "<div class='dateSel '"+tmpClass+">"+d+"<br><br><p align='center'>출석</p>"+"</div>";
+		    	    		checkFlag = true;
+		    	    		return false;
+		    	    	}
+		    	    });
+    	    if(!checkFlag) {
+	    		html += "<div class='dateSel '"+tmpClass+">"+d+"</div>";
+    	    }
     	  }
     	  document.querySelector('.dateSel').innerHTML = html;
     	  document.querySelector('.date_text').innerText = y+'년 '+pad(m)+'월';
