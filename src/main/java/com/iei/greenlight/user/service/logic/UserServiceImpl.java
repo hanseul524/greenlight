@@ -193,21 +193,23 @@ public class UserServiceImpl implements UserService{
 		return store.updateCancelChargePoint(user);
 	}
 
-	 // 총 회원수
-	   @Override
-	   public int getListCount() {
-	      int totalCount = store.selectListCount();
-	      return totalCount;
-	   }
+	// 총 회원수
+	@Override
+	public int getListCount() {
+	   int totalCount = store.selectListCount();
+	   return totalCount;
+	}
 
-	   @Override
-	   public List<User> showUserList(PageInfo upi) {
-	      List<User> uList = store.selectUserList(upi);
-	      return uList;
-	   }
+	@Override
+	public List<User> showUserList(PageInfo upi) {
+	   List<User> uList = store.selectUserList(upi);
+	   return uList;
+	}
 
-
-
-
+	@Override
+	public int removeUser(List<String> uList) {
+		int result = store.deleteUser(uList);
+		return result;
+	}
 
 }

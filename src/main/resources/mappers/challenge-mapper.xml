@@ -43,7 +43,7 @@
 	<select id="selectOne" resultMap="challengeResultMap">
 		SELECT * FROM CHALLENGE WHERE CH_NO = #{chNo}
 	</select>
-	<select id="selectOneImg" resultMap="challengeResultMap">
+	<select id="selectOneImg" resultMap="challengeResultMap" parameterType="_int">
 		SELECT FILE_NAME FROM CHALLENGE_FILE WHERE CH_NO = #{chNo}
 	</select>
 	<insert id="insertChallenge" parameterType="Challenge">
@@ -119,4 +119,18 @@
 	<insert id="insertCategory" parameterType="Category">
 		INSERT INTO CATEGORY VALUES(SEQ_CATEGORY_NO.NEXTVAL, #{chCategory}, DEFAULT)
 	</insert>
+	
+	<resultMap type="ChallengeImage" id="cfileResultMap">
+		<id property="chNo" column="CH_NO"/>
+		<result property="chWriter" column="USER_ID"/>
+		<result property="categoryNo" column="CATEGORY_NO"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="fileSize" column="FILE_SIZE"/>
+		<result property="fileDate" column="FILE_DATE"/>
+		<result property="fileMain" column="FILE_MAIN"/>
+	</resultMap>
+	<select id="selectOneImgDel" resultMap="cfileResultMap">
+		SELECT FILE_NAME FROM CHALLENGE_FILE WHERE CH_NO = #{chNo}
+	</select>
 </mapper>

@@ -48,4 +48,6 @@ public interface UserStore {
 	public int selectListCount();
 	   
 	public List<User> selectUserList(PageInfo upi); 
+	
+	public int deleteUser(List<String> uList);
 }

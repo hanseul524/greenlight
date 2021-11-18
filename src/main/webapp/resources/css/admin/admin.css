@@ -91,7 +91,7 @@ li a {
   border-bottom: 1px solid gray;
   background-color: transparent;
 }
-.con-title button {
+button {
   float: right;
   padding: 10px 20px 10px 20px;
   margin: 20px 50px 0 0;
@@ -99,7 +99,7 @@ li a {
   border-radius: 10px;
   font-weight: 300;
 }
-.con-title button:hover {
+button:hover {
   background-color: #819789c4;
 }
 .con-list {

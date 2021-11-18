@@ -24,6 +24,7 @@ public interface ChallengeService {
 	public List<Challenge> printAll(PageInfo pi);
 	public Challenge printOne(int chNo);
 	public List<CFile> printOneImg(int chNo);
+	public List<CFile> printImgDel(int chNo);
 //	public int likeCount(int chNo);
 	public ChLike LikeCk(HashMap<String, Object> hashMap);
 	public int addLike(HashMap<String, Object> hashMap);

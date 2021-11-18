@@ -12,6 +12,7 @@
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function(){
       $(".header").load("header.html");
@@ -43,7 +44,7 @@
       <div class="nav-inner">
         <ul>
           <li class="li-area">
-            <i class="fas fa-user-cog" style="margin-right: 10px;"></i><a href="#">회원관리</a>
+            <i class="fas fa-user-cog" style="margin-right: 10px;"></i><a href="userList.do">회원관리</a>
           </li>
           <li class="li-area">
             <i class="fas fa-coins" style="margin-right: 10px;"></i><a href="#">경매관리</a> 
@@ -72,13 +73,11 @@
       </div>
     </div>
       <div class="contents">
-        <form action="" method="post">
           <div class="con-title">
             <div>전체 회원 목록</div>
-            <input type="text" placeholder="검색하실 아이디를 입력하세요.">
-            <input type="button" name="name" value="search">
+            <input type="text" id="userId" placeholder="검색하실 아이디를 입력하세요.">
+            <input type="button" name="name" value="search" onclick="search();">
           </div>
-        </form>
           <div class="con-list">
             <table class="table table-hover">
               <thead>
@@ -96,12 +95,12 @@
               <tbody>
 			  <c:forEach items="${uList }" var="user">
                 <tr>
-                  <td>01</td>
+                  <td>${user.count }</td>
                   <td>${user.userId }</td>
                   <td>${user.userName }</td>
                   <td>${user.userEmail }</td>
                   <td>${user.userAddr }</td>
-                  <td>${totalPoint}</td>
+                  <td>${user.point}</td>
                   <td>${user.regDate }</td>
                   <td><input type="checkbox" name="chk" class="del-chk" value="${user.userId }"></td>
                 </tr>
@@ -142,7 +141,7 @@
 			      </div>
 			 </div>
               <div class="btn-area">
-                <input type="submit" value="선택탈퇴">
+                <button onclick="delUser();">선택 탈퇴</button>
               </div>
            </div>
           </div>
@@ -151,6 +150,71 @@
   </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
 <script>
+	
+	// 회원 검색
+	function search() {
+		var searchId = $("#userId").val();
+		$.ajax({
+			url : "searchUserView.do",
+			type : "post",
+			data : { "userId" : searchId },
+			success : function(data) {
+				alert("검색 성공");
+			},
+			error : function() {
+				alert("ajax오류");
+			}
+		})
+	}
+	
+	// 회원 탈퇴
+	function delUser() {
+		var chkboxValues = new Array();
+		$("input[name='chk']:checked").each(function(i) {
+			chkboxValues.push($(this).val()); //체크한 벨류값 가져오기
+// 			return false;
+		});
+		
+		console.log(chkboxValues);
+		Swal.fire({
+			  title: '삭제하겠습니까?',
+			  text: "선택한 회원을 탈퇴시킵니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: '삭제하기'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+					$.ajax({
+						url : "userDeleteList.do",
+						type : "post",
+						data : { "chkArray" : chkboxValues },
+						success : function(data) {
+							if(data == "success") {
+							    Swal.fire(
+									'삭제 되었습니다!',
+									'해당 회원을 삭제했습니다.',
+									'success'
+								)
+							}
+						},
+						error : function() {
+							alert("ajax 오류");
+						}
+					})
+			  }
+		})
+	};
+	// 전체선택,해제
+	$("#chk_all").on("click", function() {
+	    if($('#chk_all').is(':checked')){
+	        $('.del-chk').prop('checked',true);
+	     }else{
+	        $('.del-chk').prop('checked',false);
+	     }
+	})
+	
 	todayDate();
 	
 	function todayDate(){
@@ -165,13 +229,6 @@
 		  $("#today").html(dateString);
 	}
 	
-	$("#chk_all").on("click", function() {
-	    if($('#chk_all').is(':checked')){
-	        $('.del-chk').prop('checked',true);
-	     }else{
-	        $('.del-chk').prop('checked',false);
-	     }
-	})
 </script>
 </body>
 </html>

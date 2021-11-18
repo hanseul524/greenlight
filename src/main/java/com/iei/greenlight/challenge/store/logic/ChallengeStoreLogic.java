@@ -74,6 +74,13 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	@Override
 	public List<CFile> selectOneImg(int chNo) {
 		List<CFile> cList = session.selectList("challengeMapper.selectOneImg", chNo);
+		System.out.println(cList.toString() + "2222222222222222222w");
+		return cList;
+	}
+	
+	@Override
+	public List<CFile> selectImgDel(int chNo) {
+		List<CFile> cList = session.selectList("challengeMapper.selectOneImgDel", chNo);
 		return cList;
 	}
 	
@@ -182,5 +189,7 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	   RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 	   return session.selectList("challengeMapper.selectMyChall", hashMap, rowBounds);
 	 }
+
+
 
 }

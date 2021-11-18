@@ -25,6 +25,7 @@ public interface ChallengeStore {
 	public List<Challenge> selectAll(PageInfo pi);
 	public Challenge selectOne(int chNo);
 	public List<CFile> selectOneImg(int chNo);
+	public List<CFile> selectImgDel(int chNo);
 //	public int selectLikeCount(int likeCount);
 	public ChLike selectLike(HashMap<String, Object> hashMap);
 	public int insertLike(HashMap<String, Object> hashMap);

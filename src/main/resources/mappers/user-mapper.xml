@@ -13,6 +13,7 @@
 		<result property="chargePoint" column="CHARGE_POINT"/>
 		<result property="admin" column="ADMIN"/>
 		<result property="socialId" column="SOCIAL_ID"/>
+		<result property="count" column="COUNT"/>
 	</resultMap>
 	
 	<select id="loginUser" parameterType="User" resultMap="userResultMap">
@@ -60,7 +61,7 @@
      </select>
      
      <select id="selectAllList" resultMap="userResultMap">
-        SELECT * FROM USERS
+        SELECT ROWNUM AS COUNT, U.* FROM USERS U ORDER BY COUNT DESC
      </select>
 	
   	<insert id="insertUser" parameterType="User">
@@ -109,4 +110,14 @@
         DELETE FROM USERS WHERE USER_ID = #{user_id}
      </delete>
      
+     <!-- 관리자 페이지 회원삭제 -->
+     <delete id="deleteUserList" parameterType="java.util.List">
+     	DELETE FROM USERS
+     	<where>
+     		USER_ID IN
+     		<foreach collection="list" item="item" open="(" close=")" separator=", ">
+     			#{item}
+     		</foreach>
+     	</where>
+     </delete>
 </mapper>

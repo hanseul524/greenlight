@@ -67,6 +67,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 	@Override
 	public List<CFile> printOneImg(int chNo) {
 		List<CFile> cList = store.selectOneImg(chNo);
+		System.out.println(cList.toString() + "1111111111111");
+		return cList;
+	}
+	
+	@Override
+	public List<CFile> printImgDel(int chNo) {
+		List<CFile> cList = store.selectImgDel(chNo);
 		return cList;
 	}
 	
@@ -155,5 +162,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 	public List<Challenge> printChallList(HashMap<String, Object> hashMap) {
 	    return store.selectMyChall(hashMap);
 	 }
+
+
 
 }

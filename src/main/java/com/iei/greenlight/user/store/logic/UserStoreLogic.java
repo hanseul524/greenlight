@@ -133,7 +133,7 @@ public class UserStoreLogic implements UserStore{
 		return sqlSession.update("userMapper.updateCancelChargePoint", user);
 	}
 
-
+	// 관리자 페이지 회원 관리
 	@Override
 	public List<User> selectUserList(PageInfo upi) {
 		int offset = (upi.getCurrentPage() - 1) * upi.getBoardLimit();
@@ -144,11 +144,13 @@ public class UserStoreLogic implements UserStore{
 
 	@Override
 	public int selectListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		int totalCount = sqlSession.selectOne("userMapper.selectListCount");
+		return totalCount;
 	}
 
-
-
-
+	@Override
+	public int deleteUser(List<String> uList) {
+		int result = sqlSession.delete("userMapper.deleteUserList", uList);
+		return result;
+	}
 }
