@@ -43,6 +43,10 @@
           </li>
           <li class="li-area">
             <i class="fas fa-warehouse" style="margin-right: 10px;"></i><a href="#">매장관리</a>
+             <ul>
+              <li><a href="#">온라인 매장 관리</a></li>
+              <li><a href="adminOfflineShop.do">오프라인 매장 관리</a></li>
+            </ul>
           </li>
           <li class="li-area">
             <i class="fas fa-gifts" style="margin-right: 10px;"></i><a href="#">이벤트관리</a> 

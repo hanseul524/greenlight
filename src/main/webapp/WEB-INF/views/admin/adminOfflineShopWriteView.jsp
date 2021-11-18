@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -21,7 +20,7 @@
       <span>admin01</span>
       <div style="margin-left: 40px; font-size: 14px; font-weight: 500; color:#7ea18b;">
         관리자님, 안녕하세요. <br>
-        오늘은 <span id="today" style="width:80px;">2021.11.01</span>일 입니다.
+        오늘은 <span id="today" style="width:80px;"></span>일 입니다.
       </div>
       <div class="nav-inner">
         <ul>
@@ -59,87 +58,53 @@
       </div>
     </div>
       <div class="contents">
-          <div class="con-title">
-        <form action="registAuctionHistory.do" method="post">
-            <div>재고관리</div>
-            <button type="submit" value="물품등록">물품등록</button>
-            <p>회원들이 보낸 상품 중 경매를 시작하지 않은 상품입니다.</p>
-          </div>
-          <div class="con-list">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th>No.</th>
-                  <th>물품명</th>
-                  <th>희망가</th>
-                  <th>희망시간</th>
-                  <th>판매자</th>
-                  <th>신청일</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-              <c:if test="${ empty aList }">
-              	<tr>
-                  <td colspan="7" align="center">신청한 경매가 없습니다.</td>
-	            </tr>
-              </c:if>
-              <c:if test="${ not empty aList }">
-	              <c:forEach items="${aList }" var="auction" varStatus="status">
-	                <tr>
-	                  <td>${auction.count }</td>
-	                  <td>${auction.auctionTitle }</td>
-	                  <td>${auction.auctionPrice }P</td>
-	                  <td>${auction.auctionTime }시간</td>
-	                  <td>${auction.userId }</td>
-	                  <td>${auction.regDate }</td>
-	                  <td><input type="checkbox" value="${auction.auctionNo }" name="auctionNo"></td>
-	                </tr>
-	              </c:forEach>
-              </c:if>
-              </tbody>
-            </table>
-            
-            
-            <div class="page_wrap">
-			    <c:url var="before" value="adminAuctionView.do">
-			    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
-			    </c:url>
-			      <div class="page_nation">
-			      <c:if test="${pi.currentPage <= 1 }">
-			         <a class="arrow prev" href="#"></a>
-			      </c:if>
-			      <c:if test="${pi.currentPage > 1 }">
-			         <a class="arrow prev" href="${before }"></a>
-			      </c:if>
-			      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
-			      	<c:url var="pagenation" value="adminAuctionView.do">
-			      		<c:param name="page" value="${p }"></c:param>
-			      	</c:url>
-			      	<c:if test="${p eq pi.currentPage }">
-			         	<a href="#" class="active">${p }</a>
-			      	</c:if>
-			      	<c:if test="${p ne pi.currentPage }">
-			      		<a href="${pagenation }">${p }</a>
-			      	</c:if>
-			      </c:forEach>
-			      <c:url var="after" value="adminAuctionView.do">
-			      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
-			      </c:url>
-			      <c:if test="${pi.currentPage >= pi.maxPage }">
-			         <a class="arrow next" href="#"></a>
-			      </c:if>
-			      <c:if test="${pi.currentPage < pi.maxPage }">
-			         <a class="arrow next" href="${after }"></a>
-			      </c:if>
-			      </div>
-			 </div>
-			 
-			 
-           </div>
-          </div>
-        </form>
+		<div class="con-title">
+			<form action="deleteOfflineShop.do" method="post">
+            	<div>오프라인 매장</div>
+            	<button type="submit">등록</button>
+		</div>
+		<div id="writeView">
+ 				<fieldset style ="border : 0px; display : inline-block;">
+                    <legend style="width:100%; height: 100px;"><p>매장 이름</p>
+                        <div class="div-auction">
+                            <input type="text"  class="auction-input"name="auctionTitle" id="auctionTitle">
+                        </div>
+                    </legend>
+                </fieldset>
+                <fieldset style ="border : 0px; display : inline-block; margin-left : 100px;">
+                    <legend style="width:100%; height: 100px;"><p>카테고리</p>
+						<select style="font-size:12px; margin-top:10px;">
+							<option value="카페/책방">카페/책방</option>
+							<option value="매장">매장</option>
+							<option value="공방/갤러리">공방/갤러리</option>
+							<option value="나무">나무</option>
+						</select>
+					</legend>
+                </fieldset>
+                <fieldset style ="border : 0px; margin-bottom:20px;">
+                    <legend style="width:100%; height: 100px;"><p style="display:inline-block">매장 주소</p>
+                        <div class="div-auction">
+                            <input type="text"  class="auction-input"name="auctionTime" id="auctionTime" style="width:500px;"><button id="addrButton">우편번호 검색</button>
+                        </div>
+                    </legend>
+                </fieldset>
+                <fieldset style ="border : 0px; ">
+                	<legend style="width:100%; height: 100px;"><p>매장 번호</p>
+                        <div class="div-auction">
+                            <input type="text"  class="auction-input"name="auctionPrice" id="auctionPrice">
+                        </div>
+                    </legend>
+                </fieldset>
+                <fieldset style ="border : 0px; ">
+                	<legend style="width:100%; height: 100px;"><p>매장 인스타그램</p>
+                        <div class="div-auction">
+                            <input type="text"  class="auction-input"name="auctionPrice" id="auctionPrice">
+                        </div>
+                    </legend>
+                </fieldset>			
+		</div>
       </div>
+</div>
     </div>
 </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
@@ -168,6 +133,7 @@
           $(this).addClass('active');
         }
       });
+	
 </script>
 </body>
 </html>

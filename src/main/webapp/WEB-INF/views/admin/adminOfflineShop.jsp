@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -21,7 +20,7 @@
       <span>admin01</span>
       <div style="margin-left: 40px; font-size: 14px; font-weight: 500; color:#7ea18b;">
         관리자님, 안녕하세요. <br>
-        오늘은 <span id="today" style="width:80px;">2021.11.01</span>일 입니다.
+        오늘은 <span id="today" style="width:80px;"></span>일 입니다.
       </div>
       <div class="nav-inner">
         <ul>
@@ -60,49 +59,51 @@
     </div>
       <div class="contents">
           <div class="con-title">
-        <form action="registAuctionHistory.do" method="post">
-            <div>재고관리</div>
-            <button type="submit" value="물품등록">물품등록</button>
-            <p>회원들이 보낸 상품 중 경매를 시작하지 않은 상품입니다.</p>
+        <form action="deleteOfflineShop.do" method="post">
+            <div>오프라인 매장</div>
+            <button type="submit" value="삭제">삭제</button>
+            <button value="등록" onclick="insertOfflineShop(event);">등록</button>
           </div>
           <div class="con-list">
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th>No.</th>
-                  <th>물품명</th>
-                  <th>희망가</th>
-                  <th>희망시간</th>
-                  <th>판매자</th>
-                  <th>신청일</th>
+                  <th>No</th>
+                  <th>매장이름</th>
+                  <th>매장주소</th>
+                  <th>매장번호</th>
+                  <th>카테고리</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-              <c:if test="${ empty aList }">
+              <c:if test="${ empty sList }">
               	<tr>
-                  <td colspan="7" align="center">신청한 경매가 없습니다.</td>
+                  <td colspan="7" align="center">등록된 매장이 없습니다.</td>
 	            </tr>
               </c:if>
-              <c:if test="${ not empty aList }">
-	              <c:forEach items="${aList }" var="auction" varStatus="status">
+              <c:if test="${ not empty sList }">
+	              <c:forEach items="${sList }" var="offline" varStatus="status">
 	                <tr>
-	                  <td>${auction.count }</td>
-	                  <td>${auction.auctionTitle }</td>
-	                  <td>${auction.auctionPrice }P</td>
-	                  <td>${auction.auctionTime }시간</td>
-	                  <td>${auction.userId }</td>
-	                  <td>${auction.regDate }</td>
-	                  <td><input type="checkbox" value="${auction.auctionNo }" name="auctionNo"></td>
+	                  <td>${offline.shopNo }</td>
+	                  <td>${offline.shopName }</td>
+	                  <td>${offline.shopAddress }</td>
+	                  <c:if test="${offline.shopPhone eq 'N' }">
+	                  	<td>없음</td>
+	                  </c:if>
+	                  <c:if test="${offline.shopPhone ne 'N' }">
+		              	<td>${offline.shopPhone }</td>
+	                  </c:if>
+	                  <td>${offline.category }</td>
+	                  <td><input type="checkbox" value="${offline.shopNo }" name="shopNo"></td>
 	                </tr>
 	              </c:forEach>
               </c:if>
               </tbody>
             </table>
-            
-            
+            </form>
             <div class="page_wrap">
-			    <c:url var="before" value="adminAuctionView.do">
+			    <c:url var="before" value="adminOfflineShop.do">
 			    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 			    </c:url>
 			      <div class="page_nation">
@@ -113,7 +114,7 @@
 			         <a class="arrow prev" href="${before }"></a>
 			      </c:if>
 			      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
-			      	<c:url var="pagenation" value="adminAuctionView.do">
+			      	<c:url var="pagenation" value="adminOfflineShop.do">
 			      		<c:param name="page" value="${p }"></c:param>
 			      	</c:url>
 			      	<c:if test="${p eq pi.currentPage }">
@@ -123,7 +124,7 @@
 			      		<a href="${pagenation }">${p }</a>
 			      	</c:if>
 			      </c:forEach>
-			      <c:url var="after" value="adminAuctionView.do">
+			      <c:url var="after" value="adminOfflineShop.do">
 			      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
 			      </c:url>
 			      <c:if test="${pi.currentPage >= pi.maxPage }">
@@ -134,11 +135,8 @@
 			      </c:if>
 			      </div>
 			 </div>
-			 
-			 
            </div>
           </div>
-        </form>
       </div>
     </div>
 </div>
@@ -168,6 +166,13 @@
           $(this).addClass('active');
         }
       });
+	
+	function insertOfflineShop(e){
+		e.preventDefault();
+		e.stopPropagation();
+		location.href="insertOfflineShop.do";
+	}
+	
 </script>
 </body>
 </html>

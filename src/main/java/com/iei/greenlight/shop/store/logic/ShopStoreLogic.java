@@ -2,10 +2,12 @@ package com.iei.greenlight.shop.store.logic;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.iei.greenlight.shop.domain.OfflinePageInfo;
 import com.iei.greenlight.shop.domain.OfflineShop;
 import com.iei.greenlight.shop.store.ShopStore;
 
@@ -16,9 +18,11 @@ public class ShopStoreLogic implements ShopStore{
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public List<OfflineShop> selectOfflineShopList() {
+	public List<OfflineShop> selectOfflineShopList(OfflinePageInfo pi) {
 		
-		List<OfflineShop> sList = sqlSession.selectList("offlineShopMapper.selectOfflineShopList");
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		List<OfflineShop> sList = sqlSession.selectList("offlineShopMapper.selectOfflineShopList", pi, rowBounds);
 		
 		return sList;
 	}
@@ -37,6 +41,22 @@ public class ShopStoreLogic implements ShopStore{
 		OfflineShop offlineShop = sqlSession.selectOne("offlineShopMapper.selectOfflineOneByNo", shopNo);
 		
 		return offlineShop;
+	}
+
+	@Override
+	public int selectOfflineListCount() {
+		
+		int count = sqlSession.selectOne("offlineShopMapper.selectOfflineListCount");
+		
+		return count;
+	}
+
+	@Override
+	public int deleteOfflineShop(int[] shopNo) {
+		
+		int result = sqlSession.delete("offlineShopMapper.deleteOfflineShop", shopNo);
+		
+		return result;
 	}
 
 

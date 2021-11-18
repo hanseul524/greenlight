@@ -29,4 +29,16 @@
 	<select id="selectOfflineOneByNo" resultMap="offlineShopResultMap" parameterType="_int">
 		SELECT * FROM OFFLINESHOP WHERE SHOP_NO = #{shopNo }
 	</select>
+	<select id="selectOfflineListCount" resultType="_int">
+		SELECT COUNT(*) FROM OFFLINESHOP
+	</select>
+	<delete id="deleteOfflineShop" parameterType="java.util.Arrays">
+  		DELETE FROM OFFLINESHOP
+  		<where>
+  			SHOP_NO IN
+  			<foreach collection="array" item="item" index="index" open="(" close=")" separator=", ">
+  				#{item }
+  			</foreach>
+  		</where>
+  	</delete>
 </mapper>
