@@ -56,8 +56,8 @@
 		                   	   <td class="table-td">${point.rowNum }</td>
 		                       <td  class="table-td">${point.pointDate }</td>
 		                       <td  class="table-td">${point.pointContents }</td>
-		                       <td  class="table-td">+${point.pointPayment }</td>
-		                       <td  class="table-td">-${point.pointUse }</td>
+		                       <td  class="table-td">+ ${point.pointPayment }</td>
+		                       <td  class="table-td">- ${point.pointUse }</td>
 		                   </tr>
 	                   </c:forEach>
                    </c:if>

@@ -18,8 +18,9 @@ public interface MyPageService {
 	
 	List<PointHistory> printPoint(HashMap<String, Object> hashmap);
 
-	
 	public int getListCount(String userId);
+
+	public int addAdCheck(String id);
 	
 	public int registerAuctionBuyerPoint(User user);
 	public int registerAuctionBuyerChargePoint(HashMap<String, Object> hashMap);

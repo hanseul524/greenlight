@@ -76,6 +76,11 @@ public class MyPageStoreLogic implements MyPageStore{
 	      return sqlSession.selectList("adCheckMapper.selectAdList", userId);
 	}
 
+	@Override
+	public int isertAdCheck(String id) {
+		return sqlSession.insert("adCheckMapper.insertChecking", id);
+	}
+
 	
 	
 	

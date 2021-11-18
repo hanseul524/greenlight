@@ -7,6 +7,10 @@
 		<result property="consecutive" column="CONSECUTIVE"/>
 	</resultMap>
 	<select id="selectAdList" resultMap="adCheckResultMap">
-		SELECT * FROM AD_CHECK WHERE USER_ID = #{userId}
+		SELECT * FROM AD_CHECK WHERE USER_ID = #{userId} order by ad_date desc
 	</select>
+	
+	<insert id="insertChecking">
+		insert into ad_check values(#{id}, sysdate, 6)
+	</insert>
 </mapper>
