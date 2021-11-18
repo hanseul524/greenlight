@@ -14,11 +14,12 @@ public class User {
 	private int chargePoint;
 	private char admin;
 	private String socialId;
+	private int count;
 	
 	public User() {}
 	
 	public User(String userId, String userPwd, String userName, String userEmail, String userAddr, String userPhone,
-			Date regDate, int point, int chargePoint, char admin, String socialId) {
+			Date regDate, int point, int chargePoint, char admin, String socialId, int count) {
 		super();
 		this.userId = userId;
 		this.userPwd = userPwd;
@@ -31,9 +32,17 @@ public class User {
 		this.chargePoint = chargePoint;
 		this.admin = admin;
 		this.socialId = socialId;
+		this.count = count;
 	}
 
+	
+	public int getCount() {
+		return count;
+	}
 
+	public void setCount(int count) {
+		this.count = count;
+	}
 
 	public String getUserId() {
 		return userId;
@@ -125,10 +134,10 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "UserController [userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName + ", userEmail="
-				+ userEmail + ", userAddr=" + userAddr + ", userPhone=" + userPhone + ", regDate=" + regDate
-				+ ", point=" + point + ", chargePoint=" + chargePoint + ", admin=" + admin + ", socialId=" + socialId
+		return "User [userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName + ", userEmail=" + userEmail
+				+ ", userAddr=" + userAddr + ", userPhone=" + userPhone + ", regDate=" + regDate + ", point=" + point
+				+ ", chargePoint=" + chargePoint + ", admin=" + admin + ", socialId=" + socialId + ", count=" + count
 				+ "]";
 	}
-	
+
 }

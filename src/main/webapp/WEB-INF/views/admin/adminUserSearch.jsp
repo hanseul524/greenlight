@@ -1,21 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>admin Auction</title>
+<title>adminPage</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function(){
+      $(".header").load("header.html");
+      $(".footer").load("footer.html");
+
+      $('div > ul > li').click(function() {
+        if ( $(this).hasClass('active') ) {
+          $(this).find(' > ul').stop().slideUp(300);
+          $(this).removeClass('active');
+        }
+        else {
+          $(this).find(' > ul').stop().slideDown(300);
+          $(this).addClass('active');
+        }
+      });
+    });
+</script>
 </head>
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
-<div class="container">
+  <div class="container">
     <div class="nav-admin">
       <i class="fas fa-user-circle fa-4x" style="color: gray; margin: 15px;"></i>
       <span>admin01</span>
@@ -55,112 +73,83 @@
       </div>
     </div>
       <div class="contents">
+        <form action="" method="post">
           <div class="con-title">
-        <form action="userPayPoint.do" method="post">
-            <div>판매승인관리</div>
-            <button type="submit" value="판매승인">판매승인</button>
-            <p>상품을 최종 낙찰한 회원들의 포인트를 회수해주세요.</p>
+            <div>전체 회원 목록</div>
+            <input type="text" placeholder="검색하실 아이디를 입력하세요.">
+            <input type="button" name="name" value="search">
           </div>
+        </form>
           <div class="con-list">
             <table class="table table-hover">
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>물품명</th>
-                  <th>낙찰가</th>
-                  <th>판매자</th>
-                  <th>구매자</th>
-                  <th>낙찰일</th>
-                  <th></th>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Address</th>
+                  <th>Point</th>
+                  <th>Date</th>
+                  <th><input type="checkbox" id="chk_all"></th>
                 </tr>
               </thead>
               <tbody>
-              <c:if test="${ empty sList }">
-              	<tr>
-                  <td colspan="7" align="center">낙찰된 경매가 없습니다.</td>
-	            </tr>
-              </c:if>
-              <c:if test="${ not empty sList }">
-	              <c:forEach items="${sList }" var="auction" varStatus="status">
-	                <tr>
-	                  <td>${auction.count }</td>
-	                  <td>${auction.auctionTitle }</td>
-	                  <td>${auction.auctionPrice }</td>
-	                  <td>${auction.seller }</td>
-	                  <td>${auction.buyer }</td>
-	                  <td>${auction.auctionDate }</td>
-	                  <td><input type="checkbox" value="${auction.auctionNo }" name="auctionNo"></td>
-	                </tr>
-	              </c:forEach>
-              </c:if>
+			  <c:forEach items="${uList }" var="user">
+                <tr>
+                  <td>${user.count }</td>
+                  <td>${user.userId }</td>
+                  <td>${user.userName }</td>
+                  <td>${user.userEmail }</td>
+                  <td>${user.userAddr }</td>
+                  <td>${user.point}</td>
+                  <td>${user.regDate }</td>
+                  <td><input type="checkbox" name="chk" class="del-chk" value="${user.userId }"></td>
+                </tr>
+			  </c:forEach>
               </tbody>
             </table>
-            </form>
-            
             <div class="page_wrap">
-			    <c:url var="before" value="adminSellAuctionView.do">
-			    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+			    <c:url var="before" value="userList.do">
+			    	<c:param name="page" value="${upi.currentPage - 1 }"></c:param>
 			    </c:url>
 			      <div class="page_nation">
-			      <c:if test="${pi.currentPage <= 1 }">
+			      <c:if test="${upi.currentPage <= 1 }">
 			         <a class="arrow prev" href="#"></a>
 			      </c:if>
-			      <c:if test="${pi.currentPage > 1 }">
+			      <c:if test="${upi.currentPage > 1 }">
 			         <a class="arrow prev" href="${before }"></a>
 			      </c:if>
-			      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
-			      	<c:url var="pagenation" value="adminSellAuctionView.do">
+			      <c:forEach var="p" begin="${upi.startNavi}" end="${upi.endNavi }">
+			      	<c:url var="pagenation" value="userList.do">
 			      		<c:param name="page" value="${p }"></c:param>
 			      	</c:url>
-			      	<c:if test="${p eq pi.currentPage }">
+			      	<c:if test="${p eq upi.currentPage }">
 			         	<a href="#" class="active">${p }</a>
 			      	</c:if>
-			      	<c:if test="${p ne pi.currentPage }">
+			      	<c:if test="${p ne upi.currentPage }">
 			      		<a href="${pagenation }">${p }</a>
 			      	</c:if>
 			      </c:forEach>
-			      <c:url var="after" value="adminSellAuctionView.do">
-			      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+			      <c:url var="after" value="userList.do">
+			      	<c:param name="page" value="${upi.currentPage + 1 }"></c:param>
 			      </c:url>
-			      <c:if test="${pi.currentPage >= pi.maxPage }">
+			      <c:if test="${upi.currentPage >= upi.maxPage }">
 			         <a class="arrow next" href="#"></a>
 			      </c:if>
-			      <c:if test="${pi.currentPage < pi.maxPage }">
+			      <c:if test="${upi.currentPage < upi.maxPage }">
 			         <a class="arrow next" href="${after }"></a>
 			      </c:if>
 			      </div>
 			 </div>
+              <div class="btn-area">
+                <button onclick="delUser();">선택 탈퇴</button>
+              </div>
            </div>
           </div>
       </div>
     </div>
-</div>
+  </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
-<script>
-	todayDate();
-
-	function todayDate(){
-	  var today = new Date();
-	
-	  var year = today.getFullYear();
-	  var month = ('0' + (today.getMonth() + 1)).slice(-2);
-	  var day = ('0' + today.getDate()).slice(-2);
-	
-	  var dateString = year + '.' + month  + '.' + day;
-	
-	  $("#today").html(dateString);
-	}
-	
-	$('div > ul > li').click(function() {
-        if ( $(this).hasClass('active') ) {
-          $(this).find(' > ul').stop().slideUp(300);
-          $(this).removeClass('active');
-        }
-        else {
-          $(this).find(' > ul').stop().slideDown(300);
-          $(this).addClass('active');
-        }
-      });
-</script>
 </body>
 </html>

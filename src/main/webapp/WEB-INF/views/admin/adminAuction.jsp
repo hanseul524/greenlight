@@ -26,7 +26,7 @@
       <div class="nav-inner">
         <ul>
           <li class="li-area">
-            <i class="fas fa-user-cog" style="margin-right: 10px;"></i><a href="#">회원관리</a>
+            <i class="fas fa-user-cog" style="margin-right: 10px;"></i><a href="userList.do">회원관리</a>
           </li>
           <li class="li-area">
             <i class="fas fa-coins" style="margin-right: 10px;"></i><a href="#">경매관리</a> 

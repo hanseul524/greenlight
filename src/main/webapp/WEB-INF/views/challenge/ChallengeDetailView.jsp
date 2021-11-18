@@ -46,7 +46,7 @@
 	        <span>${challenge.chTitle }</span>
 	      <c:if test="${userId eq 'admin' }">
 	      	<c:if test="${challenge.chConfirm eq 'N'}">
-		        <button onclick="chConfirm();" value="승인하기">승인하기</button>
+		        <button onclick="chConfirm();">승인하기</button>
 	      	</c:if>
 	      	<c:if test="${challenge.chConfirm eq 'Y' }">
 		        <button onclick="chMessage();">승인완료</button>

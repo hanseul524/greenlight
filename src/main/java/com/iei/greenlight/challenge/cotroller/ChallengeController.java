@@ -315,14 +315,18 @@ public class ChallengeController {
 	@RequestMapping(value="ChallengeDelete.do", method=RequestMethod.GET)
 	public String ChallengeDelete(
 			@RequestParam("chNo") int chNo,
-			@RequestParam("fileName") String fileName,
 			HttpServletRequest request,
 			Model model) {
-		int result = service.removeChallenge(chNo);
-		if(result > 0) {
-			if(fileName != "") {
-				deleteFile(fileName, request);
+		System.out.println(chNo);
+		List<CFile> cList = service.printImgDel(chNo);
+		if(!cList.isEmpty()) {
+			for(int i=0; i<cList.size(); i++) {
+				deleteFile(cList.get(i).getFileName(), request);
 			}
+		}
+		int result = service.removeChallenge(chNo);
+		System.out.println(result);
+		if(result > 0) {
 			return "redirect:ChallengeListView.do";
 		}else {
 			model.addAttribute("msg", "게시글 삭제 실패");
@@ -330,8 +334,9 @@ public class ChallengeController {
 		}
 	}
 	
-	// 파일 삭제 ~~
+	// 파일 삭제
 	public void deleteFile(String fileName, HttpServletRequest request) {
+		System.out.println(345);
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String fullPath = root + "\\cuploadFiles";
 		File file = new File(fullPath + "\\" + fileName);

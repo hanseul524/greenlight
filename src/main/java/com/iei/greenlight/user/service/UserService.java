@@ -49,8 +49,10 @@ public interface UserService {
 	public int modifyChargePoint(User userOne);
 
 	public int modifycancelChargePoin(User user);
-	
+	// 관리자 페이지
 	public int getListCount();
 	
 	public List<User> showUserList(PageInfo upi); 
+	
+	public int removeUser(List<String> uList);
 }
