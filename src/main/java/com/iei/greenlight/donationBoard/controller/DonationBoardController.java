@@ -4,6 +4,7 @@ package com.iei.greenlight.donationBoard.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.iei.greenlight.donationBoard.common.donationBoardPagination;
+import com.iei.greenlight.donationBoard.domain.Donation;
 import com.iei.greenlight.donationBoard.domain.DonationBoard;
 import com.iei.greenlight.donationBoard.domain.DtFile;
 import com.iei.greenlight.donationBoard.domain.PageInfo;
@@ -87,6 +89,7 @@ public class DonationBoardController {
 		return dtFile;
 	}
 	
+	// 기부게시판 리스트
 	@RequestMapping(value="donationBoardList.do", method=RequestMethod.GET)
 	public String donationBoardListView(Model model, HttpServletRequest request, @RequestParam(value="page", required=false) Integer page) {
 		int currentPage = (page != null) ? page : 1;
@@ -101,5 +104,43 @@ public class DonationBoardController {
 			return "user/error";
 		}
 		
+	}
+	
+	@RequestMapping(value="donationBoardDetail.do", method=RequestMethod.GET)
+	public String donationBoardDetailView(@RequestParam("boardNo") int boardNo, Model model, HttpServletRequest request) {
+		DonationBoard board = service.printDonationBoardOne(boardNo);
+		List<DtFile> dFList = null;
+		if(board != null) {
+			dFList = service.printAllDonationBoardImageOneByNo(boardNo);
+			model.addAttribute("board", board);
+			model.addAttribute("dFList", dFList);
+			return "donation/donationBoardDetail";
+		}else {
+			return "user/error";
+		}
+	}
+	
+	// 회원 기부
+	@RequestMapping(value="donation.do", method=RequestMethod.POST)
+	public String donation(@RequestParam("donationPoint") int donationPoint,@RequestParam("boardNo") int boardNo , HttpServletRequest request) {
+		String userId = (String)request.getSession().getAttribute("userId");
+		// 회원 포인트 차감
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("donationPoint", donationPoint);
+		System.out.println(donationPoint);
+		int uResult = service.donationUserPoint(map);
+		// 도네이션 테이블에 insert
+		Donation donation = new Donation();
+		donation.setUserId(userId);
+		donation.setDonationPoint(donationPoint);
+		donation.setBoardNo(boardNo);
+		service.registerDonation(donation);
+		// 도네이션 보드 달성금액 수정
+		DonationBoard db = new DonationBoard();
+		db.setBoardNo(boardNo);
+		db.setDonationAmount(donationPoint);
+		service.updateDonationBoardDonationAmount(db);
+		return "redirect:donationBoardDetail.do?boardNo=" + boardNo;
 	}
 }

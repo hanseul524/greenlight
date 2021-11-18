@@ -24,6 +24,7 @@
 		<typeAlias alias="AdCheck" type="com.iei.greenlight.mypage.domain.AdCheck"/>
 		<typeAlias alias="Category" type="com.iei.greenlight.challenge.domain.Category"/>
 		<typeAlias alias="DonationImage" type="com.iei.greenlight.donationBoard.domain.DtFile"/>
+		<typeAlias alias="Donation" type="com.iei.greenlight.donationBoard.domain.Donation"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
