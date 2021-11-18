@@ -11,6 +11,23 @@
 	</select>
 	
 	<insert id="insertChecking">
-		insert into ad_check values(#{id}, sysdate, 6)
+		insert into ad_check values(#{userId}, sysdate, #{puls})
 	</insert>
+	
+	<insert id="inserNonConAdCheck">
+		insert into ad_check values(#{userId}, sysdate, 1)
+	</insert>
+	
+	<update id="updateConPoint">
+		update users set point = point+1000 where user_id = #{id}
+	</update>
+	
+	<update id="updatePoint">
+		update users set point = point+100 where user_id = #{userId}
+	</update>
+	
+	<update id="updateNonConPoint">
+		update users set point = point+100 where user_id = #{id}
+	</update>
+	
 </mapper>

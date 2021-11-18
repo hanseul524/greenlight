@@ -75,13 +75,48 @@ public class MyPageStoreLogic implements MyPageStore{
 	   public List<AdCheck> selectAdCheck(String userId) {
 	      return sqlSession.selectList("adCheckMapper.selectAdList", userId);
 	}
-
+	
 	@Override
-	public int isertAdCheck(String id) {
-		return sqlSession.insert("adCheckMapper.insertChecking", id);
+	public int isertAdCheck(HashMap<String, Object> hashMap) {
+		return sqlSession.insert("adCheckMapper.insertChecking", hashMap);
+	}
+	
+	@Override
+	public int updateContinuityPoint(HashMap<String, Object> hashMap) {
+		return sqlSession.update("adCheckMapper.updateConPoint", hashMap);
 	}
 
+	@Override
+	public int insertConHistory(HashMap<String, Object> hashMap) {
+		return sqlSession.insert("pointMapper.insertConHistory", hashMap);
+	}
+
+	@Override
+	public int updatePoint(HashMap<String, Object> hashMap) {
+		return sqlSession.update("adCheckMapper.updatePoint", hashMap);
+	}
 	
+	@Override
+	public int insertHistory(HashMap<String, Object> hashMap) {
+		return sqlSession.insert("pointMapper.inserHistory", hashMap);
+	}
+
+	@Override
+	public int inserNonConAdCheck(String id) {
+		return sqlSession.insert("adCheckMapper.inserNonConAdCheck", id);
+	}
+
+	@Override
+	public int updateNonConPoint(String id) {
+		return sqlSession.insert("adCheckMapper.updateNonConPoint", id);
+	}
+
+	@Override
+	public int insertNonConHistory(String id) {
+		return sqlSession.insert("pointMapper.inserNonConPointHistory", id);
+	}
+
+
 	
 	
 	

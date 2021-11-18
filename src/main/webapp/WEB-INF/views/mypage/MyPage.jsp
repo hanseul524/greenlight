@@ -36,6 +36,24 @@
             <div id="main-section">
                 <div id="main-img"><img src="../../../resources/css/mypage/img/mybatis.png" alt=""></div>
                 <div id="main-text">
+                	<c:if test="${empty history }">
+	                	<p>
+				                        회원님이 사용하신 포인트는 0이고<br>
+				                        보유한 포인트는 0입니다.
+	                    </p>
+	                    <c:if test="${iValue == 1 || iValue == 3 || iValue == 5 || iValue == 7 || iValue == 9}">
+		                    <p>
+					                        총합 0의 포인트로<br>
+					                        나무를 0그루를 심는 효과를 얻었습니다.
+		                    </p>
+		                </c:if>
+		                <c:if test="${iValue == 2 || iValue == 4 || iValue == 6 || iValue == 8 || iValue == 10}">
+		                    <p>
+					                        총합 0의 포인트로<br>
+					                        쓰레기 0kg을 줄이는 효과를 얻었습니다
+		                    </p>
+		                </c:if>
+	                </c:if>
                 	<c:forEach items="${history }" var="history">
 	                <c:forEach items="${user }" var="user">
                 		<p>
@@ -50,7 +68,7 @@
 					                  	<c:when test="${history.pointUse + user.point <= 999}">10그루</c:when>
 					                  	<c:when test="${history.pointUse + user.point <= 9999}">100그루</c:when>
 					                  	<c:when test="${history.pointUse + user.point <= 99999}">1000그루</c:when>
-					                  	<c:when test="${history.pointUse + user.point >= 999999}">10000그루</c:when>
+					                  	<c:when test="${history.pointUse + user.point >= 100000}">10000그루</c:when>
 					                  </c:choose>를 심는 효과를 얻었습니다.
 		                    </p>
 		                </c:if>
@@ -62,7 +80,7 @@
 						                  	<c:when test="${history.pointUse + user.point <= 999}">10kg</c:when>
 						                  	<c:when test="${history.pointUse + user.point <= 9999}">100kg</c:when>
 						                  	<c:when test="${history.pointUse + user.point <= 99999}">1t</c:when>
-						                  	<c:when test="${history.pointUse + user.point >= 999999}">10t</c:when>
+						                  	<c:when test="${history.pointUse + user.point >= 100000}">10t</c:when>
 						                  </c:choose>을 줄이는 효과를 얻었습니다
 			                    </p>
 		                </c:if>

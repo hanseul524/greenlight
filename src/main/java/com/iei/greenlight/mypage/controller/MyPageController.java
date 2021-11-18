@@ -35,8 +35,6 @@ public class MyPageController {
 		String userId = (String)session.getAttribute("userId");
 		List<User> user = service.printTotalPoint(userId);
 		List<PointHistory> history = service.printTotalUse(userId);
-		System.out.println(user.toString());
-		System.out.println(history.toString());
 		// 난수 생성
 		double dValue = Math.random();
 		int iValue = (int)(dValue * 10)+1;
@@ -67,7 +65,6 @@ public class MyPageController {
 		hashmap.put("pi", pi);
 		hashmap.put("userId", userId);
 		List<PointHistory> point = service.printPoint(hashmap);
-		System.out.println(point);
 		try {
 			if(!point.isEmpty()) {
 				model.addAttribute("point", point);
@@ -109,6 +106,7 @@ public class MyPageController {
 	            return "mypage/AdCheck";
 	         }else {
 	            model.addAttribute("ad", null);
+	            model.addAttribute("consecutive", 0);
 	            return "mypage/AdCheck";
 	         }
 	      } catch (Exception e) {
@@ -118,31 +116,34 @@ public class MyPageController {
 	   }
 	   
 	@RequestMapping(value="adChecking.do", method=RequestMethod.POST)
-	   public String myPageAdChecking(Model model, @RequestParam("adDate") String adDate, @RequestParam("consecutive") int consecutive, HttpSession session) {
+	   public String myPageAdChecking(Model model, @RequestParam("adDate") String adDate, @RequestParam(value="consecutive", required = false) int consecutive, HttpSession session) {
 		   String id = (String) session.getAttribute("userId");
 		   Calendar c1 = new GregorianCalendar();
 	       c1.add(Calendar.DATE, -1); // 오늘날짜로부터 -1
 	       int pulsConsecutive = consecutive+1;
+	       int result = 0;
 	       HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		   SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // 날짜 포맷 
 		   String yesterDay = sdf.format(c1.getTime()); // String으로 저장
 	       if(yesterDay.equals(adDate)) {
-	    	   if(consecutive%7 == 0) {
-	    		   System.out.println("연속출석 7");
+	    	   if(pulsConsecutive%7 == 0) {
 	    		   hashMap.put("puls", pulsConsecutive);
 	    		   hashMap.put("userId", id);
+	    		   result = service.addContinuityAdCheck(hashMap);
 	    	   }else {
-	    		   System.out.println("연속출석 7 이하");
+	    		   hashMap.put("puls", pulsConsecutive);
+	    		   hashMap.put("userId", id);
+	    		   result = service.addAdCheck(hashMap);
 	    	   }
 	       }else {
-	    	   System.out.println("다름");
+	    	   result = service.addNonConAdCheck(id);
 	       }
-		   int result = service.addAdCheck(id);
+		   
 		   try {
 			   if (result > 0) {
 				   return "redirect:myPageAdCheck.do";
 			   }else {
-				   return "reidrect:myPageAdCheck.do";
+				   return "redirect:myPageAdCheck.do";
 			   }
 			} catch (Exception e) {
 				model.addAttribute("msg", e);

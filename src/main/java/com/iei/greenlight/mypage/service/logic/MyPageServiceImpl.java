@@ -71,12 +71,44 @@ public class MyPageServiceImpl implements MyPageService{
 	public List<AdCheck> printAdCheck(String userId) {
 		return store.selectAdCheck(userId);
 	}
-
+	
 	@Override
-	public int addAdCheck(String id) {
-		return store.isertAdCheck(id);
+	public int addAdCheck(HashMap<String, Object> hashMap) {
+		int result = 0;
+		int adCheck = store.isertAdCheck(hashMap);
+		int adPoint = store.updatePoint(hashMap);
+		int pointHistory = store.insertHistory(hashMap);
+		if(adCheck > 0 && pointHistory > 0 && adPoint > 0) {
+			result = adCheck + pointHistory;
+		}
+		return result;
+	}
+	
+	@Override
+	public int addContinuityAdCheck(HashMap<String, Object> hashMap) {
+		int result = 0;
+		int adCheck = store.isertAdCheck(hashMap);
+		int adPoint = store.updateContinuityPoint(hashMap);
+		int pointHistory = store.insertConHistory(hashMap);
+		if(adCheck > 0 && adPoint > 0 && pointHistory > 0) {
+			result = adCheck + adPoint + pointHistory;
+		}
+		return result;
 	}
 
+	@Override
+	public int addNonConAdCheck(String id) {
+		int result = 0;
+		int adCheck = store.inserNonConAdCheck(id);
+		int adPoint = store.updateNonConPoint(id);
+		int pointHistory = store.insertNonConHistory(id);
+		if(adCheck > 0 && adPoint > 0 && pointHistory > 0) {
+			result = adCheck + adPoint + pointHistory;
+		}
+		return result;
+	}
+
+	
 
 	
 

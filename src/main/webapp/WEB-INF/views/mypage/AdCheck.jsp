@@ -62,17 +62,20 @@
                 <div id="adCheck">
                 	<form action="adChecking.do" method="post">
 <!-- 	                    <input type="button" onclick="CheckSubmit();" id="adCheck-butn" value="출석체크"> -->
+						<c:if test="${consecutive eq 0}">
+	                    		<input type="hidden" name="consecutive" value="${consecutive }">
+                    	</c:if>
 	                    <c:forEach items="${ad }" var="ad" varStatus="index">
 		            		<input type="hidden" name="consecutive" value="${ad.consecutive }">
 	            		</c:forEach>
 		            		<input type="hidden" id="last-Checking" name="adDate" value="${lastCheck }">
-	            		<c:if test="${lastCheck ne toDay }">
+	            		<c:if test="${lastCheck ne today || empty lastCheck }">
 							<button class="adCheck-butn">출석체크</button>
 	            		</c:if>
-	            		<c:if test="${lastCheck eq toDay }">
-	            			<button class="adCheck-butn">이미 출석을 하셨습니다</button>
-	            		</c:if>
                 	</form>
+            		<c:if test="${lastCheck eq today && not empty lastCheck}">
+            			<button class="adCheck-butn">이미 출석 하셨어요!</button>
+            		</c:if>
                 </div>
             </main>
         </div>
