@@ -5,22 +5,45 @@
 		<id property="boardNo" column="BOARD_NO"/>
 		<result property="dtSubject" column="DT_SUBJECT"/>
 		<result property="dtContents" column="DT_CONTENTS"/>
-		<result property="dtReplyCount" column="DT_CONTENTS"/>
+		<result property="dtReplyCount" column="DT_REPLY_COUNT"/>
 		<result property="dtTargetAmount" column="DT_TARGET_AMOUNT"/>
 		<result property="donationAmount" column="DT_DONATION_AMOUNT"/>
 		<result property="dtSuccess" column="DT_SUCCESS"/>
+		<result property="writerId" column="WRITER_ID"/>
 		<result property="writeDate" column="WRITE_DATE"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="fileMain" column="FILE_MAIN"/>
+	</resultMap>
+	<resultMap type="DonationImage" id="donationImageResultMap">
+		<result property="boardNo" column="BOARD_NO"/>
+		<result property="fileName" column="FILE_NAME"/>
+		<result property="filePath" column="FILE_PATH"/>
+		<result property="fileMain" column="FILE_MAIN"/>
 	</resultMap>
 	
+	<!-- 페이징 처리 위한 count -->
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*) FROM DONATION_BOARD
+	</select>
+	<!-- donationBoard 리스트 불러오기 -->
+	<select id="selectDonationBoardAllList" resultMap="donationBoardResultMap">
+		SELECT
+		D.BOARD_NO, D.DT_SUBJECT, D.DT_CONTENTS, D.DT_REPLY_COUNT, D.DT_TARGET_AMOUNT, D.DT_DONATION_AMOUNT, D.DT_SUCCESS, D.WRITER_ID, D.WRITE_DATE,
+		F.FILE_NAME, F.FILE_PATH, F.FILE_MAIN FROM DONATION_BOARD D LEFT JOIN DT_FILE F
+		ON D.BOARD_NO = F.BOARD_NO WHERE F.FILE_MAIN = 'Y' ORDER BY BOARD_NO DESC
+	</select>
 	
 	<insert id="insertDonationBoard">
 		<selectKey keyProperty="boardNo" resultType="_int" order="BEFORE">
 			SELECT SEQ_DT_BOARD_NO.NEXTVAL FROM dual
 		</selectKey>
-		INSERT INTO DONATION_BOARD VALUES(#{boardNo }, #{dtSubject }, #{dtContents }, DEFAULT, #{dtTargetAmount }, DEFAULT, DEFAULT, DEFAULT)
+		INSERT INTO DONATION_BOARD VALUES(#{boardNo }, #{dtSubject }, #{dtContents }, DEFAULT, #{dtTargetAmount }, DEFAULT, DEFAULT,#{writerId } , DEFAULT)
 	</insert>
 	
-	<insert id="insertDtFile">
-		INSERT INTO DT_FILE VALUES(#{boradNo }, #{fileName }, #{filePath }, #{fileSize }, DEFAULT)
+	<insert id="insertDtFile" parameterType="list">
+		<foreach item="item" open="INSERT ALL" close="SELECT * FROM SYS.DUAL" collection="list" separator=" ">
+			INTO DT_FILE VALUES(#{item.boardNo }, #{item.fileName }, #{item.filePath }, #{item.fileSize }, DEFAULT, #{item.fileMain })
+		</foreach>
 	</insert>
 </mapper>

@@ -4,29 +4,35 @@ import java.sql.Date;
 
 public class DtFile {
 
-	private int boradNo;
+	private int boardNo;
 	private String fileName;
 	private String filePath;
 	private long fileSize;
 	private Date uploadDate;
+	private String fileMain;
 	
 	public DtFile() {}
 
-	public DtFile(int boradNo, String fileName, String filePath, long fileSize, Date uploadDate) {
+	
+
+	public DtFile(int boardNo, String fileName, String filePath, long fileSize, Date uploadDate, String fileMain) {
 		super();
-		this.boradNo = boradNo;
+		this.boardNo = boardNo;
 		this.fileName = fileName;
 		this.filePath = filePath;
 		this.fileSize = fileSize;
 		this.uploadDate = uploadDate;
+		this.fileMain = fileMain;
 	}
 
-	public int getBoradNo() {
-		return boradNo;
+
+
+	public int getBoardNo() {
+		return boardNo;
 	}
 
-	public void setBoradNo(int boradNo) {
-		this.boradNo = boradNo;
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
 	}
 
 	public String getFileName() {
@@ -61,11 +67,23 @@ public class DtFile {
 		this.uploadDate = uploadDate;
 	}
 
+	
+	public String getFileMain() {
+		return fileMain;
+	}
+
+
+
+	public void setFileMain(String fileMain) {
+		this.fileMain = fileMain;
+	}
+
+
+
 	@Override
 	public String toString() {
-		return "DtFile [boradNo=" + boradNo + ", fileName=" + fileName + ", filePath=" + filePath + ", fileSize="
-				+ fileSize + ", uploadDate=" + uploadDate + "]";
+		return "DtFile [boardNo=" + boardNo + ", fileName=" + fileName + ", filePath=" + filePath + ", fileSize="
+				+ fileSize + ", uploadDate=" + uploadDate + ", fileMain=" + fileMain + "]";
 	}
-	
 	
 }

@@ -12,11 +12,16 @@ public class DonationBoard {
 	private int donationAmount;
 	private char dtSuccess;
 	private Date writeDate;
+	private String writerId;
+	private String fileName;
+	private String filePath;
+	private String fileMain;
 	
 	public DonationBoard() {}
 
-	public DonationBoard(int boardNo, String dtSubject, String dtContents, int dtReplyCount,
-			int dtTargetAmount, int donationAmount, char dtSuccess, Date writeDate) {
+	public DonationBoard(int boardNo, String dtSubject, String dtContents, int dtReplyCount, int dtTargetAmount,
+			int donationAmount, char dtSuccess, Date writeDate, String writerId, String fileName, String filePath,
+			String fileMain) {
 		super();
 		this.boardNo = boardNo;
 		this.dtSubject = dtSubject;
@@ -26,6 +31,19 @@ public class DonationBoard {
 		this.donationAmount = donationAmount;
 		this.dtSuccess = dtSuccess;
 		this.writeDate = writeDate;
+		this.writerId = writerId;
+		this.fileName = fileName;
+		this.filePath = filePath;
+		this.fileMain = fileMain;
+	}
+
+
+	public String getWriterId() {
+		return writerId;
+	}
+
+	public void setWriterId(String writerId) {
+		this.writerId = writerId;
 	}
 
 	public int getBoardNo() {
@@ -91,12 +109,48 @@ public class DonationBoard {
 	public void setWriteDate(Date writeDate) {
 		this.writeDate = writeDate;
 	}
+	
+	
+	public String getFileName() {
+		return fileName;
+	}
+
+
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+
+
+	public String getFileMain() {
+		return fileMain;
+	}
+
+
+
+	public void setFileMain(String fileMain) {
+		this.fileMain = fileMain;
+	}
 
 	@Override
 	public String toString() {
 		return "DonationBoard [boardNo=" + boardNo + ", dtSubject=" + dtSubject + ", dtContents=" + dtContents
-				+ ", dtReplyCount=" + dtReplyCount + ", dtTargetAmount=" + dtTargetAmount
-				+ ", donationAmount=" + donationAmount + ", dtSuccess=" + dtSuccess + ", writeDate=" + writeDate + "]";
+				+ ", dtReplyCount=" + dtReplyCount + ", dtTargetAmount=" + dtTargetAmount + ", donationAmount="
+				+ donationAmount + ", dtSuccess=" + dtSuccess + ", writeDate=" + writeDate + ", writerId=" + writerId
+				+ ", fileName=" + fileName + ", filePath=" + filePath + ", fileMain=" + fileMain + "]";
 	}
 	
 }
