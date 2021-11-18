@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>challengeWriteForm</title>
+<title>DonationBoardWriteForm</title>
 <script src="${pageContext.request.contextPath}/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/challenge/writeForm.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;900&display=swap" rel="stylesheet">
@@ -34,17 +34,16 @@ $(document).ready(function(){
 <jsp:include page="/common/header.jsp"></jsp:include>
   <div class="container">
     <form action="donationboardWrite.do" method="post" enctype="multipart/form-data">
-    <input type="hidden" value="1" name="categoryNo">
       <div class="write-form">
         <div class="title-area">
-          <input type="text" name="dtSubject" id="" placeholder="제목을 입력해주세요.">
+          <input type="text" name="dtSubject" placeholder="제목을 입력해주세요.">
         </div>
         <input type="text" name="dtTargetAmount" placeholder="기부 목표금액을 입력해주세요." style="border-left: white; border-right: white; border-top: white; margin-bottom: 30px;">
         <textarea name="editordata" id="summernote"></textarea>
         <div id='image_preview'>
           <h3>사진을 업로드 해주세요.</h3>
-          <input type='file' id='btnAtt' multiple='multiple' name="uploadFile"/>
-          <div id='att_zone' data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
+          <input type="file" id="btnAtt" multiple="multiple" name="uploadFile"/>
+          <div id="att_zone" data-placeholder="파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요"></div>
         </div>
       </div>
       <input type="submit" value="등록">
