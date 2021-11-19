@@ -35,6 +35,12 @@ public class ChallengeStoreLogic implements ChallengeStore {
 		int result = session.insert("challengeMapper.insertImage", cList);
 		return result;
 	}
+	
+	@Override
+	public int selectCategory() {
+		int cNo = session.selectOne("challengeMapper.selectCategory");
+		return cNo;
+	}
 
 	@Override
 	public int updateChallenge(Challenge challenge) {
@@ -83,13 +89,7 @@ public class ChallengeStoreLogic implements ChallengeStore {
 		List<CFile> cList = session.selectList("challengeMapper.selectOneImgDel", chNo);
 		return cList;
 	}
-	
-//	@Override
-//	public int selectLikeCount(int likeCount) {
-//		int result = session.selectOne()
-//		return 0;
-//	}
-	
+
 	@Override
 	public ChLike selectLike(HashMap<String, Object> hashMap) {
 		ChLike chlike = session.selectOne("challengeMapper.selectLike", hashMap);
@@ -112,6 +112,18 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	public int deleteLike(ChLike chlike) {
 		int result = session.update("challengeMapper.deleteLike", chlike);
 		return result;
+	}
+	
+	@Override
+	public int updateLikeCount(Challenge challenge) {
+		int likeCount = session.update("challengeMapper.updateLikeCount", challenge);
+		return likeCount;
+	}
+
+	@Override
+	public int deleteLikeCount(Challenge challenge) {
+		int likeCount = session.update("challengeMapper.deleteLikeCount", challenge);
+		return likeCount;
 	}
 
 	@Override
@@ -139,12 +151,6 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	public int deleteReply(Reply reply) {
 		int result = session.delete("challengeMapper.deleteReply", reply);
 		return result;
-	}
-
-	@Override
-	public int selectCategory(Challenge challenge) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	@Override
@@ -189,7 +195,5 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	   RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 	   return session.selectList("challengeMapper.selectMyChall", hashMap, rowBounds);
 	 }
-
-
 
 }

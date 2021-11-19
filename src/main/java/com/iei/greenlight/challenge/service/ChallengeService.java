@@ -15,6 +15,7 @@ public interface ChallengeService {
 	
 	// 글 작성, 수정, 삭제
 	public int registerChallenge(Challenge challenge);
+	public int selectCategory();
 	public int registerChImage(List<CFile> cList);
 	public int modifyChallenge(Challenge challenge);
 	public int removeChallenge(int chNo);
@@ -25,11 +26,12 @@ public interface ChallengeService {
 	public Challenge printOne(int chNo);
 	public List<CFile> printOneImg(int chNo);
 	public List<CFile> printImgDel(int chNo);
-//	public int likeCount(int chNo);
 	public ChLike LikeCk(HashMap<String, Object> hashMap);
 	public int addLike(HashMap<String, Object> hashMap);
 	public int updateLike(ChLike chlike);
 	public int removeLike(ChLike chlike);
+	public int updateLikeCount(Challenge challenge);
+	public int removeLikeCount(Challenge challenge);
 	
 	// 챌린지 게시판 댓글
 	public List<Reply> printAll(int chNo);
