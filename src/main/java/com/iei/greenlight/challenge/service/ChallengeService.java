@@ -21,8 +21,9 @@ public interface ChallengeService {
 	public int removeChallenge(int chNo);
 	
 	// 챌린지 리스트, 상세 페이지
-	public int getListCount();
-	public List<Challenge> printAll(PageInfo pi);
+	public int getListCount(HashMap<String, Object> hashmap);
+	public List<Challenge> printAll(HashMap<String, Object> hashmap);
+	public int printCategoryTitle(int categoryNo);
 	public Challenge printOne(int chNo);
 	public List<CFile> printOneImg(int chNo);
 	public List<CFile> printImgDel(int chNo);
@@ -40,6 +41,7 @@ public interface ChallengeService {
 	public int removeReply(Reply reply);
 	
 	// 관리자 챌린지 페이지
+	public int getAdminListCount();
 	public List<Challenge> printAllCh(PageInfo api);
 	public int registerCategory(Category category);
 	public int confirmChallenge(HashMap<String, Object> hashmap);
