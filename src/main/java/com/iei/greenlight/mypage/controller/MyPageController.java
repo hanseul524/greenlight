@@ -35,6 +35,8 @@ public class MyPageController {
 		String userId = (String)session.getAttribute("userId");
 		List<User> user = service.printTotalPoint(userId);
 		List<PointHistory> history = service.printTotalUse(userId);
+		System.out.println(user.toString());
+		System.out.println(history.toString());
 		// 난수 생성
 		double dValue = Math.random();
 		int iValue = (int)(dValue * 10)+1;
@@ -47,6 +49,7 @@ public class MyPageController {
 			}else {
 				model.addAttribute("user", null);
 				model.addAttribute("history", null);
+				model.addAttribute("userId", null);
 				return "mypage/MyPage";
 			}
 		} catch (Exception e) {

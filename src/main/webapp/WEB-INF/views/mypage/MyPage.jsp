@@ -19,6 +19,17 @@
 	<jsp:include page="/common/header.jsp"></jsp:include>
     </header>
     <div class="warper">
+    <c:if test="${empty userId }">
+    	<br><br><br>
+ 		<br><br><br>
+ 		<br><br><br>   
+    	<h2 align="center">로그인 후 이용할 수 있는 기능입니다.</h2>
+    	<br><br><br>
+    	<div align="center"><button align="center">로그인</button></div>
+    	<br><br><br>
+    	<br><br><br>
+    </c:if>
+    <c:if test="${not empty userId }">
     <nav>
             <div id="nav-section">
                 <ul id="nav nav-tabs">
@@ -28,7 +39,7 @@
                   <li class="nav-item"><a href="myChallenge.do" class="nav-link active">내가 쓴 글</a></li>
                   <li class="nav-item"><a href="myPagePoint.do" class="nav-link active">포인트 내역</a></li>
                   <li class="nav-item"><a href="myAcution.do" class="nav-link active">내 경매</a></li>
-                  <li class="nav-item"><a href="#" class="nav-link active">나의 기부 현황</a></li>
+                  <li class="nav-item"><a href="myDonation.do" class="nav-link active">나의 기부 현황</a></li>
                 </ul>
             </div>
         </nav>
@@ -91,6 +102,7 @@
             </div>
         </main>
     </div>
+    </c:if>
     <footer>
 		<jsp:include page="/common/footer.jsp"></jsp:include>
     </footer>
