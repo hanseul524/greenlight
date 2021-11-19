@@ -91,11 +91,15 @@
     <p class="zerowastemap">ZEROWASTE MAP</p>
         <div class="menu-shop">
             <div class="offline">
-                <p>OFFLINE SHOP</p>
+        	    <a href="">
+	                <p>OFFLINE SHOP</p>
+	            </a>
             </div>
             <div style="width:30px;float:left;height:100%;"></div>
             <div class="online">
-                <p>ONLINE SHOP</p>
+	            <a href="onlineShopView.do">
+	                <p>ONLINE SHOP</p>
+	            </a>
             </div>
         </div>
         <!-- ------------------------------------------------------------------------- -->
@@ -298,14 +302,12 @@
 	        	    map: map,
 	        	    position: marker.getPosition()       
 		       });
-		       overlay.setMap(null);
 		       // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
 		       
 		       
 		       // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
 		       
 		       (function(marker, overlay) {
-		    	   overlay.setMap(null);
 		           // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
 		           kakao.maps.event.addListener(marker, 'click', function() {
 		        	   overlay.setMap(map);

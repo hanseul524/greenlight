@@ -58,53 +58,89 @@
       </div>
     </div>
       <div class="contents">
-		<div class="con-title">
-			<form action="insertOfflineShop.do" method="post">
-            	<div>오프라인 매장</div>
-            	<button type="submit">등록</button>
-		</div>
-		<div id="writeView">
- 				<fieldset style ="border : 0px; display : inline-block;">
-                    <legend style="width:100%; height: 100px;"><p>매장 이름</p>
-                        <div class="div-auction">
-                            <input type="text"  class="auction-input" name="shopName" id="auctionTitle" placeholder="매장 이름을 입력해주세요">
-                        </div>
-                    </legend>
-                </fieldset>
-                <fieldset style ="border : 0px; display : inline-block; margin-left : 100px;">
-                    <legend style="width:100%; height: 100px;"><p>카테고리</p>
-						<select name="category" style="font-size:12px; margin-top:8px;">
-							<option value="카페/책방">카페/책방</option>
-							<option value="매장">매장</option>
-							<option value="공방/갤러리">공방/갤러리</option>
-							<option value="나무">나무</option>
-						</select>
-					</legend>
-                </fieldset>
-                <fieldset style ="border : 0px; margin-bottom:20px;">
-                    <legend style="width:100%; height: 100px;"><p style="display:inline-block">매장 주소</p>
-                        <div class="div-auction">
-                            <input type="text"  class="auction-input" name="shopAddress" id="offlineAddr" style="width:500px; float:left;" placeholder="매장 주소를 입력해주세요"><!-- <button id="addrButton" style="float:left; margin-top:9px;" onclick="sample6_execDaumPostcode()">우편번호</button> -->
-                        </div>
-                    </legend>
-                </fieldset>
-                <fieldset style ="border : 0px; ">
-                	<legend style="width:100%; height: 100px;"><p>매장 번호</p>
-                        <div class="div-auction">
-                            <input type="text"  class="auction-input" name="shopPhone" id="auctionPrice" placeholder="매장 번호을 입력해주세요">
-                        </div>
-                    </legend>
-                </fieldset>
-                <fieldset style ="border : 0px; ">
-                	<legend style="width:100%; height: 100px;"><p>매장 인스타그램</p>
-                        <div class="div-auction">
-                            <input type="text"  class="auction-input" name="shopInstagram" id="auctionPrice"  placeholder="인스타그램을 입력해주세요">
-                        </div>
-                    </legend>
-                </fieldset>			
-		</div>
+          <div class="con-title">
+        <form action="deleteOnlineShop.do" method="post">
+            <div>온라인 매장</div>
+            <button type="submit" value="삭제" class="button">삭제</button>
+            <button value="등록"  class="button" onclick="insertOnlineShop(event);">등록</button>
+          </div>
+          <div class="con-list">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>매장이름</th>
+                  <th>매장설명</th>
+                  <th>매장이미지</th>
+                  <th>매장링크</th>
+                  <th>카테고리</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+				<c:if test="${ empty sList }">
+					<tr>
+						<td colspan="7" align="center">등록된 매장이 없습니다.</td>
+					</tr>
+				</c:if>
+				<c:if test="${ not empty sList }">
+					<c:forEach items="${sList }" var="online" varStatus="status">
+						<tr>
+							<td>${online.shopNo }</td>
+							<td>${online.shopName }</td>
+							<td>${online.shopContents }</td>
+							<td>${online.shopImage }</td>
+							<td>${online.shopAddress }</td>
+							<td>${online.category }</td>
+							<td><input type="checkbox" value="${online.shopNo }" name="shopNo"></td>
+						</tr>
+					</c:forEach>
+				</c:if>
+				</tbody>
+            </table>
+            </form>
+		    <form action="adminSearchOfflineShopList.do" method="post">
+			    <div class="search">
+			      <input type="text" name="searchKeyword" id="search-title" placeholder="매장이름을 입력해주세요.">
+			    </div>
+		    </form>          
+		    <div style="width:100%; height:50px;"></div>  
+            <div class="page_wrap">
+			    <c:url var="before" value="adminOfflineShop.do">
+			    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+			    </c:url>
+			      <div class="page_nation">
+			      <c:if test="${pi.currentPage <= 1 }">
+			         <a class="arrow prev" href="#"></a>
+			      </c:if>
+			      <c:if test="${pi.currentPage > 1 }">
+			         <a class="arrow prev" href="${before }"></a>
+			      </c:if>
+			      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
+			      	<c:url var="pagenation" value="adminOfflineShop.do">
+			      		<c:param name="page" value="${p }"></c:param>
+			      	</c:url>
+			      	<c:if test="${p eq pi.currentPage }">
+			         	<a href="#" class="active">${p }</a>
+			      	</c:if>
+			      	<c:if test="${p ne pi.currentPage }">
+			      		<a href="${pagenation }">${p }</a>
+			      	</c:if>
+			      </c:forEach>
+			      <c:url var="after" value="adminOfflineShop.do">
+			      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+			      </c:url>
+			      <c:if test="${pi.currentPage >= pi.maxPage }">
+			         <a class="arrow next" href="#"></a>
+			      </c:if>
+			      <c:if test="${pi.currentPage < pi.maxPage }">
+			         <a class="arrow next" href="${after }"></a>
+			      </c:if>
+			      </div>
+			 </div>
+           </div>
+          </div>
       </div>
-</div>
     </div>
 </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
@@ -134,6 +170,15 @@
         }
       });
 	
+	function insertOnlineShop(e){
+		e.preventDefault();
+		e.stopPropagation();
+		location.href="onlineShopWriteView.do";
+	}
+	
+	function shopAddress(data){
+		window.open(data);
+	}
 	
 </script>
 </body>

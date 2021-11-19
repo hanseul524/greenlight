@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="offlineShopMapper">
+<mapper namespace="ShopMapper">
 	<resultMap type="OfflineShop" id="offlineShopResultMap">
 		<id property="shopNo" column="SHOP_NO"/>
 		<result property="shopName" column="SHOP_NAME"/>
@@ -23,7 +23,7 @@
 	<select id="selectOfflineShopList" resultMap="offlineShopResultMap">
 		SELECT * FROM OFFLINESHOP ORDER BY SHOP_NO ASC
 	</select>
-	<select id="selectOfflineSearchList" resultMap="offlineShopResultMap" parameterType="string">
+	<select id="selectOfflineSearchList" resultMap="offlineShopResultMap" parameterType="hashmap">
 		SELECT * FROM OFFLINESHOP WHERE SHOP_NAME LIKE '%'||#{searchKeyword }||'%'
 	</select>
 	<select id="selectOfflineOneByNo" resultMap="offlineShopResultMap" parameterType="_int">
@@ -32,6 +32,12 @@
 	<select id="selectOfflineListCount" resultType="_int">
 		SELECT COUNT(*) FROM OFFLINESHOP
 	</select>
+	<select id="selectSearchOfflineListCount" resultType="_int">
+		SELECT COUNT(*) FROM OFFLINESHOP WHERE SHOP_NAME LIKE '%'||#{searchKeyword }||'%'
+	</select>
+	<insert id="insertOfflineShop" parameterType="OfflineShop">
+		INSERT INTO OFFLINESHOP VALUES(182, #{shopName }, #{shopAddress }, #{shopPhone }, #{shopInstagram }, #{category })
+	</insert>
 	<delete id="deleteOfflineShop" parameterType="java.util.Arrays">
   		DELETE FROM OFFLINESHOP
   		<where>
@@ -41,4 +47,21 @@
   			</foreach>
   		</where>
   	</delete>
+  	<!-- OnlineShop -->
+  	<select id="selectOnlineList" resultMap="onlineShopResultMap">
+  		SELECT * FROM ONLINESHOP ORDER BY SHOP_NO ASC
+  	</select>
+  	<select id="selectOnlineListCount" resultType="_int">
+  		SELECT COUNT(*) FROM ONLINESHOP
+  	</select>
+  	<insert id="insertOnlineShop" parameterType="OnlineShop">
+  		INSERT INTO ONLINESHOP VALUES(SEQ_ONLINE_SHOP_NO.NEXTVAL, #{shopName }, #{shopContents }, #{shopAddress }, #{shopImage }, #{category })
+  	</insert>
+  	<!-- zerowaste -->
+  	<select id="selectZeroWateList" resultMap="onlineShopResultMap">
+  		SELECT * FROM ONLINESHOP WHERE CATEGORY = 'ZEROWASTE'
+  	</select>
+  	<select id="selectZeroWasteListCount" resultType="_int">
+  		SELECT COUNT(*) FROM ONLINESHOP WHERE CATEGORY = 'ZEROWASTE'
+  	</select>
 </mapper>

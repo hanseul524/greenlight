@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>admin Auction</title>
+<title>admin SearchOfflineShop</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/adminShop.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
@@ -109,8 +109,9 @@
 		    </form>          
 		    <div style="width:100%; height:50px;"></div>  
             <div class="page_wrap">
-			    <c:url var="before" value="adminOfflineShop.do">
+			    <c:url var="before" value="adminSearchOfflineShopList.do">
 			    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+			    	<c:param name="searchKeyword" value="${searchKeyWord }"></c:param>
 			    </c:url>
 			      <div class="page_nation">
 			      <c:if test="${pi.currentPage <= 1 }">
@@ -120,8 +121,9 @@
 			         <a class="arrow prev" href="${before }"></a>
 			      </c:if>
 			      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
-			      	<c:url var="pagenation" value="adminOfflineShop.do">
+			      	<c:url var="pagenation" value="adminSearchOfflineShopList.do">
 			      		<c:param name="page" value="${p }"></c:param>
+			      		<c:param name="searchKeyword" value="${searchKeyWord }"></c:param>
 			      	</c:url>
 			      	<c:if test="${p eq pi.currentPage }">
 			         	<a href="#" class="active">${p }</a>
@@ -130,8 +132,9 @@
 			      		<a href="${pagenation }">${p }</a>
 			      	</c:if>
 			      </c:forEach>
-			      <c:url var="after" value="adminOfflineShop.do">
+			      <c:url var="after" value="adminSearchOfflineShopList.do">
 			      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+			      	<c:param name="searchKeyword" value="${searchKeyWord }"></c:param>
 			      </c:url>
 			      <c:if test="${pi.currentPage >= pi.maxPage }">
 			         <a class="arrow next" href="#"></a>
