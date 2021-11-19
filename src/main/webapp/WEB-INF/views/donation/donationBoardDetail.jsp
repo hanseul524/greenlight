@@ -94,15 +94,27 @@
 	      </div>
 	      <div class="charts" style="width: 800px; background-color:rgb(240, 236, 236); height: 40px; margin: 0 auto; margin-bottom: 50px; margin-top: 50px; border-radius: 20px;">
 	      		<div class="charts__chart" style="width: ${(board.donationAmount / board.dtTargetAmount) * 100 }%; background-color: rgb(126, 187, 34); margin: 0; border-radius: 20px; z-index: 1; height: 100%;"></div>
-	      		<span style="position: relative; left: 48%; font-size: 18px;">${(board.donationAmount / board.dtTargetAmount) * 100 }%</span>
+	      		<span style="position: relative; left: 48%; font-size: 18px;">${board.achievement }%</span>
 	      </div>
-	      <div>
+	      <div style="margin-bottom: 20px;">
 	      	<form action="donation.do" method="post">
 	      		<label style="font-size: 20px; font-weight: bold; color: #455c4e;">후원 POINT </label>
 	      		<input type="text" name="donationPoint" placeholder="기부 금액을 입력해주세요." style="height: 30px; position: relative;bottom: 5px; left: 12px; border-top: none; border-left: none; border-right: none; outline: none;">
 	      		<input type="hidden" name="boardNo" value="${board.boardNo }">
 	      		<input type="submit" id="donationBtn" value="후원하기">
 	      	</form>
+	      </div>
+	      <div>
+	      	<table style="margin: 0 auto; width: 40%;">
+	   			<c:forEach items="${dList }" var="dUser">
+	   				<c:set var="i" value="${i+1 }"/>
+	   				<tr style="text-align: center; height: 40px;">
+		   				<td style="border-top: 30px;">USER ID : ${dUser.userId }</td>
+		   				<td style="border-top: 30px;">후원 POINT : ${dUser.donationPoint }</td>
+		   				<td style="border-top: 30px;">${i } 등</td>
+	   				</tr>
+	     		</c:forEach>
+     		</table>
 	      </div>
 	      <div class="comm-div">
 	        <span style="font-size: 20px; font-weight: 600;">Comments</span> <span id="rCount">${board.dtReplyCount }</span>
@@ -113,7 +125,7 @@
 	          <button id="submitBtn" style="">등록</button>
 	        </div>
 	        <div class="comm-area" id="replyArea">
-	          <div class="comm-inner-area" id="replyArea"> <!-- 댓글 목록 영역 -->
+	          <div class="comm-inner-area" id="replyArea" style="margin: 0 auto;"> <!-- 댓글 목록 영역 -->
 	          </div>
 	        </div>
 	      </div>
@@ -124,14 +136,14 @@
 	// 댓글 쓰기
     getReplyList();
 	$("#submitBtn").on("click", function() {
-		var chNo = '${challenge.chNo}';
+		var boardNo = '${board.boardNo}';
 		var replyContents = $("#replyContents").val();
 		$.ajax({
-			url : "addReply.do",
+			url : "donationBoardAddReply.do",
 			type : "post",
 			data : {
-				"chNo" : chNo,
-				"replyContents" : replyContents
+				"boardNo" : boardNo,
+				"dtReplyContents" : replyContents
 			},
 			success : function(data) {
 				console.log(data)
@@ -142,7 +154,9 @@
 						icon: 'success',
 						title: '댓글 등록',
 						text: '등록이 완료되었습니다.',
-						});
+						}).then(function(){
+                        	location.reload();
+                        })
 				}else{
 					alert("댓글 등록 실패!");
 				}
@@ -155,11 +169,11 @@
 	
 	// 댓글 리스트 불러오기
 	function getReplyList() {
-		var chNo = '${challenge.chNo}';
+		var boardNo = '${board.boardNo}';
 		$.ajax({
-			url : "replyList.do",
+			url : "donationReplyList.do",
 			type : "get",
-			data : { "chNo" : chNo },
+			data : { "boardNo" : boardNo },
 			dataType : "json",
 			
 			success : function(data) {
@@ -176,20 +190,20 @@
 				$("#rCount").text(data.length);
 				if(data.length > 0) {
 					for(var i in data) {
-						$innerdiv = $("<div id='replyDiv' style=vertical-align:middle; align-items:center; padding: 30px;><hr>");
+						$innerdiv = $("<div id='replyDiv' style='vertical-align:middle; align-items:center; padding: 10px;'><hr>");
 						$icon = $("<i class='fas fa-user-circle fa-3x' style='color: gray;'>");
-						$rWriter = $("<span>").text(data[i].replywriter);
-						$rContent = $("<span>").text(data[i].replyContents);
-						$rDate = $("<span>").text(data[i].replyDate);
+						$rWriter = $("<span style='float: right; margin-right: 15px;'>").text(data[i].dtReplyUserId);
+						$rContent = $("<span style='line-height: -3px;'>").text(data[i].dtReplyContents);
+						$rDate = $("<span style='float: right; margin-right: 15px;'>").text(data[i].dtReplyDate);
 						$btnArea = $("<span style='float:right;'>")
-						.append("<a href='#' onclick='modifyReply(this,"+chNo+","+data[i].replyNo+",\""+data[i].replyContents+"\");'>수정 /</a>")
-						.append("<a href='#' onclick='deleteReply(this,"+chNo+","+data[i].replyNo+");'> 삭제</a>")
+						.append("<a href='#' onclick='modifyReply(this,"+boardNo+","+data[i].dtReplyNo+",\""+data[i].dtReplyContents+"\");'>수정 /</a>")
+						.append("<a href='#' onclick='deleteReply(this,"+boardNo+","+data[i].dtReplyNo+");'> 삭제</a>")
 						
 						$innerdiv.append($icon);
-						$innerdiv.append($rWriter);
 						$innerdiv.append($rContent);
-						$innerdiv.append($rDate);
 						$innerdiv.append($btnArea);
+						$innerdiv.append($rDate);
+						$innerdiv.append($rWriter);
 						$rdiv.append($innerdiv);
 						
 					}

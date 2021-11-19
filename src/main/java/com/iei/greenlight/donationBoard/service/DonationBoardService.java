@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.iei.greenlight.donationBoard.domain.Donation;
 import com.iei.greenlight.donationBoard.domain.DonationBoard;
+import com.iei.greenlight.donationBoard.domain.DonationReply;
 import com.iei.greenlight.donationBoard.domain.DtFile;
 import com.iei.greenlight.donationBoard.domain.PageInfo;
 
@@ -28,4 +29,13 @@ public interface DonationBoardService {
 
 	void updateDonationBoardDonationAmount(DonationBoard db);
 
+	List<Donation> printDonationUserRanking(int boardNo);
+
+	public List<DonationBoard> myPrintList(HashMap<String, Object> hashMap);
+
+	int registerReply(DonationReply donationReply);
+
+	void modifyReplyCount(int boardNo);
+
+	List<DonationReply> printAllReply(int boardNo);
 }

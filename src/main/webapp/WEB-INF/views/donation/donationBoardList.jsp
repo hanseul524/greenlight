@@ -42,7 +42,7 @@
 		              <div class="charts" style="background-color: rgb(240, 236, 236);  border-radius: 10px; margin-top: 2%;">
 		              	<div class="charts__chart" style="width: ${(donationBoard.donationAmount / donationBoard.dtTargetAmount) * 100 }%; background-color: rgb(126, 187, 34); margin: 0; border-radius: 10px; z-index: 1;"></div>
 		              </div>
-		              <span style="font-size: 12px; position: relative; left: 90%;">${(donationBoard.donationAmount / donationBoard.dtTargetAmount) * 100 }%</span>
+		              <span style="font-size: 12px; position: relative; left: 90%;">${donationBoard.achievement }%</span>
 		            </div>
 		            <hr>
 		            <div style="padding-top: 10px;">

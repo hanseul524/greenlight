@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.iei.greenlight.donationBoard.domain.Donation;
 import com.iei.greenlight.donationBoard.domain.DonationBoard;
+import com.iei.greenlight.donationBoard.domain.DonationReply;
 import com.iei.greenlight.donationBoard.domain.DtFile;
 import com.iei.greenlight.donationBoard.domain.PageInfo;
 import com.iei.greenlight.donationBoard.store.DonationBoardStore;
@@ -83,7 +84,7 @@ public class DonationBoardLogic implements DonationBoardStore{
 			cMap.put("userId", userId);
 			sqlSession.update("donationBoardMapper.updateUserChargePoint", cMap);
 		}else {
-			String pointContents = "기부";
+			String pointContents = "기부(지급 포인트)";
 			map.put("pointContents", pointContents);
 			sqlSession.insert("donationBoardMapper.insertdonationPointHistory", map);
 		}
@@ -100,4 +101,31 @@ public class DonationBoardLogic implements DonationBoardStore{
 		sqlSession.update("donationBoardMapper.updateDonationBoardDonationAmount", db);
 	}
 
+	@Override
+	public List<Donation> selectDonationUserRanking(int boardNo) {
+		return sqlSession.selectList("donationBoardMapper.selectDonationUserRanking", boardNo);
+	}
+
+	@Override
+	   public List<DonationBoard> mySelectList(HashMap<String, Object> hashMap) {
+	      PageInfo pi = (PageInfo)(hashMap.get("pi"));
+	      int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+	      RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+	      return sqlSession.selectList("donationBoardMapper.selectMyDonation", hashMap, rowBounds);
+	   }
+
+	@Override
+	public int insertDonationReply(DonationReply donationReply) {
+		return sqlSession.insert("donationBoardMapper.insertDonationReply", donationReply);
+	}
+
+	@Override
+	public void updateBoardReplyCound(int boardNo) {
+		sqlSession.update("donationBoardMapper.addBoardReplyCount", boardNo);
+	}
+
+	@Override
+	public List<DonationReply> seelectAllReply(int boardNo) {
+		return sqlSession.selectList("donationBoardMapper.selectAllReply", boardNo);
+	}
 }
