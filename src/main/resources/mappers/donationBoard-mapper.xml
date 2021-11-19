@@ -34,6 +34,21 @@
 		ON D.BOARD_NO = F.BOARD_NO WHERE F.FILE_MAIN = 'Y' ORDER BY BOARD_NO DESC
 	</select>
 	
+	<!-- donationBoard 디테일 -->
+	<select id="selectDonationOne" parameterType="_int" resultMap="donationBoardResultMap">
+		SELECT * FROM DONATION_BOARD WHERE BOARD_NO = #{boardNo }
+	</select>
+	
+	<!-- donationBoardImage -->
+	<select id="selectDonationBoardImageList" parameterType="_int" resultMap="donationImageResultMap">
+		SELECT * FROM DT_FILE WHERE BOARD_NO = #{boardNo }
+	</select>
+	
+	<!-- 유저 포인트 조회 -->
+	<select id="selectUserPoint" parameterType="string" resultType="_int">
+		SELECT POINT FROM USERS WHERE USER_ID = #{userId }
+	</select>
+	
 	<insert id="insertDonationBoard">
 		<selectKey keyProperty="boardNo" resultType="_int" order="BEFORE">
 			SELECT SEQ_DT_BOARD_NO.NEXTVAL FROM dual
@@ -46,4 +61,41 @@
 			INTO DT_FILE VALUES(#{item.boardNo }, #{item.fileName }, #{item.filePath }, #{item.fileSize }, DEFAULT, #{item.fileMain })
 		</foreach>
 	</insert>
+	
+	<!-- 도네이션 테이블 등록 -->
+	<insert id="insertDonationUser" parameterType="Donation">
+		INSERT INTO DONATION VALUES(#{boardNo }, #{userId }, #{donationPoint }, DEFAULT)
+	</insert>
+	
+	<!-- 기부 포인트 히스토리 point 등록 -->
+	<insert id="insertdonationPointHistory" parameterType="hashmap">
+		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, #{pointContents }, DEFAULT, #{donationPoint }, DEFAULT)
+	</insert>
+	
+	<!-- 유저포인트가 마이너스일때 chargePoint 사용할때 history -->
+	<insert id="insertNormalPointHistory" parameterType="hashmap">
+		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, #{pointContents }, DEFAULT, #{point }, DEFAULT)
+	</insert>
+	
+	<!-- 포인트 히스토리 chargePoint 차감 내역 등록 -->
+	<insert id="insertUseChargePointHistory" parameterType="hashmap">
+		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, #{pointContents }, DEFAULT, #{cPoint }, 'Y')
+	</insert>
+	<!-- user donation -->
+	<update id="donationUserPoint" parameterType="hashmap">
+		UPDATE USERS SET POINT = POINT - #{donationPoint } WHERE USER_ID = #{userId }
+	</update>
+	<!-- 유저 포인트가 마이너스이면 0으로  -->
+	<update id="updateUserPointZero" parameterType="string">
+		UPDATE USERS SET POINT = 0 WHERE USER_ID = #{userId }
+	</update>
+	<!-- 유저 충전포인트 차감 -->
+	<update id="updateUserChargePoint" parameterType="hashmap">
+		UPDATE USERS SET CHARGE_POINT = CHARGE_POINT + #{donationPoint } WHERE USER_ID = #{userId }
+	</update>
+	
+	<!-- 후원시 후원게시판 금액 수정 -->
+	<update id="updateDonationBoardDonationAmount" parameterType="DonationBoard">
+		UPDATE DONATION_BOARD SET DT_DONATION_AMOUNT = DT_DONATION_AMOUNT + #{donationAmount } WHERE BOARD_NO = #{boardNo }
+	</update>
 </mapper>

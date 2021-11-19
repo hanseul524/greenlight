@@ -33,17 +33,17 @@
 		              <span style="color: #293e31a2; font-size: 13px;">${donationBoard.writeDate }</span>
 		            </div>
 		            <div class="box-contents">
-		            	<c:url var="dBoardDetail" value="ChallengeDetail.do">
+		            	<c:url var="dBoardDetail" value="donationBoardDetail.do">
 		            		<c:param name="boardNo" value="${donationBoard.boardNo }"></c:param>
 		            	</c:url>
 		              <a href="${dBoardDetail }">
 		                ${donationBoard.dtSubject }
 		              </a>
-		              <div class="charts">
-		              	<div class="charts__chart" style="width: ${(donationBoard.donationAmount / donationBoard.dtTargetAmount) * 100 }%; background-color: green;"></div>
+		              <div class="charts" style="background-color: rgb(240, 236, 236);  border-radius: 10px; margin-top: 2%;">
+		              	<div class="charts__chart" style="width: ${(donationBoard.donationAmount / donationBoard.dtTargetAmount) * 100 }%; background-color: rgb(126, 187, 34); margin: 0; border-radius: 10px; z-index: 1;"></div>
 		              </div>
+		              <span style="font-size: 12px; position: relative; left: 90%;">${(donationBoard.donationAmount / donationBoard.dtTargetAmount) * 100 }%</span>
 		            </div>
-		            <br>
 		            <hr>
 		            <div style="padding-top: 10px;">
 		              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp;${donationBoard.dtReplyCount }</span>

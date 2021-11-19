@@ -1,7 +1,9 @@
 package com.iei.greenlight.donationBoard.store;
 
+import java.util.HashMap;
 import java.util.List;
 
+import com.iei.greenlight.donationBoard.domain.Donation;
 import com.iei.greenlight.donationBoard.domain.DonationBoard;
 import com.iei.greenlight.donationBoard.domain.DtFile;
 import com.iei.greenlight.donationBoard.domain.PageInfo;
@@ -15,5 +17,15 @@ public interface DonationBoardStore {
 	int getListCount();
 
 	List<DonationBoard> selectDonationBoardAllList(PageInfo pi);
+
+	DonationBoard selectDonationBoardOne(int boardNo);
+
+	List<DtFile> selectAllDonationBoardImageOneByNo(int boardNo);
+
+	int donationUserPoint(HashMap<String, Object> map);
+
+	void insertDonationUser(Donation donation);
+
+	void updateDonationBoardDonationAmount(DonationBoard db);
 
 }
