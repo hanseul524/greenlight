@@ -59,6 +59,9 @@ public class ChallengeController {
 		challenge.setChContents(chContents);
 		challenge.setChWriter((String)request.getSession().getAttribute("userId")); //세션에서 id값 가져오기
 		try {
+			int cNo = service.selectCategory();
+			challenge.setCategoryNo(cNo);
+			System.out.println(cNo);
 			int result = service.registerChallenge(challenge);
 			List<CFile> cList = null;
 			if(result > 0) {
@@ -141,21 +144,50 @@ public class ChallengeController {
 			HttpServletRequest request,
 			Model model,
 			@RequestParam(value="page", required=false) Integer page) {
+		int maxCategoryNo = service.selectCategory();
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = service.getListCount();
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		List<Challenge> cList = service.printAll(pi);
+		System.out.println("챌린지 리스트:" + cList.toString());
 		int likeCount = 0;
 		
 		if(!cList.isEmpty()) {
 			model.addAttribute("cList", cList);
 			model.addAttribute("pi", pi);
+			model.addAttribute("max", maxCategoryNo);
 			return "challenge/ChallengeListView";
 		}else {
 			model.addAttribute("msg", "리스트 조회 실패");
 			return "common/errorPage";
 		}
 	}
+	
+	// 챌린지 지난챌린지 리스트 뷰 + 페이징 처리
+//	@RequestMapping(value="ChallengeListOneView.do", method=RequestMethod.GET)
+//	public String ChallengeListViewOne(
+//			@ModelAttribute Challenge challenge,
+//			HttpServletRequest request,
+//			Model model,
+//			@RequestParam(value="page", required=false) Integer page) {
+//		int maxCategoryNo = service.selectCategory();
+//		int currentPage = (page != null) ? page : 1;
+//		int totalCount = service.getListCount();
+//		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+//		List<Challenge> cList = service.printAll(pi);
+//		int likeCount = 0;
+//		
+//		if(!cList.isEmpty()) {
+//			model.addAttribute("cList", cList);
+//			model.addAttribute("pi", pi);
+//			model.addAttribute("max", maxCategoryNo);
+//			return "challenge/ChallengeListView";
+//		}else {
+//			model.addAttribute("msg", "리스트 조회 실패");
+//			return "common/errorPage";
+//		}
+//	}
+	
 	// 관리자 페이지 챌린지 리스트 조회
 	@RequestMapping(value="AdminChList.do", method=RequestMethod.GET)
 	public String AdminChListView(
@@ -275,6 +307,7 @@ public class ChallengeController {
 	@ResponseBody
 	@RequestMapping(value="addLike.do", method=RequestMethod.POST)
 	public String addLike(@ModelAttribute ChLike chlike,
+			@ModelAttribute Challenge challenge,
 			HttpServletRequest request,
 			Model model) {
 		int likeCk = 1;
@@ -284,6 +317,12 @@ public class ChallengeController {
 		System.out.println("좋아요 눌렀을 때"+ chlike.toString());
 		System.out.println(result);
 		if(result > 0) {
+			int likeCount = 0;
+			challenge.setLikeCount(likeCount);
+			likeCount = service.updateLikeCount(challenge);
+			if(likeCount > 0) {
+				model.addAttribute("challenge", challenge);
+			}
 			model.addAttribute("chlike", chlike);
 			System.out.println("누른 결과값" + chlike.toString());
 			return "success";
@@ -296,6 +335,7 @@ public class ChallengeController {
 	@ResponseBody
 	@RequestMapping(value="removeLike.do", method=RequestMethod.POST)
 	public String delLike(@ModelAttribute ChLike chlike,
+			@ModelAttribute Challenge challenge,
 			HttpServletRequest request,
 			Model model) {
 		chlike.setUserId((String)request.getSession().getAttribute("userId"));
@@ -303,6 +343,12 @@ public class ChallengeController {
 		int result = service.removeLike(chlike);
 		System.out.println(result);
 		if(result > 0) {
+			int likeCount = 0;
+			challenge.setLikeCount(likeCount);
+			likeCount = service.removeLikeCount(challenge);
+			if(likeCount > 0) {
+				model.addAttribute("challenge", challenge);
+			}
 			System.out.println(chlike.toString());
 			model.addAttribute("chlike", chlike);
 			return "success";
@@ -462,13 +508,13 @@ public class ChallengeController {
 	      hashMap.put("userId", userId);
 	      List<Challenge> challenges = service.printChallList(hashMap);
 	      if(!challenges.isEmpty()) {
-	         model.addAttribute("cList", challenges);
-	         model.addAttribute("pi", pi);
-	         model.addAttribute("userId", userId);
-	         return "mypage/MyChallenge";
-	      }else {
-	         model.addAttribute("msg", "실패");
-	         return "common/errorPage";
-	      }
+	            model.addAttribute("cList", challenges);
+	            model.addAttribute("pi", pi);
+	            model.addAttribute("userId", userId);
+	            return "mypage/MyChallenge";
+	         }else {
+	            model.addAttribute("cList", null);
+	            return "mypage/MyChallenge";
+	         }
 	   }
 }

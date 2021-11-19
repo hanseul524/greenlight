@@ -34,7 +34,7 @@ $(document).ready(function(){
 <jsp:include page="/common/header.jsp"></jsp:include>
   <div class="container">
     <form action="ChallengeRegister.do" method="post" enctype="multipart/form-data">
-    <input type="hidden" value="1" name="categoryNo">
+<%--     <input type="hidden" value="${challenge.categoryNo }" name="categoryNo"> --%>
       <div class="write-form">
         <span class="write-left">챌린지 참여하기</span>
         <span class="write-right">하루 한장, 모바일 영수증 받기!</span>

@@ -34,6 +34,12 @@ public class ChallengeServiceImpl implements ChallengeService{
 		int result = store.insertChImage(cList);
 		return result;
 	}
+	
+	@Override
+	public int selectCategory() {
+		int cNo = store.selectCategory();
+		return cNo;
+	}
 
 	@Override
 	public int modifyChallenge(Challenge challenge) {
@@ -106,6 +112,16 @@ public class ChallengeServiceImpl implements ChallengeService{
 		int result = store.deleteLike(chlike);
 		return result;
 	}
+	
+	@Override
+	public int updateLikeCount(Challenge challenge) {
+		return store.updateLikeCount(challenge);
+	}
+
+	@Override
+	public int removeLikeCount(Challenge challenge) {
+		return store.deleteLikeCount(challenge);
+	}
 
 	@Override
 	public List<Reply> printAll(int chNo) {
@@ -162,7 +178,5 @@ public class ChallengeServiceImpl implements ChallengeService{
 	public List<Challenge> printChallList(HashMap<String, Object> hashMap) {
 	    return store.selectMyChall(hashMap);
 	 }
-
-
 
 }
