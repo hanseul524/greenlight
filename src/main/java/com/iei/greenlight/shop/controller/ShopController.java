@@ -166,25 +166,7 @@ public class ShopController {
 			return "common/errorPage";
 		}
 	}
-	
-	// 관리자 오프라인 매장 삭제
-	@RequestMapping(value="deleteOfflineShop.do", method=RequestMethod.POST)
-	public String deleteOfflineShop(@RequestParam("shopNo") int[] shopNo, Model model) {
-		
-		try {
-			int result = service.removeOfflineShop(shopNo);
-			if(result > 0) {
-				return "redirect:adminOfflineShop.do";
-			}else {
-				model.addAttribute("msg", "삭제 실패!");
-				return "common/errorPage";
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", e.toString());
-			return "common/errorPage";
-		}
-	}
+
 	
 	// 관리자 오프라인매장 등록 페이지 이동
 	@RequestMapping(value="OfflineShopWriteView.do")
@@ -212,6 +194,59 @@ public class ShopController {
 		}
 	}
 	
+	// 관리자 오프라인 매장 수정 페이지
+	@RequestMapping(value="offlineShopUpdateWriteView.do")
+	public String offlineShopUpdateWriteView(@RequestParam("shopNo") int shopNo, Model model) {
+		
+		OfflineShop offlineShop = service.printOfflineOneByNo(shopNo);
+		if(offlineShop != null) {
+			model.addAttribute("offlineShop", offlineShop);
+			return "admin/adminOfflineShopUpdateView";
+		}else {
+			model.addAttribute("msg", "조회 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	//관리자 오프라인 매장 수정
+	@RequestMapping(value="updateOfflineShop.do", method=RequestMethod.POST)
+	public String updateOfflineShop(Model model, @ModelAttribute OfflineShop offlineShop) {
+		
+		try {
+			System.out.println(offlineShop.toString());
+			int result = service.modifyOfflineShop(offlineShop);
+			if(result > 0) {
+				return "redirect:adminOfflineShop.do";
+			}else {
+				model.addAttribute("msg", "수정 실패!");
+				return "common/errorPage";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}
+	}
+	
+	// 관리자 오프라인 매장 삭제
+	@RequestMapping(value="deleteOfflineShop.do", method=RequestMethod.POST)
+	public String deleteOfflineShop(@RequestParam("shopNo") int[] shopNo, Model model) {
+		
+		try {
+			int result = service.removeOfflineShop(shopNo);
+			if(result > 0) {
+				return "redirect:adminOfflineShop.do";
+			}else {
+				model.addAttribute("msg", "삭제 실패!");
+				return "common/errorPage";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}
+	}
+	
 	//---------------------------------------------------------------------------------------------------------//
 	
 	// ZeroWaste Shop List
@@ -223,13 +258,44 @@ public class ShopController {
 			int totalCount = service.getZeroWasteListCount();
 			OnlinePageInfo pi = OnlineShopPagination.getPageInfo(currentPage, totalCount);
 			List<OnlineShop> sList = service.printZeroWasteShopList(pi);
-			return "shop/zerowasteShop";
+			if(!sList.isEmpty()) {
+				model.addAttribute("pi", pi);
+				model.addAttribute("sList", sList);
+				return "shop/zerowasteShop";
+			}else {
+				model.addAttribute("sList", null);
+				return "shop/zerowasteShop";
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", e.toString());
 			return "common/errorPage";
 		}
 		
+	}
+	
+	// upCycling List
+	@RequestMapping(value="upCyclingView.do")
+	public String upCyclingView(Model model, @RequestParam(value="page", required=false) Integer page) {
+		
+		try {
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = service.getUpCyclingListCount(); 
+			OnlinePageInfo pi = OnlineShopPagination.getPageInfo(currentPage, totalCount);
+			List<OnlineShop> sList = service.printUpCyclingShopList(pi);
+			if(!sList.isEmpty()) {
+				model.addAttribute("sList", sList);
+				model.addAttribute("pi", pi);
+				return "shop/upcyclingShop";
+			}else {
+				model.addAttribute("sList", null);
+				return "shop/upcyclingShop";	
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}
 	}
 	
 	// 관리자 온라인매장 페이지
@@ -257,6 +323,28 @@ public class ShopController {
 		
 	}
 	
+	// 관리자 온라인 검색 리스트
+	@RequestMapping(value="adminSearchOnlineShopList.do", method=RequestMethod.POST)
+	public String adminOnlineSearchList(@RequestParam("searchKeyWord") String searchKeyWord, Model model,@RequestParam(value="page", required=false) Integer page) {
+		
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getOnlineSearchListCount(searchKeyWord);
+		OfflinePageInfo pi = AdminOfflineShopPagination.getPageInfo(currentPage, totalCount);
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		hashmap.put("pi", pi);
+		hashmap.put("searchKeyWord", searchKeyWord);
+		List<OnlineShop> sList = service.printOnlineShopSearchList(hashmap);
+		if(!sList.isEmpty()) {
+			model.addAttribute("searchKeyWord", searchKeyWord);
+			model.addAttribute("sList", sList);
+			model.addAttribute("pi", pi);
+			return "admin/adminOnlineSearchShop";
+		}else {
+			model.addAttribute("sList", null);
+			return "admin/adminOnlineSearchShop";
+		}
+	}
+	
 	// 관리자 온라인매장 등록 페이지
 	@RequestMapping(value="onlineShopWriteView.do")
 	public String adminOnlineWriteView() {
@@ -274,7 +362,6 @@ public class ShopController {
 					onlineShop.setShopImage(shopImage);
 				}
 			}
-			System.out.println(onlineShop.toString());
 			int result = service.registerOnlineShop(onlineShop);
 			if(result > 0) {
 				return "redirect:adminOnlineShop.do";
@@ -288,6 +375,33 @@ public class ShopController {
 			return "common/errorPage";
 		}
 		
+	}
+	
+	// 관리자 온라인 매장 삭제
+	@RequestMapping(value="deleteOnlineShop.do", method=RequestMethod.POST)
+	public String deleteOnlineShop(Model model, @RequestParam("shopNo") int[] shopNo, HttpServletRequest request) {
+		
+		HashMap<String, int[]> hashmap = new HashMap<String, int[]>();
+		hashmap.put("shopNo", shopNo);
+		
+		try {
+			List<OnlineShop> sList = service.printOnlineShopOneByNo(hashmap);
+			for(OnlineShop o : sList) {
+				deleteFile(o.getShopImage(), request);
+			}
+			int result = service.removeOnlineShop(shopNo);
+			if (result > 0) {
+				return "redirect:adminOnlineShop.do";
+			} else {
+				model.addAttribute("msg", "온라인샵 삭제 실패!");
+				return "common/errorPage";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}
+		 
 	}
 	
 	// 파일저장
@@ -311,6 +425,17 @@ public class ShopController {
 		}
 		
 		return uploadFile.getOriginalFilename();
+	}
+	
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String fullPath = root + "\\shopUploadFiles";
+		File file = new File(fullPath + "\\" + fileName);
+		if(file.exists()) {
+			file.delete();
+		}
+		
 	}
 	
 }

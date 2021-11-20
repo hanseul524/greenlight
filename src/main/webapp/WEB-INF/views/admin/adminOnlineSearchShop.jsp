@@ -59,10 +59,10 @@
     </div>
       <div class="contents">
           <div class="con-title">
-        <form action="deleteOfflineShop.do" method="post">
-            <div>오프라인 매장</div>
+        <form action="deleteOnlineShop.do" method="post">
+            <div>온라인 매장</div>
             <button type="submit" value="삭제" class="button">삭제</button>
-            <button value="등록"  class="button" onclick="insertOfflineShop(event);">등록</button>
+            <button value="등록"  class="button" onclick="insertOnlineShop(event);">등록</button>
           </div>
           <div class="con-list">
             <table class="table table-hover">
@@ -70,47 +70,45 @@
                 <tr>
                   <th>No</th>
                   <th>매장이름</th>
-                  <th>매장주소</th>
-                  <th>매장번호</th>
+                  <th>매장설명</th>
+                  <th>매장이미지</th>
+                  <th>매장링크</th>
                   <th>카테고리</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-              <c:if test="${ empty sList }">
-              	<tr>
-                  <td colspan="7" align="center">등록된 매장이 없습니다.</td>
-	            </tr>
-              </c:if>
-              <c:if test="${ not empty sList }">
-	              <c:forEach items="${sList }" var="offline" varStatus="status">
-		                <tr>
-		                  <td>${offline.shopNo }</td>
-		                  <td><a href="offlineShopUpdateWriteView.do?shopNo=${offline.shopNo }">${offline.shopName }</a></td>
-		                  <td>${offline.shopAddress }</td>
-		                  <c:if test="${offline.shopPhone eq 'N' }">
-		                  	<td>없음</td>
-		                  </c:if>
-		                  <c:if test="${offline.shopPhone ne 'N' }">
-			              	<td>${offline.shopPhone }</td>
-		                  </c:if>
-		                  <td>${offline.category }</td>
-		                  <td><input type="checkbox" value="${offline.shopNo }" name="shopNo"></td>
-		                </tr>
-	              </c:forEach>
-              </c:if>
-              </tbody>
+				<c:if test="${ empty sList }">
+					<tr>
+						<td colspan="7" align="center">등록된 매장이 없습니다.</td>
+					</tr>
+				</c:if>
+				<c:if test="${ not empty sList }">
+					<c:forEach items="${sList }" var="online" varStatus="status">
+						<tr>
+							<td>${online.shopNo }</td>
+							<td>${online.shopName }</td>
+							<td>${online.shopContents }</td>
+							<td>${online.shopImage }</td>
+							<td>${online.shopAddress }</td>
+							<td>${online.category }</td>
+							<td><input type="checkbox" value="${online.shopNo }" name="shopNo"></td>
+						</tr>
+					</c:forEach>
+				</c:if>
+				</tbody>
             </table>
             </form>
-		    <form action="adminSearchOfflineShopList.do" method="get">
+		    <form action="adminSearchOnlineShopList.do" method="post">
 			    <div class="search">
-			      <input type="text" name="searchKeyword" id="search-title" placeholder="매장이름을 입력해주세요.">
+			      <input type="text" name="searchKeyWord" id="search-title" placeholder="매장이름을 입력해주세요.">
 			    </div>
 		    </form>          
 		    <div style="width:100%; height:50px;"></div>  
             <div class="page_wrap">
-			    <c:url var="before" value="adminOfflineShop.do">
+			    <c:url var="before" value="adminSearchOnlineShopList.do">
 			    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+			    	<c:param name="searchKeyWord" value="${searchKeyWord }"></c:param>
 			    </c:url>
 			      <div class="page_nation">
 			      <c:if test="${pi.currentPage <= 1 }">
@@ -120,8 +118,9 @@
 			         <a class="arrow prev" href="${before }"></a>
 			      </c:if>
 			      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
-			      	<c:url var="pagenation" value="adminOfflineShop.do">
+			      	<c:url var="pagenation" value="adminSearchOnlineShopList.do">
 			      		<c:param name="page" value="${p }"></c:param>
+			      		<c:param name="searchKeyWord" value="${searchKeyWord }"></c:param>
 			      	</c:url>
 			      	<c:if test="${p eq pi.currentPage }">
 			         	<a href="#" class="active">${p }</a>
@@ -130,8 +129,9 @@
 			      		<a href="${pagenation }">${p }</a>
 			      	</c:if>
 			      </c:forEach>
-			      <c:url var="after" value="adminOfflineShop.do">
+			      <c:url var="after" value="adminSearchOnlineShopList.do">
 			      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+			      	<c:param name="searchKeyWord" value="${searchKeyWord }"></c:param>
 			      </c:url>
 			      <c:if test="${pi.currentPage >= pi.maxPage }">
 			         <a class="arrow next" href="#"></a>
@@ -173,10 +173,14 @@
         }
       });
 	
-	function insertOfflineShop(e){
+	function insertOnlineShop(e){
 		e.preventDefault();
 		e.stopPropagation();
-		location.href="OfflineShopWriteView.do";
+		location.href="onlineShopWriteView.do";
+	}
+	
+	function shopAddress(data){
+		window.open(data);
 	}
 	
 </script>

@@ -86,7 +86,7 @@
 	              <c:forEach items="${sList }" var="offline" varStatus="status">
 	                <tr>
 	                  <td>${offline.shopNo }</td>
-	                  <td>${offline.shopName }</td>
+	                  <td><a href="offlineShopUpdateWriteView.do?shopNo=${offline.shopNo }">${offline.shopName }</a></td>
 	                  <td>${offline.shopAddress }</td>
 	                  <c:if test="${offline.shopPhone eq 'N' }">
 	                  	<td>없음</td>

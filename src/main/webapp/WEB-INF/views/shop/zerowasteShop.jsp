@@ -8,7 +8,7 @@
 <title>제로웨이스트 리스트</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/shop/upcyclingShop.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/shop/zerowasteShop.css">
 </head>
 <body>
 <jsp:include page="${pageContext.request.contextPath}/common/header.jsp"></jsp:include>
@@ -16,80 +16,81 @@
     <p class="zerowastemap">ZEROWASTE MAP</p>
     <div class="menu-shop">
         <div class="offline">
-            <p>OFFLINE SHOP</p>
+       	    <a href="offlineShopView.do">
+                <p class="offline">OFFLINE SHOP</p>
+            </a>
         </div>
         <div style="width:30px;float:left;height:100%;"></div>
         <div class="online">
-            <p>ONLINE SHOP</p>
+            <a href="onlineShopView.do">
+                <p>ONLINE SHOP</p>
+            </a>
         </div>
     </div>
     <div class="menu-category">
         <div class="zerowaste">
-            <p>ZERO WASTE</p>
+        	<a href="onlineShopView.do">
+            	<p class="p-zerowaste">ZERO WASTE</p>
+            </a>
         </div>
         <div style="width:30px;float:left;height:100%;"></div>
         <div class="upcycling">
-            <p>UPCYCLING</p>
+        	<a href="upCyclingView.do">
+            	<p class="p-upcycling">UPCYCLING</p>
+            </a>
         </div>
     </div>
     <h3>이미지 클릭시 해당 사이트로 이동됩니다.</h3>
     <div class="content">
-        <div class="auction-box">
-            <a href="#">
-                <div class="auction-img">
-                    <img src="../../img/지갑 목걸이.jpg" class="img">
-                </div>
-            </a>    
-            <div class="auction-title">
-                <p>더 피커</p>
-            </div>
-            <div class="auction-point">
-                <p class="point">제로웨이스트 라이프스타일 플랫폼라이프스타일 플랫폼라이프스타일 플랫폼라이프스타일 플랫폼라이프스타일 플랫폼라이프스타일 플랫폼</p>
-            </div>
-        </div>
-        <div class="auction-box">
-            <a href="#">
-                <div class="auction-img">
-                    <img src="../../img/지갑 목걸이.jpg" class="img">
-                </div>
-            </a>    
-            <div class="auction-title">
-                <p>더 피커</p>
-            </div>
-            <div class="auction-point">
-                <p class="point">제로웨이스트 라이프스타일 플랫폼라이프스타일 플랫폼라이프스타일 플랫폼라이프스타일 플랫폼라이프스타일 플랫폼라이프스타일 플랫폼</p>
-            </div>
-        </div>
-        <div class="auction-box">
-            <a href="#">
-                <div class="auction-img">
-                    <img src="../../img/지갑 목걸이.jpg" class="img">
-                </div>
-            </a>    
-            <div class="auction-title">
-                <p>더 피커</p>
-            </div>
-            <div class="auction-point">
-                <p class="point">제로웨이스트 라이프스타일 플랫폼라이프스타일 플랫폼라이프스타일 플랫폼라이프스타일 플랫폼라이프스타일 플랫폼라이프스타일 플랫폼</p>
-            </div>
-        </div>
+    	<c:forEach items="${sList }" var="zeroWaste" varStatus="status">
+	        <div class="auction-box">
+	            <a href="http://${zeroWaste.shopAddress }" target="_blank">
+	                <div class="auction-img">
+	                    <img src="${pageContext.request.contextPath}/resources/shopUploadFiles/${zeroWaste.shopImage }" class="img">
+	                </div>
+	            </a>    
+	            <div class="auction-title">
+	                <p>${zeroWaste.shopName }</p>
+	            </div>
+	            <div class="auction-point">
+	                <p class="point">${zeroWaste.shopContents }</p>
+	            </div>
+	        </div>
+		</c:forEach>
     </div>
     <div class="page_wrap">
-        <div class="page_nation">
-           <a class="arrow prev" href="#"></a>
-           <a href="#" class="active">1</a>
-           <a href="#">2</a>
-           <a href="#">3</a>
-           <a href="#">4</a>
-           <a href="#">5</a>
-           <a href="#">6</a>
-           <a href="#">7</a>
-           <a href="#">8</a>
-           <a href="#">9</a>
-           <a href="#">10</a>
-           <a class="arrow next" href="#"></a>
-        </div>
-     </div>
+		   <c:url var="before" value="onlineShopView.do">
+		      <c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+		   </c:url>
+		     <div class="page_nation">
+		     <c:if test="${pi.currentPage <= 1 }">
+		        <a class="arrow prev" href="#"></a>
+		     </c:if>
+		     <c:if test="${pi.currentPage > 1 }">
+		        <a class="arrow prev" href="${before }"></a>
+		     </c:if>
+		     <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
+		        <c:url var="pagenation" value="onlineShopView.do">
+		           <c:param name="page" value="${p }"></c:param>
+		        </c:url>
+		        <c:if test="${p eq pi.currentPage }">
+		           <a href="#" class="active">${p }</a>
+		        </c:if>
+		        <c:if test="${p ne pi.currentPage }">
+		           <a href="${pagenation }">${p }</a>
+		        </c:if>
+		     </c:forEach>
+		     <c:url var="after" value="onlineShopView.do">
+		        <c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+		     </c:url>
+		     <c:if test="${pi.currentPage >= pi.maxPage }">
+		        <a class="arrow next" href="#"></a>
+		     </c:if>
+		     <c:if test="${pi.currentPage < pi.maxPage }">
+		        <a class="arrow next" href="${after }"></a>
+		     </c:if>
+	     </div>
+	</div>
 <jsp:include page="${pageContext.request.contextPath}/common/footer.jsp"></jsp:include>
 </body>
 </html>

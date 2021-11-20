@@ -26,6 +26,20 @@ h2, h3{
     text-align: center;
 }
 
+.offline a{
+	color : gray;
+}
+.offline a:active{
+	color : gray;
+}
+.offline a:visited{
+	color : gray;
+}
+
+.p-zerowaste{
+	color : gray;
+}
+
 .zerowastemap{
     text-align: center;
     font-size : 50px;

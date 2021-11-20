@@ -87,7 +87,7 @@
 					<c:forEach items="${sList }" var="online" varStatus="status">
 						<tr>
 							<td>${online.shopNo }</td>
-							<td>${online.shopName }</td>
+							<td><a href="onlineShopUpdateWriteView.do?shopNo=${online.shopNo }">${online.shopName }</a></td>
 							<td>${online.shopContents }</td>
 							<td>${online.shopImage }</td>
 							<td>${online.shopAddress }</td>
@@ -99,9 +99,9 @@
 				</tbody>
             </table>
             </form>
-		    <form action="adminSearchOfflineShopList.do" method="post">
+		    <form action="adminSearchOnlineShopList.do" method="post">
 			    <div class="search">
-			      <input type="text" name="searchKeyword" id="search-title" placeholder="매장이름을 입력해주세요.">
+			      <input type="text" name="searchKeyWord" id="search-title" placeholder="매장이름을 입력해주세요.">
 			    </div>
 		    </form>          
 		    <div style="width:100%; height:50px;"></div>  
