@@ -25,6 +25,8 @@
 		<typeAlias alias="Category" type="com.iei.greenlight.challenge.domain.Category"/>
 		<typeAlias alias="DonationImage" type="com.iei.greenlight.donationBoard.domain.DtFile"/>
 		<typeAlias alias="Donation" type="com.iei.greenlight.donationBoard.domain.Donation"/>
+		<typeAlias alias="DonationReply" type="com.iei.greenlight.donationBoard.domain.DonationReply"/>
+		<typeAlias alias="Category" type="com.iei.greenlight.challenge.domain.Category"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>

@@ -16,12 +16,16 @@ public class DonationBoard {
 	private String fileName;
 	private String filePath;
 	private String fileMain;
+	private double achievement;
 	
 	public DonationBoard() {}
 
+	
+
+
 	public DonationBoard(int boardNo, String dtSubject, String dtContents, int dtReplyCount, int dtTargetAmount,
 			int donationAmount, char dtSuccess, Date writeDate, String writerId, String fileName, String filePath,
-			String fileMain) {
+			String fileMain, double achievement) {
 		super();
 		this.boardNo = boardNo;
 		this.dtSubject = dtSubject;
@@ -35,8 +39,8 @@ public class DonationBoard {
 		this.fileName = fileName;
 		this.filePath = filePath;
 		this.fileMain = fileMain;
+		this.achievement = achievement;
 	}
-
 
 	public String getWriterId() {
 		return writerId;
@@ -144,13 +148,30 @@ public class DonationBoard {
 	public void setFileMain(String fileMain) {
 		this.fileMain = fileMain;
 	}
+	
+	
+
+	public double getAchievement() {
+		return achievement;
+	}
+
+
+
+
+	public void setAchievement(double achievement) {
+		this.achievement = achievement;
+	}
+
+
+
 
 	@Override
 	public String toString() {
 		return "DonationBoard [boardNo=" + boardNo + ", dtSubject=" + dtSubject + ", dtContents=" + dtContents
 				+ ", dtReplyCount=" + dtReplyCount + ", dtTargetAmount=" + dtTargetAmount + ", donationAmount="
 				+ donationAmount + ", dtSuccess=" + dtSuccess + ", writeDate=" + writeDate + ", writerId=" + writerId
-				+ ", fileName=" + fileName + ", filePath=" + filePath + ", fileMain=" + fileMain + "]";
+				+ ", fileName=" + fileName + ", filePath=" + filePath + ", fileMain=" + fileMain + ", achievement="
+				+ achievement + "]";
 	}
-	
+
 }

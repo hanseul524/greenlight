@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,11 +18,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.iei.greenlight.donationBoard.common.donationBoardPagination;
 import com.iei.greenlight.donationBoard.domain.Donation;
 import com.iei.greenlight.donationBoard.domain.DonationBoard;
+import com.iei.greenlight.donationBoard.domain.DonationReply;
 import com.iei.greenlight.donationBoard.domain.DtFile;
 import com.iei.greenlight.donationBoard.domain.PageInfo;
 import com.iei.greenlight.donationBoard.service.DonationBoardService;
@@ -97,6 +104,13 @@ public class DonationBoardController {
 		PageInfo pi = donationBoardPagination.getPageInfo(currentPage, totalCount);
 		List<DonationBoard> dList = service.printAll(pi);
 		if(!dList.isEmpty()) {
+			for(int i = 0; i < dList.size(); i++) {
+				double dtTargetAmount = dList.get(i).getDtTargetAmount();
+				double donationAmount = dList.get(i).getDonationAmount();
+				double ac = (donationAmount / dtTargetAmount) * 100;
+				double achievement = Math.floor(ac * 100) / 100.0;
+				dList.get(i).setAchievement(achievement);
+			}
 			model.addAttribute("dList", dList);
 			model.addAttribute("pi", pi);
 			return "donation/donationBoardList";
@@ -110,10 +124,18 @@ public class DonationBoardController {
 	public String donationBoardDetailView(@RequestParam("boardNo") int boardNo, Model model, HttpServletRequest request) {
 		DonationBoard board = service.printDonationBoardOne(boardNo);
 		List<DtFile> dFList = null;
+		List<Donation> dList = null;
 		if(board != null) {
+			double dtTargetAmount = board.getDtTargetAmount();
+			double donationAmount = board.getDonationAmount();
+			double ac = (donationAmount / dtTargetAmount) * 100;
+			double achievement = Math.floor(ac * 100) / 100.0;
+			board.setAchievement(achievement);
 			dFList = service.printAllDonationBoardImageOneByNo(boardNo);
+			dList = service.printDonationUserRanking(boardNo);
 			model.addAttribute("board", board);
 			model.addAttribute("dFList", dFList);
+			model.addAttribute("dList", dList);
 			return "donation/donationBoardDetail";
 		}else {
 			return "user/error";
@@ -143,4 +165,52 @@ public class DonationBoardController {
 		service.updateDonationBoardDonationAmount(db);
 		return "redirect:donationBoardDetail.do?boardNo=" + boardNo;
 	}
+	//마이페이지 내가 기부한 기부글 리스트
+	   @RequestMapping(value="myDonation.do", method=RequestMethod.GET)
+	   public String myDonationList(HttpSession session, Model model, @RequestParam(value="page", required=false) Integer page) {
+	      String userId = (String) session.getAttribute("userId");
+	      int currentPage = (page != null) ? page : 1;
+	      int totalCount = service.getListCount();
+	      PageInfo pi = donationBoardPagination.getPageInfo(currentPage, totalCount);
+	      HashMap<String, Object> hashMap = new HashMap<String, Object>();
+	      hashMap.put("pi", pi);
+	      hashMap.put("userId", userId);
+	      List<DonationBoard> dList = service.myPrintList(hashMap);
+	      System.out.println(dList.toString());
+	      if(!dList.isEmpty()) {
+	         model.addAttribute("dList", dList);
+	         model.addAttribute("pi", pi);
+	         return "mypage/MyDonation";
+	      }else {
+	         model.addAttribute("dList", null);
+	         return "mypage/MyDonation";
+	      }
+	   }
+	   // 기부게시판 댓글 등록
+	   @ResponseBody
+	   @RequestMapping(value="donationBoardAddReply.do", method=RequestMethod.POST)
+	   public String donationBoardAddReply(@ModelAttribute DonationReply donationReply, HttpServletRequest request) {
+		   String userId = (String)request.getSession().getAttribute("userId");
+		   donationReply.setDtReplyUserId(userId);
+		   int result = service.registerReply(donationReply);
+		   if(result > 0) {
+			   service.modifyReplyCount(donationReply.getBoardNo());
+			   return "success";
+		   }else {
+			   return"fails";
+		   }
+	   }
+	   
+	   // 기부게시판 댓글 리스트 출력
+	   @ResponseBody
+	   @RequestMapping(value="donationReplyList.do", method=RequestMethod.GET)
+	   public void showDonationReplyList(@RequestParam("boardNo") int boardNo, HttpServletResponse response) throws Exception {
+		   List<DonationReply> drList = service.printAllReply(boardNo);
+		   if(!drList.isEmpty()) {
+			   Gson gson = new Gson();
+			   gson.toJson(drList, response.getWriter());
+		   }else {
+			   System.out.println("댓글 데이터 전송 실패");
+		   }
+	   }
 }

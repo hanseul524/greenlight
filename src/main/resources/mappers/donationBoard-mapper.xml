@@ -21,6 +21,19 @@
 		<result property="filePath" column="FILE_PATH"/>
 		<result property="fileMain" column="FILE_MAIN"/>
 	</resultMap>
+	<resultMap type="Donation" id="donationResultMap">
+		<result property="boardNo" column="BOARD_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="donationPoint" column="DONATION_POINT"/>
+		<result property="donationDate" column="DONATION_DATE"/>
+	</resultMap>
+	<resultMap type="DonationReply" id="donationReplyResultMap">
+		<id property="dtReplyNo" column="DT_REPLY_NO"/>
+		<result property="boardNo" column="BOARD_NO"/>
+		<result property="dtReplyContents" column="DT_REPLY_CONTENTS"/>
+		<result property="dtReplyUserId" column="DT_REPLY_USERID"/>
+		<result property="dtReplyDate" column="DT_REPLY_DATE"/>
+	</resultMap>
 	
 	<!-- 페이징 처리 위한 count -->
 	<select id="selectListCount" resultType="_int">
@@ -49,6 +62,21 @@
 		SELECT POINT FROM USERS WHERE USER_ID = #{userId }
 	</select>
 	
+	<!-- 기부하기 후원 랭킹 -->
+	<select id="selectDonationUserRanking" parameterType="_int" resultMap="donationResultMap">
+		SELECT ROWNUM, C.* FROM (SELECT USER_ID, SUM(DONATION_POINT) AS DONATION_POINT FROM DONATION WHERE BOARD_NO = #{boardNo } GROUP BY USER_ID ORDER BY DONATION_POINT DESC) C WHERE ROWNUM BETWEEN 1 AND 3
+	</select>
+	
+	<!-- 마이페이지 후원 게시물 리스트 -->
+	<select id="selectMyDonation" resultMap="donationBoardResultMap">
+      select d.board_no, d.dt_subject, d.dt_contents, d.dt_reply_count, d.dt_target_amount, D.DT_DONATION_AMOUNT, D.DT_SUCCESS, D.WRITER_ID, D.WRITE_DATE, e.* from donation_board D inner join (SELECT DISTINCT c.board_no, F.FILE_NAME, F.FILE_PATH, F.FILE_MAIN FROM DONATION c left join dt_file f on(c.board_no = f.board_no)  WHERE c.USER_ID = #{userId})e on (d.board_no = e.board_no) where e.file_main = 'Y'        
+   </select>
+   
+   <!-- 기부게시판 댓글 리스트 -->
+   <select id="selectAllReply" parameterType="_int" resultMap="donationReplyResultMap">
+   		SELECT * FROM DT_BOARD_REPLY WHERE BOARD_NO = #{boardNo } ORDER BY DT_REPLY_NO DESC
+   </select>
+	
 	<insert id="insertDonationBoard">
 		<selectKey keyProperty="boardNo" resultType="_int" order="BEFORE">
 			SELECT SEQ_DT_BOARD_NO.NEXTVAL FROM dual
@@ -74,13 +102,19 @@
 	
 	<!-- 유저포인트가 마이너스일때 chargePoint 사용할때 history -->
 	<insert id="insertNormalPointHistory" parameterType="hashmap">
-		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, #{pointContents }, DEFAULT, #{point }, DEFAULT)
+		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, '기부(지급포인트)', DEFAULT, #{point }, DEFAULT)
 	</insert>
 	
 	<!-- 포인트 히스토리 chargePoint 차감 내역 등록 -->
 	<insert id="insertUseChargePointHistory" parameterType="hashmap">
-		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, #{pointContents }, DEFAULT, #{cPoint }, 'Y')
+		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, '기부(충전포인트)', DEFAULT, #{cPoint }, 'Y')
 	</insert>
+	
+	<!-- 기부게시판 댓글 작성 -->
+	<insert id="insertDonationReply" >
+		INSERT INTO DT_BOARD_REPLY VALUES(SEQ_DT_REPLY_NO.NEXTVAL, #{boardNo }, #{dtReplyContents }, #{dtReplyUserId }, DEFAULT)
+	</insert>
+	
 	<!-- user donation -->
 	<update id="donationUserPoint" parameterType="hashmap">
 		UPDATE USERS SET POINT = POINT - #{donationPoint } WHERE USER_ID = #{userId }
@@ -97,5 +131,10 @@
 	<!-- 후원시 후원게시판 금액 수정 -->
 	<update id="updateDonationBoardDonationAmount" parameterType="DonationBoard">
 		UPDATE DONATION_BOARD SET DT_DONATION_AMOUNT = DT_DONATION_AMOUNT + #{donationAmount } WHERE BOARD_NO = #{boardNo }
+	</update>
+	
+	<!-- 댓글 등록시 게시글 댓글수 add -->
+	<update id="addBoardReplyCount" parameterType="_int">
+		UPDATE DONATION_BOARD SET DT_REPLY_COUNT = DT_REPLY_COUNT + 1 WHERE BOARD_NO = #{boardNo }
 	</update>
 </mapper>
