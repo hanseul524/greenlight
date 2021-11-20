@@ -24,8 +24,23 @@
 <!-- 		DEFAULT, DEFAULT, DEFAULT, DEFAULT) -->
 <!-- 		INTO CALLENGE_FILE VALUES(SEQ_CH_NO.NEXTVAL, #{chWriter}, #{categoryNo}, #{filePath}, #{fileName}, #{fileSize}, DEFAULT) -->
 <!-- 	</insert> -->
-	<select id="selectListCount" resultType="_int">
-	   SELECT COUNT(*) FROM CHALLENGE
+	<select id="selectAdminListCount" resultType="_int">
+		SELECT COUNT(*) FROM CHALLENGE
+	</select>
+	<select id="selectListCount" resultType="_int" parameterType="hashmap">
+	   SELECT COUNT(*) FROM (SELECT CATEGORY_NO, CH_NO, USER_ID, CH_TITLE, WRITE_DATE, CHLIKE_COUNT, REPLY_COUNT, CH_CONFIRM, DENSE_RANK() OVER (ORDER BY CATEGORY_NO DESC) AS RANKING FROM CHALLENGE)
+	   <if test="check == 'recent'.toString()">
+	   		WHERE RANKING = 1
+	   </if>
+	   <if test="check == 'prev'.toString()">
+	   		WHERE RANKING = 2
+	   </if>
+	   <if test="check == 'prevprev'.toString()">
+	   		WHERE RANKING = 3
+	   </if>
+	   <if test="check == 'all'.toString()">
+	   	
+	   </if>
 	</select>
 	<!--    챌린지 전달 -->
    <select id="selectCount" parameterType="string" resultType="_int">
@@ -34,8 +49,23 @@
 	<select id="selectMyChall" resultMap="challengeResultMap">
        SELECT c.CATEGORY_NO, c.CH_NO, c.USER_ID, c.CH_TITLE, c.WRITE_DATE, c.CHLIKE_COUNT, c.REPLY_COUNT, f.FILE_PATH, f.FILE_NAME, f.FILE_MAIN FROM CHALLENGE c LEFT JOIN CHALLENGE_FILE f ON c.CH_NO = f.CH_NO WHERE f.FILE_MAIN = 'Y' AND c.USER_ID = #{userId} ORDER BY CH_NO DESC
    </select>
-	<select id="selectAllList" resultMap="challengeResultMap">
-		SELECT c.CATEGORY_NO, c.CH_NO, c.USER_ID, c.CH_TITLE, c.WRITE_DATE, c.CHLIKE_COUNT, c.REPLY_COUNT, c.CH_CONFIRM, f.FILE_PATH, f.FILE_NAME, f.FILE_MAIN FROM CHALLENGE c LEFT JOIN CHALLENGE_FILE f ON c.CH_NO = f.CH_NO WHERE f.FILE_MAIN = 'Y' ORDER BY CH_NO DESC
+   <select id="selectAdminAllList" resultMap="challengeResultMap">
+   		SELECT * FROM CHALLENGE
+   </select>
+	<select id="selectAllList" resultMap="challengeResultMap" parameterType="hashmap">
+		SELECT c.*, f.FILE_PATH, f.FILE_NAME, f.FILE_MAIN from CHALLENGE_FILE f INNER JOIN (SELECT * FROM (SELECT CATEGORY_NO, CH_NO, USER_ID, CH_TITLE, WRITE_DATE, CHLIKE_COUNT, REPLY_COUNT, CH_CONFIRM, DENSE_RANK() OVER (ORDER BY CATEGORY_NO DESC) AS RANKING
+		<if test="check == 'recent'.toString()">
+			FROM CHALLENGE) WHERE RANKING = 1 ORDER BY CH_NO DESC) c ON (c.CH_NO = f.CH_NO) WHERE f.FILE_MAIN = 'Y'
+		</if>
+		<if test="check == 'prev'.toString()">
+			FROM CHALLENGE) WHERE RANKING = 2 ORDER BY CH_NO DESC) c ON (c.CH_NO = f.CH_NO) WHERE f.FILE_MAIN = 'Y'
+		</if>
+		<if test="check == 'prevprev'.toString()">
+			FROM CHALLENGE) WHERE RANKING = 3 ORDER BY CH_NO DESC) c ON (c.CH_NO = f.CH_NO) WHERE f.FILE_MAIN = 'Y'
+		</if>
+		<if test="check == 'all'.toString()">
+			FROM CHALLENGE) ORDER BY CH_NO DESC) c ON (c.CH_NO = f.CH_NO) WHERE f.FILE_MAIN = 'Y'
+		</if>
 	</select>
 <!-- 	<select id="selectAllList" resultMap="challengeResultMap"> -->
 <!-- 		SELECT * FROM CHALLENGE ORDER BY CH_NO DESC -->
@@ -125,6 +155,14 @@
 	</update>
 	
 	<!-- CH CATEGORY RESULTMAP -->
+	<resultMap type="Category" id="categoryResultMap">
+		<id property="categoryNo" column="CATEGORY_NO"/>
+		<result property="chCategory" column="CH_CATEGORY"/>
+		<result property="chStartDate" column="CH_START_DATE"/>
+	</resultMap>
+	<select id="selectCategoryTitle" resultMap="categoryResultMap" parameterType="string">
+		SELECT CH_CATEGORY FROM CATEGORY WHERE CATEGORY_NO = #{categoryNo}
+	</select>
 	<insert id="insertCategory" parameterType="Category">
 		INSERT INTO CATEGORY VALUES(SEQ_CATEGORY_NO.NEXTVAL, #{chCategory}, DEFAULT)
 	</insert>

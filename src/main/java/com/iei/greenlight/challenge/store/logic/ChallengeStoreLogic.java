@@ -55,17 +55,23 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	}
 
 	@Override
-	public int selectListCount() {
-		int count = session.selectOne("challengeMapper.selectListCount");
+	public int selectListCount(HashMap<String, Object> hashmap) {
+		int count = session.selectOne("challengeMapper.selectListCount", hashmap);
 		return count;
 	}
 
 	@Override
-	public List<Challenge> selectAll(PageInfo pi) {
+	public List<Challenge> selectAll(HashMap<String, Object> hashmap) {
+		PageInfo pi = (PageInfo)hashmap.get("pi");
 		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		List<Challenge> cList = session.selectList("challengeMapper.selectAllList", pi, rowBounds);
+		List<Challenge> cList = session.selectList("challengeMapper.selectAllList", hashmap, rowBounds);
 		return cList;
+	}
+	
+	@Override
+	public int selectAdminListCount() {
+		return session.selectOne("challengeMapper.selectAdminListCount");
 	}
 
 	@Override
@@ -80,7 +86,6 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	@Override
 	public List<CFile> selectOneImg(int chNo) {
 		List<CFile> cList = session.selectList("challengeMapper.selectOneImg", chNo);
-		System.out.println(cList.toString() + "2222222222222222222w");
 		return cList;
 	}
 	
@@ -157,7 +162,7 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	public List<Challenge> printAllCh(PageInfo api) {
 		int offset = (api.getCurrentPage()-1) * api.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, api.getBoardLimit());
-		List<Challenge> cList = session.selectList("challengeMapper.selectAllList", api, rowBounds);
+		List<Challenge> cList = session.selectList("challengeMapper.selectAdminAllList", api, rowBounds);
 		return cList;
 	}
 
@@ -165,6 +170,11 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	public int insertCategory(Category category) {
 		int result = session.insert("challengeMapper.insertCategory", category);
 		return result;
+	}
+	
+	@Override
+	public int selectCategoryTitle(int categoryNo) {
+		return session.selectOne("challengeMapper.selectCategoryTitle", categoryNo);
 	}
 	
 	@Override

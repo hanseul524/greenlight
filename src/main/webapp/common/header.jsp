@@ -101,7 +101,7 @@
     <div class="navi-area">
       <ul class="navi-menu">
         <li><a href="main.do">Home</a></li>
-        <li><a href="ChallengeListView.do">Challenge</a></li>
+        <li><a href="ChallengeListView.do?check=recent">Challenge</a></li>
         <li><a href="auctionListView.do">Auction</a></li>
         <li><a href="#">Donation</a></li>
         <li><a href="offlineShopView.do">Map</a></li>

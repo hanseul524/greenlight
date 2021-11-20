@@ -54,14 +54,14 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	@Override
-	public int getListCount() {
-		int totalCount = store.selectListCount();
+	public int getListCount(HashMap<String, Object> hashmap) {
+		int totalCount = store.selectListCount(hashmap);
 		return totalCount;
 	}
 
 	@Override
-	public List<Challenge> printAll(PageInfo pi) {
-		List<Challenge> cList = store.selectAll(pi);
+	public List<Challenge> printAll(HashMap<String, Object> hashmap) {
+		List<Challenge> cList = store.selectAll(hashmap);
 		return cList;
 	}
 
@@ -73,7 +73,6 @@ public class ChallengeServiceImpl implements ChallengeService{
 	@Override
 	public List<CFile> printOneImg(int chNo) {
 		List<CFile> cList = store.selectOneImg(chNo);
-		System.out.println(cList.toString() + "1111111111111");
 		return cList;
 	}
 	
@@ -83,12 +82,6 @@ public class ChallengeServiceImpl implements ChallengeService{
 		return cList;
 	}
 	
-//	@Override
-//	public int likeCount(int likeCount) {
-//		int result = store.selectLikeCount(likeCount);
-//		return result;
-//	}
-
 	@Override
 	public ChLike LikeCk(HashMap<String, Object> hashMap) {
 		ChLike chlike = store.selectLike(hashMap);
@@ -148,7 +141,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	@Override
 	public List<Challenge> printAllCh(PageInfo api) {
-		List<Challenge> cList = store.selectAll(api);
+		List<Challenge> cList = store.printAllCh(api);
 		return cList;
 	}
 
@@ -179,4 +172,13 @@ public class ChallengeServiceImpl implements ChallengeService{
 	    return store.selectMyChall(hashMap);
 	 }
 
+	@Override
+	public int getAdminListCount() {
+		return store.selectAdminListCount();
+	}
+
+	@Override
+	public int printCategoryTitle(int categoryNo) {
+		return store.selectCategoryTitle(categoryNo);
+	}
 }

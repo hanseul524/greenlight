@@ -22,8 +22,9 @@ public interface ChallengeStore {
 	public int deleteChallenge(int chNo);
 	
 	// 챌린지 리스트, 상세 페이지
-	public int selectListCount();
-	public List<Challenge> selectAll(PageInfo pi);
+	public int selectListCount(HashMap<String, Object> hashmap);
+	public List<Challenge> selectAll(HashMap<String, Object> hashmap);
+	public int selectCategoryTitle(int categoryNo);
 	public Challenge selectOne(int chNo);
 	public List<CFile> selectOneImg(int chNo);
 	public List<CFile> selectImgDel(int chNo);
@@ -41,6 +42,7 @@ public interface ChallengeStore {
 	public int deleteReply(Reply reply);
 	
 	// 관리자 챌린지 페이지
+	public int selectAdminListCount();
 	public List<Challenge> printAllCh(PageInfo api);
 	public int insertCategory(Category category);
 	public int updateChallengeCf(HashMap<String, Object> hashmap);

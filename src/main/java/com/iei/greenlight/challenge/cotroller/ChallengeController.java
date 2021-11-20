@@ -102,7 +102,7 @@ public class ChallengeController {
 				cList.get(0).setFileMain("Y");
 				int imgresult = service.registerChImage(cList);
 				System.out.println("파일 등록 성공");
-				return "redirect:ChallengeListView.do";
+				return "redirect:ChallengeListView.do?check=recent";
 			}else {
 				model.addAttribute("msg", "글 등록 실패");
 				return "common/errorPage";
@@ -143,19 +143,32 @@ public class ChallengeController {
 			@ModelAttribute Challenge challenge,
 			HttpServletRequest request,
 			Model model,
+			@RequestParam(value="check") String check,
 			@RequestParam(value="page", required=false) Integer page) {
-		int maxCategoryNo = service.selectCategory();
+		if(check == null) {
+			check = "recent";
+		}
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		hashmap.put("check", check);
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = service.getListCount();
+		int totalCount = service.getListCount(hashmap);
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-		List<Challenge> cList = service.printAll(pi);
+		hashmap.put("pi", pi);
+		List<Challenge> cList = service.printAll(hashmap);
+		System.out.println(pi.toString());
+		System.out.println(check);
 		System.out.println("챌린지 리스트:" + cList.toString());
 		int likeCount = 0;
 		
 		if(!cList.isEmpty()) {
 			model.addAttribute("cList", cList);
+//			int categoryNo = cList.get(0).getCategoryNo();
+//			System.out.println("글번호:" + categoryNo);
+//			int chCategory = service.printCategoryTitle(categoryNo);		
+//			System.out.println("카테고리 제목 : " + chCategory);
 			model.addAttribute("pi", pi);
-			model.addAttribute("max", maxCategoryNo);
+			model.addAttribute("check", check);
+//			model.addAttribute("chCategory", chCategory);
 			return "challenge/ChallengeListView";
 		}else {
 			model.addAttribute("msg", "리스트 조회 실패");
@@ -163,30 +176,6 @@ public class ChallengeController {
 		}
 	}
 	
-	// 챌린지 지난챌린지 리스트 뷰 + 페이징 처리
-//	@RequestMapping(value="ChallengeListOneView.do", method=RequestMethod.GET)
-//	public String ChallengeListViewOne(
-//			@ModelAttribute Challenge challenge,
-//			HttpServletRequest request,
-//			Model model,
-//			@RequestParam(value="page", required=false) Integer page) {
-//		int maxCategoryNo = service.selectCategory();
-//		int currentPage = (page != null) ? page : 1;
-//		int totalCount = service.getListCount();
-//		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
-//		List<Challenge> cList = service.printAll(pi);
-//		int likeCount = 0;
-//		
-//		if(!cList.isEmpty()) {
-//			model.addAttribute("cList", cList);
-//			model.addAttribute("pi", pi);
-//			model.addAttribute("max", maxCategoryNo);
-//			return "challenge/ChallengeListView";
-//		}else {
-//			model.addAttribute("msg", "리스트 조회 실패");
-//			return "common/errorPage";
-//		}
-//	}
 	
 	// 관리자 페이지 챌린지 리스트 조회
 	@RequestMapping(value="AdminChList.do", method=RequestMethod.GET)
@@ -196,7 +185,7 @@ public class ChallengeController {
 			Model model,
 			@RequestParam(value="page", required=false) Integer page) {
 		int currentPage = (page != null) ? page : 1;
-		int totalCount = service.getListCount();
+		int totalCount = service.getAdminListCount();
 		PageInfo api = AdminChPagination.getPageInfo(currentPage, totalCount);
 		List<Challenge> cList = service.printAllCh(api);
 		System.out.println(cList.toString());
