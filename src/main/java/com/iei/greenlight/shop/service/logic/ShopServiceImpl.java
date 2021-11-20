@@ -21,105 +21,103 @@ public class ShopServiceImpl implements ShopService{
 
 	@Override
 	public List<OfflineShop> printOfflineShopList(OfflinePageInfo pi) {
-
-		List<OfflineShop> sList = store.selectOfflineShopList(pi);
-		
-		return sList;
+		return store.selectOfflineShopList(pi);
 	}
 
 	@Override
 	public List<OfflineShop> printOfflineSearchList(HashMap<String, Object> hashmap) {
-		
-		List<OfflineShop> sList = store.selectOfflineSearchList(hashmap);
-		
-		return sList;
+		return store.selectOfflineSearchList(hashmap);
 	}
 	
 	@Override
 	public OfflineShop printOfflineOneByNo(int shopNo) {
-		
-		OfflineShop offlineShop = store.selectOfflineOneByNo(shopNo);
-		
-		return offlineShop;
+		return store.selectOfflineOneByNo(shopNo);
 	}
 
 	@Override
 	public int getOfflineListCount() {
-		
-		int count = store.selectOfflineListCount();
-		
-		return count;
+		return store.selectOfflineListCount();
 	}
 	
 	@Override
 	public int getSearchOfflineListCount(String searchKeyWord) {
-		
-		int count = store.selectSearchOfflineListCount(searchKeyWord);
-		
-		return count;
+		return store.selectSearchOfflineListCount(searchKeyWord);
 	}
 	
 	@Override
 	public int registerOfflineShop(OfflineShop offlineShop) {
-		
-		int result = store.insertOfflineShop(offlineShop);
-		
-		return result;
+		return store.insertOfflineShop(offlineShop);
 	}
 	
-
-
+	@Override
+	public OfflineShop printOfflineShopOneByNo(int shopNo) {
+		return store.printOfflineShopOneByNo(shopNo);
+	}
+	
+	@Override
+	public int modifyOfflineShop(OfflineShop offlineShop) {
+		return store.updateOfflineShop(offlineShop);
+	}
+	
 	@Override
 	public int removeOfflineShop(int[] shopNo) {
-		
-		int result = store.deleteOfflineShop(shopNo);
-		
-		return result;
+		return store.deleteOfflineShop(shopNo);
 	}
 
 	@Override
 	public List<OnlineShop> printOnlineShopList(OfflinePageInfo pi) {
-		
-		List<OnlineShop> sList = store.selectOnlineShopList(pi);
-		
-		return sList;
+		return store.selectOnlineShopList(pi);
 	}
 
 	@Override
 	public int getOnlineListCount() {
-		
-		int count = store.selectOnlineListCount();
-		
-		return count;
-	}
-
-	@Override
-	public int registerOnlineShop(OnlineShop onlineShop) {
-		
-		int result = store.insertOnlineShop(onlineShop);
-		
-		return result;
+		return store.selectOnlineListCount();
 	}
 
 	@Override
 	public List<OnlineShop> printZeroWasteShopList(OnlinePageInfo pi) {
-
-		List<OnlineShop> sList = store.selectZeroWasteList(pi);
-		
-		return sList;
+		return store.selectZeroWasteList(pi);
 	}
 
 	@Override
 	public int getZeroWasteListCount() {
-		
-		int count = store.selectZeroWasteListCount();
-				
-		return count;
+		return store.selectZeroWasteListCount();
+	}
+	
+	@Override
+	public List<OnlineShop> printUpCyclingShopList(OnlinePageInfo pi) {
+		return store.selectUpCyclingList(pi);
+	}
+	
+	@Override
+	public int getUpCyclingListCount() {
+		return store.selectUpCyclingListCount();
 	}
 
+	@Override
+	public List<OnlineShop> printOnlineShopOneByNo(HashMap<String, int[]> hashmap) {
+		return store.selectOnlineListOneByNo(hashmap);
+	}
+	
+	@Override
+	public List<OnlineShop> printOnlineShopSearchList(HashMap<String, Object> hashmap) {
+		return store.selectOnlineSearchList(hashmap);
+	}
+	
+	@Override
+	public int getOnlineSearchListCount(String searchKeyWord) {
+		return store.selectOnlineSearchListCount(searchKeyWord);
+	}
+	
+	@Override
+	public int removeOnlineShop(int[] shopNo) {
+		return store.deleteOnlineShop(shopNo);
+	}
 
-
-
+	@Override
+	public int registerOnlineShop(OnlineShop onlineShop) {
+		return store.insertOnlineShop(onlineShop);
+	}
 
 
 }

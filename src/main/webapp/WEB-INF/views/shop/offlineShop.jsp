@@ -91,7 +91,7 @@
     <p class="zerowastemap">ZEROWASTE MAP</p>
         <div class="menu-shop">
             <div class="offline">
-        	    <a href="">
+        	    <a href="offlineShopView.do">
 	                <p>OFFLINE SHOP</p>
 	            </a>
             </div>

@@ -17,13 +17,21 @@ public interface ShopService {
 	public int getOfflineListCount();
 	public int getSearchOfflineListCount(String searchKeyWordHashMap);
 	public int registerOfflineShop(OfflineShop offlineShop);
+	public OfflineShop printOfflineShopOneByNo(int shopNo);
+	public int modifyOfflineShop(OfflineShop offlineShop);
 	public int removeOfflineShop(int[] shopNo);
 	
 	//온라인
 	public List<OnlineShop> printZeroWasteShopList(OnlinePageInfo pi);
 	public int getZeroWasteListCount();
+	public List<OnlineShop> printUpCyclingShopList(OnlinePageInfo pi);
+	public int getUpCyclingListCount();
 	public List<OnlineShop> printOnlineShopList(OfflinePageInfo pi);
 	public int getOnlineListCount();
+	public List<OnlineShop> printOnlineShopOneByNo(HashMap<String, int[]> hashmap);
+	public List<OnlineShop> printOnlineShopSearchList(HashMap<String, Object> hashmap);
+	public int getOnlineSearchListCount(String searchKeyWord);
 	public int registerOnlineShop(OnlineShop onlineShop);
+	public int removeOnlineShop(int[] shopNo);
 
 }

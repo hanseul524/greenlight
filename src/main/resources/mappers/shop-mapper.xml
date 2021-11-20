@@ -33,11 +33,17 @@
 		SELECT COUNT(*) FROM OFFLINESHOP
 	</select>
 	<select id="selectSearchOfflineListCount" resultType="_int">
-		SELECT COUNT(*) FROM OFFLINESHOP WHERE SHOP_NAME LIKE '%'||#{searchKeyword }||'%'
+		SELECT COUNT(*) FROM OFFLINESHOP WHERE SHOP_NAME LIKE '%'||#{searchKeyword }||'%' ORDER BY SHOP_NO DESC
+	</select>
+	<select id="selectOfflineShopOneByNo" parameterType="_int" resultMap="offlineShopResultMap">
+		SELECT * FROM OFFLINESHOP WHERE SHOP_NO = #{shopNo }
 	</select>
 	<insert id="insertOfflineShop" parameterType="OfflineShop">
 		INSERT INTO OFFLINESHOP VALUES(182, #{shopName }, #{shopAddress }, #{shopPhone }, #{shopInstagram }, #{category })
 	</insert>
+	<update id="updateOfflineShop" parameterType="offlineShop">
+		UPDATE OFFLINESHOP SET SHOP_NAME = #{shopName }, SHOP_ADDRESS = #{shopAddress }, SHOP_PHONE = #{shopPhone }, SHOP_INSTAGRAM = #{shopInstagram }, CATEGORY = #{category } WHERE SHOP_NO = #{shopNo }
+	</update>
 	<delete id="deleteOfflineShop" parameterType="java.util.Arrays">
   		DELETE FROM OFFLINESHOP
   		<where>
@@ -54,14 +60,42 @@
   	<select id="selectOnlineListCount" resultType="_int">
   		SELECT COUNT(*) FROM ONLINESHOP
   	</select>
+  	<select id="selectOnlineListOneByNo" parameterType="hashmap" resultMap="onlineShopResultMap">
+  		SELECT * FROM ONLINESHOP WHERE
+  		<foreach collection="shopNo" item="item" separator="or">
+  			SHOP_NO = #{item }
+  		</foreach>
+  	</select>
+  	<select id="selectOnlineSearchList" parameterType="hashmap" resultMap="onlineShopResultMap">
+  		SELECT * FROM ONLINESHOP WHERE SHOP_NAME LIKE '%'||#{searchKeyword }||'%'
+  	</select>
+  	<select id="selectOnlineSearchCount" parameterType="string" resultType="_int">
+  		SELECT COUNT(*) FROM ONLINESHOP WHERE SHOP_NAME LIKE '%'||#{searchKeyword }||'%'
+  	</select>
   	<insert id="insertOnlineShop" parameterType="OnlineShop">
   		INSERT INTO ONLINESHOP VALUES(SEQ_ONLINE_SHOP_NO.NEXTVAL, #{shopName }, #{shopContents }, #{shopAddress }, #{shopImage }, #{category })
   	</insert>
+  	<delete id="deleteOnlineShop" parameterType="java.util.Arrays">
+  		DELETE FROM ONLINESHOP
+  		<where>
+  			SHOP_NO IN
+  			<foreach collection="array" item="item" index="index" open="(" close=")" separator=", ">
+  				#{item }
+  			</foreach>
+  		</where>
+  	</delete>
   	<!-- zerowaste -->
   	<select id="selectZeroWateList" resultMap="onlineShopResultMap">
-  		SELECT * FROM ONLINESHOP WHERE CATEGORY = 'ZEROWASTE'
+  		SELECT * FROM ONLINESHOP WHERE CATEGORY = 'ZEROWASTE' ORDER BY SHOP_NO ASC
   	</select>
   	<select id="selectZeroWasteListCount" resultType="_int">
   		SELECT COUNT(*) FROM ONLINESHOP WHERE CATEGORY = 'ZEROWASTE'
+  	</select>
+  	<!-- upcycling -->
+  	<select id="selectUpCyclingList" resultMap="onlineShopResultMap">
+  		SELECT * FROM ONLINESHOP WHERE CATEGORY = 'UPCYCLING' ORDER BY SHOP_NO ASC
+  	</select>
+  	<select id="selectUpCyclingListCount" resultType="_int">
+  		SELECT COUNT(*) FROM ONLINESHOP WHERE CATEGORY = 'UPCYCLING'
   	</select>
 </mapper>
