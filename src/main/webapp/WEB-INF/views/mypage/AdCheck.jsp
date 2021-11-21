@@ -69,12 +69,15 @@
 		            		<input type="hidden" name="consecutive" value="${ad.consecutive }">
 	            		</c:forEach>
 		            		<input type="hidden" id="last-Checking" name="adDate" value="${lastCheck }">
-	            		<c:if test="${lastCheck ne today || empty lastCheck }">
+	            		<c:if test="${lastCheck ne today || empty lastCheck && userId ne null}">
 							<button class="adCheck-butn">출석체크</button>
 	            		</c:if>
                 	</form>
             		<c:if test="${lastCheck eq today && not empty lastCheck}">
             			<button class="adCheck-butn">이미 출석 하셨어요!</button>
+            		</c:if>
+            		<c:if test="${userId eq null }">
+            			<button class="adCheck-butn">로그인을 해주세요</button>
             		</c:if>
                 </div>
             </main>
@@ -126,7 +129,7 @@
     	    let checkFlag = false;
 		    	    $("input[name=day]").each(function(index, item) {
 		    	    	if(d == $(item).val()) {
-		    	    		html += "<div class='dateSel '"+tmpClass+">"+d+"<br><br><p align='center'>출석</p>"+"</div>";
+		    	    		html += "<div style='border=1px solid red; 'class='dateSel ''class='dateSell '"+tmpClass+">"+d+"<br><br><p align='center'>출석 완료</p>"+"</div>";
 		    	    		checkFlag = true;
 		    	    		return false;
 		    	    	}

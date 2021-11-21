@@ -242,7 +242,8 @@ public class UserController {
 			model.addAttribute("user", user);
 			return "mypage/UserInfo";
 		}else {
-			return "common/errorPage";
+			model.addAttribute("user", null);
+			return "mypage/UserInfo";
 		}
 	}
 	
@@ -251,15 +252,14 @@ public class UserController {
 	public String modifyInfo(@ModelAttribute User user, @RequestParam("post") String post, @RequestParam("addrOne") String addrOne, @RequestParam("addrTwo") String addrTwo, Model model, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		user.setUserAddr(post+"/"+addrOne+"/"+addrTwo);
-		System.out.println(post + addrOne + addrTwo);
 		try {
 			int result = service.modifyUser(user);
 			if(result > 0) {
 				session.setAttribute("loginUser", user);
 				return "redirect:myPageInfo.do";
 			}else {
-				model.addAttribute("msg", "회원 정보 수정 실패");
-				return "common/errorPage";
+				model.addAttribute("loginUser", null);
+				return "mypage/UserInfo";
 			}
 		}catch(Exception e) {
 			model.addAttribute("msg", "회원정보 수정 실패");
