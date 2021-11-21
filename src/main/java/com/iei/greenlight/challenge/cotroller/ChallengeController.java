@@ -162,18 +162,27 @@ public class ChallengeController {
 		
 		if(!cList.isEmpty()) {
 			model.addAttribute("cList", cList);
-//			int categoryNo = cList.get(0).getCategoryNo();
-//			System.out.println("글번호:" + categoryNo);
-//			int chCategory = service.printCategoryTitle(categoryNo);		
-//			System.out.println("카테고리 제목 : " + chCategory);
+			int categoryNo = cList.get(0).getCategoryNo();
+			System.out.println("글번호:" + categoryNo);
+			Category category = service.printCategoryTitle(categoryNo);
+			if( category != null) {
+				System.out.println("넘어온 카테고리 " +category.toString());
+				model.addAttribute("category", category);
+			}
 			model.addAttribute("pi", pi);
 			model.addAttribute("check", check);
-//			model.addAttribute("chCategory", chCategory);
 			return "challenge/ChallengeListView";
 		}else {
 			model.addAttribute("msg", "리스트 조회 실패");
 			return "common/errorPage";
 		}
+	}
+	
+	@RequestMapping(value="chSearch.do", method=RequestMethod.GET)
+	public String ChallengeSearchView(
+			@RequestParam("search-title") String chTitle) {
+		
+		return "";
 	}
 	
 	
@@ -270,13 +279,13 @@ public class ChallengeController {
 					if(chlike != null) {
 						System.out.println("테이블에 유저 정보 있을 때 " + chlike.toString());
 						model.addAttribute("chlike", chlike);
-						return "challenge/ChallengeDetailView";
+						return "challenge/ChallengeDetailView2";
 					}else { //테이블에 유저 정보가 없을때 insert
 						int result = service.addLike(hashMap);
 						if(result > 0) {
 							chlike = service.LikeCk(hashMap);
 							model.addAttribute("chlike", chlike);
-							return "challenge/ChallengeDetailView";
+							return "challenge/ChallengeDetailView2";
 						}
 					}
 				}

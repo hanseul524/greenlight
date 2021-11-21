@@ -173,7 +173,7 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	}
 	
 	@Override
-	public int selectCategoryTitle(int categoryNo) {
+	public Category selectCategoryTitle(int categoryNo) {
 		return session.selectOne("challengeMapper.selectCategoryTitle", categoryNo);
 	}
 	

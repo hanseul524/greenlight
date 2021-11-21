@@ -23,7 +23,7 @@ public interface ChallengeService {
 	// 챌린지 리스트, 상세 페이지
 	public int getListCount(HashMap<String, Object> hashmap);
 	public List<Challenge> printAll(HashMap<String, Object> hashmap);
-	public int printCategoryTitle(int categoryNo);
+	public Category printCategoryTitle(int categoryNo);
 	public Challenge printOne(int chNo);
 	public List<CFile> printOneImg(int chNo);
 	public List<CFile> printImgDel(int chNo);

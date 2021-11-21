@@ -178,7 +178,7 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	@Override
-	public int printCategoryTitle(int categoryNo) {
+	public Category printCategoryTitle(int categoryNo) {
 		return store.selectCategoryTitle(categoryNo);
 	}
 }

@@ -24,7 +24,7 @@ public interface ChallengeStore {
 	// 챌린지 리스트, 상세 페이지
 	public int selectListCount(HashMap<String, Object> hashmap);
 	public List<Challenge> selectAll(HashMap<String, Object> hashmap);
-	public int selectCategoryTitle(int categoryNo);
+	public Category selectCategoryTitle(int categoryNo);
 	public Challenge selectOne(int chNo);
 	public List<CFile> selectOneImg(int chNo);
 	public List<CFile> selectImgDel(int chNo);

@@ -210,6 +210,7 @@
 	$("#chk_all").on("click", function() {
 	    if($('#chk_all').is(':checked')){
 	        $('.del-chk').prop('checked',true);
+	        
 	     }else{
 	        $('.del-chk').prop('checked',false);
 	     }

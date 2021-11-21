@@ -160,7 +160,7 @@
 		<result property="chCategory" column="CH_CATEGORY"/>
 		<result property="chStartDate" column="CH_START_DATE"/>
 	</resultMap>
-	<select id="selectCategoryTitle" resultMap="categoryResultMap" parameterType="string">
+	<select id="selectCategoryTitle" resultMap="categoryResultMap" parameterType="category">
 		SELECT CH_CATEGORY FROM CATEGORY WHERE CATEGORY_NO = #{categoryNo}
 	</select>
 	<insert id="insertCategory" parameterType="Category">
