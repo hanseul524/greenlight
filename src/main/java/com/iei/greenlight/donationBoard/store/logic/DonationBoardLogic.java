@@ -128,4 +128,39 @@ public class DonationBoardLogic implements DonationBoardStore{
 	public List<DonationReply> seelectAllReply(int boardNo) {
 		return sqlSession.selectList("donationBoardMapper.selectAllReply", boardNo);
 	}
+
+	@Override
+	public int updateBoardReplyContents(DonationReply donationReply) {
+		return sqlSession.update("donationBoardMapper.updateBoardReplyContents", donationReply);
+	}
+
+	@Override
+	public int deleteDonationReply(DonationReply donationReply) {
+		return sqlSession.delete("donationBoardMapper.deleteBoardReply", donationReply);
+	}
+
+	@Override
+	public int selectSearchDonationListCount(String searchKey) {
+		return sqlSession.selectOne("donationBoardMapper.selectSearchBoardListCount", searchKey);
+	}
+
+	@Override
+	public List<DonationBoard> selectDonationBoardSearchList(HashMap<String, Object> hashMap) {
+		PageInfo pi = (PageInfo)hashMap.get("pi");
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+		return sqlSession.selectList("donationBoardMapper.selectDonationBoardSearchList",hashMap.get("searchKey"), rowBounds);
+	}
+
+	@Override
+	public int selectAdminDonationCount() {
+		return sqlSession.selectOne("donationBoardMapper.selectAdminBoardListCount");
+	}
+
+	@Override
+	public List<DonationBoard> selectAllAdminBoard(PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return sqlSession.selectList("donationBoardMapper.selectAdminBoardList",pi, rowBounds);
+	}
 }

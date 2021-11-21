@@ -38,4 +38,16 @@ public interface DonationBoardStore {
 	void updateBoardReplyCound(int boardNo);
 
 	List<DonationReply> seelectAllReply(int boardNo);
+
+	int updateBoardReplyContents(DonationReply donationReply);
+
+	int deleteDonationReply(DonationReply donationReply);
+
+	int selectSearchDonationListCount(String searchKey);
+
+	List<DonationBoard> selectDonationBoardSearchList(HashMap<String, Object> hashMap);
+
+	int selectAdminDonationCount();
+
+	List<DonationBoard> selectAllAdminBoard(PageInfo pi);
 }

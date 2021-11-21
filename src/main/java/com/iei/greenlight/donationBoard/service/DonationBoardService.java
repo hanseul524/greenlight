@@ -38,4 +38,17 @@ public interface DonationBoardService {
 	void modifyReplyCount(int boardNo);
 
 	List<DonationReply> printAllReply(int boardNo);
+
+	int modifyReplyContents(DonationReply donationReply);
+
+	int donationRemoveReply(DonationReply donationReply);
+
+	int getSearchDonationListCount(String searchKey);
+
+	List<DonationBoard> printDonationSearchList(HashMap<String, Object> hashMap);
+
+	int getAdminDonationListCount();
+
+	List<DonationBoard> printAdminboardAll(PageInfo pi);
+
 }
