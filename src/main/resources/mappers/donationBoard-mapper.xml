@@ -69,7 +69,7 @@
 	
 	<!-- 마이페이지 후원 게시물 리스트 -->
 	<select id="selectMyDonation" resultMap="donationBoardResultMap">
-      select d.board_no, d.dt_subject, d.dt_contents, d.dt_reply_count, d.dt_target_amount, D.DT_DONATION_AMOUNT, D.DT_SUCCESS, D.WRITER_ID, D.WRITE_DATE, e.* from donation_board D inner join (SELECT DISTINCT c.board_no, F.FILE_NAME, F.FILE_PATH, F.FILE_MAIN FROM DONATION c left join dt_file f on(c.board_no = f.board_no)  WHERE c.USER_ID = #{userId})e on (d.board_no = e.board_no) where e.file_main = 'Y'        
+      select d.board_no, d.dt_subject, d.dt_contents, d.dt_reply_count, d.dt_target_amount, D.DT_DONATION_AMOUNT, D.DT_SUCCESS, D.WRITER_ID, D.WRITE_DATE, e.* from donation_board D inner join (SELECT DISTINCT c.board_no, F.FILE_NAME, F.FILE_PATH, F.FILE_MAIN FROM DONATION c left join dt_file f on(c.board_no = f.board_no)  WHERE c.USER_ID = #{userId})e on (d.board_no = e.board_no) where e.file_main = 'Y' AND DT_SUCCESS = 'N'        
    </select>
    
    <!-- 기부게시판 댓글 리스트 -->
@@ -99,6 +99,25 @@
    <select id="selectAdminBoardList" resultMap="donationBoardResultMap">
    		SELECT * FROM DONATION_BOARD ORDER BY BOARD_NO DESC
    </select>
+   
+   <!-- 관리자 기부게시판 검색 카운트 -->
+   <select id="selectAdminBoardSearchCount" parameterType="string" resultType="_int">
+   		SELECT COUNT(*) FROM DONATION_BOARD WHERE DT_SUBJECT LIKE '%'||#{searchKey }||'%'
+   </select>
+	
+	<!-- 관리자 기부게시판 검색 리스트 -->
+	<select id="selectAdminBoardSearchList" parameterType="string" resultMap="donationBoardResultMap">
+		SELECT * FROM DONATION_BOARD WHERE DT_SUBJECT LIKE '%'||#{searchKey }||'%' ORDER BY BOARD_NO DESC
+	</select>
+	
+	<select id="selectSuccessN" resultMap="donationBoardResultMap">
+		SELECT * FROM DONATION_BOARD WHERE DT_SUCCESS = 'N'
+	</select>
+	
+	<!-- 수정 뷰 페이지 넘어갈때 이미지 셀렉트 -->
+	<select id="selectModifyViewFile" parameterType="_int" resultMap="donationImageResultMap">
+		SELECT * FROM DT_FILE WHERE BOARD_NO = #{boardNo }
+	</select>
 	
 	<insert id="insertDonationBoard">
 		<selectKey keyProperty="boardNo" resultType="_int" order="BEFORE">
@@ -166,9 +185,28 @@
 		UPDATE DT_BOARD_REPLY SET DT_REPLY_CONTENTS = #{dtReplyContents } WHERE DT_REPLY_NO = #{dtReplyNo }
 	</update>
 	
+	<!-- 댓글 삭제시 게시글 댓글 카운트 수정 -->
+	<update id="updateBoardReplyDeleteCount" parameterType="_int" >
+		UPDATE DONATION_BOARD SET DT_REPLY_COUNT = DT_REPLY_COUNT - 1 WHERE BOARD_NO = #{boardNo }
+	</update>
+	
+	<!-- 기부 목표금액이 달성 되면 success 데이터 수정 -->
+	<update id="updateDonationEnd" parameterType="_int">
+		UPDATE DONATION_BOARD SET DT_SUCCESS = 'Y' WHERE BOARD_NO = #{boardNo }
+	</update>
+	
+	<!-- 기부게시판 게시글 수정 -->
+	<update id="updateDonationBoard" parameterType="DonationBoard">
+		UPDATE DONATION_BOARD SET DT_SUBJECT = #{dtSubject }, DT_CONTENTS = #{dtContents } WHERE BOARD_NO = #{boardNo }
+	</update>
 	
 	<!-- 댓글 삭제 -->
 	<delete id="deleteBoardReply" parameterType="DonationReply">
 		DELETE FROM DT_BOARD_REPLY WHERE DT_REPLY_NO = #{dtReplyNo }
+	</delete>
+	
+	<!-- 게시글 수정시 이미지 삭제 -->
+	<delete id="deleteDonationBoardImage" parameterType="_int">
+		DELETE FROM DT_FILE WHERE BOARD_NO = #{boardNo }
 	</delete>
 </mapper>

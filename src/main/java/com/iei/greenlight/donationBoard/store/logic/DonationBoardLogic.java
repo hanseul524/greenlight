@@ -163,4 +163,47 @@ public class DonationBoardLogic implements DonationBoardStore{
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return sqlSession.selectList("donationBoardMapper.selectAdminBoardList",pi, rowBounds);
 	}
+
+	@Override
+	public int selectAdminDonationSearchCount(String searchKey) {
+		return sqlSession.selectOne("donationBoardMapper.selectAdminBoardSearchCount", searchKey);
+	}
+
+	@Override
+	public List<DonationBoard> selectAdminDonationSearchList(HashMap<String, Object> hashMap) {
+		PageInfo pi = (PageInfo)hashMap.get("pi");
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return sqlSession.selectList("donationBoardMapper.selectAdminBoardSearchList", hashMap.get("searchKey"), rowBounds);
+	}
+
+	@Override
+	public void updateBoardReplyDeleteCount(int boardNo) {
+		sqlSession.update("donationBoardMapper.updateBoardReplyDeleteCount", boardNo);
+	}
+
+	@Override
+	public void updateDonationEnd(int boardNo) {
+		sqlSession.update("donationBoardMapper.updateDonationEnd",boardNo);
+	}
+
+	@Override
+	public List<DonationBoard> selectSuccessN() {
+		return sqlSession.selectList("donationBoardMapper.selectSuccessN");
+	}
+
+	@Override
+	public List<DtFile> printModifyViewFile(int boardNo) {
+		return sqlSession.selectList("donationBoardMapper.selectModifyViewFile", boardNo);
+	}
+
+	@Override
+	public int updateDonationBoard(DonationBoard db) {
+		return sqlSession.update("donationBoardMapper.updateDonationBoard", db);
+	}
+
+	@Override
+	public int deleteDonationBoardImage(int boardNo) {
+		return sqlSession.delete("donationBoardMapper.deleteDonationBoardImage", boardNo);
+	}
 }
