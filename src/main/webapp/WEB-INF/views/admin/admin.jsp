@@ -30,6 +30,20 @@
       });
     });
 </script>
+<style>
+  .delBtn {
+  	float: right;
+  	padding: 5px 17px 5px 17px;
+  	margin: 65px 25px 0 0;
+  	border: 1px solid rgba(128, 128, 128, 0.61);
+  	border-radius: 5px;
+  	font-weight: 300;
+  	font-size: 13px;
+	}
+  .delBtn:hover {
+  		background-color: #819789c4;
+	}
+</style>
 </head>
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
@@ -74,10 +88,12 @@
     </div>
       <div class="contents">
           <div class="con-title">
+          <form action="" method="get">
             <div>전체 회원 목록</div>
-            <input type="text" id="userId" placeholder="검색하실 아이디를 입력하세요.">
-            <input type="button" name="name" value="search" onclick="search();">
-          </div>
+            	<input type="text" name="userId" id="userId" placeholder="검색하실 아이디를 입력하세요.">
+            	<button type="submit" class="searchBtn"><i class="fas fa-search"></i></button>
+          	</div>
+          </form>
           <div class="con-list">
             <table class="table table-hover">
               <thead>
@@ -139,10 +155,10 @@
 			         <a class="arrow next" href="${after }"></a>
 			      </c:if>
 			      </div>
+                <button class="delBtn" onclick="delUser();">선택 탈퇴</button>
 			 </div>
-              <div class="btn-area">
-                <button onclick="delUser();">선택 탈퇴</button>
-              </div>
+<!--               <div class="btn-area"> -->
+<!--               </div> -->
            </div>
           </div>
       </div>

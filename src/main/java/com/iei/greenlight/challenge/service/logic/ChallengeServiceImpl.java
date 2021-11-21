@@ -61,10 +61,19 @@ public class ChallengeServiceImpl implements ChallengeService{
 
 	@Override
 	public List<Challenge> printAll(HashMap<String, Object> hashmap) {
-		List<Challenge> cList = store.selectAll(hashmap);
-		return cList;
+		return store.selectAll(hashmap);
 	}
 
+	@Override
+	public int getSearchListCount(HashMap<String, Object> hashmap) {
+		return store.selectSearchListCount(hashmap);
+	}
+
+	@Override
+	public List<Challenge> printSearchList(HashMap<String, Object> hashmap) {
+		return store.selectSearchList(hashmap);
+	}
+	
 	@Override
 	public Challenge printOne(int chNo) {
 		Challenge challenge = store.selectOne(chNo);
@@ -181,4 +190,5 @@ public class ChallengeServiceImpl implements ChallengeService{
 	public Category printCategoryTitle(int categoryNo) {
 		return store.selectCategoryTitle(categoryNo);
 	}
+
 }

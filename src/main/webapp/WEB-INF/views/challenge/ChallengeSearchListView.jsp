@@ -29,47 +29,53 @@
 	    <div class="category-area">
 	      <span>${category.chCategory }</span>
 	    </div>
-    <c:forEach items="${cList }" var="challenge">
-	    <input type="hidden" value="${challenge.categoryNo }" name="categoryNo">
-		    <ul class="box">
-		      <li class="item">
-		        <div class="box-inner">
-		        <c:if test="${challenge.fileMain eq 'Y' }">
-		          <div class="box-img">
-		          	<img alt="" src="${pageContext.request.contextPath}/resources/cuploadFiles/${challenge.fileName}">
-		          </div>
-		        </c:if>		        
-		          <div class="contents-bottom">
-		            <div class="box-user">
-		              <div style="float: left; margin-right: 15px;">
-		                <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
-		              </div>
-		              <span style="color: #293e31a2; font-size: 13px;">${challenge.chWriter }<br>${challenge.writeDate }</span>
-		            </div>
-		            <div class="box-contents">
-		            	<c:url var="cDetail" value="ChallengeDetail.do">
-		            		<c:param name="chNo" value="${challenge.chNo }"></c:param>
-		            	</c:url>
-		              <a href="${cDetail }">
-		                ${challenge.chTitle }
-		              </a>
-		            </div>
-		            <br>
-		            <hr>
-		            <div style="padding-top: 10px;">
-		              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp;${challenge.replyCount }</span>
-		              <span class="like"><i class="far fa-heart" style="color: red;"></i>&nbsp;&nbsp;${challenge.likeCount }</span>
-		            </div>
-		          </div>
-		          </div>
-		      </li>
-	    </ul>
-    </c:forEach>
+	<c:if test="${empty cList }">
+		<div>검색 결과에 맞는 글이 없습니다.</div>
+	</c:if>   
+	<c:if test="${not empty cList }">
+	    <c:forEach items="${cList }" var="challenge">
+		    <input type="hidden" value="${challenge.categoryNo }" name="categoryNo">
+			    <ul class="box">
+			      <li class="item">
+			        <div class="box-inner">
+			        <c:if test="${challenge.fileMain eq 'Y' }">
+			          <div class="box-img">
+			          	<img alt="" src="${pageContext.request.contextPath}/resources/cuploadFiles/${challenge.fileName}">
+			          </div>
+			        </c:if>		        
+			          <div class="contents-bottom">
+			            <div class="box-user">
+			              <div style="float: left; margin-right: 15px;">
+			                <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
+			              </div>
+			              <span style="color: #293e31a2; font-size: 13px;">${challenge.chWriter }<br>${challenge.writeDate }</span>
+			            </div>
+			            <div class="box-contents">
+			            	<c:url var="cDetail" value="ChallengeDetail.do">
+			            		<c:param name="chNo" value="${challenge.chNo }"></c:param>
+			            	</c:url>
+			              <a href="${cDetail }">
+			                ${challenge.chTitle }
+			              </a>
+			            </div>
+			            <br>
+			            <hr>
+			            <div style="padding-top: 10px;">
+			              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp;${challenge.replyCount }</span>
+			              <span class="like"><i class="far fa-heart" style="color: red;"></i>&nbsp;&nbsp;${challenge.likeCount }</span>
+			            </div>
+			          </div>
+			          </div>
+			      </li>
+		    </ul>
+	    </c:forEach>
+	</c:if>
 	</div>
     <div class="page_wrap">
-    <c:url var="before" value="ChallengeListView.do">
+    <c:url var="before" value="ChallengeSearchList.do">
     	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
     	<c:param name="check" value="${check }"></c:param>
+    	<c:param name="searchTitle" value="${searchTitle }"></c:param>
     </c:url>
       <div class="page_nation">
       <c:if test="${pi.currentPage <= 1 }">
@@ -79,9 +85,10 @@
          <a class="arrow prev" href="${before }"></a>
       </c:if>
       <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
-      	<c:url var="pagenation" value="ChallengeListView.do">
+      	<c:url var="pagenation" value="ChallengeSearchList.do">
       		<c:param name="page" value="${p }"></c:param>
       		<c:param name="check" value="${check }"></c:param>
+      		<c:param name="searchTitle" value="${searchTitle }"></c:param>
       	</c:url>
       	<c:if test="${p eq pi.currentPage }">
          	<a href="#" class="active">${p }</a>
@@ -90,9 +97,10 @@
       		<a href="${pagenation }">${p }</a>
       	</c:if>
       </c:forEach>
-      <c:url var="after" value="ChallengeListView.do">
+      <c:url var="after" value="ChallengeSearchList.do">
       	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
       	<c:param name="check" value="${check }"></c:param>
+      	<c:param name="searchTitle" value="${searchTitle }"></c:param>
       </c:url>
       <c:if test="${pi.currentPage >= pi.maxPage }">
          <a class="arrow next" href="#"></a>
