@@ -110,14 +110,28 @@ public class ShopServiceImpl implements ShopService{
 	}
 	
 	@Override
-	public int removeOnlineShop(int[] shopNo) {
-		return store.deleteOnlineShop(shopNo);
+	public OnlineShop printOnlineShopOneByNo(int shopNo) {
+		return store.selectOnlineShopOneByNo(shopNo);
 	}
-
+	
 	@Override
 	public int registerOnlineShop(OnlineShop onlineShop) {
 		return store.insertOnlineShop(onlineShop);
 	}
+	
+	@Override
+	public int modifyOnlineShop(OnlineShop onlineShop) {
+		return store.updateOnlineShop(onlineShop);
+	}
+	
+	@Override
+	public int removeOnlineShop(int[] shopNo) {
+		return store.deleteOnlineShop(shopNo);
+	}
+
+
+
+
 
 
 }

@@ -30,8 +30,10 @@ public interface ShopService {
 	public int getOnlineListCount();
 	public List<OnlineShop> printOnlineShopOneByNo(HashMap<String, int[]> hashmap);
 	public List<OnlineShop> printOnlineShopSearchList(HashMap<String, Object> hashmap);
+	public OnlineShop printOnlineShopOneByNo(int shopNo);
 	public int getOnlineSearchListCount(String searchKeyWord);
 	public int registerOnlineShop(OnlineShop onlineShop);
+	public int modifyOnlineShop(OnlineShop onlineShop);
 	public int removeOnlineShop(int[] shopNo);
 
 }

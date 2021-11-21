@@ -87,7 +87,7 @@
 					<c:forEach items="${sList }" var="online" varStatus="status">
 						<tr>
 							<td>${online.shopNo }</td>
-							<td><a href="onlineShopUpdateWriteView.do?shopNo=${online.shopNo }">${online.shopName }</a></td>
+							<td><a href="onlineShopDetailView.do?shopNo=${online.shopNo }">${online.shopName }</a></td>
 							<td>${online.shopContents }</td>
 							<td>${online.shopImage }</td>
 							<td>${online.shopAddress }</td>

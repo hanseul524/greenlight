@@ -155,9 +155,6 @@ public class ChallengeController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
 		hashmap.put("pi", pi);
 		List<Challenge> cList = service.printAll(hashmap);
-		System.out.println(pi.toString());
-		System.out.println(check);
-		System.out.println("챌린지 리스트:" + cList.toString());
 		int likeCount = 0;
 		
 		if(!cList.isEmpty()) {
@@ -188,7 +185,6 @@ public class ChallengeController {
 		int totalCount = service.getAdminListCount();
 		PageInfo api = AdminChPagination.getPageInfo(currentPage, totalCount);
 		List<Challenge> cList = service.printAllCh(api);
-		System.out.println(cList.toString());
 		if(!cList.isEmpty()) {
 			model.addAttribute("cList", cList);
 			model.addAttribute("api", api);

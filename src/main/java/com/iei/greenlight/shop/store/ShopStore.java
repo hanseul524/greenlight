@@ -31,7 +31,9 @@ public interface ShopStore {
 	public List<OnlineShop> selectOnlineListOneByNo(HashMap<String, int[]> hashmap);
 	public List<OnlineShop> selectOnlineSearchList(HashMap<String, Object> hashmap);
 	public int selectOnlineSearchListCount(String searchKeyWord);
+	public OnlineShop selectOnlineShopOneByNo(int shopNo);
 	public int insertOnlineShop(OnlineShop onlineShop);
+	public int updateOnlineShop(OnlineShop onlineShop);
 	public int deleteOnlineShop(int[] shopNo);
 
 }

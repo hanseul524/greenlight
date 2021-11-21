@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="eventMapper">
+	<resultMap type="Event" id="eventResultMap">
+		<id property="eventNo" column="EVENT_NO"/>
+		<result property="eventStart" column="EVENT_START"/>
+		<result property="eventEnd" column="EVENT_END"/>
+		<result property="eventPoint" column="EVENT_POINT"/>
+		<result property="eventQuestion" column="EVENT_QUESTION"/>
+		<result property="eventAnswer" column="EVENT_ANSWER"/>
+	</resultMap>
+	
+	<resultMap type="EventAnswer" id="eventAnswerResultMap">
+		<id property="eventNo" column="EVENT_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="joinDate" column="JOIN_DATE"/>
+	</resultMap>
+	
+	<resultMap type="EventWinner" id="eventWinnerResultMap">
+		<id property="eventNo" column="EVENT_NO"/>
+		<result property="userId" column="USER_ID"/>
+		<result property="joinDate" column="JOIN_DATE"/>
+	</resultMap>
+	
+	<insert id="insertEvent" parameterType="Event">
+		INSERT INTO EVENT VALUES(SEQ_EVENT_NO.NEXTVAL, #{eventStart }, #{eventEnd }, #{eventPoint }, #{eventQuestion }, #{eventAnswer })
+	</insert>
+</mapper>

@@ -166,6 +166,26 @@ public class ShopController {
 			return "common/errorPage";
 		}
 	}
+	
+	// 관리자 오프라인매장 디테일 페이지 이동
+	@RequestMapping(value="offlineShopDetailView.do")
+	public String offlineShopDetailView(int shopNo, Model model) {
+		
+		try {
+			OfflineShop offlineShop = service.printOfflineOneByNo(shopNo);
+			if(offlineShop != null) {
+				model.addAttribute("offlineShop", offlineShop);
+				return "admin/adminOfflineShopDetailView";
+			}else {
+				model.addAttribute("msg", "오프라인 매장 조회 실패");
+				return "common/errorPage";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}
+	}
 
 	
 	// 관리자 오프라인매장 등록 페이지 이동
@@ -216,7 +236,7 @@ public class ShopController {
 			System.out.println(offlineShop.toString());
 			int result = service.modifyOfflineShop(offlineShop);
 			if(result > 0) {
-				return "redirect:adminOfflineShop.do";
+				return "redirect:offlineShopDetailView.do?shopNo="+offlineShop.getShopNo();
 			}else {
 				model.addAttribute("msg", "수정 실패!");
 				return "common/errorPage";
@@ -375,6 +395,69 @@ public class ShopController {
 			return "common/errorPage";
 		}
 		
+	}
+	
+	// 관리자 온라인 매장 디테일 페이지 이동
+	@RequestMapping(value="onlineShopDetailView.do")
+	public String onlineShopDetailView(int shopNo, Model model) {
+		
+		try {
+			OnlineShop onlineShop = service.printOnlineShopOneByNo(shopNo);
+			if(onlineShop != null) {
+				model.addAttribute("onlineShop", onlineShop);
+				return "admin/adminOnlineShopDetailView";
+			}else {
+				model.addAttribute("msg", "온라인 매장 조회 실패");
+				return "common/errorPage";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}
+	}
+	
+	// 관리자 온라인 매장 수정 페이지 이동
+	@RequestMapping(value="onlineShopUpdateWriteView.do")
+	public String onlineShopUpdateWriteView(Model model, int shopNo) {
+		
+		try {
+			OnlineShop onlineShop = service.printOnlineShopOneByNo(shopNo);
+			if(onlineShop != null) {
+				model.addAttribute("onlineShop", onlineShop);
+				return "admin/adminOnlineShopUpdateView";
+			}else {
+				model.addAttribute("msg", "온라인 매장 조회 실패!");
+				return "common/errorPage";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}
+	}
+	
+	// 관리자 온라인 매장 수정
+	@RequestMapping(value="updateOnlineShop.do", method=RequestMethod.POST)
+	public String updateOnlineShop(@ModelAttribute OnlineShop onlineShop, Model model, HttpServletRequest request, @RequestParam("uploadFile") MultipartFile uploadFile) {
+		
+		try {
+			deleteFile(onlineShop.getShopImage(), request);
+			saveFile(uploadFile, request);
+			onlineShop.setShopImage(uploadFile.getOriginalFilename());
+			int result = service.modifyOnlineShop(onlineShop);
+			if(result > 0) {
+				model.addAttribute("onlineShop", onlineShop);
+				return "redirect:onlineShopDetailView.do?shopNo="+onlineShop.getShopNo();
+			}else {
+				model.addAttribute("msg", "온라인 매장 수정 실패");
+				return "common/errorPage";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", e.toString());
+			return "common/errorPage";
+		}
 	}
 	
 	// 관리자 온라인 매장 삭제

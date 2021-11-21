@@ -44,14 +44,6 @@ public class AuctionController {
 	private UserService userService;
 	@Autowired
 	private MyPageService mypageService;
-	
-	
-	@RequestMapping(value="admin.do")
-	public String asdfasdf() {
-		
-		return "admin/adminCh";
-	}
-	
 	 
 	// 관리자 재고 페이지 이동
 	@RequestMapping(value="adminAuctionView.do")

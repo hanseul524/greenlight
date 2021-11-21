@@ -27,6 +27,9 @@
 		<typeAlias alias="Donation" type="com.iei.greenlight.donationBoard.domain.Donation"/>
 		<typeAlias alias="DonationReply" type="com.iei.greenlight.donationBoard.domain.DonationReply"/>
 		<typeAlias alias="Category" type="com.iei.greenlight.challenge.domain.Category"/>
+		<typeAlias alias="Event" type="com.iei.greenlight.event.domain.Event"/>
+		<typeAlias alias="EventAnswer" type="com.iei.greenlight.event.domain.EventAnswer"/>
+		<typeAlias alias="EventWinner" type="com.iei.greenlight.event.domain.EventWinner"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml"/>
@@ -37,5 +40,6 @@
 		<mapper resource="mappers/shop-mapper.xml"/>
 		<mapper resource="mappers/donationBoard-mapper.xml"/>
 		<mapper resource="mappers/adcheck-mapper.xml"/>
+		<mapper resource="mappers/event-mapper.xml"/>
 	</mappers>
 </configuration>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>admin Auction</title>
+<title>admin OnlineShop</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/adminShop.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
@@ -55,19 +55,18 @@
 		</div>
 		<div class="contents">
 			<div class="con-title">
-				<form action="updateOfflineShop.do" method="post">
-					<input type="hidden" name="shopNo" value="${offlineShop.shopNo }">
-					<div>오프라인 매장</div>
+				<form action="updateOnlineShop.do" method="post" enctype="multipart/form-data">
+					<div>온라인 매장</div>
 					<button type="submit">등록</button>
 			</div>
 			<div id="writeView">
+			<input type="hidden" name="shopNo" value="${onlineShop.shopNo }">
+			<input type="hidden" name="shopImage" value="${onlineShop.shopImage }">
 				<fieldset style="border: 0px; display: inline-block;">
 					<legend style="width: 100%; height: 100px;">
 						<p>매장 이름</p>
 						<div class="div-auction">
-							<input type="text" value="${offlineShop.shopName }"
-								class="auction-input" name="shopName" id="auctionTitle"
-								placeholder="매장 이름을 입력해주세요">
+							<input type="text" class="auction-input" name="shopName" id="auctionTitle" value="${onlineShop.shopName }">
 						</div>
 					</legend>
 				</fieldset>
@@ -76,50 +75,35 @@
 					<legend style="width: 100%; height: 100px;">
 						<p>카테고리</p>
 						<select name="category" style="font-size: 12px; margin-top: 8px;">
-							<option value="카페/책방"
-								<c:if test="${offlineShop.category == '카페/책방' }">selected</c:if>>카페/책방</option>
-							<option value="매장"
-								<c:if test="${offlineShop.category == '매장' }">selected</c:if>>매장</option>
-							<option value="공방/갤러리"
-								<c:if test="${offlineShop.category == '공방/갤러리' }">selected</c:if>>공방/갤러리</option>
-							<option value="나무"
-								<c:if test="${offlineShop.category == '나무' }">selected</c:if>>나무</option>
+							<option value="ZEROWASTE" <c:if test="${onlineShop.category == 'ZEROWASTE' }">selected</c:if>>ZEROWASTE</option>
+							<option value="UPCYCLING" <c:if test="${onlineShop.category == 'UPCYCLING' }">selected</c:if>>UPCYCLING</option>
 						</select>
 					</legend>
 				</fieldset>
 				<fieldset style="border: 0px; margin-bottom: 20px;">
 					<legend style="width: 100%; height: 100px;">
-						<p style="display: inline-block">매장 주소</p>
+						<p style="display: inline-block">매장 설명</p>
 						<div class="div-auction">
-							<input type="text" value="${offlineShop.shopAddress }"
-								class="auction-input" name="shopAddress" id="offlineAddr"
-								style="width: 500px; float: left;" placeholder="매장 주소를 입력해주세요">
+							<input type="text" class="auction-input" name="shopContents" id="offlineAddr" style="width: 500px; float: left;" value="${onlineShop.shopContents }">
 							<!-- <button id="addrButton" style="float:left; margin-top:9px;" onclick="sample6_execDaumPostcode()">우편번호</button> -->
 						</div>
 					</legend>
 				</fieldset>
 				<fieldset style="border: 0px;">
 					<legend style="width: 100%; height: 100px;">
-						<p>매장 번호</p>
+						<p>매장 링크</p>
 						<div class="div-auction">
-							<input type="text" value="${offlineShop.shopPhone }"
-								class="auction-input" name="shopPhone" id="auctionPrice"
-								placeholder="매장 번호을 입력해주세요">
+							<input type="text" class="auction-input" name="shopAddress" id="auctionPrice" value="${onlineShop.shopAddress }">
 						</div>
 					</legend>
 				</fieldset>
-				<fieldset style="border: 0px;">
-					<legend style="width: 100%; height: 100px;">
-						<p>매장 인스타그램</p>
-						<div class="div-auction">
-							<input type="text" value="${offlineShop.shopInstagram }"
-								class="auction-input" name="shopInstagram" id="auctionPrice"
-								placeholder="인스타그램을 입력해주세요" style="width: 500px;">
-						</div>
-					</legend>
-				</fieldset>
+				<div class="mainImage">
+                    <span>매장 이미지</span>
+                    <label for="file">파일찾기</label>
+                    <input type="file" id="file" accept="image/*" name="uploadFile" onchange="setThumbnail(event);">
+                    <div id="image_container"><img src="${pageContext.request.contextPath}/resources/shopUploadFiles/${onlineShop.shopImage }"></div>
+                </div>
 			</div>
-			</form>
 		</div>
 	</div>
 	</div>
@@ -127,6 +111,7 @@
 	<jsp:include page="/common/footer.jsp"></jsp:include>
 <script>
 	todayDate();
+	
 
 	function todayDate(){
 	  var today = new Date();
@@ -142,14 +127,26 @@
 	
 	$('div > ul > li').click(function() {
         if ( $(this).hasClass('active') ) {
-          $(this).find(' > ul').stop().slideUp(
-	300);
+          $(this).find(' > ul').stop(
+	).slideUp(300);
 			$(this).removeClass('active');
 		} else {
 			$(this).find(' > ul').stop().slideDown(300);
 			$(this).addClass('active');
 		}
 	});
+	
+	
+	function setThumbnail(event) {
+        $("#image_container").show();
+		var reader = new FileReader();
+		reader.onload = function(event) {
+			var img = document.createElement("img");
+			img.setAttribute("src", event.target.result);
+			document.querySelector("div#image_container").appendChild(img);
+		};
+		reader.readAsDataURL(event.target.files[0]);
+	}
 </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>admin Auction</title>
+<title>admin offlineShop</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/adminShop.css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
@@ -86,7 +86,7 @@
 	              <c:forEach items="${sList }" var="offline" varStatus="status">
 		                <tr>
 		                  <td>${offline.shopNo }</td>
-		                  <td><a href="offlineShopUpdateWriteView.do?shopNo=${offline.shopNo }">${offline.shopName }</a></td>
+		                  <td><a href="offlineShopDetailView.do?shopNo=${offline.shopNo }">${offline.shopName }</a></td>
 		                  <td>${offline.shopAddress }</td>
 		                  <c:if test="${offline.shopPhone eq 'N' }">
 		                  	<td>없음</td>

@@ -55,19 +55,17 @@
 		</div>
 		<div class="contents">
 			<div class="con-title">
-				<form action="updateOfflineShop.do" method="post">
+				<form action="offlineShopUpdateWriteView.do" method="post">
 					<input type="hidden" name="shopNo" value="${offlineShop.shopNo }">
 					<div>오프라인 매장</div>
-					<button type="submit">등록</button>
+					<button type="submit">수정</button>
 			</div>
 			<div id="writeView">
 				<fieldset style="border: 0px; display: inline-block;">
 					<legend style="width: 100%; height: 100px;">
 						<p>매장 이름</p>
 						<div class="div-auction">
-							<input type="text" value="${offlineShop.shopName }"
-								class="auction-input" name="shopName" id="auctionTitle"
-								placeholder="매장 이름을 입력해주세요">
+							<input type="text" value="${offlineShop.shopName }" class="auction-input" name="shopName" id="auctionTitle" readonly>
 						</div>
 					</legend>
 				</fieldset>
@@ -76,14 +74,18 @@
 					<legend style="width: 100%; height: 100px;">
 						<p>카테고리</p>
 						<select name="category" style="font-size: 12px; margin-top: 8px;">
-							<option value="카페/책방"
-								<c:if test="${offlineShop.category == '카페/책방' }">selected</c:if>>카페/책방</option>
-							<option value="매장"
-								<c:if test="${offlineShop.category == '매장' }">selected</c:if>>매장</option>
-							<option value="공방/갤러리"
-								<c:if test="${offlineShop.category == '공방/갤러리' }">selected</c:if>>공방/갤러리</option>
-							<option value="나무"
-								<c:if test="${offlineShop.category == '나무' }">selected</c:if>>나무</option>
+							<c:if test="${offlineShop.category == '카페/책방' }">
+								<option value="카페/책방" >카페/책방</option>
+							</c:if>
+							 <c:if test="${offlineShop.category == '매장' }">
+								<option value="매장">매장</option>
+							</c:if>
+							<c:if test="${offlineShop.category == '공방/갤러리' }">
+								<option value="공방/갤러리" >공방/갤러리</option>
+							</c:if>
+							<c:if test="${offlineShop.category == '나무' }">
+								<option value="나무" >나무</option>
+							</c:if>
 						</select>
 					</legend>
 				</fieldset>
@@ -91,9 +93,7 @@
 					<legend style="width: 100%; height: 100px;">
 						<p style="display: inline-block">매장 주소</p>
 						<div class="div-auction">
-							<input type="text" value="${offlineShop.shopAddress }"
-								class="auction-input" name="shopAddress" id="offlineAddr"
-								style="width: 500px; float: left;" placeholder="매장 주소를 입력해주세요">
+							<input type="text" value="${offlineShop.shopAddress }" class="auction-input" name="shopAddress" id="offlineAddr" style="width: 500px; float: left;" readonly>
 							<!-- <button id="addrButton" style="float:left; margin-top:9px;" onclick="sample6_execDaumPostcode()">우편번호</button> -->
 						</div>
 					</legend>
@@ -102,9 +102,7 @@
 					<legend style="width: 100%; height: 100px;">
 						<p>매장 번호</p>
 						<div class="div-auction">
-							<input type="text" value="${offlineShop.shopPhone }"
-								class="auction-input" name="shopPhone" id="auctionPrice"
-								placeholder="매장 번호을 입력해주세요">
+							<input type="text" value="${offlineShop.shopPhone }" class="auction-input" name="shopPhone" id="auctionPrice"  readonly>
 						</div>
 					</legend>
 				</fieldset>
@@ -112,9 +110,7 @@
 					<legend style="width: 100%; height: 100px;">
 						<p>매장 인스타그램</p>
 						<div class="div-auction">
-							<input type="text" value="${offlineShop.shopInstagram }"
-								class="auction-input" name="shopInstagram" id="auctionPrice"
-								placeholder="인스타그램을 입력해주세요" style="width: 500px;">
+							<input type="text" value="${offlineShop.shopInstagram }" class="auction-input" name="shopInstagram" id="auctionPrice" style="width: 500px;" readonly>
 						</div>
 					</legend>
 				</fieldset>
