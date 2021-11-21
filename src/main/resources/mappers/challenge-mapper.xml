@@ -42,6 +42,36 @@
 	   	
 	   </if>
 	</select>
+	<select id="selectSearchListCount" resultType="_int" parameterType="hashmap">
+		SELECT COUNT(*) FROM (SELECT CATEGORY_NO, CH_NO, USER_ID, CH_TITLE, WRITE_DATE, CHLIKE_COUNT, REPLY_COUNT, CH_CONFIRM, DENSE_RANK() OVER (ORDER BY CATEGORY_NO DESC) AS RANKING FROM CHALLENGE)
+		<if test="check == 'recent'.toString()">
+	   		WHERE RANKING = 1 AND CH_TITLE LIKE '%' || #{searchTitle} || '%'
+	   </if>
+	   <if test="check == 'prev'.toString()">
+	   		WHERE RANKING = 2 AND CH_TITLE LIKE '%' || #{searchTitle} || '%'
+	   </if>
+	   <if test="check == 'prevprev'.toString()">
+	   		WHERE RANKING = 3 AND CH_TITLE LIKE '%' || #{searchTitle} || '%'
+	   </if>
+	   <if test="check == 'all'.toString()">
+	   		WHERE CH_TITLE LIKE '%' || #{searchTitle} || '%'
+	   </if>
+	</select>
+	<select id="selectSearchList" resultMap="challengeResultMap" parameterType="string">
+		SELECT c.*, f.FILE_PATH, f.FILE_NAME, f.FILE_MAIN from CHALLENGE_FILE f INNER JOIN (SELECT * FROM (SELECT CATEGORY_NO, CH_NO, USER_ID, CH_TITLE, WRITE_DATE, CHLIKE_COUNT, REPLY_COUNT, CH_CONFIRM, DENSE_RANK() OVER (ORDER BY CATEGORY_NO DESC) AS RANKING
+		<if test="check == 'recent'.toString()">
+			FROM CHALLENGE) WHERE RANKING = 1 ORDER BY CH_NO DESC) c ON (c.CH_NO = f.CH_NO) WHERE f.FILE_MAIN = 'Y' AND CH_TITLE LIKE '%' || #{searchTitle} || '%'
+		</if>
+		<if test="check == 'prev'.toString()">
+			FROM CHALLENGE) WHERE RANKING = 2 ORDER BY CH_NO DESC) c ON (c.CH_NO = f.CH_NO) WHERE f.FILE_MAIN = 'Y' AND CH_TITLE LIKE '%' || #{searchTitle} || '%'
+		</if>
+		<if test="check == 'prevprev'.toString()">
+			FROM CHALLENGE) WHERE RANKING = 3 ORDER BY CH_NO DESC) c ON (c.CH_NO = f.CH_NO) WHERE f.FILE_MAIN = 'Y' AND CH_TITLE LIKE '%' || #{searchTitle} || '%'
+		</if>
+		<if test="check == 'all'.toString()">
+			FROM CHALLENGE) ORDER BY CH_NO DESC) c ON (c.CH_NO = f.CH_NO) WHERE f.FILE_MAIN = 'Y' AND CH_TITLE LIKE '%' || #{searchTitle} || '%'
+		</if>
+	</select>
 	<!--    챌린지 전달 -->
    <select id="selectCount" parameterType="string" resultType="_int">
       SELECT COUNT(*) FROM CHALLENGE WHERE USER_ID = #{userId} ORDER BY CH_NO DESC

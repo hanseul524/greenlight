@@ -80,8 +80,8 @@ li a {
   padding: 20px;
   display: inline-block;
 }
-.con-title input {
-  width: 220px;
+.con-title #userId {
+  width: 270px;
   float: right;
   text-align: left;
   padding: 10px;
@@ -90,18 +90,26 @@ li a {
   border: 0;
   border-bottom: 1px solid gray;
   background-color: transparent;
+  position: relative;
 }
-button {
-  float: right;
-  padding: 10px 20px 10px 20px;
-  margin: 20px 50px 0 0;
-  border: 1px solid rgba(128, 128, 128, 0.61);
-  border-radius: 10px;
-  font-weight: 300;
+.con-title .searchBtn {
+  position: absolute;
+  right: 242px;
+  top: 230px;
+  background: none;
+  border: none;
 }
-button:hover {
-  background-color: #819789c4;
-}
+/* button { */
+/*   float: right; */
+/*   padding: 10px 20px 10px 20px; */
+/*   margin: 20px 50px 0 0; */
+/*   border: 1px solid rgba(128, 128, 128, 0.61); */
+/*   border-radius: 10px; */
+/*   font-weight: 300; */
+/* } */
+/* button:hover { */
+/*   background-color: #819789c4; */
+/* } */
 .con-list {
   width: 850px;
   height: 600px;

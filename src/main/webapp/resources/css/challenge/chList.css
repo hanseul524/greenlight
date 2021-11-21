@@ -49,9 +49,12 @@ a {
   border-bottom: 1px solid gray;
   background-color: transparent;
   position: relative;
+  left: 140px;
 }
-.category button {
+.category #submitBtn {
 	position: absolute;
+	top: 187px;
+    right: 385px;
 }
 .category-area span {
 	font-size: 20px;
@@ -72,7 +75,7 @@ a {
   width: 300px;
   height: 170px;
   position: relative;
-  position: hidden;
+  overflow: hidden;
 }
 .box-img>img {
   width: 100%;

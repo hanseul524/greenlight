@@ -36,7 +36,53 @@ body {
 .event-area {
   width: 100%;
   height: 23%;
-  background: navajowhite;
+  position: relative;
+  overflow: hidden;
+}
+.event-area img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.event-area div {
+  font-size: 35px;
+  font-weight: 600;
+  color: #ffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.event-area .event-span {
+  font-size: 15px;
+  font-weight: 300;
+  display: inline-block;
+}
+.event-area .event-time {
+  font-size: 20px;
+  font-weight: 300;
+  vertical-align: bottom;
+}
+.event-area .input-area {
+  width: 300px;
+  text-align: left;
+  padding: 10px;
+  margin-top: 30px;
+  outline: none;
+  border: 0;
+  border-bottom: 2px solid #ffff;
+  background-color: transparent;
+  color: #ffff;
+  font-weight: 500;
+  font-size: 20px;
+}
+.event-area button {
+  padding: 7px 20px 7px 20px;
+  margin: 20px 50px 0 0;
+  border: 1px solid rgba(128, 128, 128, 0.61);
+  border-radius: 5px;
+  font-weight: 300;
 }
 .ch-area {
   width: 100%;

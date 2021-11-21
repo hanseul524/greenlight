@@ -33,6 +33,20 @@
       'top=250, left=500, height=300, width=500,toolbar=no, menubar=no, location=no, status=no, scrollbars=no, resizable=no');
     }
   </script>
+  <style>
+  button {
+  	float: right;
+  	padding: 7px 12px 7px 12px;
+  	margin: 20px 50px 0 0;
+  	border: 1px solid rgba(128, 128, 128, 0.61);
+  	border-radius: 5px;
+  	font-weight: 300;
+  	font-size: 14px;
+	}
+	button:hover {
+  		background-color: #819789c4;
+	}
+  </style>
 </head>
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
@@ -103,7 +117,7 @@
                   <c:url var="cDetail" value="ChallengeDetail.do">
                   	<c:param name="chNo" value="${challenge.chNo }"></c:param>
                   </c:url>
-                  <td><a href="${cDetail }">${challenge.chTitle }</a></td>
+                  <td><a href="${cDetail }" style="text-decoration: none; color: black;">${challenge.chTitle }</a></td>
                   <td>${challenge.chWriter }</td>
                   <td>${challenge.writeDate }</td>
                   <td>

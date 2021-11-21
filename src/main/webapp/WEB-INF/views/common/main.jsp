@@ -20,7 +20,6 @@
   <div class="main-area">
 <jsp:include page="/common/header.jsp"></jsp:include>
       <div class="first-area">
-
     </div>
   </div>
   <div class="site-info">
@@ -44,7 +43,14 @@
     </a>
   </div>
   <div class="event-area">
-  	
+  	<img src="${pageContext.request.contextPath}/resources/img/event01.png">
+  	<div>일회용품 사용을 줄이고 일상에서 사용되는 자원과 제품을 재활용할 수 있도록 쓰레기를 최소화하자는 사회운동은 무엇일까요?<br>
+  		<span class="event-span">이벤트는 5일동안 진행됩니다! 정답을 맞히신 분들에게 100포인트. <br>추첨을 통해 정답자 중 10%의 회원에게 500포인트를 드립니다.
+  		많은 참여 부탁드립니다.</span>
+  		<input type="text" name="event-answer" class="input-area">
+  		<button onclick="">참여하기</button>
+  		<p class="event-time">참여 기간 : 2021.11.21 ~ 2021.11.28일 저녁 8시</p>
+  	</div>
   </div>
   <div class="ch-area">
     <div class="swiper mySwiper">

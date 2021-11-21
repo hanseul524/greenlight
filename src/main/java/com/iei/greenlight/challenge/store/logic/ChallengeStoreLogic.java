@@ -68,6 +68,20 @@ public class ChallengeStoreLogic implements ChallengeStore {
 		List<Challenge> cList = session.selectList("challengeMapper.selectAllList", hashmap, rowBounds);
 		return cList;
 	}
+
+	@Override
+	public int selectSearchListCount(HashMap<String, Object> hashmap) {
+		return session.selectOne("challengeMapper.selectSearchListCount", hashmap);
+	}
+
+	@Override
+	public List<Challenge> selectSearchList(HashMap<String, Object> hashmap) {
+		PageInfo pi = (PageInfo)hashmap.get("pi");
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return session.selectList("challengeMapper.selectSearchList", hashmap, rowBounds);
+	}
+
 	
 	@Override
 	public int selectAdminListCount() {

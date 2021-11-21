@@ -143,7 +143,7 @@ public class ChallengeController {
 			@ModelAttribute Challenge challenge,
 			HttpServletRequest request,
 			Model model,
-			@RequestParam(value="check") String check,
+			@RequestParam(value="check", required=false) String check,
 			@RequestParam(value="page", required=false) Integer page) {
 		if(check == null) {
 			check = "recent";
@@ -174,12 +174,38 @@ public class ChallengeController {
 			return "common/errorPage";
 		}
 	}
-	
-	@RequestMapping(value="chSearch.do", method=RequestMethod.GET)
+	// 챌린지 게시판 검색
+	@RequestMapping(value="ChallengeSearchList.do", method=RequestMethod.GET)
 	public String ChallengeSearchView(
-			@RequestParam("search-title") String chTitle) {
+			@RequestParam("search-title") String searchTitle,
+			@RequestParam(value="check", required=false) String check,
+			@RequestParam(value="page", required=false) Integer page,
+			Model model){
 		
-		return "";
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		hashmap.put("check", check);
+		hashmap.put("searchTitle", searchTitle);
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getSearchListCount(hashmap);
+		PageInfo pi = Pagination.getPageInfo(currentPage, totalCount);
+		hashmap.put("pi", pi);
+		List<Challenge> cList = service.printSearchList(hashmap);
+		
+		if(!cList.isEmpty()) {
+			model.addAttribute("cList", cList);
+			int categoryNo = cList.get(0).getCategoryNo();
+			Category category = service.printCategoryTitle(categoryNo);
+			if(category != null) {
+				model.addAttribute("category", category);
+			}
+			model.addAttribute("pi", pi);
+			model.addAttribute("searchtitle", searchTitle);
+			model.addAttribute("check", check);
+			return "challenge/ChallengeSearchListView";
+		}else {
+			model.addAttribute("cList", null);
+			return "challenge/ChallengeSearchListView";
+		}
 	}
 	
 	
