@@ -53,8 +53,8 @@ header{
         }
 
         .date_head div {
-        background: #000000;
-        color: #fff;
+        background: #f7f7f7;
+        color: rgb(0, 0, 0);
         text-align: center;
         }
 
@@ -72,7 +72,7 @@ header{
         }
 
         .dateSel div {
-        font-weight: bold;
+        font-weight: 400;
         color: #333;
         min-height: 130px;
         padding: 16px 20px;
@@ -80,22 +80,28 @@ header{
         border: 1px solid #f7f7f7;
         cursor: default;
         }
-
-        .background {
-        background: #f7f7f7;
+        .dateSel .dateSell{
+        font-weight: 400;
+        color: #333;
+        min-height: 130px;
+        padding: 16px 20px;
+        border-radius: 10px;
+        border: 1px solid #ffffff;
+        cursor: default;
         }
-        
+
         #adCheck{
             text-align: center;
             margin-top: 20px;
         }
             .adCheck-butn{
-                background-color: black;
-                color: white;
+                background-color: #e6e6e6;
+                color: black;
                 border-top-left-radius: 25px;
                 border-top-right-radius: 25px;
                 border-bottom-left-radius: 25px;
                 border-bottom-right-radius: 25px;
+                border: 1px solid #b4b4b4;
                 height: 50px;
-                width: 130px;
+                width: 120px;
             }

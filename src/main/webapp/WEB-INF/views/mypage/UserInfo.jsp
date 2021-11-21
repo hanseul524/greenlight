@@ -18,6 +18,17 @@
 <body>
 	<jsp:include page="/common/header.jsp"></jsp:include>
 	<div style="width: 1200px; height: 900px; margin:0 auto;">
+		<c:if test="${empty user }">
+    	<br><br><br>
+ 		<br><br><br>
+ 		<br><br><br>   
+    	<h2 align="center">로그인 후 이용할 수 있는 기능입니다.</h2>
+    	<br><br><br>
+    	<div align="center"><button align="center" onclick="location.href='loginView.do'">로그인</button></div>
+    	<br><br><br>
+    	<br><br><br>
+    </c:if>
+    <c:if test="${not empty user }">
 		<div id="nav-section">
            <ul id="nav nav-tabs">
 			  <li class="nav-item"><a href="myPage.do" class="nav-link active">활동 기여도</a></li>
@@ -88,18 +99,19 @@
 			</c:forTokens>
 			<div align="center" style="height: 80px; width: 500px; margin:0 auto;">
                 <div class="col-12" style="margin-top: 5%; float: left;">
-                    <button type="button" onclick="join();" class="btn btn-lg" style="background-color: blue; color: white;">가입하기</button>
+                    <button type="button" onclick="join();" class="btn btn-lg" style="background-color: blue; color: white;">수정하기</button>
                     <button type="button" onclick="deleteUser();" class="btn btn-lg" style="background-color: red; color: white;">탈퇴하기</button>
                 </div>
             </div>
 		</form>
+		</c:if>
 		</div>
 	<jsp:include page="/common/footer.jsp"></jsp:include>
 	<script>
 	    $("#inputPwd").blur(function(){
 	    	var checkPwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/;
 			var userPwd = $("#inputPwd").val();
-			if(!checkPwd.test(userPwd)){
+			if(!checkPwd.test(userPwd){
 				$("#inputPwd").addClass("is-invalid");
 				return false;
 			}else{
@@ -214,7 +226,7 @@
 					alert("비밀번호를 확인 바랍니다.")
 				}
 			}else{
-				alert("탈퇴 안해주셔서 감사합니다!");
+				alert("감사합니다!");
 			}
 		}
 	</script>

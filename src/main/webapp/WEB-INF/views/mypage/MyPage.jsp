@@ -25,7 +25,7 @@
  		<br><br><br>   
     	<h2 align="center">로그인 후 이용할 수 있는 기능입니다.</h2>
     	<br><br><br>
-    	<div align="center"><button align="center">로그인</button></div>
+    	<div align="center"><button align="center" onclick="location.href='loginView.do'">로그인</button></div>
     	<br><br><br>
     	<br><br><br>
     </c:if>
@@ -98,7 +98,10 @@
 	                </c:forEach>
 	                </c:forEach>
                 </div>
-                <div id="main-butn"><button onclick="location.href='myPage.do'">포인트 사용하기</button></div>
+                <div id="main-butn">
+                	<button class="point-use-butn" onclick="location.href='auctionListView.do'">기부하기</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                	<button class="point-use-butn" onclick="location.href='donationBoardList.do'">경매하기</button>
+                </div>
             </div>
         </main>
     </div>
