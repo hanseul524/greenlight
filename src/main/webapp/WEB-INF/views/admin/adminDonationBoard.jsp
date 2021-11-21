@@ -1,0 +1,176 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>adminPage</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/admin/admin.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function(){
+      $(".header").load("header.html");
+      $(".footer").load("footer.html");
+
+      $('div > ul > li').click(function() {
+        if ( $(this).hasClass('active') ) {
+          $(this).find(' > ul').stop().slideUp(300);
+          $(this).removeClass('active');
+        }
+        else {
+          $(this).find(' > ul').stop().slideDown(300);
+          $(this).addClass('active');
+        }
+      });
+    });
+</script>
+</head>
+<body>
+<jsp:include page="/common/header.jsp"></jsp:include>
+  <div class="container">
+    <div class="nav-admin">
+      <i class="fas fa-user-circle fa-4x" style="color: gray; margin: 15px;"></i>
+      <span>admin01</span>
+      <div style="margin-left: 40px; font-size: 14px; font-weight: 500; color:#7ea18b;">
+        관리자님, 안녕하세요. <br>
+        오늘은 <span id="today" style="width:80px;">2021.11.01</span>일 입니다.
+      </div>
+      <div class="nav-inner">
+        <ul>
+          <li class="li-area">
+            <i class="fas fa-user-cog" style="margin-right: 10px;"></i><a href="userList.do">회원관리</a>
+          </li>
+          <li class="li-area">
+            <i class="fas fa-coins" style="margin-right: 10px;"></i><a href="#">경매관리</a> 
+            <ul>
+              <li><a href="adminAuctionView.do">재고관리</a></li>
+              <li><a href="adminSellAuctionView.do">판매관리</a></li>
+            </ul>
+          </li>
+          <li class="li-area">
+            <i class="far fa-calendar-check" style="margin-right: 10px;"></i><a href="AdminChList.do">챌린지 관리</a> 
+          </li>
+          <li class="li-area">
+            <i class="fas fa-hand-holding-usd" style="margin-right: 10px;"></i><a href="#">기부관리</a>
+          </li>
+          <li class="li-area">
+            <i class="fas fa-warehouse" style="margin-right: 10px;"></i><a href="#">매장관리</a>
+          </li>
+          <li class="li-area">
+            <i class="fas fa-gifts" style="margin-right: 10px;"></i><a href="#">이벤트관리</a> 
+            <ul>
+              <li><a href="#">이벤트 생성</a></li>
+              <li><a href="#">당첨자 관리</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+      <div class="contents">
+          <div class="con-title">
+            <div style="width: 30%;">전체 기부 게시판 목록</div>
+            <form style="margin-bottom: 30px;"action="#" method="get">
+	            <input type="text" id="userId" placeholder="제목을 입력하세요.">
+	            <input type="submit" name="searh" value="search">
+            </form>
+          </div>
+          <div class="con-list">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Subject</th>
+                  <th>Target Amount</th>
+                  <th>Donation Amount</th>
+                  <th>Success</th>
+                  <th>Write Date</th>
+                </tr>
+              </thead>
+              <tbody>
+			  <c:forEach items="${dList }" var="board">
+			  	<c:url var="dBoardDetail" value="donationBoardDetail.do">
+			  		<c:param name="boardNo" value="${board.boardNo }"></c:param>
+			  	</c:url>
+                <tr>
+                  <td>${board.boardNo }</td>
+                  <td><a style="text-decoration: none; color: black;" href="${dBoardDetail }">${board.dtSubject }</a></td>
+                  <td>${board.dtTargetAmount }</td>
+                  <td>${board.donationAmount }</td>
+                  <td>
+	                  <c:if test="${board.dtSuccess eq 'N' }">미달성</c:if>
+	                  <c:if test="${board.dtSuccess eq 'Y' }">달성</c:if>
+                  </td>
+                  <td>${board.writeDate}</td>
+                </tr>
+			  </c:forEach>
+              </tbody>
+            </table>
+            <div class="page_wrap">
+			    <c:url var="before" value="daminDonationBoardList.do">
+			    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+			    </c:url>
+			      <div class="page_nation">
+			      <c:if test="${pi.currentPage <= 1 }">
+			         <a class="arrow prev" href="#"></a>
+			      </c:if>
+			      <c:if test="${pi.currentPage > 1 }">
+			         <a class="arrow prev" href="${before }"></a>
+			      </c:if>
+			      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
+			      	<c:url var="pagenation" value="daminDonationBoardList.do">
+			      		<c:param name="page" value="${p }"></c:param>
+			      	</c:url>
+			      	<c:if test="${p eq pi.currentPage }">
+			         	<a href="#" class="active">${p }</a>
+			      	</c:if>
+			      	<c:if test="${p ne pi.currentPage }">
+			      		<a href="${pagenation }">${p }</a>
+			      	</c:if>
+			      </c:forEach>
+			      <c:url var="after" value="daminDonationBoardList.do">
+			      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+			      </c:url>
+			      <c:if test="${pi.currentPage >= pi.maxPage }">
+			         <a class="arrow next" href="#"></a>
+			      </c:if>
+			      <c:if test="${pi.currentPage < pi.maxPage }">
+			         <a class="arrow next" href="${after }"></a>
+			      </c:if>
+			      </div>
+			 </div>
+              <div class="btn-area">
+                <button onclick="donationBoardWrite();">글 작성</button>
+              </div>
+           </div>
+          </div>
+      </div>
+    </div>
+  </div>
+<jsp:include page="/common/footer.jsp"></jsp:include>
+<script>
+	todayDate();
+	
+	function todayDate(){
+		  var today = new Date();
+		
+		  var year = today.getFullYear();
+		  var month = ('0' + (today.getMonth() + 1)).slice(-2);
+		  var day = ('0' + today.getDate()).slice(-2);
+		
+		  var dateString = year + '.' + month  + '.' + day;
+		
+		  $("#today").html(dateString);
+	}
+	
+	function donationBoardWrite(){
+		location.href="donationBoardWriteView.do";
+	}
+</script>
+</body>
+</html>

@@ -10,10 +10,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.ResponseWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.iei.greenlight.donationBoard.common.AdminDonationBoardPagination;
 import com.iei.greenlight.donationBoard.common.donationBoardPagination;
 import com.iei.greenlight.donationBoard.domain.Donation;
 import com.iei.greenlight.donationBoard.domain.DonationBoard;
@@ -120,6 +123,34 @@ public class DonationBoardController {
 		
 	}
 	
+	// 기부 게시판 게시글 검색
+	@RequestMapping(value="donationBoardSearch.do", method=RequestMethod.GET)
+	public String donationBoardSearch(@RequestParam("search-title") String searchKey, @RequestParam(value="page", required=false) Integer page, Model model) {
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			
+			int currentPage = (page != null) ? page : 1;
+			int totalCount = service.getSearchDonationListCount(searchKey);
+			PageInfo pi = donationBoardPagination.getPageInfo(currentPage, totalCount);
+			hashMap.put("pi", pi);
+			hashMap.put("searchKey", searchKey);
+			List<DonationBoard> dList = service.printDonationSearchList(hashMap);
+			if(!dList.isEmpty()) {
+				for(int i = 0; i < dList.size(); i++) {
+					double dtTargetAmount = dList.get(i).getDtTargetAmount();
+					double donationAmount = dList.get(i).getDonationAmount();
+					double ac = (donationAmount / dtTargetAmount) * 100;
+					double achievement = Math.floor(ac * 100) / 100.0;
+					dList.get(i).setAchievement(achievement);
+				}
+				model.addAttribute("dList", dList);
+				model.addAttribute("pi", pi);
+				return "donation/donationBoardSearchList";
+			}else {
+				return "user/error";
+			}
+		
+	}
+	
 	@RequestMapping(value="donationBoardDetail.do", method=RequestMethod.GET)
 	public String donationBoardDetailView(@RequestParam("boardNo") int boardNo, Model model, HttpServletRequest request) {
 		DonationBoard board = service.printDonationBoardOne(boardNo);
@@ -211,6 +242,47 @@ public class DonationBoardController {
 			   gson.toJson(drList, response.getWriter());
 		   }else {
 			   System.out.println("댓글 데이터 전송 실패");
+		   }
+	   }
+	   
+	   // 댓글 수정
+	   @ResponseBody
+	   @RequestMapping(value="donationBoardmodifyReply.do", method=RequestMethod.POST)
+	   public String donationBoardModifyReply(@ModelAttribute DonationReply donationReply, @RequestParam("replyContents") String replyContents) {
+		   donationReply.setDtReplyContents(replyContents);
+		   int result = service.modifyReplyContents(donationReply);
+		   if(result > 0) {
+			   return "success";
+		   }else {
+			   return "fails";
+		   }
+	   }
+	   
+	   // 댓글 삭제
+	   @ResponseBody
+	   @RequestMapping(value="donationReplyDeleteReply.do", method=RequestMethod.GET)
+	   public String donationBoardRemoveReply(@ModelAttribute DonationReply donationReply) {
+		   int result = service.donationRemoveReply(donationReply);
+		   if(result > 0) {
+			   return "success";  
+		   }else {
+			   return "fails";
+		   }
+	   }
+	   
+	   // 관리자 페이지 기부리스트
+	   @RequestMapping(value="daminDonationBoardList.do", method=RequestMethod.GET)
+	   public String adminDonationBoardList(@RequestParam(value="page", required = false) Integer page,Model model) {
+		   int currentPage = (page != null) ? page : 1;
+		   int totalCount = service.getAdminDonationListCount();
+		   PageInfo pi = AdminDonationBoardPagination.getPageInfo(currentPage, totalCount);
+		   List<DonationBoard> dList = service.printAdminboardAll(pi);
+		   if(!dList.isEmpty()) {
+			   model.addAttribute("dList", dList);
+			   model.addAttribute("pi",pi);
+			   return "admin/adminDonationBoard";
+		   }else {
+			   return "user/error"; 
 		   }
 	   }
 }

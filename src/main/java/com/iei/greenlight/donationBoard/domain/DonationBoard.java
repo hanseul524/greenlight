@@ -10,7 +10,7 @@ public class DonationBoard {
 	private int dtReplyCount;
 	private int dtTargetAmount;
 	private int donationAmount;
-	private char dtSuccess;
+	private String dtSuccess;
 	private Date writeDate;
 	private String writerId;
 	private String fileName;
@@ -24,7 +24,7 @@ public class DonationBoard {
 
 
 	public DonationBoard(int boardNo, String dtSubject, String dtContents, int dtReplyCount, int dtTargetAmount,
-			int donationAmount, char dtSuccess, Date writeDate, String writerId, String fileName, String filePath,
+			int donationAmount, String dtSuccess, Date writeDate, String writerId, String fileName, String filePath,
 			String fileMain, double achievement) {
 		super();
 		this.boardNo = boardNo;
@@ -98,11 +98,11 @@ public class DonationBoard {
 		this.donationAmount = donationAmount;
 	}
 
-	public char getDtSuccess() {
+	public String getDtSuccess() {
 		return dtSuccess;
 	}
 
-	public void setDtSuccess(char dtSuccess) {
+	public void setDtSuccess(String dtSuccess) {
 		this.dtSuccess = dtSuccess;
 	}
 

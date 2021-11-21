@@ -170,6 +170,7 @@
 	// 댓글 리스트 불러오기
 	function getReplyList() {
 		var boardNo = '${board.boardNo}';
+		var userId = '${userId}';
 		$.ajax({
 			url : "donationReplyList.do",
 			type : "get",
@@ -190,20 +191,21 @@
 				$("#rCount").text(data.length);
 				if(data.length > 0) {
 					for(var i in data) {
-						$innerdiv = $("<div id='replyDiv' style='vertical-align:middle; align-items:center; padding: 10px;'><hr>");
+						$innerdiv = $("<div id='replyDiv' style='border-top: 1px solid rgb(219, 219, 219); vertical-align:middle; align-items:center; padding: 10px;'>");
 						$icon = $("<i class='fas fa-user-circle fa-3x' style='color: gray;'>");
-						$rWriter = $("<span style='float: right; margin-right: 15px;'>").text(data[i].dtReplyUserId);
-						$rContent = $("<span style='line-height: -3px;'>").text(data[i].dtReplyContents);
-						$rDate = $("<span style='float: right; margin-right: 15px;'>").text(data[i].dtReplyDate);
-						$btnArea = $("<span style='float:right;'>")
-						.append("<a href='#' onclick='modifyReply(this,"+boardNo+","+data[i].dtReplyNo+",\""+data[i].dtReplyContents+"\");'>수정 /</a>")
-						.append("<a href='#' onclick='deleteReply(this,"+boardNo+","+data[i].dtReplyNo+");'> 삭제</a>")
-						
+						$rWriter = $("<span style='font-size: 12px; margin-left: 75px; display: block;'>").text(data[i].dtReplyUserId);
+						$rContent = $("<span style='position: relative; bottom:7px; margin-left:30px; line-height: -3px;'>").text(data[i].dtReplyContents);
+						$rDate = $("<span style='float: right; margin-right: 15px; position: relative; top:15px;'>").text(data[i].dtReplyDate);
+						if(userId == data[i].dtReplyUserId){
+							$btnArea = $("<span style='float:right; position: relative; top:15px;'>")
+							.append("<a href='#' onclick='modifyReply(this,"+boardNo+","+data[i].dtReplyNo+",\""+data[i].dtReplyContents+"\");'>수정 /</a>")
+							.append("<a href='#' onclick='deleteReply(this,"+boardNo+","+data[i].dtReplyNo+");'> 삭제</a>")
+						}
+						$innerdiv.append($rWriter);
 						$innerdiv.append($icon);
 						$innerdiv.append($rContent);
 						$innerdiv.append($btnArea);
 						$innerdiv.append($rDate);
-						$innerdiv.append($rWriter);
 						$rdiv.append($innerdiv);
 						
 					}
@@ -224,14 +226,14 @@
 	}
 	
 	// 댓글 수정 ajax
-	function modifyReplyOk(chNo, replyNo) {
+	function modifyReplyOk(boardNo, dtReplyNo) {
 		var updateContent = $("#modifyReply").val();
 		$.ajax({
-			url : "modifyReply.do",
+			url : "donationBoardmodifyReply.do",
 			type : "post",
 			data : {
-				"chNo" : chNo,
-				"replyNo" : replyNo,
+				"boardNo" : boardNo,
+				"dtReplyNo" : dtReplyNo,
 				"replyContents" : updateContent
 			},
 			success : function(data) {
@@ -241,7 +243,9 @@
 						icon: 'success',
 						title: '댓글 수정', 
 						text: '수정이 완료되었습니다.', 
-						});
+						}).then(function(){
+                        	location.reload();
+                        });
 				}else {
 					alert("댓글 수정 실패");
 				}
@@ -253,15 +257,15 @@
 	}
 	
 	// 댓글 삭제
-	function deleteReply(obj, chNo, replyNo) {
+	function deleteReply(obj, boardNo, dtReplyNo) {
 		var offset = $(obj).offset();
 		$('html, body').animate({scrollTop : offset.top}, 600);
 		$.ajax({
-			url : "deleteReply.do",
+			url : "donationReplyDeleteReply.do",
 			type : "get",
 			data : {
-				"chNo" : chNo,
-				"replyNo" : replyNo
+				"boardNo" : boardNo,
+				"dtReplyNo" : dtReplyNo
 			},
 			success : function(data) {
 				if(data == "success") {
@@ -269,7 +273,9 @@
 						icon: 'success', // Alert 타입 
 						title: '댓글 삭제', // Alert 제목 
 						text: '삭제가 완료되었습니다.', // Alert 내용 
-						});
+						}).then(function(){
+                        	location.reload();
+                        });
 					getReplyList();
 				}else {
 					alert("댓글 삭제 실패");
@@ -277,35 +283,6 @@
 			}
 		});
 	}
-// 	function alertBtn() {
-		
-// 		var chNo = $("#chNo").val();
-// 		var fileName = $("#fileName").val();
-		
-// 		console.log(chNo);
-// 		console.log(fileName);
-		
-// 		Swal.fire({
-// 			  title: '글을 삭제하시곘습니까?',
-// 			  text: "삭제를 한 후 다시 복구시킬 수 없습니다.",
-// 			  icon: 'warning',
-// 			  showCancelButton: true,
-// 			  confirmButtonColor: '#3085d6',
-// 			  cancelButtonColor: '#d33',
-// 			  confirmButtonText: '삭제',
-// 			  cancelButtonText: '취소'
-// 			}).then((result){
-// 			  if (result.isConfirmed) {
-// 			    Swal.fire(
-// 			      '삭제되었습니다!',
-// 			      '글이 삭제 되었습니다.',
-// 			      'success'
-// 			    ).function() {
-// 			    	location.href='ChallengeDelete.do?chNo='+chNo+'&fileName='+fileName;
-// 			    };
-// 			  }
-// 			})
-// 		}
 </script>
 </body>
 </html>

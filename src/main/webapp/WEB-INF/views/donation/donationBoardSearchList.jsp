@@ -18,7 +18,6 @@
   <form action="donationBoardSearch.do" method="get">
 	    <div class="search">
 	      <input type="text" name="search-title" id="search-title" placeholder="제목을 입력해주세요.">
-	      <input type="submit" value="검색하기">
 	    </div>
     </form>
     <c:forEach items="${dList }" var="donationBoard">
@@ -61,7 +60,7 @@
     </c:forEach>
 	</div>
     <div class="page_wrap">
-    <c:url var="before" value="donationBoardList.do">
+    <c:url var="before" value="donationBoardSearch.do">
     	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
     </c:url>
       <div class="page_nation">
@@ -72,7 +71,7 @@
          <a class="arrow prev" href="${before }"></a>
       </c:if>
       <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
-      	<c:url var="pagenation" value="donationBoardList.do">
+      	<c:url var="pagenation" value="donationBoardSearch.do">
       		<c:param name="page" value="${p }"></c:param>
       	</c:url>
       	<c:if test="${p eq pi.currentPage }">
@@ -82,7 +81,7 @@
       		<a href="${pagenation }">${p }</a>
       	</c:if>
       </c:forEach>
-      <c:url var="after" value="donationBoardList.do">
+      <c:url var="after" value="donationBoardSearch.do">
       	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
       </c:url>
       <c:if test="${pi.currentPage >= pi.maxPage }">

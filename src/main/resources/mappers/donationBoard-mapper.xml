@@ -76,6 +76,29 @@
    <select id="selectAllReply" parameterType="_int" resultMap="donationReplyResultMap">
    		SELECT * FROM DT_BOARD_REPLY WHERE BOARD_NO = #{boardNo } ORDER BY DT_REPLY_NO DESC
    </select>
+   
+   <!-- 기부게시판 검색 카운트 -->
+   <select id="selectSearchBoardListCount" parameterType="string" resultType="_int">
+   		SELECT COUNT(*) FROM DONATION_BOARD WHERE DT_SUBJECT LIKE '%'||#{searchKey }||'%'
+   </select>
+   
+   <!-- 기부게시판 검색 리스트 -->
+   <select id="selectDonationBoardSearchList" parameterType="string" resultMap="donationBoardResultMap">
+   		SELECT
+		D.BOARD_NO, D.DT_SUBJECT, D.DT_CONTENTS, D.DT_REPLY_COUNT, D.DT_TARGET_AMOUNT, D.DT_DONATION_AMOUNT, D.DT_SUCCESS, D.WRITER_ID, D.WRITE_DATE,
+		F.FILE_NAME, F.FILE_PATH, F.FILE_MAIN FROM DONATION_BOARD D LEFT JOIN DT_FILE F
+		ON D.BOARD_NO = F.BOARD_NO WHERE F.FILE_MAIN = 'Y' AND D. DT_SUBJECT LIKE '%'||#{searchKey }||'%' ORDER BY BOARD_NO DESC
+   </select>
+   
+   <!-- 관리자 어드민 페이지 카운트 -->
+   <select id="selectAdminBoardListCount" resultType="_int">
+   		SELECT COUNT(*) FROM DONATION_BOARD ORDER BY BOARD_NO DESC
+   </select>
+   
+   <!-- 관리자 기부게시판 리스트 -->
+   <select id="selectAdminBoardList" resultMap="donationBoardResultMap">
+   		SELECT * FROM DONATION_BOARD ORDER BY BOARD_NO DESC
+   </select>
 	
 	<insert id="insertDonationBoard">
 		<selectKey keyProperty="boardNo" resultType="_int" order="BEFORE">
@@ -137,4 +160,15 @@
 	<update id="addBoardReplyCount" parameterType="_int">
 		UPDATE DONATION_BOARD SET DT_REPLY_COUNT = DT_REPLY_COUNT + 1 WHERE BOARD_NO = #{boardNo }
 	</update>
+	
+	<!--댓글 내용 수정 -->
+	<update id="updateBoardReplyContents" parameterType="DonationReply">
+		UPDATE DT_BOARD_REPLY SET DT_REPLY_CONTENTS = #{dtReplyContents } WHERE DT_REPLY_NO = #{dtReplyNo }
+	</update>
+	
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteBoardReply" parameterType="DonationReply">
+		DELETE FROM DT_BOARD_REPLY WHERE DT_REPLY_NO = #{dtReplyNo }
+	</delete>
 </mapper>
