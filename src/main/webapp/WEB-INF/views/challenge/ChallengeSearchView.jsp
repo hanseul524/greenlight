@@ -15,15 +15,13 @@
 <jsp:include page="/common/header.jsp"></jsp:include>
   <div class="container">
     <div class="category">
-	  <form action="chSearch.do" method="get">
       <span class="menubar"><a href="ChallengeListView.do?check=recent">참여하기</a></span>
       <span class="menubar"><a href="ChallengeListView.do?check=prev">지난 챌린지</a></span>
       <span class="menubar"><a href="ChallengeListView.do?check=prevprev">지난 챌린지</a></span>
       <span class="menubar"><a href="ChallengeListView.do?check=all">All</a></span>
-	    <input type="text" name="search-title" id="search-title" placeholder="제목을 입력해주세요.">
-        <input type="submit" value="search">
+	  <input type="text" name="search-title" id="search-title" placeholder="제목을 입력해주세요.">
+	  <button>search</button>
       <span class="write-btn"><a href="ChallengeWriteview.do">write</a></span>
-	  </form>
     </div>
 	    <div class="category-area">
 	      <span>${category.chCategory }</span>
