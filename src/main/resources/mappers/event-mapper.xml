@@ -14,6 +14,7 @@
 		<id property="eventNo" column="EVENT_NO"/>
 		<result property="userId" column="USER_ID"/>
 		<result property="joinDate" column="JOIN_DATE"/>
+		<result property="rowNum" column="ROWNUM"/>
 	</resultMap>
 	
 	<resultMap type="EventWinner" id="eventWinnerResultMap">
@@ -22,7 +23,42 @@
 		<result property="joinDate" column="JOIN_DATE"/>
 	</resultMap>
 	
+	<!-- Event -->
+	<select id="selectEventOneByNo" resultMap="eventResultMap" parameterType="_int">
+		SELECT * FROM EVENT WHERE EVENT_NO = #{eventNo }
+	</select>
 	<insert id="insertEvent" parameterType="Event">
 		INSERT INTO EVENT VALUES(SEQ_EVENT_NO.NEXTVAL, #{eventStart }, #{eventEnd }, #{eventPoint }, #{eventQuestion }, #{eventAnswer })
 	</insert>
+	<delete id="deleteEvent">
+		DELETE FROM EVENT
+	</delete>
+	
+	<!-- EventAnswer -->
+	<select id="selectEventAnswerList" resultMap="eventAnswerResultMap">
+		SELECT EVENT_NO, USER_ID, JOIN_DATE, ROWNUM FROM EVENT_ANSWER
+	</select>
+	<select id="selectEventAnswerUserCheck" resultType="_int" parameterType="string">
+		SELECT COUNT(*) FROM EVENT_ANSWER WHERE USER_ID = #{userId }
+	</select>
+	<insert id="insertEventAnswer" parameterType="hashmap">
+		INSERT INTO EVENT_ANSWER VALUES (#{eventNo }, #{userId }, DEFAULT)
+	</insert>
+	<delete id="deleteEventAnswer">
+		DELETE FROM DELETE_ANSWER
+	</delete>
+	
+	<!-- EventWinning -->
+	<select id="selectEventWinnerList" resultMap="eventWinnerResultMap">
+		SELECT * FROM EVENT_WINNER
+	</select>
+	<insert id="insertEventWinner" parameterType="list">
+  		<foreach item="item" open="INSERT ALL" close="SELECT * FROM SYS.DUAL" collection="list" separator=" ">
+	  		INTO EVENT_WINNER VALUES
+  			(#{item.eventNo }, #{item.userId }, DEFAULT)
+  		</foreach>
+  	</insert>
+  	<delete id="deleteEventWinner">
+  		DELETE FROM EVENT_WINNER
+  	</delete>
 </mapper>

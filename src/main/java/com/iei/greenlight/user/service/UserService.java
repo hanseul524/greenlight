@@ -3,6 +3,7 @@ package com.iei.greenlight.user.service;
 import java.util.HashMap;
 import java.util.List;
 import com.iei.greenlight.user.domain.PageInfo;
+import com.iei.greenlight.event.domain.EventWinner;
 import com.iei.greenlight.mypage.domain.PointHistory;
 import com.iei.greenlight.user.domain.User;
 
@@ -33,6 +34,10 @@ public interface UserService {
 	public int modifyUserChargePoint(HashMap<String, Object> chargePointMap);
 	
 	public int modifySellerPoint(HashMap<String, Object> pointMap);
+	
+	public int modifyEventAnswerPoint(String userId);
+	
+	public int modifyEventWinnerPoint(List<EventWinner> wList);
 
 	public int checkSocialId(User userOne);
 

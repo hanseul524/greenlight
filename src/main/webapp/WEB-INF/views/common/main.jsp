@@ -43,7 +43,9 @@
       </div>
     </a>
   </div>
-  <div class="event-area"></div>
+  <div class="event-area">
+  	
+  </div>
   <div class="ch-area">
     <div class="swiper mySwiper">
       <div class="swiper-wrapper">

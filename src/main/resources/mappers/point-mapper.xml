@@ -37,13 +37,22 @@
 	<insert id="insertSellerPointHistory" parameterType="hashmap">
 		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, '경매 판매', #{point }, DEFAULT, DEFAULT)
 	</insert>
+	<insert id="insertEventAnswerPointHistory" parameterType="string">
+		INSERT INTO POINT_HISTORY VALUES(#{userId }, DEFAULT, '이벤트 정답', 100, DEFAULT, DEFAULT)
+	</insert>
+	<insert id="insertEventWinnerPointHistory" parameterType="list">
+		<foreach item="item" open="INSERT ALL"
+			close="SELECT * FROM SYS.DUAL" collection="list" separator=" ">
+			INTO POINT_HISTORY VALUES (#{item.userId }, DEFAULT, '이벤트 당첨', 500, DEFAULT, DEFAULT)
+		</foreach>
+	</insert>
 	<insert id="insertConHistory">
-		insert into POINT_HISTORY VALUES(#{userId}, sysdate, '7일 연속출석', 1000, 0, default)
+		insert into POINT_HISTORY VALUES(#{userId}, SYSDATE, '7일 연속출석', 1000, 0, default)
 	</insert>
 	<insert id="inserHistory">
-		insert into POINT_HISTORY VALUES(#{userId}, sysdate, '출석체크', 100, 0, default)
+		insert into POINT_HISTORY VALUES(#{userId}, SYSDATE, '출석체크', 100, 0, default)
 	</insert>
 	<insert id="inserNonConPointHistory">
-		insert into POINT_HISTORY VALUES(#{id}, sysdate, '출석체크', 100, 0, default)
+		insert into POINT_HISTORY VALUES(#{id}, SYSDATE, '출석체크', 100, 0, default)
 	</insert>
 </mapper>
