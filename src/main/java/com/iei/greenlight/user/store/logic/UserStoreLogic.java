@@ -7,6 +7,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.iei.greenlight.event.domain.EventWinner;
 import com.iei.greenlight.user.domain.PageInfo;
 import com.iei.greenlight.user.domain.User;
 import com.iei.greenlight.user.store.UserStore;
@@ -118,6 +120,16 @@ public class UserStoreLogic implements UserStore{
 	}
 	
 	@Override
+	public int updateEventAnswerPoint(String userId) {
+		return sqlSession.update("userMapper.updateEventAnswerPoint", userId);
+	}
+	
+	@Override
+	public int updateEventWinnerPoing(List<EventWinner> wList) {
+		return sqlSession.update("userMapper.updateEventWinnerPoint", wList);
+	}
+	
+	@Override
 	public int deleteUser(String userId) {
 		int result = sqlSession.delete("userMapper.deleteUserOne", userId);
 		return result;
@@ -153,4 +165,5 @@ public class UserStoreLogic implements UserStore{
 		int result = sqlSession.delete("userMapper.deleteUserList", uList);
 		return result;
 	}
+
 }

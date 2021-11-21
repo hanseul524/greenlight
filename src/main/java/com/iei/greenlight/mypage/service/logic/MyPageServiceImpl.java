@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.iei.greenlight.auction.domain.Auction;
 import com.iei.greenlight.challenge.domain.Challenge;
 import com.iei.greenlight.challenge.domain.PageInfo;
+import com.iei.greenlight.event.domain.EventWinner;
 import com.iei.greenlight.mypage.domain.AdCheck;
 import com.iei.greenlight.mypage.domain.PointHistory;
 import com.iei.greenlight.mypage.service.MyPageService;
@@ -108,20 +109,14 @@ public class MyPageServiceImpl implements MyPageService{
 		return result;
 	}
 
-	
+	@Override
+	public int registerEventAnswerPointHistory(String userId) {
+		return store.insertEventAnswerPointHistory(userId);
+	}
 
-	
-
-	
-	
-
-	
-
-	
-
-	
-
-	
-	
+	@Override
+	public int registerEventWinnerPointHistory(List<EventWinner> wList) {
+		return store.insertEventWinnerPointHistory(wList);
+	}
 
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.iei.greenlight.auction.domain.Auction;
 import com.iei.greenlight.challenge.domain.Challenge;
+import com.iei.greenlight.event.domain.EventWinner;
 import com.iei.greenlight.mypage.domain.AdCheck;
 import com.iei.greenlight.mypage.domain.PageInfo;
 import com.iei.greenlight.mypage.domain.PointHistory;
@@ -116,18 +117,13 @@ public class MyPageStoreLogic implements MyPageStore{
 		return sqlSession.insert("pointMapper.inserNonConPointHistory", id);
 	}
 
+	@Override
+	public int insertEventAnswerPointHistory(String userId) {
+		return sqlSession.insert("pointMapper.insertEventAnswerPointHistory", userId);
+	}
 
-	
-	
-	
-	
-	
-
-	
-
-	
-
-	
-
-
+	@Override
+	public int insertEventWinnerPointHistory(List<EventWinner> wList) {
+		return sqlSession.insert("pointMapper.insertEventWinnerPointHistory", wList);
+	}
 }

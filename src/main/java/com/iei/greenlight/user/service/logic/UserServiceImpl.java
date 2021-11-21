@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.iei.greenlight.auction.domain.Auction;
+import com.iei.greenlight.event.domain.EventWinner;
 import com.iei.greenlight.mypage.domain.PointHistory;
 import com.iei.greenlight.user.domain.PageInfo;
 import com.iei.greenlight.user.domain.User;
@@ -177,6 +178,16 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
+	public int modifyEventAnswerPoint(String userId) {
+		return store.updateEventAnswerPoint(userId);
+	}
+	
+	@Override
+	public int modifyEventWinnerPoint(List<EventWinner> wList) {
+		return store.updateEventWinnerPoing(wList);
+	}
+	
+	@Override
 	public int removeUser(String userId) {
 		int result = store.deleteUser(userId);
 		return result;
@@ -211,5 +222,9 @@ public class UserServiceImpl implements UserService{
 		int result = store.deleteUser(uList);
 		return result;
 	}
+
+
+
+
 
 }

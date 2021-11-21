@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.iei.greenlight.challenge.domain.Challenge;
+import com.iei.greenlight.event.domain.EventWinner;
 import com.iei.greenlight.mypage.domain.AdCheck;
 import com.iei.greenlight.mypage.domain.PageInfo;
 import com.iei.greenlight.mypage.domain.PointHistory;
@@ -40,6 +41,8 @@ public interface MyPageStore {
 	public int insertAuctionBuyerChargePoint(HashMap<String, Object> hashMap);
 	public int insertAuctionBuyerPointHistory(HashMap<String, Object> hashMap);
 	public int insertAuctionSellerPointHistory(HashMap<String, Object> hashMap);
+	public int insertEventAnswerPointHistory(String userId);
+	public int insertEventWinnerPointHistory(List<EventWinner> wList);
 	
 
 }

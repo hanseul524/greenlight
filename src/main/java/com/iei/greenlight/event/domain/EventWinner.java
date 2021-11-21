@@ -10,6 +10,12 @@ public class EventWinner {
 	
 	private EventWinner() {}
 
+	public EventWinner(int eventNo, String userId) {
+		super();
+		this.eventNo = eventNo;
+		this.userId = userId;
+	}
+
 	public EventWinner(int eventNo, String userId, Date joinDate) {
 		super();
 		this.eventNo = eventNo;

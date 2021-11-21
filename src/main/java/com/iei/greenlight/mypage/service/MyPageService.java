@@ -6,6 +6,7 @@ import java.util.List;
 import com.iei.greenlight.auction.domain.Auction;
 import com.iei.greenlight.challenge.domain.Challenge;
 import com.iei.greenlight.challenge.domain.PageInfo;
+import com.iei.greenlight.event.domain.EventWinner;
 import com.iei.greenlight.mypage.domain.AdCheck;
 import com.iei.greenlight.mypage.domain.PointHistory;
 import com.iei.greenlight.user.domain.User;
@@ -32,5 +33,7 @@ public interface MyPageService {
 	public int registerAuctionBuyerChargePoint(HashMap<String, Object> hashMap);
 	public int registerAuctionBuyerPointHistory(HashMap<String, Object> hashMap);
 	public int registerAuctionSellerPointHistory(HashMap<String, Object> hashMap);
+	public int registerEventAnswerPointHistory(String userId);
+	public int registerEventWinnerPointHistory(List<EventWinner> wList);
 	
 }

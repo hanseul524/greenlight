@@ -3,6 +3,7 @@ package com.iei.greenlight.user.store;
 import java.util.HashMap;
 import java.util.List;
 import com.iei.greenlight.user.domain.User;
+import com.iei.greenlight.event.domain.EventWinner;
 import com.iei.greenlight.user.domain.PageInfo;
 
 public interface UserStore {
@@ -28,6 +29,10 @@ public interface UserStore {
 	public int updateUserChargePoint(HashMap<String, Object> chargePointMap);
 	
 	public int updateSellerPoint(HashMap<String, Object> pointMap);
+	
+	public int updateEventAnswerPoint(String userId);
+	
+	public int updateEventWinnerPoing(List<EventWinner> wList);
 
 	public int checkSocialId(User userOne);
 
