@@ -36,7 +36,7 @@ public class EventController {
 		return "";
 	}
 	
-	// 이벤트 마감
+	// 이벤트 종료
 	public String eventEnd() {
 		
 		
@@ -44,6 +44,9 @@ public class EventController {
 		return "";
 	}
 	
-	// 이벤트 정답시 포인트 지급
-
+	// 이벤트 정답시 포인트 지급 및 포인트 히스토리
+	
+	
+	
+	// 
 }
