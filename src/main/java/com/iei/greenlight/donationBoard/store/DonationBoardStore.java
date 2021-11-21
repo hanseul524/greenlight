@@ -50,4 +50,20 @@ public interface DonationBoardStore {
 	int selectAdminDonationCount();
 
 	List<DonationBoard> selectAllAdminBoard(PageInfo pi);
+
+	int selectAdminDonationSearchCount(String searchKey);
+
+	List<DonationBoard> selectAdminDonationSearchList(HashMap<String, Object> hashMap);
+
+	void updateBoardReplyDeleteCount(int boardNo);
+
+	void updateDonationEnd(int boardNo);
+
+	List<DonationBoard> selectSuccessN();
+
+	List<DtFile> printModifyViewFile(int boardNo);
+
+	int updateDonationBoard(DonationBoard db);
+
+	int deleteDonationBoardImage(int boardNo);
 }

@@ -51,4 +51,20 @@ public interface DonationBoardService {
 
 	List<DonationBoard> printAdminboardAll(PageInfo pi);
 
+	int getAdminDonationListSearchCount(String searchKey);
+
+	List<DonationBoard> printDonationAdminSearchList(HashMap<String, Object> hashMap);
+
+	void DonationBoardDeleteReplyCount(int boardNo);
+
+	void DonationEnd(int boardNo);
+
+	List<DonationBoard> printSuccessN();
+
+	List<DtFile> printModifyViewFile(int boardNo);
+
+	int modifyDonationBoard(DonationBoard db);
+
+	int DonationBoardRemoveImage(int boardNo);
+
 }

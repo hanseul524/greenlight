@@ -102,6 +102,16 @@ public class DonationBoardController {
 	// 기부게시판 리스트
 	@RequestMapping(value="donationBoardList.do", method=RequestMethod.GET)
 	public String donationBoardListView(Model model, HttpServletRequest request, @RequestParam(value="page", required=false) Integer page) {
+		List<DonationBoard> bList = service.printSuccessN();
+		if(!bList.isEmpty()) {
+			for(int i = 0; i<bList.size(); i++) {
+				int dtTargetAmount = bList.get(i).getDtTargetAmount();
+				int dtDonationAmount = bList.get(i).getDonationAmount();
+				if(dtDonationAmount >= dtTargetAmount) {
+					service.DonationEnd(bList.get(i).getBoardNo());
+				}
+			}
+		}
 		int currentPage = (page != null) ? page : 1;
 		int totalCount = service.getListCount();
 		PageInfo pi = donationBoardPagination.getPageInfo(currentPage, totalCount);
@@ -156,6 +166,7 @@ public class DonationBoardController {
 		DonationBoard board = service.printDonationBoardOne(boardNo);
 		List<DtFile> dFList = null;
 		List<Donation> dList = null;
+		String userId = (String)request.getSession().getAttribute("userId");
 		if(board != null) {
 			double dtTargetAmount = board.getDtTargetAmount();
 			double donationAmount = board.getDonationAmount();
@@ -167,6 +178,7 @@ public class DonationBoardController {
 			model.addAttribute("board", board);
 			model.addAttribute("dFList", dFList);
 			model.addAttribute("dList", dList);
+			model.addAttribute("userID",userId);
 			return "donation/donationBoardDetail";
 		}else {
 			return "user/error";
@@ -263,7 +275,10 @@ public class DonationBoardController {
 	   @RequestMapping(value="donationReplyDeleteReply.do", method=RequestMethod.GET)
 	   public String donationBoardRemoveReply(@ModelAttribute DonationReply donationReply) {
 		   int result = service.donationRemoveReply(donationReply);
+		   int boardNo = donationReply.getBoardNo();
 		   if(result > 0) {
+			   // 도네이션 게시판 댓글 수 수정
+			   service.DonationBoardDeleteReplyCount(boardNo);
 			   return "success";  
 		   }else {
 			   return "fails";
@@ -271,7 +286,7 @@ public class DonationBoardController {
 	   }
 	   
 	   // 관리자 페이지 기부리스트
-	   @RequestMapping(value="daminDonationBoardList.do", method=RequestMethod.GET)
+	   @RequestMapping(value="adminDonationBoardList.do", method=RequestMethod.GET)
 	   public String adminDonationBoardList(@RequestParam(value="page", required = false) Integer page,Model model) {
 		   int currentPage = (page != null) ? page : 1;
 		   int totalCount = service.getAdminDonationListCount();
@@ -283,6 +298,81 @@ public class DonationBoardController {
 			   return "admin/adminDonationBoard";
 		   }else {
 			   return "user/error"; 
+		   }
+	   }
+	   
+	   // 관리자 페이지 기부리스트 검색
+	   @RequestMapping(value="adminDonationBoardSearchList.do", method=RequestMethod.GET)
+	   public String adminDonationBoardSearchList(@RequestParam("searchKey") String searchKey, @RequestParam(value="page", required=false) Integer page, Model model) {
+		   HashMap<String, Object> hashMap = new HashMap<String, Object>();
+		   int currentPage = (page != null) ? page : 1;
+		   int totalCount = service.getAdminDonationListSearchCount(searchKey);
+		   PageInfo pi = AdminDonationBoardPagination.getPageInfo(currentPage, totalCount);
+		   hashMap.put("pi", pi);
+		   hashMap.put("searchKey", searchKey);
+		   List<DonationBoard> dList = service.printDonationAdminSearchList(hashMap);
+		   if(!dList.isEmpty()) {
+			   model.addAttribute("dList", dList);
+			   model.addAttribute("pi", pi);
+			   return "admin/adminSearchDonationBoard";
+		   }else {
+			   return "user/error";
+		   }
+	   }
+	   // 기부게시글 수정 뷰 페이지 이동
+	   @RequestMapping(value="donationBoardModifyView.do", method=RequestMethod.GET)
+	   public String donationBoardModifyView(@RequestParam("boardNo") int boardNo, Model model) {
+		   List<DtFile> dFList = null;
+		   DonationBoard dBoard = service.printDonationBoardOne(boardNo);
+		   if(dBoard != null) {
+			   dFList = service.printModifyViewFile(boardNo);
+			   if(!dFList.isEmpty()) {
+				   model.addAttribute("dFList",dFList);
+			   }
+			   model.addAttribute("donationBoard", dBoard);
+			   return"admin/donationBoardModify";
+		   }else {
+			   return "user/error";
+		   }
+	   }
+	   // 기부 게시판 수정
+	   @RequestMapping(value="donationBoardModify.do", method=RequestMethod.POST)
+	   public String donationBoardModify(@ModelAttribute DonationBoard db, @RequestParam("editordata") String dtContents, @RequestParam("uploadFile") MultipartFile[] uploadFiles, HttpServletRequest request) {
+		   db.setDtContents(dtContents);
+		   int result = service.modifyDonationBoard(db);
+		   int boardNo = db.getBoardNo();
+		   List<DtFile> dFList = null;
+		   if(result > 0) {
+			   List<DtFile> FList = service.printAllDonationBoardImageOneByNo(db.getBoardNo());
+			   dFList = new ArrayList<DtFile>();
+			   for(int i=0; i<FList.size(); i++) {
+				   deleteFile(FList.get(i), request, boardNo);
+			   }
+			   for(MultipartFile uploadFile : uploadFiles) {
+					if(!uploadFile.getOriginalFilename().equals("")) {
+						DtFile dt = saveFile(uploadFile, request,boardNo);
+						dt.setFileMain("N");
+						dFList.add(dt);
+					}
+				}
+			   dFList.get(0).setFileMain("Y");
+			   int dResult = service.DonationBoardRemoveImage(boardNo);
+			   if(dResult > 0) {
+				   service.registerDtFile(dFList);
+			   }
+			   return "redirect:adminDonationBoardList.do";
+		   }else {
+			   return "user/error";
+		   }
+	   }
+	   
+	   // 파일삭제
+	   public void deleteFile(DtFile dtFile, HttpServletRequest request, int boardNo) {
+		   String root = request.getSession().getServletContext().getRealPath("resources");
+		   String fullPath = root + "\\donationUploadFiles";
+		   File folder = new File(fullPath + "\\" + dtFile.getFileName());
+		   if(folder.exists()) {
+			   folder.delete();
 		   }
 	   }
 }

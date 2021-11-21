@@ -119,4 +119,44 @@ public class DonationBoardServiceImpl implements DonationBoardService{
 	public List<DonationBoard> printAdminboardAll(PageInfo pi) {
 		return store.selectAllAdminBoard(pi);
 	}
+
+	@Override
+	public int getAdminDonationListSearchCount(String searchKey) {
+		return store.selectAdminDonationSearchCount(searchKey);
+	}
+
+	@Override
+	public List<DonationBoard> printDonationAdminSearchList(HashMap<String, Object> hashMap) {
+		return store.selectAdminDonationSearchList(hashMap);
+	}
+
+	@Override
+	public void DonationBoardDeleteReplyCount(int boardNo) {
+		store.updateBoardReplyDeleteCount(boardNo);
+	}
+
+	@Override
+	public void DonationEnd(int boardNo) {
+		store.updateDonationEnd(boardNo);
+	}
+
+	@Override
+	public List<DonationBoard> printSuccessN() {
+		return store.selectSuccessN();
+	}
+
+	@Override
+	public List<DtFile> printModifyViewFile(int boardNo) {
+		return store.printModifyViewFile(boardNo);
+	}
+
+	@Override
+	public int modifyDonationBoard(DonationBoard db) {
+		return store.updateDonationBoard(db);
+	}
+
+	@Override
+	public int DonationBoardRemoveImage(int boardNo) {
+		return store.deleteDonationBoardImage(boardNo);
+	}
 }

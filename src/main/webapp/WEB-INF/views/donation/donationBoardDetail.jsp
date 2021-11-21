@@ -60,7 +60,7 @@
 	        <span class="date-div" style="margin: 10px; font-weight: 300;">${board.writeDate }</span>
 	        <c:if test="${userId eq 'admin' }">
 		        <span style="float: right; margin: 10px; font-weight: 300;">
-		        	<c:url var="donationBoardModify" value="donationBoardModify.do">
+		        	<c:url var="donationBoardModify" value="donationBoardModifyView.do">
 		        		<c:param name="boardNo" value="${board.boardNo}"></c:param>
 		        	</c:url>
 		        	<a href="${donationBoardModify }">수정</a>
@@ -170,7 +170,7 @@
 	// 댓글 리스트 불러오기
 	function getReplyList() {
 		var boardNo = '${board.boardNo}';
-		var userId = '${userId}';
+		var userId = '${userID}';
 		$.ajax({
 			url : "donationReplyList.do",
 			type : "get",
@@ -192,22 +192,21 @@
 				if(data.length > 0) {
 					for(var i in data) {
 						$innerdiv = $("<div id='replyDiv' style='border-top: 1px solid rgb(219, 219, 219); vertical-align:middle; align-items:center; padding: 10px;'>");
-						$icon = $("<i class='fas fa-user-circle fa-3x' style='color: gray;'>");
-						$rWriter = $("<span style='font-size: 12px; margin-left: 75px; display: block;'>").text(data[i].dtReplyUserId);
-						$rContent = $("<span style='position: relative; bottom:7px; margin-left:30px; line-height: -3px;'>").text(data[i].dtReplyContents);
+						$icon = $("<i class='fas fa-user-circle fa-3x' style='color: gray; margin-right: 30px; margin-bottom: 20px;'>");
+						$rWriter = $("<span style='font-size: 10px; display: block;  position: relative; left:74px;'>").text(data[i].dtReplyUserId);
+						$rContent = $("<span style='line-height: 30px; position: relative; bottom: 8px;'>").text(data[i].dtReplyContents);
 						$rDate = $("<span style='float: right; margin-right: 15px; position: relative; top:15px;'>").text(data[i].dtReplyDate);
+						$rdiv.append($innerdiv);
+						$innerdiv.append($rWriter);
+						$innerdiv.append($icon);
+						$innerdiv.append($rDate);
 						if(userId == data[i].dtReplyUserId){
 							$btnArea = $("<span style='float:right; position: relative; top:15px;'>")
 							.append("<a href='#' onclick='modifyReply(this,"+boardNo+","+data[i].dtReplyNo+",\""+data[i].dtReplyContents+"\");'>수정 /</a>")
-							.append("<a href='#' onclick='deleteReply(this,"+boardNo+","+data[i].dtReplyNo+");'> 삭제</a>")
+							.append("<a href='#' style='margin-right:15px;' onclick='deleteReply(this,"+boardNo+","+data[i].dtReplyNo+");'> 삭제</a>")
+							$innerdiv.append($btnArea);
 						}
-						$innerdiv.append($rWriter);
-						$innerdiv.append($icon);
 						$innerdiv.append($rContent);
-						$innerdiv.append($btnArea);
-						$innerdiv.append($rDate);
-						$rdiv.append($innerdiv);
-						
 					}
 				}
 			}

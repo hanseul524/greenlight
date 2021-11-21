@@ -77,7 +77,7 @@
             <div style="width: 30%;">전체 기부 게시판 목록</div>
             <form style="position: relative; bottom: 75px;"action="adminDonationBoardSearchList.do" method="get">
 	            <input type="text" name="searchKey" id="userId" placeholder="제목을 입력하세요.">
-	            <input type="submit" name="search" value="search">
+	            <input type="submit" name="searh" value="search">
             </form>
           </div>
           <div class="con-list">
@@ -112,7 +112,7 @@
               </tbody>
             </table>
             <div class="page_wrap">
-			    <c:url var="before" value="adminDonationBoardList.do">
+			    <c:url var="before" value="adminDonationBoardSearchList.do">
 			    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 			    </c:url>
 			      <div class="page_nation">
@@ -123,7 +123,7 @@
 			         <a class="arrow prev" href="${before }"></a>
 			      </c:if>
 			      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
-			      	<c:url var="pagenation" value="adminDonationBoardList.do">
+			      	<c:url var="pagenation" value="adminDonationBoardSearchList.do">
 			      		<c:param name="page" value="${p }"></c:param>
 			      	</c:url>
 			      	<c:if test="${p eq pi.currentPage }">
@@ -133,7 +133,7 @@
 			      		<a href="${pagenation }">${p }</a>
 			      	</c:if>
 			      </c:forEach>
-			      <c:url var="after" value="adminDonationBoardList.do">
+			      <c:url var="after" value="adminDonationBoardSearchList.do">
 			      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
 			      </c:url>
 			      <c:if test="${pi.currentPage >= pi.maxPage }">
