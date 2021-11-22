@@ -77,6 +77,23 @@ body {
   font-weight: 500;
   font-size: 20px;
 }
+ .input-area {
+  width: 300px;
+  text-align: left;
+  padding: 10px;
+  margin-top: 30px;
+  outline: none;
+  border: 0;
+  border-bottom: 2px solid #ffff;
+  background-color: transparent;
+  color: #ffff;
+  font-weight: 500;
+  font-size: 20px;
+}
+.input-area::placeholder{
+	font-size : 13px;
+	color : white;
+}
 .event-area button {
   padding: 7px 20px 7px 20px;
   margin: 20px 50px 0 0;
@@ -156,3 +173,54 @@ body {
   height: 100%;
   object-fit: cover;
 }
+
+.event-button{
+        width:100px;
+        height:40px;
+        color:rgb(100, 100, 100);
+        border : 1px solid rgb(100, 100, 100);
+        text-align:center;
+        line-height:38px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+        .event-button:hover{
+            animation-name:button;
+            animation-duration: 0.3s;
+            animation-fill-mode: forwards;
+        }
+        .event-button:not(:hover){
+            animation-name:notButton;
+            animation-duration: 0.3s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes button{
+            from{
+                color:rgb(100, 100, 100);
+                background-color: white;
+            }
+            to{
+                color:white;
+                background-color: rgb(100, 100, 100);
+            }
+        }
+        @keyframes notButton{
+            from{
+                color:white;
+                background-color: rgb(100, 100, 100);
+            }
+            to{
+                color:rgb(100, 100, 100);
+                background-color: white;
+            }
+        }
+
+.searchBtn{
+	position: absolute;
+	right: 242px;
+	top: 230px;
+	background: none;
+	border: none;
+}
+        
+        

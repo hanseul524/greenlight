@@ -28,6 +28,7 @@
 	        $(this).addClass('active');
 	      }
 	    });
+	    
 	  });
 </script>
 <body>
@@ -82,69 +83,72 @@
               이벤트 당첨 관리 <br>
               <span>이번 이벤트 정답자 리스트입니다. 추첨을 해주세요.</span>
             </div>
-            <button value=""  class="button" onclick="">추첨하기</button>
-            <button value=""  class="button" onclick="">이벤트 오픈</button>
+            <button value=""  class="button" onclick="eventRaffle();">추첨하기</button>
+            <button value=""  class="button" onclick="eventOpen();">이벤트 오픈</button>
           </div>
           <div class="con-list">
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th>No</th>
-                  <th>Id</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Date</th>
+                  <th>NO</th>
+                  <th>ID</th>
+                  <th>NAME</th>
+                  <th>POINT</th>
+                  <th>JOIN_DATE</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>01</td>
-                  <td>user01</td>
-                  <td>김유저</td>
-                  <td>user01@naver.com</td>
-                  <td>2021.11.20</td>
+              <c:if test="${aList eq null }">
+              	<tr>
+                  <td colspan="5" align="center">현재 정답자가 없습니다.</td>
                 </tr>
+              </c:if>
+              <c:if test="${aList ne null }">
+              <c:forEach items="${aList }" var="eventAnswer" varStatus="status">
                 <tr>
-                  <td>01</td>
-                  <td>user01</td>
-                  <td>김유저</td>
-                  <td>user01@naver.com</td>
-                  <td>2021.11.20</td>
+                  <td>${eventAnswer.eventNo }</td>
+                  <td>${eventAnswer.userId }</td>
+                  <td>${eventAnswer.userName }</td>
+                  <td>${eventAnswer.point }</td>
+                  <td>${eventAnswer.joinDate }</td>
                 </tr>
-                <tr>
-                  <td>01</td>
-                  <td>user01</td>
-                  <td>김유저</td>
-                  <td>user01@naver.com</td>
-                  <td>2021.11.20</td>
-                </tr>
-                <tr>
-                  <td>01</td>
-                  <td>user01</td>
-                  <td>김유저</td>
-                  <td>user01@naver.com</td>
-                  <td>2021.11.20</td>
-                </tr>
-                <tr>
-                  <td>01</td>
-                  <td>user01</td>
-                  <td>김유저</td>
-                  <td>user01@naver.com</td>
-                  <td>2021.11.20</td>
-                </tr>
+              </c:forEach>
+              </c:if>
               </tbody>
             </table>
             </form>         
             <div class="page_wrap">
-              <div class="page_nation">
-                <a class="arrow prev" href="#"></a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a class="arrow next" href="#"></a>
-              </div>
+              <c:url var="before" value="adminEventPage.do">
+			    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+			    </c:url>
+			      <div class="page_nation">
+			      <c:if test="${pi.currentPage <= 1 }">
+			         <a class="arrow prev" href="#"></a>
+			      </c:if>
+			      <c:if test="${pi.currentPage > 1 }">
+			         <a class="arrow prev" href="${before }"></a>
+			      </c:if>
+			      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
+			      	<c:url var="pagenation" value="adminEventPage.do">
+			      		<c:param name="page" value="${p }"></c:param>
+			      	</c:url>
+			      	<c:if test="${p eq pi.currentPage }">
+			         	<a href="#" class="active">${p }</a>
+			      	</c:if>
+			      	<c:if test="${p ne pi.currentPage }">
+			      		<a href="${pagenation }">${p }</a>
+			      	</c:if>
+			      </c:forEach>
+			      <c:url var="after" value="adminEventPage.do">
+			      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+			      </c:url>
+			      <c:if test="${pi.currentPage >= pi.maxPage }">
+			         <a class="arrow next" href="#"></a>
+			      </c:if>
+			      <c:if test="${pi.currentPage < pi.maxPage }">
+			         <a class="arrow next" href="${after }"></a>
+			      </c:if>
+			   	  </div>
             </div>
 
             <div class="con-title">
@@ -153,68 +157,71 @@
                   당첨자 추첨 <br>
                   <span>당첨자 중 10%의 회원입니다. 포인트를 지급해주세요</span>
                 </div>
-                <button value=""  class="button" onclick="">포인트 지급</button>
+                <button value=""  class="button" onclick="pointPayments()">포인트 지급</button>
               </div>
               <div class="con-list">
                 <table class="table table-hover">
                   <thead>
                     <tr>
-                      <th>No</th>
-                      <th>Id</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Date</th>
+	                  <th>NO</th>
+	                  <th>ID</th>
+	                  <th>NAME</th>
+	                  <th>POINT</th>
+	                  <th>JOIN_DATE</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>01</td>
-                      <td>user01</td>
-                      <td>김유저</td>
-                      <td>user01@naver.com</td>
-                      <td>2021.11.20</td>
+                  <c:if test="${wList eq null }">
+                  	 <tr>
+	                  <td colspan="5" align="center">추첨을 해주시기 바랍니다.</td>
                     </tr>
+                  </c:if>
+                  <c:if test="${wList ne null }">
+                  <c:forEach items="${wList }" var="eventWinner" varStatus="status">
                     <tr>
-                      <td>01</td>
-                      <td>user01</td>
-                      <td>김유저</td>
-                      <td>user01@naver.com</td>
-                      <td>2021.11.20</td>
+	                  <td>${eventWinner.eventNo }</td>
+	                  <td>${eventWinner.userId }</td>
+	                  <td>${eventWinner.userName }</td>
+	                  <td>${eventWinner.point }</td>
+	                  <td>${eventWinner.joinDate }</td>
                     </tr>
-                    <tr>
-                      <td>01</td>
-                      <td>user01</td>
-                      <td>김유저</td>
-                      <td>user01@naver.com</td>
-                      <td>2021.11.20</td>
-                    </tr>
-                    <tr>
-                      <td>01</td>
-                      <td>user01</td>
-                      <td>김유저</td>
-                      <td>user01@naver.com</td>
-                      <td>2021.11.20</td>
-                    </tr>
-                    <tr>
-                      <td>01</td>
-                      <td>user01</td>
-                      <td>김유저</td>
-                      <td>user01@naver.com</td>
-                      <td>2021.11.20</td>
-                    </tr>
+                  </c:forEach>
+                  </c:if>
                   </tbody>
                 </table>
                 </form>         
                 <div class="page_wrap">
-                  <div class="page_nation">
-                    <a class="arrow prev" href="#"></a>
-                    <a href="#" class="active">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">4</a>
-                    <a href="#">5</a>
-                    <a class="arrow next" href="#"></a>
-                  </div>
+                  <c:url var="before" value="adminEventPage.do">
+			    	<c:param name="page" value="${api.currentPage - 1 }"></c:param>
+			    </c:url>
+			      <div class="page_nation">
+			      <c:if test="${api.currentPage <= 1 }">
+			         <a class="arrow prev" href="#"></a>
+			      </c:if>
+			      <c:if test="${api.currentPage > 1 }">
+			         <a class="arrow prev" href="${before }"></a>
+			      </c:if>
+			      <c:forEach var="p" begin="${api.startNavi}" end="${api.endNavi }">
+			      	<c:url var="pagenation" value="adminEventPage.do">
+			      		<c:param name="page" value="${p }"></c:param>
+			      	</c:url>
+			      	<c:if test="${p eq api.currentPage }">
+			         	<a href="#" class="active">${p }</a>
+			      	</c:if>
+			      	<c:if test="${p ne api.currentPage }">
+			      		<a href="${pagenation }">${p }</a>
+			      	</c:if>
+			      </c:forEach>
+			      <c:url var="after" value="adminEventPage.do">
+			      	<c:param name="page" value="${api.currentPage + 1 }"></c:param>
+			      </c:url>
+			      <c:if test="${api.currentPage >= api.maxPage }">
+			         <a class="arrow next" href="#"></a>
+			      </c:if>
+			      <c:if test="${api.currentPage < api.maxPage }">
+			         <a class="arrow next" href="${after }"></a>
+			      </c:if>
+			   	  </div>
                 </div>
             </div>
            </div>
@@ -248,6 +255,22 @@
           $(this).addClass('active');
         }
       });
+	
+	var eventWinner = new Array();
+	eventWinner = '${wList }';
+	
+	function eventRaffle(){
+		location.href="eventRaffle.do";
+	}
+	
+	function pointPayments(){
+		location.href="eventWinnerPayments.do";
+	}
+	
+    function eventOpen() {
+        window.open('/adminEventWriteView.do', '_blank', 
+        'top=250, left=500, height=350, width=550,toolbar=no, menubar=no, location=no, status=no, scrollbars=no, resizable=no');
+      }
 	
 </script>
 </body>

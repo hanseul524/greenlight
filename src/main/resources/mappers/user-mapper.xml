@@ -95,10 +95,10 @@
   	<update id="updateEventAnswerPoint" parameterType="string">
   		UPDATE USERS SET POINT = POINT + 100 WHERE USER_ID = #{userId }
   	</update>
-  	
-  	<update id="updateEventWinnerPoint" parameterType="list">
-  		<foreach collection="list" item="item" index="index" separator=";" open="DECLARE BEGIN" close="; END;">
-  			UPDATE USERS SET POINT = POINT + 500 WHERE USER_ID #{item.userId } 
+  	<update id="updateEventWinnerPoint" parameterType="java.util.Arrays">
+  		UPDATE USERS SET POINT = POINT + 500 WHERE USER_ID IN 
+  		<foreach collection="array" item="item" index="index" separator=", " open="(" close=")">
+  			#{item }
   		</foreach>
   	</update>
   	

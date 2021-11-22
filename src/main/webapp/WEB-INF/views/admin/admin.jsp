@@ -77,11 +77,7 @@
             <i class="fas fa-warehouse" style="margin-right: 10px;"></i><a href="#">매장관리</a>
           </li>
           <li class="li-area">
-            <i class="fas fa-gifts" style="margin-right: 10px;"></i><a href="#">이벤트관리</a> 
-            <ul>
-              <li><a href="#">이벤트 생성</a></li>
-              <li><a href="#">당첨자 관리</a></li>
-            </ul>
+            <i class="fas fa-gifts" style="margin-right: 10px;"></i><a href="adminEventPage.do">이벤트관리</a> 
           </li>
         </ul>
       </div>

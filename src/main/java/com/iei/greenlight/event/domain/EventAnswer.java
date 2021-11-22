@@ -8,15 +8,19 @@ public class EventAnswer {
 	private int rowNum;
 	private String userId;
 	private Date joinDate;
+	private String userName;
+	private int point;
 	
 	public EventAnswer() {}
 
-	public EventAnswer(int eventNo, int rowNum, String userId, Date joinDate) {
+	public EventAnswer(int eventNo, int rowNum, String userId, Date joinDate, String userName, int point) {
 		super();
 		this.eventNo = eventNo;
 		this.rowNum = rowNum;
 		this.userId = userId;
 		this.joinDate = joinDate;
+		this.userName = userName;
+		this.point = point;
 	}
 
 	public int getEventNo() {
@@ -51,10 +55,26 @@ public class EventAnswer {
 		this.joinDate = joinDate;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
+	}
+
 	@Override
 	public String toString() {
 		return "EventAnswer [eventNo=" + eventNo + ", rowNum=" + rowNum + ", userId=" + userId + ", joinDate="
-				+ joinDate + "]";
+				+ joinDate + ", userName=" + userName + ", point=" + point + "]";
 	}
-	
+
 }

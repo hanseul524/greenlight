@@ -125,8 +125,8 @@ public class UserStoreLogic implements UserStore{
 	}
 	
 	@Override
-	public int updateEventWinnerPoing(List<EventWinner> wList) {
-		return sqlSession.update("userMapper.updateEventWinnerPoint", wList);
+	public int updateEventWinnerPoint(String [] userId) {
+		return sqlSession.update("userMapper.updateEventWinnerPoint", userId);
 	}
 	
 	@Override

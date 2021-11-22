@@ -32,7 +32,7 @@ public interface UserStore {
 	
 	public int updateEventAnswerPoint(String userId);
 	
-	public int updateEventWinnerPoing(List<EventWinner> wList);
+	public int updateEventWinnerPoint(String [] userId);
 
 	public int checkSocialId(User userOne);
 

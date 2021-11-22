@@ -3,6 +3,7 @@ package com.iei.greenlight.event.domain;
 public class Event {
 	
 	private int eventNo;
+	private int rowNum;
 	private String eventStart;
 	private String eventEnd;
 	private int eventPoint;
@@ -11,10 +12,11 @@ public class Event {
 	
 	public Event() {}
 
-	public Event(int eventNo, String eventStart, String eventEnd, int eventPoint, String eventQuestion,
+	public Event(int eventNo, int rowNum, String eventStart, String eventEnd, int eventPoint, String eventQuestion,
 			String eventAnswer) {
 		super();
 		this.eventNo = eventNo;
+		this.rowNum = rowNum;
 		this.eventStart = eventStart;
 		this.eventEnd = eventEnd;
 		this.eventPoint = eventPoint;
@@ -28,6 +30,14 @@ public class Event {
 
 	public void setEventNo(int eventNo) {
 		this.eventNo = eventNo;
+	}
+
+	public int getRowNum() {
+		return rowNum;
+	}
+
+	public void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
 	}
 
 	public String getEventStart() {
@@ -72,11 +82,9 @@ public class Event {
 
 	@Override
 	public String toString() {
-		return "Event [eventNo=" + eventNo + ", eventStart=" + eventStart + ", eventEnd=" + eventEnd + ", eventPoint="
-				+ eventPoint + ", eventQuestion=" + eventQuestion + ", eventAnswer=" + eventAnswer + "]";
+		return "Event [eventNo=" + eventNo + ", rowNum=" + rowNum + ", eventStart=" + eventStart + ", eventEnd="
+				+ eventEnd + ", eventPoint=" + eventPoint + ", eventQuestion=" + eventQuestion + ", eventAnswer="
+				+ eventAnswer + "]";
 	}
 
-	
-	
-	
 }

@@ -3,6 +3,7 @@
 <mapper namespace="eventMapper">
 	<resultMap type="Event" id="eventResultMap">
 		<id property="eventNo" column="EVENT_NO"/>
+		<result property="rowNum" column="ROWNUM"/>
 		<result property="eventStart" column="EVENT_START"/>
 		<result property="eventEnd" column="EVENT_END"/>
 		<result property="eventPoint" column="EVENT_POINT"/>
@@ -13,6 +14,8 @@
 	<resultMap type="EventAnswer" id="eventAnswerResultMap">
 		<id property="eventNo" column="EVENT_NO"/>
 		<result property="userId" column="USER_ID"/>
+		<result property="point" column="POINT"/>
+		<result property="userName" column="USER_NAME"/>
 		<result property="joinDate" column="JOIN_DATE"/>
 		<result property="rowNum" column="ROWNUM"/>
 	</resultMap>
@@ -20,10 +23,16 @@
 	<resultMap type="EventWinner" id="eventWinnerResultMap">
 		<id property="eventNo" column="EVENT_NO"/>
 		<result property="userId" column="USER_ID"/>
+		<result property="point" column="POINT"/>
+		<result property="paymentsStatus" column="PAYMENTS_STATUS"/>
+		<result property="userName" column="USER_NAME"/>
 		<result property="joinDate" column="JOIN_DATE"/>
 	</resultMap>
 	
 	<!-- Event -->
+	<select id="selectEvent" resultMap="eventResultMap">
+		SELECT C.*, ROWNUM FROM EVENT C WHERE ROWNUM = 1
+	</select>
 	<select id="selectEventOneByNo" resultMap="eventResultMap" parameterType="_int">
 		SELECT * FROM EVENT WHERE EVENT_NO = #{eventNo }
 	</select>
@@ -38,6 +47,12 @@
 	<select id="selectEventAnswerList" resultMap="eventAnswerResultMap">
 		SELECT EVENT_NO, USER_ID, JOIN_DATE, ROWNUM FROM EVENT_ANSWER
 	</select>
+	<select id="adminEventAnswerList" resultMap="eventAnswerResultMap">
+		SELECT E.*, U.USER_NAME, (POINT + CHARGE_POINT) AS POINT FROM EVENT_ANSWER E INNER JOIN USERS U ON (E.USER_ID = U.USER_ID) ORDER BY E.JOIN_DATE DESC
+	</select>
+	<select id="selectEventAnswerListCount" resultType="_int">
+		SELECT COUNT(*) FROM EVENT_ANSWER
+	</select>
 	<select id="selectEventAnswerUserCheck" resultType="_int" parameterType="string">
 		SELECT COUNT(*) FROM EVENT_ANSWER WHERE USER_ID = #{userId }
 	</select>
@@ -45,19 +60,37 @@
 		INSERT INTO EVENT_ANSWER VALUES (#{eventNo }, #{userId }, DEFAULT)
 	</insert>
 	<delete id="deleteEventAnswer">
-		DELETE FROM DELETE_ANSWER
+		DELETE FROM EVENT_ANSWER
 	</delete>
 	
 	<!-- EventWinning -->
 	<select id="selectEventWinnerList" resultMap="eventWinnerResultMap">
-		SELECT * FROM EVENT_WINNER
+		SELECT * FROM EVENT_WINNER WHERE PAYMENTS_STATUS = 'N' ORDER BY JOIN_DATE DESC
+	</select>
+	<select id="adminEventWinnerList" resultMap="eventWinnerResultMap">
+		SELECT E.*, U.USER_NAME, (POINT + CHARGE_POINT) AS POINT FROM EVENT_WINNER E INNER JOIN USERS U ON (E.USER_ID = U.USER_ID) WHERE PAYMENTS_STATUS = 'N' ORDER BY JOIN_DATE DESC
+	</select>
+	<select id="eventWinnerList" resultMap="eventWinnerResultMap">
+		SELECT * FROM EVENT_WINNER WHERE PAYMENTS_STATUS = 'Y'
+	</select>
+	<select id="selectEventWinnerListCount" resultType="_int">
+		SELECT COUNT(*) FROM EVENT_WINNER
+	</select>
+	<select id="selectEventCheckUserId" resultType="_int" parameterType="string">
+		SELECT COUNT(*) FROM EVENT_WINNER WHERE USER_ID = #{userId }
 	</select>
 	<insert id="insertEventWinner" parameterType="list">
   		<foreach item="item" open="INSERT ALL" close="SELECT * FROM SYS.DUAL" collection="list" separator=" ">
 	  		INTO EVENT_WINNER VALUES
-  			(#{item.eventNo }, #{item.userId }, DEFAULT)
+  			(#{item.eventNo }, #{item.userId }, DEFAULT, DEFAULT)
   		</foreach>
   	</insert>
+  	<update id="updateEventWinnerPaymentsStatus" parameterType="java.util.Arrays">
+  		UPDATE EVENT_WINNER SET PAYMENTS_STATUS = 'Y' WHERE USER_ID IN
+  		<foreach collection="array" item="item" index="index" separator=", " open="(" close=")">
+  			#{item }
+  		</foreach>
+  	</update>
   	<delete id="deleteEventWinner">
   		DELETE FROM EVENT_WINNER
   	</delete>

@@ -183,8 +183,8 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public int modifyEventWinnerPoint(List<EventWinner> wList) {
-		return store.updateEventWinnerPoing(wList);
+	public int modifyEventWinnerPoint(String [] userId) {
+		return store.updateEventWinnerPoint(userId);
 	}
 	
 	@Override

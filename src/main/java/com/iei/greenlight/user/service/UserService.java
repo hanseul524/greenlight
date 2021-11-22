@@ -37,7 +37,7 @@ public interface UserService {
 	
 	public int modifyEventAnswerPoint(String userId);
 	
-	public int modifyEventWinnerPoint(List<EventWinner> wList);
+	public int modifyEventWinnerPoint(String [] userId);
 
 	public int checkSocialId(User userOne);
 
