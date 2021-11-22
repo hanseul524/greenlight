@@ -98,6 +98,7 @@ public class UserController {
    }
    
    // 로그인
+   @ResponseBody
    @RequestMapping(value="login.do", method=RequestMethod.POST)
    public String loginUser(@ModelAttribute User user, HttpServletRequest request) {
       HttpSession session = request.getSession();
@@ -105,9 +106,9 @@ public class UserController {
       if(userOne != null) {
          String userId = userOne.getUserId();
          session.setAttribute("userId", userId);
-         return "redirect:main.do";
+         return "success";
       }else {
-         return"user/error";
+         return"fails";
       }
       
    }
@@ -329,12 +330,5 @@ public class UserController {
 			return "fail";			
 		}
 	}
-	
-	// 관리자 페이지 회원 검색
-	@ResponseBody
-	@RequestMapping(value="searchUserView.do", method=RequestMethod.POST)
-	public String searchUserList() {
-		
-		return "";
-	}
+
 }

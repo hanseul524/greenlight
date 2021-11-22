@@ -40,11 +40,11 @@ public interface UserStore {
 
 	public int socialInsertUser(User user);
 	
-	User selectUser(String userId);
+	public User selectUser(String userId);
 	
-	int updateUser(User user);
+	public int updateUser(User user);
 	
-	int deleteUser(String userId);
+	public int deleteUser(String userId);
 
 	public int updateChargePoint(User userOne);
 

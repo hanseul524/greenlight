@@ -34,17 +34,16 @@
 		<result property="dtReplyUserId" column="DT_REPLY_USERID"/>
 		<result property="dtReplyDate" column="DT_REPLY_DATE"/>
 	</resultMap>
-	
 	<!-- 페이징 처리 위한 count -->
 	<select id="selectListCount" resultType="_int">
-		SELECT COUNT(*) FROM DONATION_BOARD
+		SELECT COUNT(*) FROM DONATION_BOARD WHERE DT_SUCCESS = 'N'
 	</select>
 	<!-- donationBoard 리스트 불러오기 -->
 	<select id="selectDonationBoardAllList" resultMap="donationBoardResultMap">
 		SELECT
 		D.BOARD_NO, D.DT_SUBJECT, D.DT_CONTENTS, D.DT_REPLY_COUNT, D.DT_TARGET_AMOUNT, D.DT_DONATION_AMOUNT, D.DT_SUCCESS, D.WRITER_ID, D.WRITE_DATE,
 		F.FILE_NAME, F.FILE_PATH, F.FILE_MAIN FROM DONATION_BOARD D LEFT JOIN DT_FILE F
-		ON D.BOARD_NO = F.BOARD_NO WHERE F.FILE_MAIN = 'Y' ORDER BY BOARD_NO DESC
+		ON D.BOARD_NO = F.BOARD_NO WHERE F.FILE_MAIN = 'Y' AND D.DT_SUCCESS = 'N' ORDER BY BOARD_NO DESC
 	</select>
 	
 	<!-- donationBoard 디테일 -->

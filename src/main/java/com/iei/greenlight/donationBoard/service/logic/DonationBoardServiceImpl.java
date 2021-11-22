@@ -13,6 +13,7 @@ import com.iei.greenlight.donationBoard.domain.DtFile;
 import com.iei.greenlight.donationBoard.domain.PageInfo;
 import com.iei.greenlight.donationBoard.service.DonationBoardService;
 import com.iei.greenlight.donationBoard.store.DonationBoardStore;
+import com.iei.greenlight.user.domain.User;
 
 @Service
 public class DonationBoardServiceImpl implements DonationBoardService{
@@ -158,5 +159,10 @@ public class DonationBoardServiceImpl implements DonationBoardService{
 	@Override
 	public int DonationBoardRemoveImage(int boardNo) {
 		return store.deleteDonationBoardImage(boardNo);
+	}
+
+	@Override
+	public User selectUserPoint(String userId) {
+		return store.selectUserPoint(userId);
 	}
 }
