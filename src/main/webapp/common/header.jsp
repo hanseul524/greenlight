@@ -109,14 +109,14 @@
     </div>
     <div class="user-area">
     <c:if test="${userId eq null }"><a href="loginView.do">Login</a></c:if>
-    <div class="user-area">
-      <a class="icon" href="userList.do" style="margin: 0;"><i class="fas fa-user-circle fa-2x" style="color: gray;"></i></a>
-      <ul class="user-navi">
-      	<li><a href="myPage.do">마이페이지</a></li>
-      	<li><a href="chargeList.do">포인트</a></li>
-      	<li><a href="logout.do">로그아웃</a></li>
-      </ul>
-    </div><!--괜찮  -->
+	    <div class="user-area">
+	      <a class="icon" href="userList.do" style="margin: 0;"><i class="fas fa-user-circle fa-2x" style="color: gray;"></i></a>
+	      <ul class="user-navi">
+	      	<li><a href="myPage.do">마이페이지</a></li>
+	      	<li><a href="chargeList.do">포인트</a></li>
+	      	<li><a href="logout.do">로그아웃</a></li>
+	      </ul>
+	    </div><!--괜찮  -->
     <c:if test="${userId eq 'admin' and userId ne null}"><i class="fas fa-user-cog fa-2x" style="color: gray;"></i></c:if> <!-- 안괜찮 -->
       
 <!--       <ul> -->

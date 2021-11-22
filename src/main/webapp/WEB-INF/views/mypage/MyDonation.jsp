@@ -27,43 +27,49 @@
 		          <li class="nav-item"><a href="myDonation.do" class="nav-link active">나의 기부 현황</a></li>
 	           </ul>
 	       </div>
+	       <c:if test="${ empty dList }">
+            	<h1 align="center">기부한 게시물이 없습니다.</h1>
+            </c:if>
+            <c:if test="${ not empty dList }">
     <c:forEach items="${dList }" var="donationBoard">
-		    <ul class="box">
-		      <li class="item">
-		        <div class="box-inner">
-		        <c:if test="${donationBoard.fileMain eq 'Y' }">
-		          <div class="box-img">
-		          	<img alt="" src="../../../resources/donationUploadFiles/${donationBoard.fileName}">
-		          </div>
-		        </c:if>		        
-		          <div class="contents-bottom">
-		            <div class="box-user" style="height: 50px;">
-		              <div style="float: left; margin-right: 15px;">
-		                <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
-		              </div>
-		              <span style="color: #293e31a2; font-size: 13px;">${donationBoard.writerId }</span><br>
-		              <span style="color: #293e31a2; font-size: 13px;">${donationBoard.writeDate }</span>
-		            </div>
-		            <div class="box-contents">
-		            	<c:url var="dBoardDetail" value="donationBoardDetail.do">
-		            		<c:param name="boardNo" value="${donationBoard.boardNo }"></c:param>
-		            	</c:url>
-		              <a href="${dBoardDetail }">
-		                ${donationBoard.dtSubject }
-		              </a>
-		              <div class="charts" style="background-color: rgb(240, 236, 236);  border-radius: 10px; margin-top: 2%;">
-		              	<div class="charts__chart" style="width: ${(donationBoard.donationAmount / donationBoard.dtTargetAmount) * 100 }%; background-color: rgb(126, 187, 34); margin: 0; border-radius: 10px; z-index: 1;"></div>
-		              </div>
-		              <span style="font-size: 12px; position: relative; left: 90%;">${(donationBoard.donationAmount / donationBoard.dtTargetAmount) * 100 }%</span>
-		            </div>
-		            <hr>
-		            <div style="padding-top: 10px;">
-		              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp;${donationBoard.dtReplyCount }</span>
-		            </div>
-		          </div>
-		          </div>
-		      </li>
-	    </ul>
+    	   <c:if test="${donationBoard.dtSuccess eq 'N' }">
+			    <ul class="box">
+			      <li class="item">
+			        <div class="box-inner">
+			        <c:if test="${donationBoard.fileMain eq 'Y' }">
+			          <div class="box-img">
+			          	<img alt="" src="${pageContext.request.contextPath}/resources/donationUploadFiles/${donationBoard.fileName}">
+			          </div>
+			        </c:if>		        
+			          <div class="contents-bottom" >
+			            <div class="box-user" style="height: 50px;">
+			              <div style="float: left; margin-right: 15px;">
+			                <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
+			              </div>
+			              <span style="color: #293e31a2; font-size: 13px;">${donationBoard.writerId }</span><br>
+			              <span style="color: #293e31a2; font-size: 13px;">${donationBoard.writeDate }</span>
+			            </div>
+			            <div class="box-contents">
+			            	<c:url var="dBoardDetail" value="donationBoardDetail.do">
+			            		<c:param name="boardNo" value="${donationBoard.boardNo }"></c:param>
+			            	</c:url>
+			              <a href="${dBoardDetail }">
+			                ${donationBoard.dtSubject }
+			              </a>
+			              <div class="charts" style="background-color: rgb(240, 236, 236);  border-radius: 10px; margin-top: 2%;">
+			              	<div class="charts__chart" style="width: ${(donationBoard.donationAmount / donationBoard.dtTargetAmount) * 100 }%; background-color: rgb(126, 187, 34); margin: 0; border-radius: 10px; z-index: 1;"></div>
+			              </div>
+			              <span style="font-size: 12px; position: relative; left: 87%;">${donationBoard.achievement }%</span>
+			            </div>
+			            <hr>
+			            <div>
+			              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp;${donationBoard.dtReplyCount }</span>
+			            </div>
+			          </div>
+			          </div>
+			      </li>
+		    </ul>
+	    </c:if>
     </c:forEach>
 	</div>
     <div class="page_wrap">
@@ -97,6 +103,7 @@
       <c:if test="${pi.currentPage < pi.maxPage }">
          <a class="arrow next" href="${after }"></a>
       </c:if>
+	    </c:if>
       </div>
     </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
