@@ -129,7 +129,7 @@
     	    let checkFlag = false;
 		    	    $("input[name=day]").each(function(index, item) {
 		    	    	if(d == $(item).val()) {
-		    	    		html += "<div style='border=1px solid red; 'class='dateSel ''class='dateSell '"+tmpClass+">"+d+"<br><br><p align='center'>출석 완료</p>"+"</div>";
+		    	    		html += "<div style='border=1px solid red; 'class='dateSel ''class='dateSell '"+tmpClass+">"+d+"<br><img class='adCheckMark' src='../../../resources/img/adCheck.png' alt=''>"+"</div>";
 		    	    		checkFlag = true;
 		    	    		return false;
 		    	    	}

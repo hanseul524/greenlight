@@ -40,12 +40,19 @@ header{
             display: block;
             text-decoration: none;
         }
+main{
+	height: 500px;
+	width: 1200px;
+	background-color: #d5ffd5;
+}
 #main-section{
     text-align: center;
     margin-left: 280px;
-    margin-top: 150px;
+    margin-top: 50px;
     height: 400px;
-    width: 700px;
+    width: 700px;	
+    position: relative;
+	top: 80px;
 }
     #main-img{
         height: 300px;

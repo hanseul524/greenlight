@@ -49,15 +49,22 @@
 				<label for="inputId" class="form-label">이름</label>
 				<input type="text" class="form-control" name="userName" id="inputName" value="${user.userName }" readonly>
 			</div>
-			<div class="col-md-5" style="display: inline-block; margin-top: 2%;">
-				<label for="inputPwd" class="form-label">비밀번호</label>
-				<input type="password" class="form-control" name="userPwd" id="inputPwd" placeholder="비밀번호는 영문 숫자 특수문자 조합으로 8~15글자로 입력해주세요.">
-				<div class="invalid-feedback">비밀번호는 영문 숫자 특수문자 조합으로 8~15글자로 입력해주세요.</div>
+			<div class="col-md-5" style="disply: block; margin-top: 2%;">
+				<label for="myPwd" class="form-label">현재 비밀번호</label>
+				<input type="password" class="form-control" id="myPwd" placeholder="현재 비밀번호를 입력해주세요">
+				<div class="invalid-feedback">비밀번호를 확인해주세요.</div>
 			</div>
-			<div class="col-md-5" style="display: inline-block; margin-top: 2%; margin-left: 9%;">
-				<label for="inputPwdCheck" class="form-label">비밀번호 확인</label>
-				<input type="password" class="form-control" id="inputPwdCheck" placeholder="비밀번호와 일치하게 입력해주세요.">
-				<div class="invalid-feedback">비밀번호와 일치하지 않습니다.</div>
+			<div>
+				<div class="col-md-5" style="display: inline-block; margin-top: 2%;">
+					<label for="inputPwd" class="form-label">비밀번호</label>
+					<input type="password" class="form-control" name="userPwd" id="inputPwd" placeholder="비밀번호는 영문 숫자 특수문자 조합으로 8~15글자로 입력해주세요.">
+					<div class="invalid-feedback">비밀번호는 영문 숫자 특수문자 조합으로 8~15글자로 입력해주세요.</div>
+				</div>
+				<div class="col-md-5" style="display: inline-block; margin-top: 2%; margin-left: 9%;">
+					<label for="inputPwdCheck" class="form-label">비밀번호 확인</label>
+					<input type="password" class="form-control" id="inputPwdCheck" placeholder="비밀번호와 일치하게 입력해주세요.">
+					<div class="invalid-feedback">비밀번호와 일치하지 않습니다.</div>
+				</div>
 			</div>
 			<div class="col-md-5" style="margin-top: 2%;">
 				<label for="inputEmail" class="form-label">이메일</label>
@@ -68,7 +75,6 @@
 					<p>전화번호</p>
 					<!-- <button style="position: relative; bottom: 3px; border-color: rgb(211, 207, 207);" type="button" class="btn btn-default btn-sm" onclick="" id="phoneBtn">휴대폰 인증</button> -->
 					<input type="text" name="userPhone" class="form-control" id="userPhone" name="userPhone" style="width: 50%; display: inline-block;" value="${user.userPhone }" readonly>
-					<input type="button" class="btn btn-default btn-sm" id="phoneBtn" style="position: relative; bottom: 3px; border-color: rgb(211, 207, 207);" value="휴대폰 인증">
 					<input type="text" id="inputCertifiedNumber" placeholder="인증번호를 입력하세요." class="form-control" style="width: 50%; display: none;">
 					<input type="button" value="확인" class="btn btn-default btn-sm" id="checkBtn" style="border-color: rgb(211, 207, 207); display: none;">
 					<input type="hidden" id="checkPhone" value="checkPhone">
@@ -99,8 +105,8 @@
 			</c:forTokens>
 			<div align="center" style="height: 80px; width: 500px; margin:0 auto;">
                 <div class="col-12" style="margin-top: 5%; float: left;">
-                    <button type="button" onclick="join();" class="btn btn-lg" style="background-color: blue; color: white;">수정하기</button>
-                    <button type="button" onclick="deleteUser();" class="btn btn-lg" style="background-color: red; color: white;">탈퇴하기</button>
+                    <button type="button" onclick="join();" class="submit-btun">수정하기</button>
+                    <button type="button" onclick="deleteUser();" class="submit-btun">탈퇴하기</button>
                 </div>
             </div>
 		</form>
@@ -108,10 +114,22 @@
 		</div>
 	<jsp:include page="/common/footer.jsp"></jsp:include>
 	<script>
+		$("#myPwd").blur(function(){
+			var userPwd = $("#myPwd").val();
+			if($("#myPwd").val() != '${user.userPwd}'){
+				$("#myPwd").addClass("is-invalid");
+				return false;
+			}else{
+				$("#myPwd").removeClass("is-invalid");
+				$("#myPwd").addClass("is-valid");
+				return true;
+			}
+		})
+	
 	    $("#inputPwd").blur(function(){
 	    	var checkPwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/;
 			var userPwd = $("#inputPwd").val();
-			if(!checkPwd.test(userPwd){
+			if(!checkPwd.test(userPwd)){
 				$("#inputPwd").addClass("is-invalid");
 				return false;
 			}else{
@@ -120,10 +138,12 @@
 				return true;
 			}
 	    });
-	    $("#inputPwdCheck").blur(function(){
+		
+		$("#inputPwdCheck").blur(function(){
 	    	var checkPwd2 = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,15}$/;
+	    	var userPwd = $("#inputPwd").val();
 			var reCheckPwd2 = $("#inputPwdCheck").val();
-			if(!checkPwd2.test(reCheckPwd2) || reCheckPwd2 ==""){
+			if(!checkPwd2.test(reCheckPwd2) || reCheckPwd2 != userPwd){
 				$("#inputPwdCheck").addClass("is-invalid");
 				return false;
 			}else{
@@ -132,35 +152,36 @@
 				return true;
 			}
 	    });
-		
 	
 		 function join(){
-			 if($("#inputId").val() == ""){
-				 $("#inputId").addClass("is-invalid");
-				 return false; 
-			 }else if($("#inputName").val() == ""){
-				 $("#inputname").addClass("is-invalid");
-				 return false;
-			 }else if($("#inputPwd").val() == ""){
-				 $("#inputPwd").addClass("is-invalid");
-				 return false;
-			 }else if($("#inputPwdCheck").val() == ""){
-				 $("#inputPwdCheck").addClass("is-invalid");
-				 return false;
-			 }else if($("#inputEmail").val() == ""){
-				 $("#inputEmail").addClass("is-invalid");
-				 return false;
-			 }else if($("#inputAddress").val() == ""){
-				 $("#inputAddress").addClass("is-invalid");
-				 return false;
-			 }else if($("#inputAddress2").val() == ""){
-				 $("#inputAddress2").addClass("is-invalid");
-				 return false;
-			 }else if($("#inputAddress3").val() == ""){
-				 $("#inputAddress3").addClass("is-invalid");
-				 return false;
-			 }else{
-				 $("#loginForm").submit();
+			 if(confirm("정말 탈퇴하실 건가요?")){
+				 if($("#inputId").val() == ""){
+					 $("#inputId").addClass("is-invalid");
+					 return false; 
+				 }else if($("#inputName").val() == ""){
+					 $("#inputname").addClass("is-invalid");
+					 return false;
+				 }else if($("#inputPwd").val() == ""){
+					 $("#inputPwd").addClass("is-invalid");
+					 return false;
+				 }else if($("#inputPwdCheck").val() == ""){
+					 $("#inputPwdCheck").addClass("is-invalid");
+					 return false;
+				 }else if($("#inputEmail").val() == ""){
+					 $("#inputEmail").addClass("is-invalid");
+					 return false;
+				 }else if($("#inputAddress").val() == ""){
+					 $("#inputAddress").addClass("is-invalid");
+					 return false;
+				 }else if($("#inputAddress2").val() == ""){
+					 $("#inputAddress2").addClass("is-invalid");
+					 return false;
+				 }else if($("#inputAddress3").val() == ""){
+					 $("#inputAddress3").addClass("is-invalid");
+					 return false;
+				 }else{
+					 $("#loginForm").submit();
+				 }
 			 }
 		 }
 		 
@@ -219,7 +240,7 @@
 			}
 		function deleteUser(){
 			if(confirm("정말 탈퇴하실 건가요?")){
-				if($("#inputPwd").val() == ${user.userPwd} && $("#inputPwdCheck").val() == ${user.userPwd}){
+				if($("#inputPwd").val() == $("#inputPwdCheck").val() && $("#myPwd").val() == '${user.userPwd}'){
 					alert("다시 찾아오실 때까지 기다리겠습니다!")
 					location.href='userDelete.do?userId=${user.userId }';
 				}else{

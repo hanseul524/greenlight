@@ -45,7 +45,7 @@
         </nav>
         <main>
             <div id="main-section">
-                <div id="main-img"><img src="../../../resources/css/mypage/img/mybatis.png" alt=""></div>
+                <div id="main-img"><img src="../../../resources/img/recycle.png" alt=""></div>
                 <div id="main-text">
                 	<c:if test="${empty history }">
 	                	<p>
