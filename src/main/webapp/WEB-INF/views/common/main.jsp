@@ -17,10 +17,29 @@
 </head>
 <body>
 <div class="container">
-  <div class="main-area">
+<div class="main-area">
 <jsp:include page="/common/header.jsp"></jsp:include>
-      <div class="first-area">
+<!-- Swiper -->
+    <div class="swiper mySwiper1">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="${pageContext.request.contextPath}/resources/img/mainone.png">
+        </div>
+        <div class="swiper-slide">
+          <img src="${pageContext.request.contextPath}/resources/img/maintwo.jpeg" />
+        </div>
+        <div class="swiper-slide">
+          <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
+        </div>
+      </div>
+      <div class="swiper-button-next1"></div>
+      <div class="swiper-button-prev1"></div>
+      <div class="swiper-pagination1"></div>
     </div>
+
+<!--   <div class="first-area"> -->
+<%--   	<img src="${pageContext.request.contextPath}/resources/img/mainone.png"> --%>
+<!--   </div> -->
   </div>
   <div class="site-info">
     <a href="#">
@@ -53,7 +72,8 @@
   	</div>
   </div>
   <div class="ch-area">
-    <div class="swiper mySwiper">
+     <!-- Swiper -->
+    <div class="swiper mySwiper2">
       <div class="swiper-wrapper">
         <div class="swiper-slide">Slide 1</div>
         <div class="swiper-slide">Slide 2</div>
@@ -74,7 +94,20 @@
 <jsp:include page="/common/footer.jsp"></jsp:include>
 <!-- Initialize Swiper -->
 <script>
-  var swiper = new Swiper(".mySwiper", {
+	var swiper1 = new Swiper(".mySwiper1", {
+	    spaceBetween: 30,
+	    effect: "fade",
+	    navigation: {
+	      nextEl: ".swiper-button-next1",
+	      prevEl: ".swiper-button-prev1",
+	    },
+	    pagination: {
+	      el: ".swiper-pagination1",
+	      clickable: true,
+	    },
+	  });
+
+  var swiper2 = new Swiper(".mySwiper2 ", {
     slidesPerView: 3,
     spaceBetween: 30,
     slidesPerGroup: 3,
@@ -89,6 +122,8 @@
       prevEl: ".swiper-button-prev",
     },
   });
+
+
 </script>
 </body>
 </html>

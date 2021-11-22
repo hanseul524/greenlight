@@ -22,49 +22,54 @@
       <span class="menubar"><a href="ChallengeListView.do?check=all">All</a></span>
       	<input type="hidden" name="check" value="${check }">
 	    <input type="text" name="search-title" id="search-title" placeholder="제목을 입력해주세요.">
-        <input type="submit" value="search" id="submitBtn">
+        <button type="submit" class="searchBtn"><i class="fas fa-search"></i></button>
       <span class="write-btn"><a href="ChallengeWriteview.do">write</a></span>
 	  </form>
     </div>
 	    <div class="category-area">
 	      <span>${category.chCategory }</span>
 	    </div>
-    <c:forEach items="${cList }" var="challenge">
-	    <input type="hidden" value="${challenge.categoryNo }" name="categoryNo">
-		    <ul class="box">
-		      <li class="item">
-		        <div class="box-inner">
-		        <c:if test="${challenge.fileMain eq 'Y' }">
-		          <div class="box-img">
-		          	<img alt="" src="${pageContext.request.contextPath}/resources/cuploadFiles/${challenge.fileName}">
-		          </div>
-		        </c:if>		        
-		          <div class="contents-bottom">
-		            <div class="box-user">
-		              <div style="float: left; margin-right: 15px;">
-		                <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
-		              </div>
-		              <span style="color: #293e31a2; font-size: 13px;">${challenge.chWriter }<br>${challenge.writeDate }</span>
-		            </div>
-		            <div class="box-contents">
-		            	<c:url var="cDetail" value="ChallengeDetail.do">
-		            		<c:param name="chNo" value="${challenge.chNo }"></c:param>
-		            	</c:url>
-		              <a href="${cDetail }">
-		                ${challenge.chTitle }
-		              </a>
-		            </div>
-		            <br>
-		            <hr>
-		            <div style="padding-top: 10px;">
-		              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp;${challenge.replyCount }</span>
-		              <span class="like"><i class="far fa-heart" style="color: red;"></i>&nbsp;&nbsp;${challenge.likeCount }</span>
-		            </div>
-		          </div>
-		          </div>
-		      </li>
-	    </ul>
-    </c:forEach>
+	<c:if test="${empty cList }">
+		없어요. 
+	</c:if>
+	<c:if test="${not empty cList }">
+	    <c:forEach items="${cList }" var="challenge">
+		    <input type="hidden" value="${challenge.categoryNo }" name="categoryNo">
+			    <ul class="box">
+			      <li class="item">
+			        <div class="box-inner">
+			        <c:if test="${challenge.fileMain eq 'Y' }">
+			          <div class="box-img">
+			          	<img alt="" src="${pageContext.request.contextPath}/resources/cuploadFiles/${challenge.fileName}">
+			          </div>
+			        </c:if>		        
+			          <div class="contents-bottom">
+			            <div class="box-user">
+			              <div style="float: left; margin-right: 15px;">
+			                <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
+			              </div>
+			              <span style="color: #293e31a2; font-size: 13px;">${challenge.chWriter }<br>${challenge.writeDate }</span>
+			            </div>
+			            <div class="box-contents">
+			            	<c:url var="cDetail" value="ChallengeDetail.do">
+			            		<c:param name="chNo" value="${challenge.chNo }"></c:param>
+			            	</c:url>
+			              <a href="${cDetail }">
+			                ${challenge.chTitle }
+			              </a>
+			            </div>
+			            <br>
+			            <hr>
+			            <div style="padding-top: 10px;">
+			              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp;${challenge.replyCount }</span>
+			              <span class="like"><i class="far fa-heart" style="color: red;"></i>&nbsp;&nbsp;${challenge.likeCount }</span>
+			            </div>
+			          </div>
+			          </div>
+			      </li>
+		    </ul>
+	    </c:forEach>
+	</c:if>
 	</div>
     <div class="page_wrap">
     <c:url var="before" value="ChallengeListView.do">

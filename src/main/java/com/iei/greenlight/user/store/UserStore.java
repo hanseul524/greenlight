@@ -51,6 +51,10 @@ public interface UserStore {
 	public int updateCancelChargePoint(User user);
 	 // 관리자 페이지
 	public int selectListCount();
+	
+	public int selectSearchListCount(String userId);
+	
+	public List<User> selectSearchList(HashMap<String, Object> hashmap);
 	   
 	public List<User> selectUserList(PageInfo upi); 
 	

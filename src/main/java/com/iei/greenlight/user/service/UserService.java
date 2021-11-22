@@ -57,6 +57,10 @@ public interface UserService {
 	// 관리자 페이지
 	public int getListCount();
 	
+	public int getSearchListCount(String userId);
+	
+	public List<User> printSearchList(HashMap<String, Object> hashmap);
+	
 	public List<User> showUserList(PageInfo upi); 
 	
 	public int removeUser(List<String> uList);

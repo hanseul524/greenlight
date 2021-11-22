@@ -26,6 +26,13 @@ body {
   border-radius: 5px;
   font-weight: 300;
 }
+.searchBtn {
+  position: absolute;
+  right: 385px;
+  top: 192px;
+  background: none;
+  border: none;
+}
 a {
   text-decoration: none;
   color: black

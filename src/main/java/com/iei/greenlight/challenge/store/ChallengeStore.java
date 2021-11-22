@@ -30,6 +30,10 @@ public interface ChallengeStore {
 	public Challenge selectOne(int chNo);
 	public List<CFile> selectOneImg(int chNo);
 	public List<CFile> selectImgDel(int chNo);
+	
+	// 챌린지 수정 
+	public int deleteModifyImg(int chNo);
+	
 	public ChLike selectLike(HashMap<String, Object> hashMap);
 	public int insertLike(HashMap<String, Object> hashMap);
 	public int updateLike(ChLike chlike);
@@ -53,4 +57,5 @@ public interface ChallengeStore {
 	//마이페이지
 	public int selectMyListCount(String userId);
 	public List<Challenge> selectMyChall(HashMap<String, Object> hashMap);
+	public List<CFile> selectDeleteImg(int chNo);
 }

@@ -166,4 +166,17 @@ public class UserStoreLogic implements UserStore{
 		return result;
 	}
 
+	@Override
+	public int selectSearchListCount(String userId) {
+		return sqlSession.selectOne("userMapper.selectSearchListCount", userId);
+	}
+
+	@Override
+	public List<User> selectSearchList(HashMap<String, Object> hashmap) {
+		PageInfo upi = (PageInfo)hashmap.get("upi");
+		int offset = (upi.getCurrentPage() -1) * upi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, upi.getBoardLimit());
+		return sqlSession.selectList("userMapper.selectSearchList", hashmap, rowBounds);
+	}
+
 }

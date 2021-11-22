@@ -48,6 +48,11 @@ public class ChallengeServiceImpl implements ChallengeService{
 	}
 
 	@Override
+	public int removeModifyImg(int chNo) {
+		return store.deleteModifyImg(chNo);
+	}
+
+	@Override
 	public int removeChallenge(int chNo) {
 		int result = store.deleteChallenge(chNo);
 		return result;
@@ -190,5 +195,11 @@ public class ChallengeServiceImpl implements ChallengeService{
 	public Category printCategoryTitle(int categoryNo) {
 		return store.selectCategoryTitle(categoryNo);
 	}
+
+	@Override
+	public List<CFile> printDeleteImg(int chNo) {
+		return store.selectDeleteImg(chNo);
+	}
+
 
 }

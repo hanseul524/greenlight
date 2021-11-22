@@ -114,33 +114,37 @@ public class ChallengeController {
 		}
 	}
 	
-//	// 파일 저장
-//	public CFile saveFile(MultipartFile uploadFile, HttpServletRequest request ) {
-//		
-//		String root = request.getSession().getServletContext().getRealPath("resources");
-//		String savePath = root + "\\cuploadFiles";
-//		File folder = new File(savePath);
-//		if(!folder.exists()) {
-//			folder.mkdir();
-//		}
-//		String filePath = folder + "\\" + uploadFile.getOriginalFilename();
-//		String fileName = uploadFile.getOriginalFilename();
-//		
-//		try {
-//			uploadFile.transferTo(new File(filePath));
-//		} catch (IllegalStateException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		CFile cfile = new CFile(fileName, filePath);
-//		return cfile;
-//	}
+	// 파일 저장
+	public CFile saveFile(MultipartFile uploadFile, HttpServletRequest request, int chNo) {
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\cuploadFiles";
+		File folder = new File(savePath);
+		CFile cfile = new CFile();
+		if(!folder.exists()) {
+			folder.mkdir();
+		}
+		String filePath = folder + "\\" + uploadFile.getOriginalFilename();
+		String fileName = uploadFile.getOriginalFilename();
+		
+		try {
+			uploadFile.transferTo(new File(filePath));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			cfile.setChNo(chNo);
+			cfile.setFileName(fileName);
+			cfile.setFilePath(filePath);
+			cfile.setFileSize(uploadFile.getSize());
+		}
+		return cfile;
+	}
 	
 	// 챌린지 리스트 뷰 + 페이징 처리
 	@RequestMapping(value="ChallengeListView.do", method=RequestMethod.GET)
 	public String ChallengeListView(
-			@ModelAttribute Challenge challenge,
 			HttpServletRequest request,
 			Model model,
 			@RequestParam(value="check", required=false) String check,
@@ -170,8 +174,8 @@ public class ChallengeController {
 			model.addAttribute("check", check);
 			return "challenge/ChallengeListView";
 		}else {
-			model.addAttribute("msg", "리스트 조회 실패");
-			return "common/errorPage";
+			model.addAttribute("cList", null);
+			return "challenge/ChallengeListView";
 		}
 	}
 	// 챌린지 게시판 검색
@@ -301,16 +305,17 @@ public class ChallengeController {
 					if(chlike != null) {
 						System.out.println("테이블에 유저 정보 있을 때 " + chlike.toString());
 						model.addAttribute("chlike", chlike);
-						return "challenge/ChallengeDetailView2";
+						return "challenge/ChallengeDetailView";
 					}else { //테이블에 유저 정보가 없을때 insert
 						int result = service.addLike(hashMap);
 						if(result > 0) {
 							chlike = service.LikeCk(hashMap);
 							model.addAttribute("chlike", chlike);
-							return "challenge/ChallengeDetailView2";
+							return "challenge/ChallengeDetailView";
 						}
 					}
 				}
+				model.addAttribute("userId", userId);
 				return "challenge/ChallengeDetailView";
 			}else {
 				model.addAttribute("msg", "상세 조회 실패");
@@ -402,7 +407,6 @@ public class ChallengeController {
 	
 	// 파일 삭제
 	public void deleteFile(String fileName, HttpServletRequest request) {
-		System.out.println(345);
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String fullPath = root + "\\cuploadFiles";
 		File file = new File(fullPath + "\\" + fileName);
@@ -412,12 +416,17 @@ public class ChallengeController {
 	}
 	
 	// 게시글 수정 뷰
-	@RequestMapping(value="ChallengeModify.do")
+	@RequestMapping(value="ChallengeModify.do", method=RequestMethod.GET)
 	public String ChallengeModifyView(
 			@RequestParam("chNo") int chNo,
 			Model model) {
+		List<CFile> cList = null;
 		Challenge challenge = service.printOne(chNo);
 		if(challenge != null) {
+			cList = service.printOneImg(chNo);
+			if(!cList.isEmpty()) {
+				model.addAttribute("cList", cList);
+			}
 			model.addAttribute("challenge", challenge);
 			return "challenge/ChallengeModify";
 		}else {
@@ -431,19 +440,38 @@ public class ChallengeController {
 	public String ChallengeModify(
 			@ModelAttribute Challenge challenge,
 			@RequestParam("editordata") String chContents,
-//			@RequestParam("fileName") String fileName,
+			@RequestParam("uploadFile") MultipartFile[] uploadFiles,
 			Model model,
 			HttpServletRequest request) {
 		try {
 			challenge.setChWriter((String)request.getSession().getAttribute("userId"));
 			challenge.setChContents(chContents);
 			System.out.println(challenge);
-//		challenge.setFileName(fileName);
 			int result = service.modifyChallenge(challenge);
+			int chNo = challenge.getChNo();
+			List<CFile> cList = null;
+			
 			if (result > 0) {
-//			if(fileName != null) {
-//				
-//			}	
+				List<CFile> cdList = service.printDeleteImg(chNo);
+				cList = new ArrayList<CFile>();
+				for(int i=0; i<cdList.size(); i++) {
+					deleteFile(cdList.get(i).getFileName(), request);
+				}
+				for(MultipartFile uploadFile : uploadFiles) {
+					if(!uploadFile.getOriginalFilename().equals("")) {
+						CFile cd = saveFile(uploadFile, request, chNo);
+						cd.setFileMain("N");
+						cd.setChNo(chNo);
+						cd.setCategoryNo(challenge.getCategoryNo());
+						cList.add(cd);
+					}
+				}
+				cList.get(0).setFileMain("Y");
+				int Cresult = service.removeModifyImg(chNo);
+				if(Cresult > 0) {
+					service.registerChImage(cList);
+					System.out.println(cList.toString());
+				}
 				model.addAttribute("chNo", challenge.getChNo());
 				System.out.println(challenge);
 			} else {
