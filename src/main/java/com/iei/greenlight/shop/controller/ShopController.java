@@ -93,12 +93,10 @@ public class ShopController {
 		try {
 			int currentPage = (page != null) ? page : 1;
 			int totalCount = service.getSearchOfflineListCount(searchKeyWord);
-			System.out.println(searchKeyWord);
 			OfflinePageInfo pi = OfflineShopPagination.getPageInfo(currentPage, totalCount);
 			hashmap.put("pi", pi);
 			hashmap.put("searchKeyWord", searchKeyWord);
 			List<OfflineShop> sList = service.printOfflineSearchList(hashmap);
-			System.out.println("지도 검색 size : " + sList.size());
 			if(!sList.isEmpty()) {
 				model.addAttribute("sList", gson.toJson(sList));
 				model.addAttribute("pi", pi);

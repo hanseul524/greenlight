@@ -168,7 +168,7 @@
 				var sttMinutes = sttDt[4];
 				var sttSeconds = sttDt[5];
 				
-				 var sttDt = "2021-11-15";
+				/* var sttDt = "2021-11-15";
 				sttDt = sttDt.split("-");
 				var sttYear = sttDt[0];
 				var sttMonth = sttDt[1]-1;
@@ -177,7 +177,7 @@
 				// 관리자가 경매 진행할 시간 입력하기
 				var sttHours = 15; // 시
 				var sttMinutes = 59; // 분
-				var sttSeconds = 00; // 초 
+				var sttSeconds = 00; // 초 */ 
 				
 			/* ----------------------------------------------------------- */
 				

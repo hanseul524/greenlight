@@ -17,7 +17,7 @@
         ZEROWASTE MAP
     </div>
     <div class="auction-title">
-        <span>${offlineShop.category } </span>&nbsp;&nbsp;&nbsp;&nbsp;<span> ${offlineShop.shopName }</span>
+        <span <c:if test="${offlineShop.category == '매장'}">style="color:orange"</c:if><c:if test="${offlineShop.category == '공방/갤러리'}">style="color:brown"</c:if><c:if test="${offlineShop.category == '나무'}">style="color:green"</c:if><c:if test="${offlineShop.category == '카페/책방'}">style="color:red"</c:if>> ${offlineShop.category } </span>&nbsp;&nbsp;&nbsp;&nbsp;<span> ${offlineShop.shopName }</span>
     </div>
     <div class="offline-info">
         <div class="address">

@@ -183,6 +183,11 @@ public class ChallengeStoreLogic implements ChallengeStore {
 		List<Challenge> cList = session.selectList("challengeMapper.selectAdminAllList", api, rowBounds);
 		return cList;
 	}
+	
+	@Override
+	public List<Challenge> selectRecentList(int chNo) {
+		return session.selectList("challengeMapper.selectRecentList", chNo);
+	}
 
 	@Override
 	public int insertCategory(Category category) {
@@ -193,6 +198,11 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	@Override
 	public Category selectCategoryTitle(int categoryNo) {
 		return session.selectOne("challengeMapper.selectCategoryTitle", categoryNo);
+	}
+	
+	@Override
+	public Category selectRecentCategory() {
+		return session.selectOne("challengeMapper.selectRecentCategory");
 	}
 	
 	@Override
