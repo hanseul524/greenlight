@@ -31,6 +31,20 @@
 	    
 	  });
 </script>
+  <style>
+  button {
+  	float: right;
+  	padding: 7px 12px 7px 12px;
+  	margin: 5px;
+  	border: 1px solid rgba(128, 128, 128, 0.61);
+  	border-radius: 5px;
+  	font-weight: 300;
+  	font-size: 14px;
+	}
+	button:hover {
+  		background-color: #819789c4;
+	}
+  </style>
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
 <div class="container">
@@ -74,7 +88,7 @@
     </div>
       <div class="contents">
           <div class="con-title">
-            <div>
+            <div style="width: 670px;">
               이벤트 당첨 관리 <br>
               <span>이번 이벤트 정답자 리스트입니다. 추첨을 해주세요.</span>
             </div>
@@ -146,7 +160,7 @@
             </div>
 
             <div class="con-title">
-                <div>
+                <div style="width: 670px;">
                   당첨자 추첨 <br>
                   <span>당첨자 중 10%의 회원입니다. 포인트를 지급해주세요</span>
                 </div>

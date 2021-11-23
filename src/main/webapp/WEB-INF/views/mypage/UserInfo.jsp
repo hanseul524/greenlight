@@ -238,7 +238,7 @@
 			}
 		function deleteUser(){
 			if(confirm("정말 탈퇴하실 건가요?")){
-				if($("#inputPwd").val() == $("#inputPwdCheck").val() && $("#myPwd").val() == '${user.userPwd}'){
+				if($("#myPwd").val() == '${user.userPwd}'){
 					alert("다시 찾아오실 때까지 기다리겠습니다!")
 					location.href='userDelete.do?userId=${user.userId }';
 				}else{

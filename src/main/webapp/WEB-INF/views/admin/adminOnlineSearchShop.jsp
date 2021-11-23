@@ -11,6 +11,20 @@
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+  button {
+  	float: right;
+  	padding: 7px 20px 7px 20px;
+  	margin: 5px;
+  	border: 1px solid rgba(128, 128, 128, 0.61);
+  	border-radius: 5px;
+  	font-weight: 300;
+  	font-size: 14px;
+	}
+	button:hover {
+  		background-color: #819789c4;
+	}
+  </style>
 </head>
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
