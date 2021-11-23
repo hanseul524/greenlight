@@ -239,5 +239,15 @@ public class ChallengeStoreLogic implements ChallengeStore {
 		return session.selectList("challengeMapper.selectDelteImg", chNo);
 	}
 
+	@Override
+	public List<Challenge> selectMainChallenge() {
+		return session.selectList("challengeMapper.selectMainChallenge");
+	}
+
+	@Override
+	public CFile selectChallengMainList(int chNo) {
+		return session.selectOne("challengeMapper.selectChallengeMain", chNo);
+	}
+
 
 }

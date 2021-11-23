@@ -32,7 +32,7 @@ public class MainController {
 	@RequestMapping(value="/main.do", method=RequestMethod.GET)
 	public String mainController(Model model) {
 		List<Challenge> cList = cService.printMainChallenge();
-		List<CFile> cFList = new ArrayList()<CFile>();
+		List<CFile> cFList = new ArrayList<CFile>();
 		for(int i=0; i<cList.size(); i++) {
 			int chNo = cList.get(i).getChNo();
 			CFile c = cService.getMainCFileList(chNo);
@@ -68,6 +68,7 @@ public class MainController {
 			model.addAttribute("msg", e);
 			return "common/errorPage";
 		}	
+		model.addAttribute("event", event);
 		return "common/main";
 	}
 }	

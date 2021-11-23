@@ -210,4 +210,14 @@ public class ChallengeServiceImpl implements ChallengeService{
 	public List<CFile> printDeleteImg(int chNo) {
 		return store.selectDeleteImg(chNo);
 	}
+
+	@Override
+	public List<Challenge> printMainChallenge() {
+		return store.selectMainChallenge();
+	}
+
+	@Override
+	public CFile getMainCFileList(int chNo) {
+		return store.selectChallengMainList(chNo);
+	}
 }

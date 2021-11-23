@@ -225,4 +225,12 @@
 	<delete id="deleteChallengeImg" parameterType="_int">
 		DELETE FROM CHALLENGE_FILE WHERE CH_NO = #{chNo}
 	</delete>
+	
+	<select id="selectMainChallenge" resultMap="challengeResultMap">
+		SELECT ROWNUM, C.* FROM (SELECT * FROM CHALLENGE ORDER BY CH_NO DESC) C WHERE ROWNUM BETWEEN 1 AND 6
+	</select>
+	
+	<select id="selectChallengeMain" parameterType="_int" resultMap="cfileResultMap">
+		SELECT * FROM CHALLENGE_FILE WHERE CH_NO = #{chNo } AND FILE_MAIN = 'Y'
+	</select>
 </mapper>

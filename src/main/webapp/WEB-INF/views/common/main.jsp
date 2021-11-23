@@ -101,15 +101,15 @@
      <!-- Swiper -->
     <div class="swiper mySwiper">
       <div class="swiper-wrapper">
-		<c:forEach items="${cFList }" var="File">
-            <c:url var="cDetail" value="ChallengeDetail.do">
-               <c:param name="chNo" value="${File.chNo }"></c:param>
-            </c:url>
-           <div class="swiper-slide">
-              <a href="${cDetail }">
-                 <img src="${pageContext.request.contextPath}/resources/cuploadFiles/${File.fileName }">
-              </a>
-           </div>
+      	<c:forEach items="${cFList }" var="File">
+      		<c:url var="cDetail" value="ChallengeDetail.do">
+      			<c:param name="chNo" value="${File.chNo }"></c:param>
+      		</c:url>
+	        <div class="swiper-slide">
+	        	<a href="${cDetail }">
+	        		<img src="${pageContext.request.contextPath}/resources/cuploadFiles/${File.fileName }">
+	        	</a>
+	        </div>
         </c:forEach>
       </div>
       <div class="swiper-button-next"></div>
