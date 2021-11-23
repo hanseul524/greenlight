@@ -50,7 +50,7 @@
 <body>
   <div class="foot-box">
     <hr style="background-color: black;">
-    <div class="foot-img">푸터 이미지</div>
+    <div class="foot-img"></div>
     <div class="foot-left">
       <h5>INFO</h5>
       <span class="box">배송 & 상품</span><br>

@@ -16,7 +16,7 @@
 <jsp:include page="/common/header.jsp"></jsp:include>
   <div class="container">
   			<nav>
-            <div id="nav-section">
+            <div id="nav-section" style="margin-bottom:30px;">
                 <ul id="nav nav-tabs" style="margin:0; font-size: 15px; font-weight: 400;">
                   <li class="nav-item"><a href="myPage.do" class="nav-link active">활동 기여도</a></li>
                   <li class="nav-item"><a href="myPageAdCheck.do" class="nav-link active">출석체크</a></li>
@@ -36,7 +36,7 @@
     	   <c:if test="${donationBoard.dtSuccess eq 'N' }">
 			    <ul class="box">
 			      <li class="item">
-			        <div class="box-inner" style="width: 300px;height: 428px;border: 0.3px solid #7ea18b;float: left;margin: 30px;">
+			        <div class="box-inner" style="width: 300px;height: 428px;border: 0.3px solid #7ea18b;float: left;margin: 5px; margin-top:10px;">
 			        <c:if test="${donationBoard.fileMain eq 'Y' }">
 			          <div class="box-img">
 			          	<img alt="" src="${pageContext.request.contextPath}/resources/donationUploadFiles/${donationBoard.fileName}">

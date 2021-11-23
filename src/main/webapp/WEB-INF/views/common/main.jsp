@@ -94,7 +94,7 @@
   		</c:if>
   			<p class="event-time">참여 기간 : 2021.11.21 ~ 2021.11.28일 저녁 8시</p>
   	</div>
-  		<img src="${pageContext.request.contextPath}/resources/img/eventEnd.png" id="eventEndImage">
+  		<img src="${pageContext.request.contextPath}/resources/img/eventEnd.png" id="eventEndImage" style="width: 105%;">
   </div>
   	<c:if test="${wList ne null }">
   		<input type="text" name="userCheck" class="input-area" id="userCheck" style="position : relative; left:600px; bottom:230px; width: 300px; text-align: left; padding: 10px; margin-top: 30px; outline: none; border: 0; border-bottom: 2px solid #ffff; background-color: transparent; color: #ffff; font-weight: 500; font-size: 20px;"placeholder="아이디를 검색하여 결과를 확인해주세요.">

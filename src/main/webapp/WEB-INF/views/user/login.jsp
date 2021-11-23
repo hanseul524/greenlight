@@ -87,7 +87,7 @@
 					<button type="button" onclick="idFindCheck();" class="login-btn">아이디
 						찾기</button>
 				</div>
-				<div style="margin-top: 50px;" class="login-btn-wrap">
+				<div style="margin-top: 10px;" class="login-btn-wrap">
 					<span style="margin-top: 50px;"><a style="cursor: pointer;" onclick="pwdFind();">비밀번호 찾기</a> / 
 					<a style="cursor: pointer;" href="enrollView.do">회원가입</a>
 					<a style="cursor: pointer; display: block; " onclick="loginView();">뒤로가기</a></span>
@@ -120,7 +120,7 @@
 					<button type="button" onclick="pwdFindCheck();" class="login-btn">비밀번호
 						찾기</button>
 				</div>
-				<div style="margin-top: 50px;" class="login-btn-wrap">
+				<div style="margin-top: 10px;" class="login-btn-wrap">
 					<span style="margin-top: 50px;"><a style="cursor: pointer;" onclick="idFind();">아이디 찾기</a> / 
 					<a style="cursor: pointer;" href="enrollView.do">회원가입</a>
 					<a style="cursor: pointer; display: block; " onclick="loginView();">뒤로가기</a></span>

@@ -97,8 +97,8 @@
 	                </c:forEach>
                 </div>
                 <div id="main-butn">
-                	<div><button class="point-use-butn" style="background: rgb(42, 173, 248); color: #ffff;"onclick="location.href='auctionListView.do'">기부하기</button></div>
-                	<div><button class="point-use-butn" onclick="location.href='donationBoardList.do'">경매하기</button></div>
+                	<div><button class="point-use-butn" style="background: rgb(42, 173, 248); color: #ffff;"onclick="location.href=donationBoardList.do''">기부하기</button></div>
+                	<div><button class="point-use-butn" onclick="location.href='auctionListView.do'">경매하기</button></div>
                 </div>
 <!--             </div> -->
         </main>

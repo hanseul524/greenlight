@@ -17,7 +17,7 @@
 	</header>
 	<div class="warper">
        <nav>
-            <div id="nav-section">
+            <div id="nav-section" style="margin-bottom:30px;">
                 <ul id="nav nav-tabs" style="margin:0;  font-size: 15px; font-weight: 400;">
                   <li class="nav-item"><a href="myPage.do" class="nav-link active"">활동 기여도</a></li>
                   <li class="nav-item"><a href="myPageAdCheck.do" class="nav-link active">출석체크</a></li>
