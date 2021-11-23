@@ -82,7 +82,8 @@ body {
   font-weight: 300;
   vertical-align: bottom;
 }
-.event-area .input-area {
+
+/* .event-area .input-area {
   width: 300px;
   text-align: left;
   padding: 10px;
@@ -95,17 +96,21 @@ body {
   font-weight: 500;
   font-size: 20px;
 }
+
 .event-area button {
   padding: 7px 20px 7px 20px;
   margin: 20px 50px 0 0;
   border: 1px solid rgba(128, 128, 128, 0.61);
   border-radius: 5px;
   font-weight: 300;
-}
+} */
+
+
 .ch-area {
   width: 100%;
   height: 16%;
 }
+
 .img-box {
   float: left;
   width: 33.3%;
@@ -147,11 +152,11 @@ body {
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
+  overflow : hidden;
 }
 
 .swiper-slide img {
   display: block;
-  width: 100%;
   height: 100%;
   object-fit: cover;
 }

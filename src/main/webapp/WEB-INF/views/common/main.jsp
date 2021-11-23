@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/common/main.css">
 <!-- Link Swiper's CSS -->
@@ -17,6 +16,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Swiper JS -->
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<style>
+	#userCheck::placeholder{
+		font-size : 13px;
+	}
+</style>
 </head>
 <body>
 <div class="container">
@@ -35,12 +39,12 @@
 			                    <p>
 						                        총합  <span>${history.pointUse + user.point }</span>의 포인트로<br>
 						                        나무를 <c:choose>
-						                    <c:when test="${history.pointUse + user.point eq 0 }"><span>0그루</span></c:when>
-						                  	<c:when test="${history.pointUse + user.point <= 999}"><span>10그루</span></c:when>
-						                  	<c:when test="${history.pointUse + user.point <= 9999}"><span>100그루</span></c:when>
-						                  	<c:when test="${history.pointUse + user.point <= 99999}"><span>1000그루</span></c:when>
-						                  	<c:when test="${history.pointUse + user.point >= 100000}"><span>10000그루</span></c:when>
-						                  </c:choose>를 심는 효과를 얻었습니다.
+						                  <c:when test="${history.pointUse + user.point eq 0 }"><span>0그루</span></c:when>
+						                  <c:when test="${history.pointUse + user.point <= 999}"><span>10그루</span></c:when>
+						                  <c:when test="${history.pointUse + user.point <= 9999}"><span>100그루</span></c:when>
+						                  <c:when test="${history.pointUse + user.point <= 99999}"><span>1000그루</span></c:when>
+						                  <c:when test="${history.pointUse + user.point >= 100000}"><span>10000그루</span></c:when>
+						               </c:choose>를 심는 효과를 얻었습니다.
 			                    </p>
 			                </c:if>
 			                <c:if test="${iValue == 2 || iValue == 4 || iValue == 6 || iValue == 8 || iValue == 10}">
@@ -48,11 +52,11 @@
 							                        총합 ${history.pointUse + user.point }의 포인트로<br>
 							                        쓰레기 <c:choose>
 							                    <c:when test="${history.pointUse + user.point eq 0 }"><span>0kg</span></c:when>
-							                  	<c:when test="${history.pointUse + user.point <= 999}"><span>10kg</span></c:when>
-							                  	<c:when test="${history.pointUse + user.point <= 9999}"><span>100kg</span></c:when>
-							                  	<c:when test="${history.pointUse + user.point <= 99999}"><span>1t</span></c:when>
-							                  	<c:when test="${history.pointUse + user.point >= 100000}"><span>10t</span></c:when>
-							                  </c:choose>을 줄이는 효과를 얻었습니다.
+							                	<c:when test="${history.pointUse + user.point <= 999}"><span>10kg</span></c:when>
+							                    <c:when test="${history.pointUse + user.point <= 9999}"><span>100kg</span></c:when>
+							                    <c:when test="${history.pointUse + user.point <= 99999}"><span>1t</span></c:when>
+							                    <c:when test="${history.pointUse + user.point >= 100000}"><span>10t</span></c:when>
+							               </c:choose>을 줄이는 효과를 얻었습니다.
 				                    </p>
 			                </c:if>
 		                </c:forEach>
@@ -93,8 +97,8 @@
   		<img src="${pageContext.request.contextPath}/resources/img/eventEnd.png" id="eventEndImage">
   </div>
   	<c:if test="${wList ne null }">
-  		<input type="text" name="userCheck" class="input-area" id="userCheck" style="position : relative; left:600px; bottom:200px;"placeholder="아이디를 검색하여 결과를 확인해주세요.">
-  		<button class="searchBtn" onclick="eventCheckUser();" style="position : relative; left: 561px; top: -200px"><i class="fas fa-search" style="color:white"></i></button>
+  		<input type="text" name="userCheck" class="input-area" id="userCheck" style="position : relative; left:600px; bottom:230px; width: 300px; text-align: left; padding: 10px; margin-top: 30px; outline: none; border: 0; border-bottom: 2px solid #ffff; background-color: transparent; color: #ffff; font-weight: 500; font-size: 20px;"placeholder="아이디를 검색하여 결과를 확인해주세요.">
+  		<button class="searchBtn" onclick="eventCheckUser();" style="position : relative; left: 561px; top: -230px; padding: 7px 20px 7px 20px; margin: 20px 50px 0 0; border : 0; background : none; font-weight: 300;"><i class="fas fa-search" style="color:white"></i></button>
   	</c:if>
   	<!-- <button onclick="winnerCheck()" class="event-button" style="position : relative; left:725px; bottom:170px;">결과 확인</button> -->
   <div class="ch-area">
@@ -245,7 +249,7 @@
 				var sttMinutes = sttDt[4];
 				var sttSeconds = sttDt[5];
 				
-				/* var sttDt = "2021-11-22";
+				var sttDt = "2021-11-22";
 				sttDt = sttDt.split("-");
 				var sttYear = sttDt[0];
 				var sttMonth = sttDt[1]-1;
@@ -254,7 +258,7 @@
 				// 관리자가 경매 진행할 시간 입력하기
 				var sttHours = 18; // 시
 				var sttMinutes = 34; // 분
-				var sttSeconds = 00; // 초 */
+				var sttSeconds = 00; // 초
 				
 			/* ----------------------------------------------------------- */
 				
@@ -276,7 +280,7 @@
 					result();
 					clearInterval(x);
 				}else{
-					console.log("남은 시간 " + hours + " : " + mins + " : " + secs);
+					/* console.log("남은 시간 " + hours + " : " + mins + " : " + secs); */
 				}
 			
 			},1000);
