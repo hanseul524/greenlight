@@ -44,7 +44,7 @@
     <div class="content">
     	<c:forEach items="${sList }" var="upcycling" varStatus="status">
 	        <div class="auction-box">
-	            <a href="http://${upcycling.shopAddress }">
+	            <a href="http://${upcycling.shopAddress }" target="_blank">
 	                <div class="auction-img">
 	                    <img src="${pageContext.request.contextPath}/resources/shopUploadFiles/${upcycling.shopImage }" class="img">
 	                </div>
@@ -59,7 +59,7 @@
 	   </c:forEach>
     </div>
     <div class="page_wrap">
-		   <c:url var="before" value="onlineShopView.do">
+		   <c:url var="before" value="upCyclingView.do">
 		      <c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 		   </c:url>
 		     <div class="page_nation">
@@ -70,7 +70,7 @@
 		        <a class="arrow prev" href="${before }"></a>
 		     </c:if>
 		     <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
-		        <c:url var="pagenation" value="onlineShopView.do">
+		        <c:url var="pagenation" value="upCyclingView.do">
 		           <c:param name="page" value="${p }"></c:param>
 		        </c:url>
 		        <c:if test="${p eq pi.currentPage }">
@@ -80,7 +80,7 @@
 		           <a href="${pagenation }">${p }</a>
 		        </c:if>
 		     </c:forEach>
-		     <c:url var="after" value="onlineShopView.do">
+		     <c:url var="after" value="upCyclingView.do">
 		        <c:param name="page" value="${pi.currentPage + 1 }"></c:param>
 		     </c:url>
 		     <c:if test="${pi.currentPage >= pi.maxPage }">

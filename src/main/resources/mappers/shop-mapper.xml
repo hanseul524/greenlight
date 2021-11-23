@@ -39,7 +39,7 @@
 		SELECT * FROM OFFLINESHOP WHERE SHOP_NO = #{shopNo }
 	</select>
 	<insert id="insertOfflineShop" parameterType="OfflineShop">
-		INSERT INTO OFFLINESHOP VALUES(182, #{shopName }, #{shopAddress }, #{shopPhone }, #{shopInstagram }, #{category })
+		INSERT INTO OFFLINESHOP VALUES(SEQ_SHOP_NO.NEXTVAL, #{shopName }, #{shopAddress }, #{shopPhone }, #{shopInstagram }, #{category })
 	</insert>
 	<update id="updateOfflineShop" parameterType="offlineShop">
 		UPDATE OFFLINESHOP SET SHOP_NAME = #{shopName }, SHOP_ADDRESS = #{shopAddress }, SHOP_PHONE = #{shopPhone }, SHOP_INSTAGRAM = #{shopInstagram }, CATEGORY = #{category } WHERE SHOP_NO = #{shopNo }

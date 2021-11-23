@@ -45,6 +45,7 @@ public class EventController {
 	@RequestMapping(value="adminEventPage.do")
 	public String adminEventView(Model model, @RequestParam(value="page", required=false) Integer page) {
 		
+		
 		int currentPage = (page != null) ? page : 1;
 		int eventAnswerCount = service.getEventAnswerListCount();
 		int eventWinnerCount = service.getEventWinnerListCount();
@@ -54,26 +55,20 @@ public class EventController {
 		List<EventWinner> wList = service.printEventWinnerList(api);
 		
 		if(!aList.isEmpty() && wList.isEmpty()) {
-			model.addAttribute("pi", pi);
-			model.addAttribute("api", api);
 			model.addAttribute("aList", aList);
 			model.addAttribute("wList", null);
 		}else if(aList.isEmpty() && !wList.isEmpty()) {
-			model.addAttribute("pi", pi);
-			model.addAttribute("api", api);
 			model.addAttribute("aList", null);
 			model.addAttribute("wList", wList);
 		}else if(!aList.isEmpty() && !wList.isEmpty()) {
-			model.addAttribute("pi", pi);
-			model.addAttribute("api", api);
 			model.addAttribute("aList", aList);
 			model.addAttribute("wList", wList);
 		}else if(aList.isEmpty() && wList.isEmpty()){
-			model.addAttribute("pi", pi);
-			model.addAttribute("api", api);
 			model.addAttribute("aList", null);
 			model.addAttribute("wList", null);
 		}
+		model.addAttribute("pi", pi);
+		model.addAttribute("api", api);
 		return "admin/adminEvent";
 	}
 	
@@ -114,7 +109,6 @@ public class EventController {
 			event.setEventStart(format.format(time));
 			event.setEventEnd(format.format(cal.getTime()).substring(0, 11) + "20-00-00");
 			event.setEventPoint(100);
-			System.out.println(event.toString());
 			int result = service.registerEvent(event);
 			if(result > 0) {
 				return "success";
@@ -162,7 +156,6 @@ public class EventController {
 			}
 		}
 		
-		
 		service.removeEventAnswer();
 		int result = service.registerEventWinner(wList); // 당첨자 등록
 		
@@ -203,12 +196,12 @@ public class EventController {
 			int pointUpdate = service.modifyEventWinner(userId);
 			int pointWinner = userService.modifyEventWinnerPoint(userId);
 			int pointHistory = mypageService.registerEventWinnerPointHistory(wList);
+			return "redirect:adminEventPage.do";
 		}catch(Exception e){
 			e.printStackTrace();
 			model.addAttribute("msg", e.toString());
 			return "common/errorPage";
 		}
-		return "redirect:adminEventPage.do";
 	}
 	
 	@ResponseBody

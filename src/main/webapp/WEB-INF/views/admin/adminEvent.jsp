@@ -74,7 +74,6 @@
     </div>
       <div class="contents">
           <div class="con-title">
-          <form action="" method="">
             <div>
               이벤트 당첨 관리 <br>
               <span>이번 이벤트 정답자 리스트입니다. 추첨을 해주세요.</span>
@@ -112,7 +111,6 @@
               </c:if>
               </tbody>
             </table>
-            </form>         
             <div class="page_wrap">
               <c:url var="before" value="adminEventPage.do">
 			    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
@@ -148,12 +146,11 @@
             </div>
 
             <div class="con-title">
-              <form action="" method="">
                 <div>
                   당첨자 추첨 <br>
                   <span>당첨자 중 10%의 회원입니다. 포인트를 지급해주세요</span>
                 </div>
-                <button value=""  class="button" onclick="pointPayments()">포인트 지급</button>
+                <button value=""  class="button" onclick="pointPayments(event)">포인트 지급</button>
               </div>
               <div class="con-list">
                 <table class="table table-hover">
@@ -185,7 +182,6 @@
                   </c:if>
                   </tbody>
                 </table>
-                </form>         
                 <div class="page_wrap">
                   <c:url var="before" value="adminEventPage.do">
 			    	<c:param name="page" value="${api.currentPage - 1 }"></c:param>
@@ -259,7 +255,9 @@
 		location.href="eventRaffle.do";
 	}
 	
-	function pointPayments(){
+	function pointPayments(e){
+		e.preventDefault;
+		e.stopPropagation;
 		location.href="eventWinnerPayments.do";
 	}
 	
