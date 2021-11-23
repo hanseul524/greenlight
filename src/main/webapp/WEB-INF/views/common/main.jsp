@@ -17,26 +17,9 @@
 </head>
 <body>
 <div class="container">
-<div class="main-area">
-<jsp:include page="/common/header.jsp"></jsp:include>
-<!-- Swiper -->
-    <div class="swiper mySwiper1">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <img src="${pageContext.request.contextPath}/resources/img/mainone.png">
-        </div>
-        <div class="swiper-slide">
-          <img src="${pageContext.request.contextPath}/resources/img/maintwo.jpeg" />
-        </div>
-        <div class="swiper-slide">
-          <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-        </div>
-      </div>
-      <div class="swiper-button-next1"></div>
-      <div class="swiper-button-prev1"></div>
-      <div class="swiper-pagination1"></div>
-    </div>
-
+  <div class="main-area">
+  <jsp:include page="/common/header.jsp"></jsp:include>
+     <img src="${pageContext.request.contextPath}/resources/img/mainone.png">
 <!--   <div class="first-area"> -->
 <%--   	<img src="${pageContext.request.contextPath}/resources/img/mainone.png"> --%>
 <!--   </div> -->
