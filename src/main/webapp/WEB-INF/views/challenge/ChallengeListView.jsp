@@ -8,12 +8,16 @@
 <title>ChallengeList</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/challenge/chList.css" type="text/css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
   <div class="container">
+  <div class="title-img" style="background-attachment: fixed;">
+  	<span style="font-family: 'Quicksand', sans-serif;">C h a l l e n g e</span>
+  </div>
     <div class="category">
 	  <form action="ChallengeSearchList.do" method="get">
       <span class="menubar"><a href="ChallengeListView.do?check=recent">참여하기</a></span>
@@ -21,13 +25,14 @@
       <span class="menubar"><a href="ChallengeListView.do?check=prevprev">지난 챌린지</a></span>
       <span class="menubar"><a href="ChallengeListView.do?check=all">All</a></span>
       	<input type="hidden" name="check" value="${check }">
+      	<input type="hidden" name="chCategory" value="${category.chCategory }">
 	    <input type="text" name="search-title" id="search-title" placeholder="제목을 입력해주세요.">
         <button type="submit" class="searchBtn"><i class="fas fa-search"></i></button>
       <span class="write-btn"><a href="ChallengeWriteview.do">write</a></span>
 	  </form>
     </div>
 	    <div class="category-area">
-	      <span>${category.chCategory }</span>
+	      <span style="font-weight: 700;">${category.chCategory }</span>
 	    </div>
 	<c:if test="${empty cList }">
 		없어요. 

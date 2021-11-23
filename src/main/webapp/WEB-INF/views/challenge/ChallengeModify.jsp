@@ -63,8 +63,7 @@ $(document).ready(function(){
 	          </div>
 	        </div>
 	      </div>
-	      <input type="submit" value="수정">
-	      <button onclick="test();">버튼</button>
+	      <input class="submitBtn" type="submit" value="수정">
     </form>
   </div>
  <script>

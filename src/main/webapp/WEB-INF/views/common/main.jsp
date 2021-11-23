@@ -20,47 +20,25 @@
 </head>
 <body>
 <div class="container">
-<div class="main-area">
-<jsp:include page="/common/header.jsp"></jsp:include>
-<!-- Swiper -->
-    <div class="swiper mySwiper1">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <img src="${pageContext.request.contextPath}/resources/img/mainone.png">
-        </div>
-        <div class="swiper-slide">
-          <img src="${pageContext.request.contextPath}/resources/img/maintwo.jpeg" />
-        </div>
-        <div class="swiper-slide">
-          <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-        </div>
-      </div>
-      <div class="swiper-button-next1"></div>
-      <div class="swiper-button-prev1"></div>
-      <div class="swiper-pagination1"></div>
-    </div>
-
-<!--   <div class="first-area"> -->
-<%--   	<img src="${pageContext.request.contextPath}/resources/img/mainone.png"> --%>
-<!--   </div> -->
+  <jsp:include page="/common/header.jsp"></jsp:include>
+  <div class="main-area">
+  <svg id="visual" viewBox="0 0 1550 700" width="1550" height="700" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><rect x="0" y="0" width="1550" height="700" fill="#FFFFFF"></rect><path d="M0 576L36.8 572.3C73.7 568.7 147.3 561.3 221.2 548.2C295 535 369 516 442.8 503.3C516.7 490.7 590.3 484.3 664.2 491C738 497.7 812 517.3 885.8 539.5C959.7 561.7 1033.3 586.3 1107.2 575C1181 563.7 1255 516.3 1328.8 489.8C1402.7 463.3 1476.3 457.7 1513.2 454.8L1550 452L1550 701L1513.2 701C1476.3 701 1402.7 701 1328.8 701C1255 701 1181 701 1107.2 701C1033.3 701 959.7 701 885.8 701C812 701 738 701 664.2 701C590.3 701 516.7 701 442.8 701C369 701 295 701 221.2 701C147.3 701 73.7 701 36.8 701L0 701Z" fill="#b2d6c4" stroke-linecap="round" stroke-linejoin="miter"></path></svg>
+  <img src="${pageContext.request.contextPath}/resources/img/mainone.png">
   </div>
-  <div class="site-info">
+  <div class="site-info" style="background-attachment: fixed;">
     <a href="#">
       <div class="img-box">
-        <img src="${pageContext.request.contextPath}/resources/img/zero2.jpeg" alt="">
-        <span style="color: white;">Zero <br> Waste</span>
+        <img src="${pageContext.request.contextPath}/resources/img/zerowaste.png">
       </div>
     </a>
     <a href="#">
       <div class="img-box">
-        <img src="${pageContext.request.contextPath}/resources/img/upcycling2.jpeg" alt="">
-        <span style="color: #293e31;">Upcycling</span>
+        <img src="${pageContext.request.contextPath}/resources/img/upcycling.png">
       </div>
     </a>
     <a href="#">
       <div class="img-box">
-        <img src="${pageContext.request.contextPath}/resources/img/recycling.jpeg" alt="">
-        <span style="color: white;">Recycling</span>
+        <img src="${pageContext.request.contextPath}/resources/img/recycling.png">
       </div>
     </a>
   </div>
@@ -87,7 +65,7 @@
   	<!-- <button onclick="winnerCheck()" class="event-button" style="position : relative; left:725px; bottom:170px;">결과 확인</button> -->
   <div class="ch-area">
      <!-- Swiper -->
-    <div class="swiper mySwiper2">
+    <div class="swiper mySwiper">
       <div class="swiper-wrapper">
         <div class="swiper-slide">Slide 1</div>
         <div class="swiper-slide">Slide 2</div>
@@ -105,6 +83,7 @@
     </div>
   </div>
 </div>
+</div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
 <!-- Initialize Swiper -->
 <script>
@@ -114,21 +93,7 @@
 	$("#eventEndImage").hide();
 	
 	
-  var swiper = new Swiper(".mySwiper", {
-	var swiper1 = new Swiper(".mySwiper1", {
-	    spaceBetween: 30,
-	    effect: "fade",
-	    navigation: {
-	      nextEl: ".swiper-button-next1",
-	      prevEl: ".swiper-button-prev1",
-	    },
-	    pagination: {
-	      el: ".swiper-pagination1",
-	      clickable: true,
-	    },
-	  });
-
-  var swiper2 = new Swiper(".mySwiper2 ", {
+  var swiper2 = new Swiper(".mySwiper ", {
     slidesPerView: 3,
     spaceBetween: 30,
     slidesPerGroup: 3,

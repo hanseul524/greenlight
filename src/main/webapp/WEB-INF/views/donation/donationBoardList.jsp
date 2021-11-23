@@ -6,24 +6,19 @@
 <head>
 <meta charset="UTF-8">
 <title>DonationBoard</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/challenge/chList.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/donation/donaList.css" type="text/css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://cdn.rawgit.com/theus/chart.css/v1.0.0/dist/chart.css"/>
-<style>
-	.searchBtn {
-	  	position: absolute;
-	    right: 351px;
-	    top: 191px;
-	    background: none;
-	    border: none;
-	  }
-</style>
 </head>
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
   <div class="container">
+  <div class="title-img" style="background-attachment: fixed;">
+	  <span style="font-family: 'Quicksand', sans-serif;">D o n a t i o n</span>
+  </div>
   <form action="donationBoardSearch.do" method="get">
 	    <div class="search">
 	      <input type="text" style="position: relative; left: 871px;" name="search-title" id="search-title" placeholder="제목을 입력해주세요.">
@@ -72,39 +67,39 @@
 	    </c:if>
     </c:forEach>
 	</div>
-    <div class="page_wrap">
-    <c:url var="before" value="donationBoardList.do">
-    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
-    </c:url>
-      <div class="page_nation">
-      <c:if test="${pi.currentPage <= 1 }">
-         <a class="arrow prev" href="#"></a>
-      </c:if>
-      <c:if test="${pi.currentPage > 1 }">
-         <a class="arrow prev" href="${before }"></a>
-      </c:if>
-      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
-      	<c:url var="pagenation" value="donationBoardList.do">
-      		<c:param name="page" value="${p }"></c:param>
-      	</c:url>
-      	<c:if test="${p eq pi.currentPage }">
-         	<a href="#" class="active">${p }</a>
-      	</c:if>
-      	<c:if test="${p ne pi.currentPage }">
-      		<a href="${pagenation }">${p }</a>
-      	</c:if>
-      </c:forEach>
-      <c:url var="after" value="donationBoardList.do">
-      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
-      </c:url>
-      <c:if test="${pi.currentPage >= pi.maxPage }">
-         <a class="arrow next" href="#"></a>
-      </c:if>
-      <c:if test="${pi.currentPage < pi.maxPage }">
-         <a class="arrow next" href="${after }"></a>
-      </c:if>
-      </div>
-    </div>
+	    <div class="page_wrap">
+	    <c:url var="before" value="donationBoardList.do">
+	    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
+	    </c:url>
+	      <div class="page_nation">
+	      <c:if test="${pi.currentPage <= 1 }">
+	         <a class="arrow prev" href="#"></a>
+	      </c:if>
+	      <c:if test="${pi.currentPage > 1 }">
+	         <a class="arrow prev" href="${before }"></a>
+	      </c:if>
+	      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
+	      	<c:url var="pagenation" value="donationBoardList.do">
+	      		<c:param name="page" value="${p }"></c:param>
+	      	</c:url>
+	      	<c:if test="${p eq pi.currentPage }">
+	         	<a href="#" class="active">${p }</a>
+	      	</c:if>
+	      	<c:if test="${p ne pi.currentPage }">
+	      		<a href="${pagenation }">${p }</a>
+	      	</c:if>
+	      </c:forEach>
+	      <c:url var="after" value="donationBoardList.do">
+	      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
+	      </c:url>
+	      <c:if test="${pi.currentPage >= pi.maxPage }">
+	         <a class="arrow next" href="#"></a>
+	      </c:if>
+	      <c:if test="${pi.currentPage < pi.maxPage }">
+	         <a class="arrow next" href="${after }"></a>
+	      </c:if>
+	      </div>
+	    </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
 </body>
 </html>
