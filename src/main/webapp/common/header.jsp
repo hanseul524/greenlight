@@ -28,17 +28,18 @@
       float: left;
     }
     .navi-area {
-      width: 70%;
+      width: 60%;
       height: 100px;
       float: left;
     }
     .login-area {
-      width: 13%;
+      width: 21%;
       height: 100px;
       float: left;
       text-align: right;
     }
     .login-area a {
+      text-align: right;
       text-decoration: none;
       color: black;
       display: inline-block;
@@ -89,17 +90,17 @@
     .user-navi {
       position: absolute;
       width: 80px;
-      right: 30px;
+      right: 55px;
       top: 40px;
       display: none;
     }
     .user-navi>li {
       list-style-type: none;
-      width: 85px;
+      width: 100px;
     }
     .user-navi>li>a {
       text-decoration: none;
-      margin: 10px;
+      margin: 5px;
       font-size: 12px;
       font-weight: 300;
       color: black;
@@ -125,14 +126,6 @@
     </div>
     <div class="login-area">
     <c:if test="${userId eq null }"><a href="loginView.do">Login</a></c:if>
-	    <div class="user-area">
-	      <a class="icon" href="userList.do" style="margin: 0;"><i class="fas fa-user-circle fa-2x" style="color: gray;"></i></a>
-	      <ul class="user-navi">
-	      	<li><a href="myPage.do">마이페이지</a></li>
-	      	<li><a href="chargeList.do">포인트</a></li>
-	      	<li><a href="logout.do">로그아웃</a></li>
-	      </ul>
-	    </div><!--괜찮  -->
     <c:if test="${userId eq 'admin' and userId ne null}"><i class="fas fa-user-cog fa-2x" style="color: gray;"></i></c:if> <!-- 안괜찮 -->
     <div class="user-area">
     <c:if test="${userId ne null and userId ne 'admin'}">

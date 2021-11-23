@@ -15,44 +15,44 @@
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
 	<div class="container">
-		<div class="nav-admin">
-			<i class="fas fa-user-circle fa-4x"
-				style="color: gray; margin: 15px;"></i> <span>admin01</span>
-			<div
-				style="margin-left: 40px; font-size: 14px; font-weight: 500; color: #7ea18b;">
-				관리자님, 안녕하세요. <br> 오늘은 <span id="today" style="width: 80px;"></span>일
-				입니다.
-			</div>
-			<div class="nav-inner">
-				<ul>
-					<li class="li-area"><i class="fas fa-user-cog"
-						style="margin-right: 10px;"></i><a href="#">회원관리</a></li>
-					<li class="li-area"><i class="fas fa-coins"
-						style="margin-right: 10px;"></i><a href="#">경매관리</a>
-						<ul>
-							<li><a href="adminAuctionView.do">재고관리</a></li>
-							<li><a href="adminSellAuctionView.do">판매관리</a></li>
-						</ul></li>
-					<li class="li-area"><i class="far fa-calendar-check"
-						style="margin-right: 10px;"></i><a href="AdminChList.do">챌린지
-							관리</a></li>
-					<li class="li-area"><i class="fas fa-hand-holding-usd"
-						style="margin-right: 10px;"></i><a href="#">기부관리</a></li>
-					<li class="li-area"><i class="fas fa-warehouse"
-						style="margin-right: 10px;"></i><a href="#">매장관리</a>
-						<ul>
-							<li><a href="adminOnlineShop.do">온라인 매장 관리</a></li>
-							<li><a href="adminOfflineShop.do">오프라인 매장 관리</a></li>
-						</ul></li>
-					<li class="li-area"><i class="fas fa-gifts"
-						style="margin-right: 10px;"></i><a href="#">이벤트관리</a>
-						<ul>
-							<li><a href="#">이벤트 생성</a></li>
-							<li><a href="#">당첨자 관리</a></li>
-						</ul></li>
-				</ul>
-			</div>
-		</div>
+    <div class="nav-admin">
+      <i class="fas fa-user-circle fa-4x" style="color: gray; margin: 15px;"></i>
+      <span>admin</span>
+      <div style="margin-left: 40px; font-size: 14px; font-weight: 500; color:#7ea18b;">
+        관리자님, 안녕하세요. <br>
+        오늘은 <span id="today" style="width:80px;"></span>일 입니다.
+      </div>
+      <div class="nav-inner">
+        <ul>
+          <li class="li-area">
+            <i class="fas fa-user-cog" style="margin-right: 10px;"></i><a href="userList.do">회원관리</a>
+          </li>
+          <li class="li-area">
+            <i class="fas fa-coins" style="margin-right: 10px;"></i><a href="#">경매관리</a> 
+            <ul>
+              <li><a href="adminAuctionView.do">재고관리</a></li>
+              <li><a href="adminSellAuctionView.do">판매관리</a></li>
+            </ul>
+          </li>
+          <li class="li-area">
+            <i class="far fa-calendar-check" style="margin-right: 10px;"></i><a href="AdminChList.do">챌린지 관리</a> 
+          </li>
+          <li class="li-area">
+            <i class="fas fa-hand-holding-usd" style="margin-right: 10px;"></i><a href="adminDonationBoardList.do">기부관리</a>
+          </li>
+          <li class="li-area">
+            <i class="fas fa-warehouse" style="margin-right: 10px;"></i><a href="#">매장관리</a>
+             <ul>
+              <li><a href="adminOnlineShop.do">온라인 매장 관리</a></li>
+              <li><a href="adminOfflineShop.do">오프라인 매장 관리</a></li>
+            </ul>
+          </li>
+          <li class="li-area">
+            <i class="fas fa-gifts" style="margin-right: 10px;"></i><a href="adminEventPage.do">이벤트관리</a> 
+          </li>
+        </ul>
+      </div>
+    </div>
 		<div class="contents">
 			<div class="con-title">
 				<form action="updateOnlineShop.do" method="post" enctype="multipart/form-data">

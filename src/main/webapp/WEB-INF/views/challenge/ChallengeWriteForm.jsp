@@ -37,7 +37,7 @@ $(document).ready(function(){
 <%--     <input type="hidden" value="${challenge.categoryNo }" name="categoryNo"> --%>
       <div class="write-form">
         <span class="write-left">챌린지 참여하기</span>
-        <span class="write-right">하루 한장, 모바일 영수증 받기!</span>
+        <span class="write-right">환경 보호를 위해 함께 챌린지에 참여하세요!</span>
         <div class="title-area">
           <input type="text" name="chTitle" id="" placeholder="제목을 입력해주세요.">
         </div>
@@ -54,7 +54,7 @@ $(document).ready(function(){
                 data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
         </div>
       </div>
-      <input type="submit" value="등록">
+      <input class="submitBtn" type="submit" value="등록">
     </form>
   </div>
  <script>
@@ -65,14 +65,14 @@ $(document).ready(function(){
         var btnAtt = document.getElementById(btn)
         var sel_files = [];
         
-        // 이미지와 체크 박스를 감싸고 있는 div 속성
+    	// 이미지와 체크 박스를 감싸고 있는 div 속성
         var div_style = 'display:inline-block;position:relative;'
-                      + 'width:150px;height:150px;margin:5px;z-index:1';
+                    + 'width:120px;height:120px;margin:5px;z-index:1';
         // 미리보기 이미지 속성
         var img_style = 'width:100%;height:100%;z-index:none';
         // 이미지안에 표시되는 체크박스의 속성
-        var chk_style = 'width:30px;height:30px;position:absolute;font-size:24px;'
-                      + 'right:0px;bottom:0px;z-index:999;background-color:rgba(255,255,255,0.1);color:#f00';
+        var chk_style = 'width:20px;height:20px;position:absolute;font-size:12px;'
+                    + 'right:0px;bottom:100px;z-index:999;background-color:rgba(255,255,255,0.5);color:rgb(255, 50, 50);border:none;';
       
         btnAtt.onchange = function(e){
           var files = e.target.files;

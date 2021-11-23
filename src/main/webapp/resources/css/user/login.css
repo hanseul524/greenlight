@@ -41,8 +41,6 @@ a:visited{
 
 }*/
 .login-form-container{
- 
-    background:#f5f5f5 ;
     width:860px;
     height: 540px;
     display: flex;
@@ -66,8 +64,6 @@ a:visited{
     color: white;
     width:100%;
     text-align: right;
-    opacity: 0.9;
-
 }
 .login-form-right-side p{
     padding-top: 50px;

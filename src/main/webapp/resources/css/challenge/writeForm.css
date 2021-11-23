@@ -23,7 +23,7 @@ body {
 }
 .write-right {
   font-weight: 200;
-  font-size: 30px;
+  font-size: 22px;
   margin-left: 30px;
 }
 .title-area {
@@ -40,6 +40,15 @@ body {
   border: 0;
   border-bottom: 1px solid gray;
   background-color: transparent;
+}
+.submitBtn {
+  padding: 7px 60px 7px 60px;
+  border: 0.5px solid lightgray;
+  border-radius: 5px;
+  font-weight: 400;
+  display: block;
+  margin: 0 auto;
+  margin-top: 30px;
 }
 /* .image_container {
   width: 200px;

@@ -16,10 +16,10 @@
 <jsp:include page="/common/header.jsp"></jsp:include>
   <div class="container">
     <div class="category">
-      <span class="menubar"><a href="#">참여하기</a></span>
-      <span class="menubar"><a href="#">지난 챌린지</a></span>
-      <span class="menubar"><a href="#">지난 챌린지</a></span>
-      <span class="menubar"><a href="#">All</a></span>
+      <span class="menubar"><a href="ChallengeListView.do?check=recent">참여하기</a></span>
+      <span class="menubar"><a href="ChallengeListView.do?check=prev">지난 챌린지</a></span>
+      <span class="menubar"><a href="ChallengeListView.do?check=prevprev">지난 챌린지</a></span>
+      <span class="menubar"><a href="ChallengeListView.do?check=all">All</a></span>
     </div>
     <div class="contents">
     	 <input type="hidden" value="${userId }" id="userId">
@@ -29,19 +29,20 @@
 	        <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
 	        <span class="id-div" style="margin: 10px; font-weight: 300;">${challenge.chWriter }</span>
 	        <span class="date-div" style="margin: 10px; font-weight: 300;">${challenge.writeDate }</span>
-	        <span style="float: right; margin: 10px; font-weight: 300;">
-	        	<c:url var="cModify" value="ChallengeModify.do">
-	        		<c:param name="chNo" value="${challenge.chNo}"></c:param>
-	        	</c:url>
-	        	<a href="${cModify }">수정 /</a>
-	        	
-	        	<c:url var="cDelete" value="ChallengeDelete.do">
-	        		<c:param name="chNo" value="${challenge.chNo }"></c:param>
-	        		<c:param name="fileName" value="${challenge.fileName }"></c:param>
-	        	</c:url>
-	        	<a href="${cDelete }">삭제</a>
-<!-- 				<a href="#" onclick="alertBtn();">삭제</a> -->
-	        </span>
+<%-- 	        <c:if test="${userId eq chWriter }"> --%>
+		        <span style="float: right; margin: 10px; font-weight: 300;">
+		        	<c:url var="cModify" value="ChallengeModify.do">
+		        		<c:param name="chNo" value="${challenge.chNo}"></c:param>
+		        	</c:url>
+		        	<a href="${cModify }">수정 /</a>
+		        	
+		        	<c:url var="cDelete" value="ChallengeDelete.do">
+		        		<c:param name="chNo" value="${challenge.chNo }"></c:param>
+		        		<c:param name="fileName" value="${challenge.fileName }"></c:param>
+		        	</c:url>
+		        	<a href="${cDelete }">삭제</a>
+		        </span>
+<%-- 	        </c:if> --%>
 	      </div>
 	      <div class="title-div">
 	        <span>${challenge.chTitle }</span>

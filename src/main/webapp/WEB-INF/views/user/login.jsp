@@ -31,8 +31,8 @@
 			<div class="login-form-container shadow">
 				<div class="login-form-right-side" style="position: relative;">
 					<img
-						style="height: 100%; width: 100%; position: absolute; right: 0px; border-radius: 10px 0 0 10px;"
-						src="${pageContext.request.contextPath}/resources/img/loginImg.jpg"
+						style="height: 100%; width: 95%; position: absolute; right: 0px; border-radius: 10px 0 0 10px;"
+						src="${pageContext.request.contextPath}/resources/img/login3.png"
 						alt="">
 				</div>
 				<!-- 로그인 입력창 -->
