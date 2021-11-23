@@ -60,4 +60,6 @@ public interface ChallengeService {
 	public int getMyListCount(String userId);
 	public List<Challenge> printChallList(HashMap<String, Object> hashMap);
 	public List<CFile> printDeleteImg(int chNo);
+	public List<Challenge> printMainChallenge();
+	public CFile getMainCFileList(int chNo);
 }

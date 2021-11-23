@@ -209,7 +209,6 @@ public class DonationBoardController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("userId", userId);
 		map.put("donationPoint", donationPoint);
-		System.out.println(donationPoint);
 		int uResult = service.donationUserPoint(map);
 		// 도네이션 테이블에 insert
 		Donation donation = new Donation();

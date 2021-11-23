@@ -60,4 +60,6 @@ public interface ChallengeStore {
 	public int selectMyListCount(String userId);
 	public List<Challenge> selectMyChall(HashMap<String, Object> hashMap);
 	public List<CFile> selectDeleteImg(int chNo);
+	public List<Challenge> selectMainChallenge();
+	public CFile selectChallengMainList(int chNo);
 }

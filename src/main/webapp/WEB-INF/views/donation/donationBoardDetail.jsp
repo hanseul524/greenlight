@@ -33,6 +33,8 @@
   #pos2:checked~.pos>label:nth-child(2){background:#666;}
   #pos3:checked~.pos>label:nth-child(3){background:#666;}
   #pos4:checked~.pos>label:nth-child(4){background:#666;}
+  #pos5:checked~.pos>label:nth-child(5){background:#666;}
+  #pos6:checked~.pos>label:nth-child(6){background:#666;}
   #donationBtn{
   	display: block;
   	margin: 0 auto;
@@ -286,9 +288,13 @@
 	
 	function donation(){
 		var userId = '${userID}';
-		var point = '${point}';
-		var donationPoint =$("#inputDonation").val();
+		console.log(userId)
+		var point = parseInt('${point}');
+		console.log(point)
+		var donationPoint = parseInt($("#inputDonation").val());
+		console.log(donationPoint)
 		var boardNo = $("#boardNo").val();
+		console.log(boardNo)
 		if(userId == ""){
 			Swal.fire({
                 icon: 'error',
@@ -298,7 +304,7 @@
            	 	location.href="loginView.do";
             })
 		}else{
-			if(point >= donationPoint){
+			if(donationPoint <= point){
 				$.ajax({
 					url : "donation.do",
 					type : "post",
