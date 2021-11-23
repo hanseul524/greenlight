@@ -30,7 +30,7 @@
     });
     function popUp() {
       window.open('/ChPopupView.do', '_blank', 
-      'top=250, left=500, height=300, width=500,toolbar=no, menubar=no, location=no, status=no, scrollbars=no, resizable=no');
+      'top=250, left=500, height=400, width=500,toolbar=no, menubar=no, location=no, status=no, scrollbars=no, resizable=no');
     }
   </script>
   <style>

@@ -119,4 +119,14 @@ public class MyPageServiceImpl implements MyPageService{
 		return store.insertEventWinnerPointHistory(wList);
 	}
 
+	@Override
+	public List<User> printTotalPointMain() {
+		return store.selectTotalCountMain();
+	}
+
+	@Override
+	public List<PointHistory> printTotalUseMain() {
+		return store.selectTotalUseCountMain();
+	}
+
 }

@@ -18,6 +18,9 @@
 	<select id="selectListCount" parameterType="String" resultType="_int">
 		SELECT COUNT(*) FROM POINT_HISTORY WHERE USER_ID = #{userId}
 	</select>
+	<select id="selectMainPointUse" resultMap="pointResultMap">
+		select SUM(POINT_USE) as POINT_USE from POINT_HISTORY
+	</select>
 	<update id="updateUserChPoint" parameterType="hashmap">
 		UPDATE USERS SET POINT = POINT + #{pointPayment} WHERE USER_ID = #{userId}
 	</update>

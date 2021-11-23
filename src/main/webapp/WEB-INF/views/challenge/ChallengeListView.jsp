@@ -28,11 +28,16 @@
       	<input type="hidden" name="chCategory" value="${category.chCategory }">
 	    <input type="text" name="search-title" id="search-title" placeholder="제목을 입력해주세요.">
         <button type="submit" class="searchBtn"><i class="fas fa-search"></i></button>
-      <span class="write-btn"><a href="ChallengeWriteview.do">write</a></span>
+      <c:if test="${check eq 'recent'}">
+	      <span class="write-btn"><a href="ChallengeWriteview.do">write</a></span>
+      </c:if>
 	  </form>
     </div>
 	    <div class="category-area">
-	      <span style="font-weight: 700;">${category.chCategory }</span>
+	      <span style="font-weight: 700;">
+	      ${category.chCategory }<br>
+	      <span style="font-weight: 300; font-size:13px;">글을 작성하시면 100포인트를 드립니다.</span>
+	      </span>
 	    </div>
 	<c:if test="${empty cList }">
 		없어요. 

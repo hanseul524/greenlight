@@ -24,6 +24,40 @@
   <div class="main-area">
   <svg id="visual" viewBox="0 0 1550 700" width="1550" height="700" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"><rect x="0" y="0" width="1550" height="700" fill="#FFFFFF"></rect><path d="M0 576L36.8 572.3C73.7 568.7 147.3 561.3 221.2 548.2C295 535 369 516 442.8 503.3C516.7 490.7 590.3 484.3 664.2 491C738 497.7 812 517.3 885.8 539.5C959.7 561.7 1033.3 586.3 1107.2 575C1181 563.7 1255 516.3 1328.8 489.8C1402.7 463.3 1476.3 457.7 1513.2 454.8L1550 452L1550 701L1513.2 701C1476.3 701 1402.7 701 1328.8 701C1255 701 1181 701 1107.2 701C1033.3 701 959.7 701 885.8 701C812 701 738 701 664.2 701C590.3 701 516.7 701 442.8 701C369 701 295 701 221.2 701C147.3 701 73.7 701 36.8 701L0 701Z" fill="#b2d6c4" stroke-linecap="round" stroke-linejoin="miter"></path></svg>
   <img src="${pageContext.request.contextPath}/resources/img/mainone.png">
+	                  <div id="main-text">
+	                	<c:forEach items="${history }" var="history">
+		                <c:forEach items="${user }" var="user">
+	                		<p>
+					                        그린라이트에서 회원들이 사용한<br> 포인트는  <span>${history.pointUse }</span>이고
+					                        보유한 포인트는 <span>${user.point }</span>입니다.
+		                    </p>
+		                	<c:if test="${iValue == 1 || iValue == 3 || iValue == 5 || iValue == 7 || iValue == 9}">
+			                    <p>
+						                        총합  <span>${history.pointUse + user.point }</span>의 포인트로<br>
+						                        나무를 <c:choose>
+						                    <c:when test="${history.pointUse + user.point eq 0 }"><span>0그루</span></c:when>
+						                  	<c:when test="${history.pointUse + user.point <= 999}"><span>10그루</span></c:when>
+						                  	<c:when test="${history.pointUse + user.point <= 9999}"><span>100그루</span></c:when>
+						                  	<c:when test="${history.pointUse + user.point <= 99999}"><span>1000그루</span></c:when>
+						                  	<c:when test="${history.pointUse + user.point >= 100000}"><span>10000그루</span></c:when>
+						                  </c:choose>를 심는 효과를 얻었습니다.
+			                    </p>
+			                </c:if>
+			                <c:if test="${iValue == 2 || iValue == 4 || iValue == 6 || iValue == 8 || iValue == 10}">
+				                    <p>
+							                        총합 ${history.pointUse + user.point }의 포인트로<br>
+							                        쓰레기 <c:choose>
+							                    <c:when test="${history.pointUse + user.point eq 0 }"><span>0kg</span></c:when>
+							                  	<c:when test="${history.pointUse + user.point <= 999}"><span>10kg</span></c:when>
+							                  	<c:when test="${history.pointUse + user.point <= 9999}"><span>100kg</span></c:when>
+							                  	<c:when test="${history.pointUse + user.point <= 99999}"><span>1t</span></c:when>
+							                  	<c:when test="${history.pointUse + user.point >= 100000}"><span>10t</span></c:when>
+							                  </c:choose>을 줄이는 효과를 얻었습니다.
+				                    </p>
+			                </c:if>
+		                </c:forEach>
+		                </c:forEach>
+	                </div>
   </div>
   <div class="site-info" style="background-attachment: fixed;">
     <a href="#">
@@ -43,7 +77,7 @@
     </a>
   </div>
   <div class="event-area">
-  	<img src="${pageContext.request.contextPath}/resources/img/event01.png">
+  	<img src="${pageContext.request.contextPath}/resources/img/eventimg2.png">
   	<div>${event.eventQuestion }<br>
   		<span class="event-span">이벤트는 5일동안 진행됩니다! 정답을 맞히신 분들에게 100포인트. <br>추첨을 통해 정답자 중 10%의 회원에게 500포인트를 드립니다.
   		많은 참여 부탁드립니다.</span>
@@ -67,15 +101,16 @@
      <!-- Swiper -->
     <div class="swiper mySwiper">
       <div class="swiper-wrapper">
-        <div class="swiper-slide">Slide 1</div>
-        <div class="swiper-slide">Slide 2</div>
-        <div class="swiper-slide">Slide 3</div>
-        <div class="swiper-slide">Slide 4</div>
-        <div class="swiper-slide">Slide 5</div>
-        <div class="swiper-slide">Slide 6</div>
-        <div class="swiper-slide">Slide 7</div>
-        <div class="swiper-slide">Slide 8</div>
-        <div class="swiper-slide">Slide 9</div>
+		<c:forEach items="${cFList }" var="File">
+            <c:url var="cDetail" value="ChallengeDetail.do">
+               <c:param name="chNo" value="${File.chNo }"></c:param>
+            </c:url>
+           <div class="swiper-slide">
+              <a href="${cDetail }">
+                 <img src="${pageContext.request.contextPath}/resources/cuploadFiles/${File.fileName }">
+              </a>
+           </div>
+        </c:forEach>
       </div>
       <div class="swiper-button-next"></div>
       <div class="swiper-button-prev"></div>

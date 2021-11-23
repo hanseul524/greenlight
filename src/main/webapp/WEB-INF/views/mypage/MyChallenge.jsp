@@ -6,29 +6,29 @@
 <head>
 <meta charset="UTF-8">
 <title>MyChallengeList</title>
-<link rel="stylesheet" href="../../../resources/css/mypage/mpChallenge.css" type="text/css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage/mpChallenge.css" type="text/css">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> <!-- 부트스트랩 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<header>
 	       <jsp:include page="/common/header.jsp"></jsp:include>
 	</header>
-	<div class="container">
-       <div id="nav-section">
-           <ul id="nav nav-tabs">
-			  <li class="nav-item"><a href="myPage.do" class="nav-link active">활동 기여도</a></li>
-	       	  <li class="nav-item"><a href="myPageAdCheck.do" class="nav-link active">출석체크</a></li>
-	          <li class="nav-item"><a href="myPageInfo.do" class="nav-link active">회원 정보</a></li>
-	          <li class="nav-item"><a href="myChallenge.do" class="nav-link active">내가 쓴 글</a></li>
-	          <li class="nav-item"><a href="myPagePoint.do" class="nav-link active">포인트 내역</a></li>
-	          <li class="nav-item"><a href="myAcution.do" class="nav-link active">내 경매</a></li>
-	          <li class="nav-item"><a href="myDonation.do" class="nav-link active">나의 기부 현황</a></li>
-           </ul>
-       </div>
+	<div class="warper">
+       <nav>
+            <div id="nav-section">
+                <ul id="nav nav-tabs" style="margin:0;  font-size: 15px; font-weight: 400;">
+                  <li class="nav-item"><a href="myPage.do" class="nav-link active"">활동 기여도</a></li>
+                  <li class="nav-item"><a href="myPageAdCheck.do" class="nav-link active">출석체크</a></li>
+                  <li class="nav-item"><a href="myPageInfo.do" class="nav-link active">회원 정보</a></li>
+                  <li class="nav-item"><a href="myChallenge.do" class="nav-link active"  style="color: rgb(42, 173, 248);">내가 쓴 글</a></li>
+                  <li class="nav-item"><a href="myPagePoint.do" class="nav-link active">포인트 내역</a></li>
+                  <li class="nav-item"><a href="myAcution.do" class="nav-link active">내 경매</a></li>
+                  <li class="nav-item"><a href="myDonation.do" class="nav-link active">나의 기부 현황</a></li>
+                </ul>
+            </div>
+        </nav>
        <c:if test="${empty cList }">
        		<h2 align="center">내가 작성한 챌린지가 없습니다</h2>
        </c:if>

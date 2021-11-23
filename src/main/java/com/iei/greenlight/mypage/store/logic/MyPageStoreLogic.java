@@ -126,4 +126,14 @@ public class MyPageStoreLogic implements MyPageStore{
 	public int insertEventWinnerPointHistory(List<EventWinner> wList) {
 		return sqlSession.insert("pointMapper.insertEventWinnerPointHistory", wList);
 	}
+
+	@Override
+	public List<User> selectTotalCountMain() {
+		return sqlSession.selectList("userMapper.selectMainPoint");
+	}
+
+	@Override
+	public List<PointHistory> selectTotalUseCountMain() {
+		return sqlSession.selectList("pointMapper.selectMainPointUse");
+	}
 }

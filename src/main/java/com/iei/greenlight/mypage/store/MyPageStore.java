@@ -43,6 +43,9 @@ public interface MyPageStore {
 	public int insertAuctionSellerPointHistory(HashMap<String, Object> hashMap);
 	public int insertEventAnswerPointHistory(String userId);
 	public int insertEventWinnerPointHistory(List<EventWinner> wList);
+
+	public List<User> selectTotalCountMain();
+	public List<PointHistory> selectTotalUseCountMain();
 	
 
 }
