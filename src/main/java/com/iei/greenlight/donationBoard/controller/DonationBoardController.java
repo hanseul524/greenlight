@@ -67,7 +67,7 @@ public class DonationBoardController {
 			}
 			dFList.get(0).setFileMain("Y");
 			int image = service.registerDtFile(dFList);
-			return "adminDonationBoardList.do";
+			return "redirect:adminDonationBoardList.do";
 		}else {
 			return"user/error";
 		}
@@ -167,11 +167,16 @@ public class DonationBoardController {
 		DonationBoard board = service.printDonationBoardOne(boardNo);
 		List<DtFile> dFList = null;
 		List<Donation> dList = null;
+		int sum;
 		String userId = (String)request.getSession().getAttribute("userId");
 		User user = service.selectUserPoint(userId);
-		int point = user.getPoint();
-		int chargePoint = user.getChargePoint();
-		int sum = point + chargePoint;
+		if(user != null) {
+	         int point = user.getPoint();
+	         int chargePoint = user.getChargePoint();
+	         sum = point + chargePoint;
+	      }else {
+	         sum = 0;
+	      }
 		if(board != null) {
 			double dtTargetAmount = board.getDtTargetAmount();
 			double donationAmount = board.getDonationAmount();
@@ -233,6 +238,13 @@ public class DonationBoardController {
 	      hashMap.put("userId", userId);
 	      List<DonationBoard> dList = service.myPrintList(hashMap);
 	      if(!dList.isEmpty()) {
+	    	  for(int i = 0; i < dList.size(); i++) {
+					double dtTargetAmount = dList.get(i).getDtTargetAmount();
+					double donationAmount = dList.get(i).getDonationAmount();
+					double ac = (donationAmount / dtTargetAmount) * 100;
+					double achievement = Math.floor(ac * 100) / 100.0;
+					dList.get(i).setAchievement(achievement);
+				}
 	         model.addAttribute("dList", dList);
 	         model.addAttribute("pi", pi);
 	         return "mypage/MyDonation";

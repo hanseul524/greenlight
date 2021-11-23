@@ -35,13 +35,13 @@
     	   <c:if test="${donationBoard.dtSuccess eq 'N' }">
 			    <ul class="box">
 			      <li class="item">
-			        <div class="box-inner">
+			        <div class="box-inner" style="width: 300px;height: 428px;border: 0.3px solid #7ea18b;float: left;margin: 30px;">
 			        <c:if test="${donationBoard.fileMain eq 'Y' }">
 			          <div class="box-img">
 			          	<img alt="" src="${pageContext.request.contextPath}/resources/donationUploadFiles/${donationBoard.fileName}">
 			          </div>
 			        </c:if>		        
-			          <div class="contents-bottom" >
+			          <div class="contents-bottom">
 			            <div class="box-user" style="height: 50px;">
 			              <div style="float: left; margin-right: 15px;">
 			                <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
@@ -62,7 +62,7 @@
 			              <span style="font-size: 12px; position: relative; left: 87%;">${donationBoard.achievement }%</span>
 			            </div>
 			            <hr>
-			            <div>
+			            <div style="padding-top: 10px;">
 			              <span class="view"><i class="far fa-comment-alt"></i>&nbsp;&nbsp;${donationBoard.dtReplyCount }</span>
 			            </div>
 			          </div>
