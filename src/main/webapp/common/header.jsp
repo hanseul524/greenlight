@@ -90,7 +90,7 @@
     .user-navi {
       position: absolute;
       width: 80px;
-      right: 55px;
+      right: 95px;
       top: 40px;
       display: none;
     }
@@ -126,7 +126,6 @@
     </div>
     <div class="login-area">
     <c:if test="${userId eq null }"><a href="loginView.do">Login</a></c:if>
-    <c:if test="${userId eq 'admin' and userId ne null}"><i class="fas fa-user-cog fa-2x" style="color: gray;"></i></c:if> <!-- 안괜찮 -->
     <div class="user-area">
     <c:if test="${userId ne null and userId ne 'admin'}">
     	<span style="font-size: 13px; font-weigth: 200; margin-right: 7px;">${userId }님, 안녕하세요.</span>
@@ -142,7 +141,6 @@
       <a class="icon" href="userList.do" style="margin: 0;"><i class="fas fa-ellipsis-h"></i></a>
     </c:if>
     </div><!--괜찮  -->
-<%--     <c:if test="${userId eq 'admin' and userId ne null}"><i class="fas fa-user-cog fa-2x" style="color: gray;"></i></c:if> <!-- 안괜찮 --> --%>
     </div>
   </div>
 </body>

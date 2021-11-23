@@ -27,9 +27,9 @@
 	     <input type="hidden" value=${challenge.chNo } name="chNo" id="chNo">
 	      <div class="user-div">
 	        <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
-	        <span class="id-div" style="margin: 10px; font-weight: 300;">${challenge.chWriter }</span>
-	        <span class="date-div" style="margin: 10px; font-weight: 300;">${challenge.writeDate }</span>
-<%-- 	        <c:if test="${userId eq chWriter }"> --%>
+	        <span class="id-div" style="margin: 30px; font-weight: 300; vertical-align: top;">${challenge.chWriter }</span>
+	        <span class="date-div" style="margin: 50px; font-weight: 300; vertical-align: top;">${challenge.writeDate }</span>
+	        <c:if test="${userId eq challenge.chWriter or userId eq 'admin'}">
 		        <span style="float: right; margin: 10px; font-weight: 300;">
 		        	<c:url var="cModify" value="ChallengeModify.do">
 		        		<c:param name="chNo" value="${challenge.chNo}"></c:param>
@@ -42,7 +42,7 @@
 		        	</c:url>
 		        	<a href="${cDelete }">삭제</a>
 		        </span>
-<%-- 	        </c:if> --%>
+	        </c:if>
 	      </div>
 	      <div class="title-div">
 	        <span>${challenge.chTitle }</span>

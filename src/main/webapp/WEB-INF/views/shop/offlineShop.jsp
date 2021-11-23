@@ -7,6 +7,7 @@
 <title>오프라인 매장</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Quicksand:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/shop/offlineShop.css">
 <style>
 	/* map / + & - */
@@ -87,8 +88,9 @@
 </head>
 <body>
 <jsp:include page="${pageContext.request.contextPath}/common/header.jsp"></jsp:include>
-<div style="width:100%; height:60px;"></div>
-    <p class="zerowastemap">ZEROWASTE MAP</p>
+  <div class="title-img" style="background-attachment: fixed; width:100%; height: 230px;">
+  	<span style="font-family: 'Quicksand', sans-serif;">Z e r o W a s t M a p</span>
+  </div>
         <div class="menu-shop">
             <div class="offline">
         	    <a href="offlineShopView.do">

@@ -18,17 +18,19 @@
 <jsp:include page="/common/header.jsp"></jsp:include>
     <div class="body">
         <div class="content">
+		<nav>
             <div id="nav-section">
-	           <ul id="nav nav-tabs">
-				  <li class="nav-item"><a href="myPage.do" class="nav-link active">활동 기여도</a></li>
-		       	  <li class="nav-item"><a href="myPageAdCheck.do" class="nav-link active">출석체크</a></li>
-		          <li class="nav-item"><a href="myPageInfo.do" class="nav-link active">회원 정보</a></li>
-		          <li class="nav-item"><a href="myChallenge.do" class="nav-link active">내가 쓴 글</a></li>
-		          <li class="nav-item"><a href="myPagePoint.do" class="nav-link active">포인트 내역</a></li>
-		          <li class="nav-item"><a href="myAcution.do" class="nav-link active">내 경매</a></li>
-		          <li class="nav-item"><a href="myDonation.do" class="nav-link active">나의 기부 현황</a></li>
-	           </ul>
-	       </div>
+                <ul id="nav nav-tabs">
+                  <li class="nav-item"><a href="myPage.do" class="nav-link active">활동 기여도</a></li>
+                  <li class="nav-item"><a href="myPageAdCheck.do" class="nav-link active">출석체크</a></li>
+                  <li class="nav-item"><a href="myPageInfo.do" class="nav-link active">회원 정보</a></li>
+                  <li class="nav-item"><a href="myChallenge.do" class="nav-link active">내가 쓴 글</a></li>
+                  <li class="nav-item"><a href="myPagePoint.do" class="nav-link active">포인트 내역</a></li>
+                  <li class="nav-item"><a href="myAcution.do" class="nav-link active"  style="color: rgb(42, 173, 248);">내 경매</a></li>
+                  <li class="nav-item"><a href="myDonation.do" class="nav-link active">나의 기부 현황</a></li>
+                </ul>
+            </div>
+        </nav>
 	       <div id="my-auction-butn">
            		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="myAcution.do">내가 올린 경매</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
            		<a href="myBidList.do">내가 입찰한 경매</a>

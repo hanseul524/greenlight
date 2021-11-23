@@ -44,6 +44,9 @@
      <select id="selectTotalPoint" resultMap="userResultMap" parameterType="string">
         select POINT+CHARGE_POINT AS POINT FROM USERS WHERE USER_ID = #{userId}
      </select>
+     <select id="selectMainPoint" resultMap="userResultMap">
+     	SELECT SUM(POINT + CHARGE_POINT) AS POINT FROM USERS
+     </select>
      
      <!-- 소셜 로그인 아이디 체크 -->
      <select id="checkSocialId" parameterType="User" resultType="_int">

@@ -35,5 +35,8 @@ public interface MyPageService {
 	public int registerAuctionSellerPointHistory(HashMap<String, Object> hashMap);
 	public int registerEventAnswerPointHistory(String userId);
 	public int registerEventWinnerPointHistory(List<EventWinner> wList);
+
+	public List<User> printTotalPointMain();
+	public List<PointHistory> printTotalUseMain();
 	
 }

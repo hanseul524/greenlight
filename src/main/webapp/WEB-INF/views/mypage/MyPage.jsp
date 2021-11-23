@@ -15,9 +15,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <header>
 	<jsp:include page="/common/header.jsp"></jsp:include>
-    </header>
     <div class="warper">
     <c:if test="${empty userId }">
     	<br><br><br>
@@ -33,7 +31,7 @@
     <nav>
             <div id="nav-section">
                 <ul id="nav nav-tabs">
-                  <li class="nav-item"><a href="myPage.do" class="nav-link active">활동 기여도</a></li>
+                  <li class="nav-item"><a href="myPage.do" class="nav-link active" style="color: rgb(42, 173, 248);">활동 기여도</a></li>
                   <li class="nav-item"><a href="myPageAdCheck.do" class="nav-link active">출석체크</a></li>
                   <li class="nav-item"><a href="myPageInfo.do" class="nav-link active">회원 정보</a></li>
                   <li class="nav-item"><a href="myChallenge.do" class="nav-link active">내가 쓴 글</a></li>
@@ -44,70 +42,68 @@
             </div>
         </nav>
         <main>
-            <div id="main-section">
-                <div id="main-img"><img src="../../../resources/img/recycle.png" alt=""></div>
+<!--             <div id="main-section"> -->
+                <div id="main-img"><img src="${pageContext.request.contextPath}/resources/img/mypageimg.png"></div>
                 <div id="main-text">
                 	<c:if test="${empty history }">
 	                	<p>
-				                        회원님이 사용하신 포인트는 0이고<br>
-				                        보유한 포인트는 0입니다.
+				                        회원님이 사용하신<br> 포인트는 
+				           <span>0</span>이고 보유한 포인트는<br><span>0</span>입니다.
 	                    </p>
 	                    <c:if test="${iValue == 1 || iValue == 3 || iValue == 5 || iValue == 7 || iValue == 9}">
 		                    <p>
-					                        총합 0의 포인트로<br>
-					                        나무를 0그루를 심는 효과를 얻었습니다.
+					                        총합<span>0</span>의 포인트로<br>
+					                        나무를 <span>0</span>그루를 심는 효과를  <br>얻었습니다.
 		                    </p>
 		                </c:if>
 		                <c:if test="${iValue == 2 || iValue == 4 || iValue == 6 || iValue == 8 || iValue == 10}">
 		                    <p>
-					                        총합 0의 포인트로<br>
-					                        쓰레기 0kg을 줄이는 효과를 얻었습니다
+					                        총합 <span>0</span>의 포인트로<br>
+					                        쓰레기<span>0</span>을 줄이는 효과를  <br>얻었습니다.
 		                    </p>
 		                </c:if>
 	                </c:if>
                 	<c:forEach items="${history }" var="history">
 	                <c:forEach items="${user }" var="user">
                 		<p>
-				                        회원님이 사용하신 포인트는 ${history.pointUse }이고<br>
-				                        보유한 포인트는 ${user.point }입니다.
+				                        회원님이 사용하신<br> 포인트는  <span>${history.pointUse }</span>이고
+				                        보유한 포인트는  <br><span>${user.point }</span>입니다.
 	                    </p>
 	                	<c:if test="${iValue == 1 || iValue == 3 || iValue == 5 || iValue == 7 || iValue == 9}">
 		                    <p>
-					                        총합 ${history.pointUse + user.point }의 포인트로<br>
+					                        총합  <span>${history.pointUse + user.point }</span>의 포인트로<br>
 					                        나무를 <c:choose>
-					                    <c:when test="${history.pointUse + user.point eq 0 }">0그루</c:when>
-					                  	<c:when test="${history.pointUse + user.point <= 999}">10그루</c:when>
-					                  	<c:when test="${history.pointUse + user.point <= 9999}">100그루</c:when>
-					                  	<c:when test="${history.pointUse + user.point <= 99999}">1000그루</c:when>
-					                  	<c:when test="${history.pointUse + user.point >= 100000}">10000그루</c:when>
-					                  </c:choose>를 심는 효과를 얻었습니다.
+					                    <c:when test="${history.pointUse + user.point eq 0 }"><span>0그루</span></c:when>
+					                  	<c:when test="${history.pointUse + user.point <= 999}"><span>10그루</span></c:when>
+					                  	<c:when test="${history.pointUse + user.point <= 9999}"><span>100그루</span></c:when>
+					                  	<c:when test="${history.pointUse + user.point <= 99999}"><span>1000그루</span></c:when>
+					                  	<c:when test="${history.pointUse + user.point >= 100000}"><span>10000그루</span></c:when>
+					                  </c:choose>를 심는 효과를  <br>얻었습니다.
 		                    </p>
 		                </c:if>
 		                <c:if test="${iValue == 2 || iValue == 4 || iValue == 6 || iValue == 8 || iValue == 10}">
 			                    <p>
 						                        총합 ${history.pointUse + user.point }의 포인트로<br>
 						                        쓰레기 <c:choose>
-						                    <c:when test="${history.pointUse + user.point eq 0 }">0kg</c:when>
-						                  	<c:when test="${history.pointUse + user.point <= 999}">10kg</c:when>
-						                  	<c:when test="${history.pointUse + user.point <= 9999}">100kg</c:when>
-						                  	<c:when test="${history.pointUse + user.point <= 99999}">1t</c:when>
-						                  	<c:when test="${history.pointUse + user.point >= 100000}">10t</c:when>
-						                  </c:choose>을 줄이는 효과를 얻었습니다
+						                    <c:when test="${history.pointUse + user.point eq 0 }"><span>0kg</span></c:when>
+						                  	<c:when test="${history.pointUse + user.point <= 999}"><span>10kg</span></c:when>
+						                  	<c:when test="${history.pointUse + user.point <= 9999}"><span>100kg</span></c:when>
+						                  	<c:when test="${history.pointUse + user.point <= 99999}"><span>1t</span></c:when>
+						                  	<c:when test="${history.pointUse + user.point >= 100000}"><span>10t</span></c:when>
+						                  </c:choose>을 줄이는 효과를  <br>얻었습니다
 			                    </p>
 		                </c:if>
 	                </c:forEach>
 	                </c:forEach>
                 </div>
                 <div id="main-butn">
-                	<button class="point-use-butn" onclick="location.href='auctionListView.do'">기부하기</button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                	<button class="point-use-butn" onclick="location.href='donationBoardList.do'">경매하기</button>
+                	<div><button class="point-use-butn" style="background: rgb(42, 173, 248); color: #ffff;"onclick="location.href='auctionListView.do'">기부하기</button></div>
+                	<div><button class="point-use-butn" onclick="location.href='donationBoardList.do'">경매하기</button></div>
                 </div>
-            </div>
+<!--             </div> -->
         </main>
     </div>
     </c:if>
-    <footer>
-		<jsp:include page="/common/footer.jsp"></jsp:include>
-    </footer>
+<jsp:include page="/common/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -510,7 +510,6 @@ public class ChallengeController {
 	public void getReplyList(@RequestParam("chNo") int chNo,
 			HttpServletResponse response) throws JsonIOException, IOException {
 		List<Reply> rList = service.printAll(chNo);
-		System.out.println(rList);
 		if(!rList.isEmpty()) {
 			Gson gson = new GsonBuilder().setDateFormat("yyyy.MM.dd").create(); // replyDate 데이터포멧으로 출력
 			gson.toJson(rList, response.getWriter());
