@@ -8,9 +8,13 @@
 <title>header</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+</head>
 <style>
     body {
       font-family: 'Noto Sans KR', sans-serif;
+    }
+    a {
+    
     }
     .header {
       width: 100%;
@@ -28,11 +32,18 @@
       height: 100px;
       float: left;
     }
-    .user-area {
+    .login-area {
       width: 13%;
       height: 100px;
       float: left;
       text-align: right;
+    }
+    .login-area a {
+      text-decoration: none;
+      color: black;
+      display: inline-block;
+      margin: 30px 30px;
+      font-weight: 300;
     }
     .navi-menu {
       list-style-type: none;
@@ -64,12 +75,15 @@
       font-weight: 300;
       font-size: 15px;
     }
+    .user-area {
+      margin: 30px 20px;
+    }
     .user-area>a {
       color: black;
       font-weight: 300;
       text-decoration: none;
       display: inline-block;
-      margin: 5px;
+      margin: 30px 20px;
       position: relative;
     }
     .user-navi {
@@ -90,11 +104,13 @@
       font-weight: 300;
       color: black;
     }
-	.icon:hover ~ .user-navi{
+/*     .user-area a { */
+/*       margin: 30px 20px; */
+/*     } */
+	.login-area:hover .user-navi {
       display: block;
    }
 </style>
-</head>
 <body>
   <div class="header">
     <div class="main-img"><img style="width: 100px; height: 100px; margin: 10px 0 10px 60px;" src="${pageContext.request.contextPath}/resources/img/mainlogo.png"></div>
@@ -107,7 +123,7 @@
         <li><a href="offlineShopView.do">Map</a></li>
       </ul>
     </div>
-    <div class="user-area">
+    <div class="login-area">
     <c:if test="${userId eq null }"><a href="loginView.do">Login</a></c:if>
 	    <div class="user-area">
 	      <a class="icon" href="userList.do" style="margin: 0;"><i class="fas fa-user-circle fa-2x" style="color: gray;"></i></a>
@@ -118,12 +134,22 @@
 	      </ul>
 	    </div><!--괜찮  -->
     <c:if test="${userId eq 'admin' and userId ne null}"><i class="fas fa-user-cog fa-2x" style="color: gray;"></i></c:if> <!-- 안괜찮 -->
-      
-<!--       <ul> -->
-<!--       	<li>마이페이지</li> -->
-<!--       	<li>포인트</li> -->
-<!--       	<li>로그아웃</li> -->
-<!--       </ul> -->
+    <div class="user-area">
+    <c:if test="${userId ne null and userId ne 'admin'}">
+    	<span style="font-size: 13px; font-weigth: 200; margin-right: 7px;">${userId }님, 안녕하세요.</span>
+      <a class="icon" style="margin: 0;"><i class="fas fa-ellipsis-h"></i></a>
+      <ul class="user-navi">
+      	<li><a href="myPage.do">마이페이지</a></li>
+      	<li><a href="chargeList.do">포인트</a></li>
+      	<li><a href="logout.do">로그아웃</a></li>
+      </ul>
+    </c:if>
+    <c:if test="${userId ne null and userId eq 'admin'}">
+    	<span style="font-size: 13px; font-weigth: 200; margin-right: 7px;">관리자님, 안녕하세요.</span>
+      <a class="icon" href="userList.do" style="margin: 0;"><i class="fas fa-ellipsis-h"></i></a>
+    </c:if>
+    </div><!--괜찮  -->
+<%--     <c:if test="${userId eq 'admin' and userId ne null}"><i class="fas fa-user-cog fa-2x" style="color: gray;"></i></c:if> <!-- 안괜찮 --> --%>
     </div>
   </div>
 </body>

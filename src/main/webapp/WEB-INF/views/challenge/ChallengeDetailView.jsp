@@ -22,6 +22,7 @@
       <span class="menubar"><a href="#">All</a></span>
     </div>
     <div class="contents">
+    	 <input type="hidden" value="${userId }" id="userId">
 	     <input type="hidden" value="1" name="categoryNo">
 	     <input type="hidden" value=${challenge.chNo } name="chNo" id="chNo">
 	      <div class="user-div">
@@ -72,17 +73,77 @@
 	        <c:if test="${userId ne null }">
 		        <c:choose>
 	   				<c:when test="${chlike.likeCk eq 0}"> <!-- likeCk가0이면 빈하트-->
-						<a class="heart-area" href="#" onclick="addHeart();"><i class="far fa-heart fa-2x" style="color:red;"></i></a><span>${challenge.likeCount }</span>
+						  <input type="checkbox" id="checkbox" name="likeChk"/>
+					      <label for="checkbox">
+					        <svg id="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
+					          <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
+					            <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" id="heart" fill="#AAB8C2"/>
+					            <circle id="main-circ" fill="#E2264D" opacity="0" cx="29.5" cy="29.5" r="1.5"/>
+					  
+					            <g id="grp7" opacity="0" transform="translate(7 6)">
+					              <circle id="oval1" fill="#9CD8C3" cx="2" cy="6" r="2"/>
+					              <circle id="oval2" fill="#8CE8C3" cx="5" cy="2" r="2"/>
+					            </g>
+					  
+					            <g id="grp6" opacity="0" transform="translate(0 28)">
+					              <circle id="oval1" fill="#CC8EF5" cx="2" cy="7" r="2"/>
+					              <circle id="oval2" fill="#91D2FA" cx="3" cy="2" r="2"/>
+					            </g>
+					  
+					            <g id="grp3" opacity="0" transform="translate(52 28)">
+					              <circle id="oval2" fill="#9CD8C3" cx="2" cy="7" r="2"/>
+					              <circle id="oval1" fill="#8CE8C3" cx="4" cy="2" r="2"/>
+					            </g>
+					  
+					            <g id="grp2" opacity="0" transform="translate(44 6)">
+					              <circle id="oval2" fill="#CC8EF5" cx="5" cy="6" r="2"/>
+					              <circle id="oval1" fill="#CC8EF5" cx="2" cy="2" r="2"/>
+					            </g>
+					  
+					            <g id="grp5" opacity="0" transform="translate(14 50)">
+					              <circle id="oval1" fill="#91D2FA" cx="6" cy="5" r="2"/>
+					              <circle id="oval2" fill="#91D2FA" cx="2" cy="2" r="2"/>
+					            </g>
+					  
+					            <g id="grp4" opacity="0" transform="translate(35 50)">
+					              <circle id="oval1" fill="#F48EA7" cx="6" cy="5" r="2"/>
+					              <circle id="oval2" fill="#F48EA7" cx="2" cy="2" r="2"/>
+					            </g>
+					  
+					            <g id="grp1" opacity="0" transform="translate(24)">
+					              <circle id="oval1" fill="#9FC7FA" cx="2.5" cy="3" r="2"/>
+					              <circle id="oval2" fill="#9FC7FA" cx="7.5" cy="2" r="2"/>
+					            </g>
+					          </g>
+					        </svg>
+					      </label>
+						<div class="likeCount">${challenge.likeCount }</div>
 	    			</c:when>
 	   				<c:otherwise> <!-- likeCk가1이면 빨간 하트-->
-						<a class="heart-area" href="#" onclick="delHeart();"><i class="fas fa-heart fa-2x" style="color:red;"></i></a><span>${challenge.likeCount }</span>
+						<input type="checkbox" id="checkbox" name="likeChk" checked />
+					      <label for="checkbox">
+					        <svg id="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
+					          <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
+					            <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" id="heart" fill="#AAB8C2"/>
+					            <circle id="main-circ" fill="#E2264D" opacity="0" cx="29.5" cy="29.5" r="1.5"/>
+					            </g>
+					            
+					          </g>
+					        </svg>
+					      </label>
+						<div class="likeCount">${challenge.likeCount }</div>
 	    			</c:otherwise>
 				</c:choose>
 	        </c:if>
 	        <c:if test="${userId eq null }">
-	        	<a class="heart-area" href="#" onclick="loginCk();"><i class="far fa-heart fa-2x" style="color:red;"></i></a><span>${challenge.likeCount }</span>
+	        	<input type="checkbox" id="checkbox" name="likeChks"/>
+					<svg id="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg" onclick="loginCk();">
+					    <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
+					    <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" id="heart" fill="#AAB8C2"/>
+					    </g>
+					</svg>
+	        	<div class="likeCount">${challenge.likeCount }</div>
 	        </c:if>
-	        
 	        <hr> 
 	        <div class="comm-user-div">
 	          <i class="fas fa-user-circle fa-3x" style="color: gray;"></i>
@@ -156,57 +217,7 @@
 				location.href="loginView.do";				
 			})
 	}
-	//좋아요 update하는 함수
-	function addHeart() {
-		var chNo = '${challenge.chNo}';
-		
-		$.ajax({
-			url : "addLike.do",
-			type : "post",
-			data : {
-				"chNo" : chNo
-			},
-			success : function(data) {
-				console.log(data)
-				Swal.fire({ 
-					icon: 'success',
-					title: '좋아요',
-					text: '좋아요 성공!',
-					}).then(function (){
-						location.reload();
-					})
-			},
-			error : function() {
-				alert("좋아요 실패~");
-			}
-		})
-	}
-	
-	// 좋아요 delete
-	function delHeart() {
-		var chNo = '${challenge.chNo}';
-		
-		$.ajax({
-			url : "removeLike.do",
-			type : "post",
-			data : {
-				"chNo" : chNo
-			},
-			success : function(data) {
-				Swal.fire({ 
-					icon: 'success',
-					title: '좋아요 취소',
-					text: '좋아요 취소 성공!',
-					}).then(function(){
-						location.reload();
-					})
-			},
-			error : function() {
-				alert("취소 실패~");
-			}
-		})
-	}
-	
+
 	// 댓글 쓰기
     getReplyList();
 	$("#submitBtn").on("click", function() {
@@ -239,9 +250,65 @@
 		})
 	});
 	
+	// 좋아요 함수
+	$("input:checkbox[name='likeChk']").click (function() {
+		
+		
+	    if($("input:checkbox[name='likeChk']").prop("checked") == false) {
+			console.log("하트누름");
+			var chNo = '${challenge.chNo}';
+			
+			$.ajax({
+				url : "removeLike.do",
+				type : "post",
+				data : {
+					"chNo" : chNo
+				},
+				success : function(data) {
+					location.reload();
+				},
+				error : function() {
+					alert("취소 실패~");
+				}
+			})
+		}
+	    if($("input:checkbox[name='likeChk']").prop("checked") == true) {
+			console.log("하트취소");
+			var chNo = '${challenge.chNo}';
+			
+			$.ajax({
+				url : "addLike.do",
+				type : "post",
+				data : {
+					"chNo" : chNo
+				},
+				success : function(data) {
+					location.reload();
+				},
+				error : function() {
+					alert("좋아요 실패~");
+				}
+			})
+		}
+		
+		
+	})
+	
+	$("input:checkbox[name='likeChks']").click (function() {
+		Swal.fire({ 
+			icon: 'warning',
+			title: '로그인이 필요합니다.',
+			text: '로그인 후 이용해주세요.',
+			}).then(function(){
+				location.href="loginView.do";				
+		})
+			
+	})
+
 	// 댓글 리스트 불러오기
 	function getReplyList() {
 		var chNo = '${challenge.chNo}';
+		var userId = '${userId}';
 		$.ajax({
 			url : "replyList.do",
 			type : "get",
@@ -262,22 +329,22 @@
 				$("#rCount").text(data.length);
 				if(data.length > 0) {
 					for(var i in data) {
-						$innerdiv = $("<div id='replyDiv' style=vertical-align:middle; align-items:center; padding: 30px;><hr>");
-						$icon = $("<i class='fas fa-user-circle fa-3x' style='color: gray;'>");
-						$rWriter = $("<span>").text(data[i].replywriter);
-						$rContent = $("<span>").text(data[i].replyContents);
-						$rDate = $("<span>").text(data[i].replyDate);
-						$btnArea = $("<span style='float:right;'>")
-						.append("<a href='#' onclick='modifyReply(this,"+chNo+","+data[i].replyNo+",\""+data[i].replyContents+"\");'>수정 /</a>")
-						.append("<a href='#' onclick='deleteReply(this,"+chNo+","+data[i].replyNo+");'> 삭제</a>")
-						
-						$innerdiv.append($icon);
-						$innerdiv.append($rWriter);
-						$innerdiv.append($rContent);
-						$innerdiv.append($rDate);
-						$innerdiv.append($btnArea);
+						$innerdiv = $("<div id='replyDiv' style='border-top: 1px solid rgb(219, 219, 219); vertical-align:middle; align-items:center; padding: 10px;'>");
+						$icon = $("<i class='fas fa-user-circle fa-3x' style='color: gray; margin-right: 30px; margin-bottom: 20px;'>");
+						$rWriter = $("<span style='font-size: 10px; display: block;  position: relative; left:74px;'>").text(data[i].replywriter);
+						$rContent = $("<span style='line-height: 30px; position: relative; bottom: 8px;'>").text(data[i].replyContents);
+						$rDate = $("<span style='float: right; margin-right: 15px; position: relative; top:15px;'>").text(data[i].replyDate);
 						$rdiv.append($innerdiv);
-						
+						$innerdiv.append($rWriter);
+						$innerdiv.append($icon);
+						$innerdiv.append($rDate);
+						if(userId == data[i].replywriter){
+							$btnArea = $("<span style='float:right; position: relative; top:15px;'>")
+							.append("<a href='#' onclick='modifyReply(this,"+chNo+","+data[i].replyNo+",\""+data[i].replyContents+"\");'>수정 /</a>")
+							.append("<a href='#' style='margin-right:15px;' onclick='deleteReply(this,"+chNo+","+data[i].replyNo+");'> 삭제</a>")
+							$innerdiv.append($btnArea);
+						}
+						$innerdiv.append($rContent);
 					}
 				}
 			}

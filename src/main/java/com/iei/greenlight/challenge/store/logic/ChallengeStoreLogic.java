@@ -44,14 +44,18 @@ public class ChallengeStoreLogic implements ChallengeStore {
 
 	@Override
 	public int updateChallenge(Challenge challenge) {
-		int result = session.insert("challengeMapper.insertChallenge", challenge);
+		int result = session.update("challengeMapper.updateChallenge", challenge);
 		return result;
 	}
 
 	@Override
+	public int deleteModifyImg(int chNo) {
+		return session.delete("challengeMapper.deleteChallengeImg", chNo);
+	}
+
+	@Override
 	public int deleteChallenge(int chNo) {
-		int result = session.delete("challengeMapper.deleteChallenge", chNo);
-		return result;
+		return session.delete("challengeMapper.deleteChallenge", chNo);
 	}
 
 	@Override
@@ -219,5 +223,11 @@ public class ChallengeStoreLogic implements ChallengeStore {
 	   RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 	   return session.selectList("challengeMapper.selectMyChall", hashMap, rowBounds);
 	 }
+
+	@Override
+	public List<CFile> selectDeleteImg(int chNo) {
+		return session.selectList("challengeMapper.selectDelteImg", chNo);
+	}
+
 
 }

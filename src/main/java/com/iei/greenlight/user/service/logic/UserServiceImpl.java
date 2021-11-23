@@ -204,7 +204,7 @@ public class UserServiceImpl implements UserService{
 		return store.updateCancelChargePoint(user);
 	}
 
-	// 총 회원수
+	// 관리자 페이지 총 회원수
 	@Override
 	public int getListCount() {
 	   int totalCount = store.selectListCount();
@@ -223,8 +223,14 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 
+	@Override
+	public int getSearchListCount(String userId) {
+		return store.selectSearchListCount(userId);
+	}
 
-
-
+	@Override
+	public List<User> printSearchList(HashMap<String, Object> hashmap) {
+		return store.selectSearchList(hashmap);
+	}
 
 }

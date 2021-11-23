@@ -1,7 +1,23 @@
 @charset "UTF-8";
+
+html,
 body {
-  font-family: 'Noto Sans KR', sans-serif;
+   position: relative;
+   height: 100%;
+   font-family: 'Noto Sans KR', sans-serif;
+   margin: 0;
+   padding: 0;
+   }
+
+.swiper-slide {
+    background-position: center;
+	background-size: cover;
 }
+.swiper-slide img {
+   display: block;
+   width: 100%;
+}
+
 .container{
   width: 100%;
   height: 2300px;
@@ -11,20 +27,14 @@ body {
   height: 793px;
 }
 
-.main-area  {
-  background: radial-gradient(ellipse at center, #fffeea 0%, #fffeea 35%, #B7E8EB 100%);
-}
 .first-area {
-	width: 100%;
-	height : 35%;
+  width: 100%;
+  height : 100%;
 }
-.con-img {
-	width: 100%;
-}
-.con-img>img {
-	width: 75%;
-	height: 75%;
-	top: 100px;
+.first-area>img {
+  width: 80%;
+  height: 80%;
+  margin: 10px 10px 10px 30px;
 }
 
 .site-info {
@@ -128,19 +138,6 @@ body {
   font-family: 'Comfortaa', cursive;
 }
 /* swiper css */
-html,
-body {
-  position: relative;
-  height: 100%;
-}
-
-body {
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  color: #000;
-  margin: 0;
-  padding: 0;
-}
 
 .swiper {
   width: 100%;

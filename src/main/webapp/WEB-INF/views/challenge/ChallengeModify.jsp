@@ -35,7 +35,7 @@ $(document).ready(function(){
 <jsp:include page="/common/header.jsp"></jsp:include>
   <div class="container">
     <form action="ChallengeUpdate.do" method="post" enctype="multipart/form-data">
-    <input type="hidden" value="1" name="categoryNo">
+    <input type="hidden" value="${challenge.categoryNo }" name="categoryNo">
     <input type="hidden" value=${challenge.chNo } name="chNo" id="chNo">
       <div class="write-form">
         <span class="write-left">챌린지 참여하기</span>
@@ -53,12 +53,18 @@ $(document).ready(function(){
 	          <h3>사진을 업로드 해주세요.</h3>
 	          <input type='file' id='btnAtt' multiple='multiple' name="uploadFile"/>
 	          <div id='att_zone' 
-	                data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'></div>
-	        	${challenge.fileName }
+	                data-placeholder='파일을 첨부 하려면 파일 선택 버튼을 클릭하거나 파일을 드래그앤드롭 하세요'>
+	          	<c:forEach items="${cList }" var="chFile">
+	          		<div style="display:inline-block;position:relative;width:150px;height:150px;margin:5px;z-index:1">
+          				<img style="width:100%;height:100%;z-index:none" src="${pageContext.request.contextPath }/resources/cuploadFiles/${chFile.fileName }">
+          				<input type="button" onclick="deleteFile(this);"value="x" delfile="${chFile.fileName }" style="width:30px;height:30px;position:absolute;font-size:24px;right:0px;bottom:0px;z-index:999;background-color:rgba(255,255,255,0.1);color:#f00">
+          			</div>
+	          	</c:forEach>
+	          </div>
 	        </div>
 	      </div>
 	      <input type="submit" value="수정">
-	      <button onclick="test()">버튼</button>
+	      <button onclick="test();">버튼</button>
     </form>
   </div>
  <script>
@@ -162,6 +168,9 @@ $(document).ready(function(){
       }
     )('att_zone', 'btnAtt')
     
+    function deleteFile(data){
+    	$(data).parent().remove();
+    }
     </script>
 <jsp:include page="/common/footer.jsp"></jsp:include>
 </body>

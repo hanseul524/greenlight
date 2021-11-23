@@ -210,4 +210,13 @@
 	<select id="selectOneImgDel" resultMap="cfileResultMap">
 		SELECT FILE_NAME FROM CHALLENGE_FILE WHERE CH_NO = #{chNo}
 	</select>
+	<select id="selectDelteImg" parameterType="_int" resultMap="cfileResultMap">
+		SELECT * FROM CHALLENGE_FILE WHERE CH_NO = #{chNo}
+	</select>
+	<select id="selectModeifyImg" parameterType="_int" resultMap="cfileResultMap">
+		SELECT * FROM CHALLENGE_FILE WHERE CH_NO = #{chNo}
+	</select>
+	<delete id="deleteChallengeImg" parameterType="_int">
+		DELETE FROM CHALLENGE_FILE WHERE CH_NO = #{chNo}
+	</delete>
 </mapper>

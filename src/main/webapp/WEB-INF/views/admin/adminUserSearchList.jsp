@@ -30,6 +30,20 @@
       });
     });
 </script>
+<style>
+  .delBtn {
+  	float: right;
+  	padding: 5px 17px 5px 17px;
+  	margin: 65px 25px 0 0;
+  	border: 1px solid rgba(128, 128, 128, 0.61);
+  	border-radius: 5px;
+  	font-weight: 300;
+  	font-size: 13px;
+	}
+  .delBtn:hover {
+  		background-color: #819789c4;
+	}
+</style>
 </head>
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
@@ -73,13 +87,13 @@
       </div>
     </div>
       <div class="contents">
-        <form action="" method="post">
+        <form action="searchUserView.do" method="get">
           <div class="con-title">
             <div>전체 회원 목록</div>
-            <input type="text" placeholder="검색하실 아이디를 입력하세요.">
-            <input type="button" name="name" value="search">
-          </div>
-        </form>
+            	<input type="text" name="userId" id="userId" placeholder="검색하실 아이디를 입력하세요.">
+            	<button type="submit" class="searchBtn"><i class="fas fa-search"></i></button>
+          	</div>
+          </form>
           <div class="con-list">
             <table class="table table-hover">
               <thead>
@@ -95,23 +109,29 @@
                 </tr>
               </thead>
               <tbody>
-			  <c:forEach items="${uList }" var="user">
-                <tr>
-                  <td>${user.count }</td>
-                  <td>${user.userId }</td>
-                  <td>${user.userName }</td>
-                  <td>${user.userEmail }</td>
-                  <td>${user.userAddr }</td>
-                  <td>${user.point}</td>
-                  <td>${user.regDate }</td>
-                  <td><input type="checkbox" name="chk" class="del-chk" value="${user.userId }"></td>
-                </tr>
-			  </c:forEach>
+              <c:if test="${empty uList }">
+              	<td colspan="8">해당하는 회원이 존재하지 않습니다.</td>
+              </c:if>
+              <c:if test="${not empty uList }">
+				  <c:forEach items="${uList }" var="user">
+	                <tr>
+	                  <td>${user.count }</td>
+	                  <td>${user.userId }</td>
+	                  <td>${user.userName }</td>
+	                  <td>${user.userEmail }</td>
+	                  <td>${user.userAddr }</td>
+	                  <td>${user.point}</td>
+	                  <td>${user.regDate }</td>
+	                  <td><input type="checkbox" name="chk" class="del-chk" value="${user.userId }"></td>
+	                </tr>
+				  </c:forEach>
+              </c:if>
               </tbody>
             </table>
             <div class="page_wrap">
-			    <c:url var="before" value="userList.do">
+			    <c:url var="before" value="searchUserView.do">
 			    	<c:param name="page" value="${upi.currentPage - 1 }"></c:param>
+			    	<c:param name="userId" value="${userId}"></c:param>
 			    </c:url>
 			      <div class="page_nation">
 			      <c:if test="${upi.currentPage <= 1 }">
@@ -121,8 +141,9 @@
 			         <a class="arrow prev" href="${before }"></a>
 			      </c:if>
 			      <c:forEach var="p" begin="${upi.startNavi}" end="${upi.endNavi }">
-			      	<c:url var="pagenation" value="userList.do">
+			      	<c:url var="pagenation" value="searchUserView.do">
 			      		<c:param name="page" value="${p }"></c:param>
+			      		<c:param name="userId" value="${userId}"></c:param>
 			      	</c:url>
 			      	<c:if test="${p eq upi.currentPage }">
 			         	<a href="#" class="active">${p }</a>
@@ -131,8 +152,9 @@
 			      		<a href="${pagenation }">${p }</a>
 			      	</c:if>
 			      </c:forEach>
-			      <c:url var="after" value="userList.do">
+			      <c:url var="after" value="searchUserView.do">
 			      	<c:param name="page" value="${upi.currentPage + 1 }"></c:param>
+			      	<c:param name="userId" value="${userId}"></c:param>
 			      </c:url>
 			      <c:if test="${upi.currentPage >= upi.maxPage }">
 			         <a class="arrow next" href="#"></a>
@@ -141,15 +163,97 @@
 			         <a class="arrow next" href="${after }"></a>
 			      </c:if>
 			      </div>
+                <button class="delBtn" onclick="delUser();">선택 탈퇴</button>
 			 </div>
-              <div class="btn-area">
-                <button onclick="delUser();">선택 탈퇴</button>
-              </div>
+<!--               <div class="btn-area"> -->
+<!--               </div> -->
            </div>
           </div>
       </div>
     </div>
   </div>
 <jsp:include page="/common/footer.jsp"></jsp:include>
+<script>
+	
+	// 회원 검색
+	function search() {
+		var searchId = $("#userId").val();
+		$.ajax({
+			url : "searchUserView.do",
+			type : "post",
+			data : { "userId" : searchId },
+			success : function(data) {
+				alert("검색 성공");
+			},
+			error : function() {
+				alert("ajax오류");
+			}
+		})
+	}
+	
+	// 회원 탈퇴
+	function delUser() {
+		var chkboxValues = new Array();
+		$("input[name='chk']:checked").each(function(i) {
+			chkboxValues.push($(this).val()); //체크한 벨류값 가져오기
+// 			return false;
+		});
+		
+		console.log(chkboxValues);
+		Swal.fire({
+			  title: '삭제하겠습니까?',
+			  text: "선택한 회원을 탈퇴시킵니다.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: '삭제하기'
+			}).then((result) => {
+			  if (result.isConfirmed) {
+					$.ajax({
+						url : "userDeleteList.do",
+						type : "post",
+						data : { "chkArray" : chkboxValues },
+						success : function(data) {
+							if(data == "success") {
+							    Swal.fire(
+									'삭제 되었습니다!',
+									'해당 회원을 삭제했습니다.',
+									'success'
+								)
+							}
+						},
+						error : function() {
+							alert("ajax 오류");
+						}
+					})
+			  }
+		})
+	};
+	// 전체선택,해제
+	$("#chk_all").on("click", function() {
+	    if($('#chk_all').is(':checked')){
+	        $('.del-chk').prop('checked',true);
+	        
+	     }else{
+	        $('.del-chk').prop('checked',false);
+	     }
+	})
+	
+	todayDate();
+	
+	function todayDate(){
+		  var today = new Date();
+		
+		  var year = today.getFullYear();
+		  var month = ('0' + (today.getMonth() + 1)).slice(-2);
+		  var day = ('0' + today.getDate()).slice(-2);
+		
+		  var dateString = year + '.' + month  + '.' + day;
+		
+		  $("#today").html(dateString);
+	}
+	
+</script>
 </body>
 </html>

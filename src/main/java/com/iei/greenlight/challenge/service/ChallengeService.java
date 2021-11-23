@@ -29,6 +29,10 @@ public interface ChallengeService {
 	public Challenge printOne(int chNo);
 	public List<CFile> printOneImg(int chNo);
 	public List<CFile> printImgDel(int chNo);
+	
+	// 챌린지 수정 
+	public int removeModifyImg(int chNo);
+	
 	public ChLike LikeCk(HashMap<String, Object> hashMap);
 	public int addLike(HashMap<String, Object> hashMap);
 	public int updateLike(ChLike chlike);
@@ -53,4 +57,5 @@ public interface ChallengeService {
 	// 마이페이지
 	public int getMyListCount(String userId);
 	public List<Challenge> printChallList(HashMap<String, Object> hashMap);
+	public List<CFile> printDeleteImg(int chNo);
 }

@@ -83,8 +83,8 @@
       </div>
     </div>
       <div class="contents">
+        <form action="searchUserView.do" method="get">
           <div class="con-title">
-          <form action="" method="get">
             <div>전체 회원 목록</div>
             	<input type="text" name="userId" id="userId" placeholder="검색하실 아이디를 입력하세요.">
             	<button type="submit" class="searchBtn"><i class="fas fa-search"></i></button>

@@ -60,8 +60,16 @@
          SELECT COUNT(*) FROM USERS ORDER BY REG_DATE DESC
      </select>
      
+     <select id="selectSearchListCount" resultType="_int">
+     	SELECT COUNT(*) FROM USERS WHERE USER_ID LIKE '%' || #{userId} || '%' ORDER BY REG_DATE DESC
+     </select>
+     
      <select id="selectAllList" resultMap="userResultMap">
-        SELECT ROWNUM AS COUNT, U.* FROM USERS U ORDER BY COUNT DESC
+        SELECT ROWNUM AS COUNT, U.* FROM USERS U ORDER BY COUNT DESC 
+     </select>
+     
+     <select id="selectSearchList" resultMap="userResultMap" parameterType="hashmap">
+     	SELECT * FROM USERS WHERE USER_ID LIKE '%' || #{userId} || '%' ORDER BY REG_DATE DESC
      </select>
 	
   	<insert id="insertUser" parameterType="User">

@@ -1,6 +1,7 @@
 package com.iei.greenlight.user.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -292,7 +293,6 @@ public class UserController {
 		int totalCount = service.getListCount();
 		PageInfo upi = UserPagination.getpageInfo(currentPage, totalCount);
 		List<User> uList = service.showUserList(upi);
-//		List<Integer> pList = new ArrayList<Integer>();
 		if(!uList.isEmpty()) {
 			int point;
 			int chargePoint; 
@@ -302,7 +302,6 @@ public class UserController {
 				chargePoint = uList.get(i).getChargePoint();
 				sum = point+chargePoint;
 				uList.get(i).setPoint(sum);
-//				System.out.println(pList);
 			}
 			model.addAttribute("uList", uList);
 			model.addAttribute("upi", upi);
@@ -310,6 +309,40 @@ public class UserController {
 		}else {
 			model.addAttribute("msg", "회원 리스트 조회 실패");
 			return "common/errorPage";
+		}
+	}
+	
+	// 관리자 페이지 회원 검색
+	@RequestMapping(value="searchUserView.do", method=RequestMethod.GET)
+	public String searchUserList(
+			@RequestParam("userId") String userId,
+			@RequestParam(value="page", required=false) Integer page,
+			Model model) {
+		
+		HashMap<String, Object> hashmap = new HashMap<String, Object>();
+		int currentPage = (page != null) ? page : 1;
+		int totalCount = service.getSearchListCount(userId);
+		PageInfo upi = UserPagination.getpageInfo(currentPage, totalCount);
+		hashmap.put("upi", upi);
+		hashmap.put("userId", userId);
+		List<User> uList = service.printSearchList(hashmap);
+		if(!uList.isEmpty()) {
+			int point;
+			int chargePoint; 
+			int sum;
+			for(int i=0; i<uList.size(); i++) {
+				point = uList.get(i).getPoint();
+				chargePoint = uList.get(i).getChargePoint();
+				sum = point+chargePoint;
+				uList.get(i).setPoint(sum);
+			}
+			model.addAttribute("uList", uList);
+			model.addAttribute("upi", upi);
+			model.addAttribute("userId", userId);
+			return "admin/adminUserSearchList";
+		}else {
+			model.addAttribute("uList", null);
+			return "admin/adminUserSearchList";
 		}
 	}
 	
@@ -330,11 +363,4 @@ public class UserController {
 		}
 	}
 	
-	// 관리자 페이지 회원 검색
-	@ResponseBody
-	@RequestMapping(value="searchUserView.do", method=RequestMethod.POST)
-	public String searchUserList() {
-		
-		return "";
-	}
 }
