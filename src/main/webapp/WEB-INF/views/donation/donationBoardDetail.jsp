@@ -92,17 +92,18 @@
 	      <div class="con-div">
 	        <p> ${board.dtContents }</p>
 	      </div>
+	      <div>
+	      	<h3>목표 금액 : ${board.dtTargetAmount } 포인트</h3>
+	      </div>
 	      <div class="charts" style="width: 800px; background-color:rgb(240, 236, 236); height: 40px; margin: 0 auto; margin-bottom: 50px; margin-top: 50px; border-radius: 20px;">
 	      		<div class="charts__chart" style="width: ${(board.donationAmount / board.dtTargetAmount) * 100 }%; background-color: rgb(126, 187, 34); margin: 0; border-radius: 20px; z-index: 1; height: 100%;"></div>
 	      		<span style="position: relative; left: 48%; font-size: 18px;">${board.achievement }%</span>
 	      </div>
 	      <div style="margin-bottom: 20px;">
-	      	<form action="donation.do" method="post">
 	      		<label style="font-size: 20px; font-weight: bold; color: #455c4e;">후원 POINT </label>
-	      		<input type="text" name="donationPoint" placeholder="기부 금액을 입력해주세요." style="height: 30px; position: relative;bottom: 5px; left: 12px; border-top: none; border-left: none; border-right: none; outline: none;">
-	      		<input type="hidden" name="boardNo" value="${board.boardNo }">
-	      		<input type="submit" id="donationBtn" value="후원하기">
-	      	</form>
+	      		<input type="text" id="inputDonation" name="donationPoint" placeholder="기부 금액을 입력해주세요." style="height: 30px; position: relative;bottom: 5px; left: 12px; border-top: none; border-left: none; border-right: none; outline: none;">
+	      		<input type="hidden" id="boardNo" name="boardNo" value="${board.boardNo }">
+	      		<input type="button" id="donationBtn" onclick="donation();" value="후원하기">
 	      </div>
 	      <div>
 	      	<table style="margin: 0 auto; width: 40%;">
@@ -281,6 +282,46 @@
 				}
 			}
 		});
+	}
+	
+	function donation(){
+		var point = '${point}';
+		var donationPoint =$("#inputDonation").val();
+		var boardNo = $("#boardNo").val();
+		if(point >= donationPoint){
+			$.ajax({
+				url : "donation.do",
+				type : "post",
+				data : {"donationPoint" : donationPoint,
+					"boardNo" : boardNo},
+				success:function(result){
+					if(result == 'success'){
+						 Swal.fire(
+	                                '기부완료',
+	                                '기부가 완료되었습니다.',
+	                                'success'
+                                 ).then(function(){
+                                	 location.reload();
+                                 })
+					}else{
+						Swal.fire(
+                                '기부완료',
+                                '기부가 달성되어 종료됩니다.',
+                                'success'
+                             ).then(function(){
+                            	 location.href="donationBoardList.do";
+                             })
+					}
+				}
+			})
+		}else{
+			Swal.fire({
+                icon: 'error',
+                title: '기부 오류',
+                text: '보유포인트가 부족합니다.',
+            })
+		}
+		
 	}
 </script>
 </body>

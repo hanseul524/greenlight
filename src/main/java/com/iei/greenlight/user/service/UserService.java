@@ -45,11 +45,11 @@ public interface UserService {
 
 	public int socialRegisterUser(User user);
 	
-	User printUser(String userId);
+	public User printUser(String userId);
 	
-	int modifyUser(User user);
+	public int modifyUser(User user);
 	
-	int removeUser(String userId);
+	public int removeUser(String userId);
 
 	public int modifyChargePoint(User userOne);
 

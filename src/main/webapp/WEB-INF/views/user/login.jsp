@@ -40,15 +40,15 @@
 					<div class="login-input-container">
 						<div class="login-input-wrap input-id">
 							<i class="far fa-envelope" style="color: #607a6a;"></i> <input
-								placeholder="ID를 입력하세요." type="text" name="userId">
+								placeholder="ID를 입력하세요." type="text" name="userId" id="userId">
 						</div>
 						<div class="login-input-wrap input-password">
 							<i class="fas fa-key" style="color: #607a6a;"></i> <input
-								placeholder="PASSWORD를 입력하세요." type="password" name="userPwd">
+								placeholder="PASSWORD를 입력하세요." type="password" id="userPwd" name="userPwd">
 						</div>
 					</div>
 					<div class="login-btn-wrap">
-						<button type="submit" class="login-btn">Login</button>
+						<button type="button" class="login-btn" onclick="Login();">Login</button>
 						<a onclick="kakaoLogin();"
 							style="width: 95px; height: 35px; cursor: pointer;"> <img
 							src="${pageContext.request.contextPath}/resources/img/kakao.png"
@@ -87,6 +87,11 @@
 					<button type="button" onclick="idFindCheck();" class="login-btn">아이디
 						찾기</button>
 				</div>
+				<div style="margin-top: 50px;" class="login-btn-wrap">
+					<span style="margin-top: 50px;"><a style="cursor: pointer;" onclick="pwdFind();">비밀번호 찾기</a> / 
+					<a style="cursor: pointer;" href="enrollView.do">회원가입</a>
+					<a style="cursor: pointer; display: block; " onclick="loginView();">뒤로가기</a></span>
+				</div>
 			</div>
 		</div>
 	</form>
@@ -114,6 +119,11 @@
 					<input type="hidden" id="pwdFindCode">
 					<button type="button" onclick="pwdFindCheck();" class="login-btn">비밀번호
 						찾기</button>
+				</div>
+				<div style="margin-top: 50px;" class="login-btn-wrap">
+					<span style="margin-top: 50px;"><a style="cursor: pointer;" onclick="idFind();">아이디 찾기</a> / 
+					<a style="cursor: pointer;" href="enrollView.do">회원가입</a>
+					<a style="cursor: pointer; display: block; " onclick="loginView();">뒤로가기</a></span>
 				</div>
 			</div>
 		</div>
@@ -143,7 +153,6 @@
 	</div>
 	</div>
 	</div>
-	<button type="button" onclick="kakaoLogout()">KAKAO LOGOUT</button>
 	<jsp:include page="/common/footer.jsp"></jsp:include>
 
 	<script>
@@ -157,7 +166,27 @@
 			$(".idFind-div").css("display", "none");
 			$(".pwdFind-div").css("display", "block");
 		}
-
+		
+		function Login(){
+			var userId = $("#userId").val();
+			var userPwd = $("#userPwd").val();
+			$.ajax({
+				url : "login.do",
+				type : "post",
+				data : {"userId" : userId, "userPwd" : userPwd},
+				success : function(result){
+					if(result == 'success'){
+						location.href="main.do"
+					}else{
+						Swal.fire({
+							icon : 'warning',
+							title : '로그인 실패',
+							text : '아이디 및 비밀번호를 확인해 주세요.', 
+						})
+					}
+				}
+			})
+		}
 		
 		//카카오로그인
 		function kakaoLogin() {
@@ -203,6 +232,12 @@
 					})
 				}
 			})
+		}
+		
+		function loginView(){
+			$(".login-div").show();
+			$(".idFind-div").hide();
+			$(".pwdFind-div").hide();
 		}
 		
 		

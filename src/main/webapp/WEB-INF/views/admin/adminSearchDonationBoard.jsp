@@ -30,6 +30,20 @@
       });
     });
 </script>
+<style>
+  .delBtn {
+  	float: right;
+  	padding: 5px 17px 5px 17px;
+  	margin: 71px 25px 0 0;
+  	border: 1px solid rgba(128, 128, 128, 0.61);
+  	border-radius: 5px;
+  	font-weight: 300;
+  	font-size: 13px;
+	}
+  .delBtn:hover {
+  		background-color: #819789c4;
+	}
+</style>
 </head>
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
@@ -77,7 +91,7 @@
             <div style="width: 30%;">전체 기부 게시판 목록</div>
             <form style="position: relative; bottom: 75px;"action="adminDonationBoardSearchList.do" method="get">
 	            <input type="text" name="searchKey" id="userId" placeholder="제목을 입력하세요.">
-	            <input type="submit" name="searh" value="search">
+	            <button type="submit" style="position: absolute;right: 8px;top: 25px;background: none;border: none;" class="searchBtn"><i class="fas fa-search"></i></button>
             </form>
           </div>
           <div class="con-list">
@@ -143,10 +157,8 @@
 			         <a class="arrow next" href="${after }"></a>
 			      </c:if>
 			      </div>
+                <button class="delBtn" onclick="donationBoardWrite();">글 작성</button>
 			 </div>
-              <div class="btn-area">
-                <button onclick="donationBoardWrite();">글 작성</button>
-              </div>
            </div>
           </div>
       </div>

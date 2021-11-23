@@ -14,6 +14,7 @@ import com.iei.greenlight.donationBoard.domain.DonationReply;
 import com.iei.greenlight.donationBoard.domain.DtFile;
 import com.iei.greenlight.donationBoard.domain.PageInfo;
 import com.iei.greenlight.donationBoard.store.DonationBoardStore;
+import com.iei.greenlight.user.domain.User;
 
 @Repository
 public class DonationBoardLogic implements DonationBoardStore{
@@ -205,5 +206,10 @@ public class DonationBoardLogic implements DonationBoardStore{
 	@Override
 	public int deleteDonationBoardImage(int boardNo) {
 		return sqlSession.delete("donationBoardMapper.deleteDonationBoardImage", boardNo);
+	}
+
+	@Override
+	public User selectUserPoint(String userId) {
+		return sqlSession.selectOne("userMapper.selectUserPoint", userId);
 	}
 }

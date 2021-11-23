@@ -11,14 +11,23 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://cdn.rawgit.com/theus/chart.css/v1.0.0/dist/chart.css"/>
+<style>
+	.searchBtn {
+	  	position: absolute;
+	    right: 351px;
+	    top: 191px;
+	    background: none;
+	    border: none;
+	  }
+</style>
 </head>
 <body>
 <jsp:include page="/common/header.jsp"></jsp:include>
   <div class="container">
   <form action="donationBoardSearch.do" method="get">
 	    <div class="search">
-	      <input type="text" name="search-title" id="search-title" placeholder="제목을 입력해주세요.">
-	      <input type="submit" value="검색하기">
+	      <input type="text" style="position: relative; left: 871px;" name="search-title" id="search-title" placeholder="제목을 입력해주세요.">
+	      <button type="submit" class="searchBtn"><i class="fas fa-search"></i></button>
 	    </div>
     </form>
  
@@ -26,7 +35,7 @@
     	   <c:if test="${donationBoard.dtSuccess eq 'N' }">
 			    <ul class="box">
 			      <li class="item">
-			        <div class="box-inner">
+			        <div class="box-inner" style="width: 300px;height: 428px;border: 0.3px solid #7ea18b;float: left;margin: 30px;">
 			        <c:if test="${donationBoard.fileMain eq 'Y' }">
 			          <div class="box-img">
 			          	<img alt="" src="${pageContext.request.contextPath}/resources/donationUploadFiles/${donationBoard.fileName}">

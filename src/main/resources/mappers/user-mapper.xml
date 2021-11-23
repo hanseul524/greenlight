@@ -71,7 +71,12 @@
      <select id="selectSearchList" resultMap="userResultMap" parameterType="hashmap">
      	SELECT * FROM USERS WHERE USER_ID LIKE '%' || #{userId} || '%' ORDER BY REG_DATE DESC
      </select>
-	
+     
+     <!-- 디테일 들어갈때 회원 포인트  -->
+	<select id="selectUserPoint" parameterType="string" resultMap="userResultMap">
+		SELECT USER_ID, USER_PWD, USER_NAME, USER_EMAIL, USER_ADDR, USER_PHONE, POINT, CHARGE_POINT, ADMIN, SOCIAL_ID FROM USERS WHERE USER_ID = #{userId } 
+	</select>
+     
   	<insert id="insertUser" parameterType="User">
   		INSERT INTO USERS VALUES(#{userId }, #{userPwd }, #{userName }, #{userEmail }, #{userAddr }, #{userPhone }, DEFAULT, DEFAULT, DEFAULT, DEFAULT, null)
   	</insert>

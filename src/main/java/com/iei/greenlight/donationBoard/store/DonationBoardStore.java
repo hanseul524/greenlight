@@ -8,6 +8,7 @@ import com.iei.greenlight.donationBoard.domain.DonationBoard;
 import com.iei.greenlight.donationBoard.domain.DonationReply;
 import com.iei.greenlight.donationBoard.domain.DtFile;
 import com.iei.greenlight.donationBoard.domain.PageInfo;
+import com.iei.greenlight.user.domain.User;
 
 public interface DonationBoardStore {
 
@@ -66,4 +67,6 @@ public interface DonationBoardStore {
 	int updateDonationBoard(DonationBoard db);
 
 	int deleteDonationBoardImage(int boardNo);
+
+	User selectUserPoint(String userId);
 }

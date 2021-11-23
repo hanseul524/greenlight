@@ -34,6 +34,7 @@ import com.iei.greenlight.donationBoard.domain.DonationReply;
 import com.iei.greenlight.donationBoard.domain.DtFile;
 import com.iei.greenlight.donationBoard.domain.PageInfo;
 import com.iei.greenlight.donationBoard.service.DonationBoardService;
+import com.iei.greenlight.user.domain.User;
 
 @Controller
 public class DonationBoardController {
@@ -66,7 +67,7 @@ public class DonationBoardController {
 			}
 			dFList.get(0).setFileMain("Y");
 			int image = service.registerDtFile(dFList);
-			return "redirect:main.do";
+			return "adminDonationBoardList.do";
 		}else {
 			return"user/error";
 		}
@@ -128,7 +129,7 @@ public class DonationBoardController {
 			model.addAttribute("pi", pi);
 			return "donation/donationBoardList";
 		}else {
-			return "user/error";
+			return "donation/donationBoardList";
 		}
 		
 	}
@@ -156,7 +157,7 @@ public class DonationBoardController {
 				model.addAttribute("pi", pi);
 				return "donation/donationBoardSearchList";
 			}else {
-				return "user/error";
+				return "donation/donationBoardSearchList";
 			}
 		
 	}
@@ -167,6 +168,10 @@ public class DonationBoardController {
 		List<DtFile> dFList = null;
 		List<Donation> dList = null;
 		String userId = (String)request.getSession().getAttribute("userId");
+		User user = service.selectUserPoint(userId);
+		int point = user.getPoint();
+		int chargePoint = user.getChargePoint();
+		int sum = point + chargePoint;
 		if(board != null) {
 			double dtTargetAmount = board.getDtTargetAmount();
 			double donationAmount = board.getDonationAmount();
@@ -179,13 +184,15 @@ public class DonationBoardController {
 			model.addAttribute("dFList", dFList);
 			model.addAttribute("dList", dList);
 			model.addAttribute("userID",userId);
+			model.addAttribute("point", sum);
 			return "donation/donationBoardDetail";
 		}else {
-			return "user/error";
+			return "donation/donationBoardDetail";
 		}
 	}
 	
 	// 회원 기부
+	@ResponseBody
 	@RequestMapping(value="donation.do", method=RequestMethod.POST)
 	public String donation(@RequestParam("donationPoint") int donationPoint,@RequestParam("boardNo") int boardNo , HttpServletRequest request) {
 		String userId = (String)request.getSession().getAttribute("userId");
@@ -206,7 +213,13 @@ public class DonationBoardController {
 		db.setBoardNo(boardNo);
 		db.setDonationAmount(donationPoint);
 		service.updateDonationBoardDonationAmount(db);
-		return "redirect:donationBoardDetail.do?boardNo=" + boardNo;
+		DonationBoard board = service.printDonationBoardOne(boardNo);
+		if(board.getDonationAmount() >= board.getDtTargetAmount()) {
+			service.DonationEnd(board.getBoardNo());
+			return"good";
+		}else {
+			return "success";
+		}
 	}
 	//마이페이지 내가 기부한 기부글 리스트
 	   @RequestMapping(value="myDonation.do", method=RequestMethod.GET)
@@ -219,7 +232,6 @@ public class DonationBoardController {
 	      hashMap.put("pi", pi);
 	      hashMap.put("userId", userId);
 	      List<DonationBoard> dList = service.myPrintList(hashMap);
-	      System.out.println(dList.toString());
 	      if(!dList.isEmpty()) {
 	         model.addAttribute("dList", dList);
 	         model.addAttribute("pi", pi);
@@ -252,8 +264,6 @@ public class DonationBoardController {
 		   if(!drList.isEmpty()) {
 			   Gson gson = new Gson();
 			   gson.toJson(drList, response.getWriter());
-		   }else {
-			   System.out.println("댓글 데이터 전송 실패");
 		   }
 	   }
 	   
@@ -297,7 +307,7 @@ public class DonationBoardController {
 			   model.addAttribute("pi",pi);
 			   return "admin/adminDonationBoard";
 		   }else {
-			   return "user/error"; 
+			   return "admin/adminDonationBoard"; 
 		   }
 	   }
 	   
@@ -316,7 +326,7 @@ public class DonationBoardController {
 			   model.addAttribute("pi", pi);
 			   return "admin/adminSearchDonationBoard";
 		   }else {
-			   return "user/error";
+			   return "admin/adminSearchDonationBoard";
 		   }
 	   }
 	   // 기부게시글 수정 뷰 페이지 이동
@@ -362,7 +372,7 @@ public class DonationBoardController {
 			   }
 			   return "redirect:adminDonationBoardList.do";
 		   }else {
-			   return "user/error";
+			   return "redirect:adminDonationBoardList.do";
 		   }
 	   }
 	   
