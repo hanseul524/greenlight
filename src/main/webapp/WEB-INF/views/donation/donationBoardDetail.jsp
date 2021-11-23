@@ -285,43 +285,53 @@
 	}
 	
 	function donation(){
+		var userId = '${userID}';
 		var point = '${point}';
 		var donationPoint =$("#inputDonation").val();
 		var boardNo = $("#boardNo").val();
-		if(point >= donationPoint){
-			$.ajax({
-				url : "donation.do",
-				type : "post",
-				data : {"donationPoint" : donationPoint,
-					"boardNo" : boardNo},
-				success:function(result){
-					if(result == 'success'){
-						 Swal.fire(
-	                                '기부완료',
-	                                '기부가 완료되었습니다.',
-	                                'success'
-                                 ).then(function(){
-                                	 location.reload();
-                                 })
-					}else{
-						Swal.fire(
-                                '기부완료',
-                                '기부가 달성되어 종료됩니다.',
-                                'success'
-                             ).then(function(){
-                            	 location.href="donationBoardList.do";
-                             })
-					}
-				}
-			})
-		}else{
+		if(userId == ""){
 			Swal.fire({
                 icon: 'error',
                 title: '기부 오류',
-                text: '보유포인트가 부족합니다.',
+                text: '로그인 후에 가능한 기능입니다.',
+            }).then(function(){
+           	 	location.href="loginView.do";
             })
+		}else{
+			if(point >= donationPoint){
+				$.ajax({
+					url : "donation.do",
+					type : "post",
+					data : {"donationPoint" : donationPoint,
+						"boardNo" : boardNo},
+					success:function(result){
+						if(result == 'success'){
+							 Swal.fire(
+		                                '기부완료',
+		                                '기부가 완료되었습니다.',
+		                                'success'
+	                                 ).then(function(){
+	                                	 location.reload();
+	                                 })
+						}else{
+							Swal.fire(
+	                                '기부완료',
+	                                '기부가 달성되어 종료됩니다.',
+	                                'success'
+	                             ).then(function(){
+	                            	 location.href="donationBoardList.do";
+	                             })
+						}
+					}
+				})
+			}else{
+				Swal.fire({
+	                icon: 'error',
+	                title: '기부 오류',
+	                text: '보유포인트가 부족합니다.',
+	            })
+			}
 		}
-		
 	}
 </script>
 </body>

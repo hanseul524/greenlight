@@ -163,38 +163,42 @@ public class DonationBoardController {
 	}
 	
 	@RequestMapping(value="donationBoardDetail.do", method=RequestMethod.GET)
-	public String donationBoardDetailView(@RequestParam("boardNo") int boardNo, Model model, HttpServletRequest request) {
-		DonationBoard board = service.printDonationBoardOne(boardNo);
-		List<DtFile> dFList = null;
-		List<Donation> dList = null;
-		int sum;
-		String userId = (String)request.getSession().getAttribute("userId");
-		User user = service.selectUserPoint(userId);
-		if(user != null) {
-	         int point = user.getPoint();
-	         int chargePoint = user.getChargePoint();
+	   public String donationBoardDetailView(@RequestParam("boardNo") int boardNo, Model model, HttpServletRequest request) {
+	      DonationBoard board = service.printDonationBoardOne(boardNo);
+	      List<DtFile> dFList = null;
+	      List<Donation> dList = null;
+	      int point;
+	      int chargePoint;
+	      int sum;
+	      String userId = (String)request.getSession().getAttribute("userId");
+	      User user = service.selectUserPoint(userId);
+	      if(user != null) {
+	         point = user.getPoint();
+	         chargePoint = user.getChargePoint();
 	         sum = point + chargePoint;
 	      }else {
+	         point = 0;
+	         chargePoint = 0;
 	         sum = 0;
 	      }
-		if(board != null) {
-			double dtTargetAmount = board.getDtTargetAmount();
-			double donationAmount = board.getDonationAmount();
-			double ac = (donationAmount / dtTargetAmount) * 100;
-			double achievement = Math.floor(ac * 100) / 100.0;
-			board.setAchievement(achievement);
-			dFList = service.printAllDonationBoardImageOneByNo(boardNo);
-			dList = service.printDonationUserRanking(boardNo);
-			model.addAttribute("board", board);
-			model.addAttribute("dFList", dFList);
-			model.addAttribute("dList", dList);
-			model.addAttribute("userID",userId);
-			model.addAttribute("point", sum);
-			return "donation/donationBoardDetail";
-		}else {
-			return "donation/donationBoardDetail";
-		}
-	}
+	      if(board != null) {
+	         double dtTargetAmount = board.getDtTargetAmount();
+	         double donationAmount = board.getDonationAmount();
+	         double ac = (donationAmount / dtTargetAmount) * 100;
+	         double achievement = Math.floor(ac * 100) / 100.0;
+	         board.setAchievement(achievement);
+	         dFList = service.printAllDonationBoardImageOneByNo(boardNo);
+	         dList = service.printDonationUserRanking(boardNo);
+	         model.addAttribute("board", board);
+	         model.addAttribute("dFList", dFList);
+	         model.addAttribute("dList", dList);
+	         model.addAttribute("userID",userId);
+	         model.addAttribute("point", sum); 
+	         return "donation/donationBoardDetail";
+	      }else {
+	         return "donation/donationBoardDetail";
+	      }
+	   }
 	
 	// 회원 기부
 	@ResponseBody
