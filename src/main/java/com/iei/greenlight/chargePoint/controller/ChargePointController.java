@@ -181,7 +181,7 @@ public class ChargePointController {
 	// 아임포트 취소요청.
 	@ResponseBody
 	@RequestMapping(value = "cancel.do", method = RequestMethod.POST)
-	public String calcel(@RequestParam("impUid") String impUid, @RequestParam("chargeMoney") int chargeMoney,
+	public String cancel(@RequestParam("impUid") String impUid, @RequestParam("chargeMoney") int chargeMoney,
 			@RequestParam("token") String token) throws Exception {
 		HttpURLConnection conn = null;
 		int result = 0;
