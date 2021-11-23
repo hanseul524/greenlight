@@ -106,7 +106,7 @@
 		    </form>          
 		    <div style="width:100%; height:50px;"></div>  
             <div class="page_wrap">
-			    <c:url var="before" value="adminOfflineShop.do">
+			    <c:url var="before" value="adminOnlineShop.do">
 			    	<c:param name="page" value="${pi.currentPage - 1 }"></c:param>
 			    </c:url>
 			      <div class="page_nation">
@@ -117,7 +117,7 @@
 			         <a class="arrow prev" href="${before }"></a>
 			      </c:if>
 			      <c:forEach var="p" begin="${pi.startNavi}" end="${pi.endNavi }">
-			      	<c:url var="pagenation" value="adminOfflineShop.do">
+			      	<c:url var="pagenation" value="adminOnlineShop.do">
 			      		<c:param name="page" value="${p }"></c:param>
 			      	</c:url>
 			      	<c:if test="${p eq pi.currentPage }">
@@ -127,7 +127,7 @@
 			      		<a href="${pagenation }">${p }</a>
 			      	</c:if>
 			      </c:forEach>
-			      <c:url var="after" value="adminOfflineShop.do">
+			      <c:url var="after" value="adminOnlineShop.do">
 			      	<c:param name="page" value="${pi.currentPage + 1 }"></c:param>
 			      </c:url>
 			      <c:if test="${pi.currentPage >= pi.maxPage }">

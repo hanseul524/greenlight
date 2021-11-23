@@ -187,6 +187,11 @@ public class ChallengeServiceImpl implements ChallengeService{
 	 }
 
 	@Override
+	public List<Challenge> printRecentList(int chNo) {
+		return store.selectRecentList(chNo);
+	}
+
+	@Override
 	public int getAdminListCount() {
 		return store.selectAdminListCount();
 	}
@@ -195,11 +200,14 @@ public class ChallengeServiceImpl implements ChallengeService{
 	public Category printCategoryTitle(int categoryNo) {
 		return store.selectCategoryTitle(categoryNo);
 	}
+	
+	@Override
+	public Category printRecentCategory() {
+		return store.selectRecentCategory();
+	}
 
 	@Override
 	public List<CFile> printDeleteImg(int chNo) {
 		return store.selectDeleteImg(chNo);
 	}
-
-
 }

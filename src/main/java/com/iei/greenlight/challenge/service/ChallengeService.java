@@ -25,7 +25,9 @@ public interface ChallengeService {
 	public int getSearchListCount(HashMap<String, Object> hashmap);
 	public List<Challenge> printAll(HashMap<String, Object> hashmap);
 	public List<Challenge> printSearchList(HashMap<String, Object> hashmap);
+	public List<Challenge> printRecentList(int chNo);
 	public Category printCategoryTitle(int categoryNo);
+	public Category printRecentCategory(); 
 	public Challenge printOne(int chNo);
 	public List<CFile> printOneImg(int chNo);
 	public List<CFile> printImgDel(int chNo);

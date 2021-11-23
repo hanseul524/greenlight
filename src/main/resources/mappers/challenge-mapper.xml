@@ -97,6 +97,9 @@
 			FROM CHALLENGE) ORDER BY CH_NO DESC) c ON (c.CH_NO = f.CH_NO) WHERE f.FILE_MAIN = 'Y'
 		</if>
 	</select>
+	<select id="selectRecentList" resultMap="challengeResultMap" parameterType="_int">
+		SELECT * FROM CHALLENGE WHERE CATEGORY_NO = #{chNo }
+	</select>
 <!-- 	<select id="selectAllList" resultMap="challengeResultMap"> -->
 <!-- 		SELECT * FROM CHALLENGE ORDER BY CH_NO DESC -->
 <!-- 	</select> -->
@@ -192,6 +195,9 @@
 	</resultMap>
 	<select id="selectCategoryTitle" resultMap="categoryResultMap" parameterType="category">
 		SELECT CH_CATEGORY FROM CATEGORY WHERE CATEGORY_NO = #{categoryNo}
+	</select>
+	<select id="selectRecentCategory" resultMap="categoryResultMap">
+		SELECT * FROM CATEGORY WHERE CATEGORY_NO = (SELECT MAX(CATEGORY_NO) FROM CATEGORY)
 	</select>
 	<insert id="insertCategory" parameterType="Category">
 		INSERT INTO CATEGORY VALUES(SEQ_CATEGORY_NO.NEXTVAL, #{chCategory}, DEFAULT)
