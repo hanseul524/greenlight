@@ -66,7 +66,7 @@
                 	<c:forEach items="${history }" var="history">
 	                <c:forEach items="${user }" var="user">
                 		<p>
-				                        회원님이 사용하신<br> 포인트는  <span>${history.pointUse }</span>이고
+				                        회원님이 사용하신 포인트는  <span>${history.pointUse }</span>이고<br>
 				                        보유한 포인트는  <br><span>${user.point }</span>입니다.
 	                    </p>
 	                	<c:if test="${iValue == 1 || iValue == 3 || iValue == 5 || iValue == 7 || iValue == 9}">
@@ -97,8 +97,8 @@
 	                </c:forEach>
                 </div>
                 <div id="main-butn">
-                	<div><button class="point-use-butn" style="background: rgb(42, 173, 248); color: #ffff;"onclick="location.href='auctionListView.do'">기부하기</button></div>
-                	<div><button class="point-use-butn" onclick="location.href='donationBoardList.do'">경매하기</button></div>
+                	<div><button class="point-use-butn" style="background: rgb(42, 173, 248); color: #ffff;"onclick="location.href='donationBoardList.do'">기부하기</button></div>
+                	<div><button class="point-use-butn" onclick="location.href='auctionListView.do'">경매하기</button></div>
                 </div>
 <!--             </div> -->
         </main>

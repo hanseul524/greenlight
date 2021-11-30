@@ -87,41 +87,42 @@
     </footer>
 	
     <script type="text/javascript">
+ 	// 날짜 변환 함수 (년, 월, 일을 반환)
     function getDate(date) {
     	  return date.toLocaleDateString().replace(/\./g, "").split(" ");
     	}
-
+		 // pad 함수 ( 10 이하는 앞에 0붙이기 )
     	const pad = (str) => str > 10 ? str : '0' + str;
+    	// date 객체
+   	  	const ToDay = new Date();
+   		// 현재 월
+    	const nowMonth = ToDay.getMonth();
+    	// 현재의 년과 월구하기
+   		const [y, m] = getDate(new Date(ToDay.setMonth(nowMonth)));
+   		// 해당 달의 마지막 일 구하기
+    	const lastDay = getDate(new Date(y, m, 0)).pop() * 1;
+    	// 해당 달의 첫 요일 구하기
+    	const day = new Date([y, m, 1].join("-")).getDay() * 1;
+    	// 마지막 날과 시작 일을 더해 7의 배수를 만들어 줍니다.
+    	const maxDay = Math.ceil((day + lastDay) / 7) * 7;
+    	
+    	const year = $("#year").val();
 
-    	  const ToDay = new Date();
+    	const month = $("#month").val();
     	  
-    	  const nowMonth = ToDay.getMonth();
+    	const dayy = $("#day").val();
     	  
-    	  const [y, m] = getDate(new Date(ToDay.setMonth(nowMonth)));
-
-    	  const lastDay = getDate(new Date(y, m, 0)).pop() * 1;
-    	  
-    	  const day = new Date([y, m, 1].join("-")).getDay() * 1;
-    	  
-    	  const maxDay = Math.ceil((day + lastDay) / 7) * 7;
-		  
-    	  const year = $("#year").val();
-
-    	  const month = $("#month").val();
-    	  
-    	  const dayy = $("#day").val();
-    	  
-    	  var html = '';
+    	var html = '';
 			
-    	  if(y == year){
-	    	    console.log(y);
-  	      }
+    	if(y == year){
+	  	    console.log(y);
+  	    }
     	  
-    	  if(m == month){
-	    	    console.log(m);
-	      }
+    	if(m == month){
+	       console.log(m);
+	    }
     	  
-    	  
+    	  // 요일과 마지막 일을 합친 수만큼 반복문
     	  for (var i = 1; i <= maxDay; i++) {
     	    const diff = i - day;
     	    const d = diff <= lastDay && i > day ? diff : '';
