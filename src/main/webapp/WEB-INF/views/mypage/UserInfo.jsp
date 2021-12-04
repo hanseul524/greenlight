@@ -152,7 +152,7 @@
 	    });
 	
 		 function join(){
-			 if(confirm("정말 탈퇴하실 건가요?")){
+			 if(confirm("수정하시겠습니까?")){
 				 if($("#inputId").val() == ""){
 					 $("#inputId").addClass("is-invalid");
 					 return false; 
