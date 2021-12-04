@@ -4,7 +4,7 @@ body {
 }
 .container {
   width: 1200px;
-  max-height: 3000px;
+  max-height: 3216px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -60,7 +60,7 @@ a {
 }
 .img-div {
   width: 1200px;
-  max-height: 2000px;
+  max-height: 2500px;
   margin: 10px;
   display: table-cell;
   vertical-align: middle;

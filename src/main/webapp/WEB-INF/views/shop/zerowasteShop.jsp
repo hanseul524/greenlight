@@ -13,7 +13,7 @@
 <body>
 <jsp:include page="${pageContext.request.contextPath}/common/header.jsp"></jsp:include>
   <div class="title-img" style="background-attachment: fixed; width:100%; height: 230px;">
-  	<span style="font-family: 'Quicksand', sans-serif;">Z e r o W a s t M a p</span>
+  	<span style="font-family: 'Quicksand', sans-serif;">Z e r o W a s t e M a p</span>
   </div>
     <div class="menu-shop">
         <div class="offline">
