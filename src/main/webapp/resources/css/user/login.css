@@ -85,6 +85,8 @@ a:visited{
     justify-content: flex-end;
     align-items: center;
     width:100%;
+    
+    
 }
 .login-form-left-side .login-top-wrap span{
     color: gray;
