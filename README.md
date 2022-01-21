@@ -7,6 +7,7 @@
   <li><a href="#">개요</a></li>
   <li><a href="#">설계의 주안점</a></li>
   <li><a href="#">개발환경</a></li>
+  <li><a href="#">DB 설계</a></li>
   <li><a href="#">프로젝트 기능구현</a></li>
   <li><a href="#">주요기능</a></li>
   <li><a href="#">Document</a></li>
@@ -39,6 +40,11 @@
 <span><img src="https://img.shields.io/badge/Apache Tomcat-red?style=flat-square&logo=Apache Tomcat&logoColor=white"/></span>&nbsp;
 <span><img src="https://img.shields.io/badge/Bootstrap-blueviolet?style=flat-square&logo=Bootstrap&logoColor=white"/></span>&nbsp;
 <span><img src="https://img.shields.io/badge/Github-black?style=flat-square&logo=GitHub&logoColor=white"/></span>&nbsp;
+
+<H2>DB 설계</H2>
+
+![스크린샷(137)](https://user-images.githubusercontent.com/91312627/150521988-cebf401b-5776-4ef7-91a9-243426a01cf9.png)
+
 <H2>프로젝트 기능구현</H2>
 <p>권승택</p>
 <li>회원가입</li>
