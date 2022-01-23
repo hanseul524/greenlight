@@ -127,11 +127,29 @@ __2. 관리자 페이지__
 메인 페이지
 
 ![메인화면](https://user-images.githubusercontent.com/91312627/150569447-cebda504-b91d-48aa-bc45-ef361f9ee49b.jpg)
-
+<br>
 이벤트
 
 ![이벤트](https://user-images.githubusercontent.com/91312627/150569621-5c8676cf-e03c-4ae6-b2bb-2e9ff01cede4.jpg)
-
+<br>
 로그인
 
 ![로그인](https://user-images.githubusercontent.com/91312627/150569737-b42bcfbe-a4df-4816-989d-1b925850b6aa.jpg)
+<br>
+계정 찾기
+
+![2022-01-23 (2)](https://user-images.githubusercontent.com/91312627/150668348-7efa01ff-96a2-41a7-8210-6d34e8445eb4.png)
+<br>
+소셜 로그인
+
+![카카오로그인](https://user-images.githubusercontent.com/91312627/150668370-4d826f19-3af0-4a3e-9513-5ed1a31b7a90.jpg)
+<br>
+회원가입
+
+![회원가입](https://user-images.githubusercontent.com/91312627/150668430-9d5aa409-208d-431f-b39e-00a8d1a7e463.jpg)
+<br>
+
+챌린지 게시판
+
+![localhost_8819_ChallengeListView do_check=recent](https://user-images.githubusercontent.com/91312627/150668601-7dea6d1a-aae3-49cf-900f-7095b9459882.png)
+<br>
