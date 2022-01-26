@@ -10,7 +10,6 @@
 - [개발환경](#개발환경)
 - [DB 설계](#db-설계)
 - [프로젝트 기능구현](#프로젝트-기능구현)
-- [Document](#document)
 
 ## 개요
 ‘그린라이트’는 다함께 녹색 미래를 만들자는 다짐을 담아,
@@ -122,54 +121,58 @@ __2. 관리자 페이지__
   - 관리자의 승인/미승인 상태 표시로 체크할 수 있고 미승인 글은 승인하기를 통해 승인 후 포인트 지급을 할 수 있다.
   - 관리자는 한달에 한 번 챌린지 오픈을 통해 주제를 입력하고 오픈시 현재 진행중인 챌린지가 변경된다.
 
-## Document
+### 메인 페이지
 
-메인 페이지
 ![메인화면](https://user-images.githubusercontent.com/91312627/150569447-cebda504-b91d-48aa-bc45-ef361f9ee49b.jpg)
 ![이벤트](https://user-images.githubusercontent.com/91312627/150569621-5c8676cf-e03c-4ae6-b2bb-2e9ff01cede4.jpg)
 <br>
-로그인
+
+### 로그인
+
 ![로그인](https://user-images.githubusercontent.com/91312627/150569737-b42bcfbe-a4df-4816-989d-1b925850b6aa.jpg)
 <br>
-계정 찾기
+
+### 계정 찾기
+
 ![2022-01-23 (2)](https://user-images.githubusercontent.com/91312627/150668348-7efa01ff-96a2-41a7-8210-6d34e8445eb4.png)
 <br>
-소셜 로그인
+
+### 소셜 로그인
+
 ![카카오로그인](https://user-images.githubusercontent.com/91312627/150668370-4d826f19-3af0-4a3e-9513-5ed1a31b7a90.jpg)
 <br>
-회원가입
+
+### 회원가입
 ![회원가입](https://user-images.githubusercontent.com/91312627/150668430-9d5aa409-208d-431f-b39e-00a8d1a7e463.jpg)
 <br>
-챌린지 게시판
+### 챌린지 게시판
 ![localhost_8819_ChallengeListView do_check=recent](https://user-images.githubusercontent.com/91312627/151170633-1dbc9423-ce7e-414e-b39e-2bcf368263f4.png)
 ![localhost_8819_ChallengeDetail do_chNo=27](https://user-images.githubusercontent.com/91312627/151170986-c081f036-ba8e-4284-b0c6-c9df9aace9cf.png)
 <br>
-경매 게시판
+### 경매 게시판
 ![경매 리스트](https://user-images.githubusercontent.com/91312627/151170777-77b015a6-ecf4-4dc0-9d98-7f3796a10eae.jpg)
 ![경매 디테일](https://user-images.githubusercontent.com/91312627/151170930-6da0482c-5de1-48e5-ac01-00400baa773d.jpg)
 <br>
-기부 게시판
+### 기부 게시판
 ![기부 리스트](https://user-images.githubusercontent.com/91312627/151170845-42be5d36-78a8-4d0b-826e-4a340005c09c.jpg)
 ![기부 디테일](https://user-images.githubusercontent.com/91312627/151170882-4257bd88-9cdb-4b25-a8fc-b97a611c26b8.jpg)
 <br>
-온라인/오프라인 매장
+### 온라인/오프라인 매장
 ![오프라인매장 리스트](https://user-images.githubusercontent.com/91312627/151171178-11bb99da-1ee7-44e0-a4c7-398d0b1a99f0.jpg)
 ![오프라인매장 디테일](https://user-images.githubusercontent.com/91312627/151171210-d81d42b7-4f42-4bcf-87f1-7983127fa025.jpg)
 ![온라인 매장 리스트](https://user-images.githubusercontent.com/91312627/151171268-ce5bb3f3-a433-4fe5-941b-39869d7c6a9c.jpg)
 <br>
-마이페이지
+### 마이페이지
 ![마이페이지 활동기여도](https://user-images.githubusercontent.com/91312627/151171348-184e3419-81df-4210-8086-1bc68b279ba0.jpg)
 ![마이페이지 출석체크](https://user-images.githubusercontent.com/91312627/151171372-bc6f21c3-0200-4b9f-81ae-de781f119b53.jpg)
 ![마이페이지 포인트내역](https://user-images.githubusercontent.com/91312627/151171404-53eae092-3022-44cf-bbbd-2e796699a6f0.jpg)
 ![마이페이지 회원정보](https://user-images.githubusercontent.com/91312627/151171435-38211d7c-fde8-435f-a184-89e6b6a887f3.jpg)
 <br>
-포인트 충전/환불
-
+### 포인트 충전/환불
 ![image](https://user-images.githubusercontent.com/91312627/151171713-098424b0-b10d-47d1-987c-d49705d2c467.png)
 ![image](https://user-images.githubusercontent.com/91312627/151171845-c3fb7773-ab83-4595-9caa-cba962197996.png)
 <br>
-관리자 페이지
-
+### 관리자 페이지
 ![관리자 챌린지 관리](https://user-images.githubusercontent.com/91312627/151171994-fc2df6f1-7c37-4d14-ab8e-236d83346364.jpg)
 ![관리자 경매관리](https://user-images.githubusercontent.com/91312627/151172030-c2656aae-bd8d-4e1b-8a3a-6bee308c571b.jpg)
 ![관리자 기부관리](https://user-images.githubusercontent.com/91312627/151172054-eed36f94-e809-4068-9c7d-b9e54073ff1b.jpg)
