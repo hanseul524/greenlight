@@ -1,8 +1,6 @@
 # :deciduous_tree: GREEN LIGHT 
-팀원 : 권승택, 송성근, 윤현석, 정한슬
-
-## :calendar: 수행기간
-2021년 10월 11일 ~ 11월 24일
+:baby: 권승택, 송성근, 윤현석, 정한슬
+:calendar: 2021년 10월 11일 ~ 11월 24일
 
 ## :book: Contents 
 - [개요](#개요)
@@ -11,11 +9,11 @@
 - [DB 설계](#db-설계)
 - [프로젝트 기능구현](#프로젝트-기능구현)
 
-## 개요
-‘그린라이트’는 다함께 녹색 미래를 만들자는 다짐을 담아,
+### 개요
+> ‘그린라이트’는 다함께 녹색 미래를 만들자는 다짐을 담아,
 사용자들이 적극적으로 실천할 수 있는 동기부여를 주고 더 나아가 환경 보호에 힘을 보탤 수 있는 사이트입니다.
 
-## 설계의 주안점
+### 설계의 주안점
 1. 출석체크시 포인트 지급, 7일 연속 출석 체크시 추가 포인트 지급 구현
 2. 관리자가 챌린지 오픈 시 챌린지 글 작성, 승인시 포인트 지급 구현
 3. 중고경매 게시판에서 관리자가 글 작성시 setInterval을 이용한 타이머 기능 구현, 회원의 보유 포인트로 경매 참여 기능 구현
@@ -23,7 +21,7 @@
 5. 아임포트API를 이용한 포인트 결제와 환불 기능 구현
 6. 기부 게시판에서 포인트로 기부 가능, 사이트에서 지급한 포인트를 우선순위로 사용하는 기능 구현
 
-## 개발환경
+### 개발환경
 
 <span><img src="https://img.shields.io/badge/Java-blue?style=flat-square&logo=Java&logoColor=white"/></span>&nbsp;
 <span><img src="https://img.shields.io/badge/Visual Studio Code-9cf?style=flat-square&logo=Visual Studio Code&logoColor=white"/></span>&nbsp;
@@ -39,11 +37,11 @@
 <span><img src="https://img.shields.io/badge/Bootstrap-blueviolet?style=flat-square&logo=Bootstrap&logoColor=white"/></span>&nbsp;
 <span><img src="https://img.shields.io/badge/Github-black?style=flat-square&logo=GitHub&logoColor=white"/></span>&nbsp;
 
-## DB 설계
+### DB 설계
 
 ![스크린샷(137)](https://user-images.githubusercontent.com/91312627/150521988-cebf401b-5776-4ef7-91a9-243426a01cf9.png)
 
-## 프로젝트 기능구현
+### 프로젝트 기능구현
 
 권승택
 
@@ -178,5 +176,3 @@ __2. 관리자 페이지__
 ![관리자 기부관리](https://user-images.githubusercontent.com/91312627/151172054-eed36f94-e809-4068-9c7d-b9e54073ff1b.jpg)
 ![관리자 매장 관리](https://user-images.githubusercontent.com/91312627/151172089-e9730200-bee8-4e24-ae95-c4cf77098f7c.jpg)
 ![관리자 이벤트 관리](https://user-images.githubusercontent.com/91312627/151172115-6fa20934-0357-4ca9-ac5c-3c6d2bb878f8.jpg)
-
-
