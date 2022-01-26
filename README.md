@@ -1,6 +1,6 @@
 # :deciduous_tree: GREEN LIGHT 
 :baby: 권승택, 송성근, 윤현석, 정한슬<br>
-:calendar: 2021년 10월 11일 ~ 11월 24일
+:calendar: 2021. 10. 11 ~ 2021. 11. 24
 
 ## :book: Contents 
 - [개요](#개요)
